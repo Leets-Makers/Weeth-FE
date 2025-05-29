@@ -96,12 +96,10 @@ const MonthCalendar = () => {
 
   const renderEventContent = (eventInfo: any) => {
     return (
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <S.EventContentContainer>
         <S.Bar isMeeting={eventInfo.event.extendedProps?.isMeeting} />
-        <div style={{ overflow: 'hidden', width: '42px' }}>
-          {eventInfo.event.title}
-        </div>
-      </div>
+        <S.EventContent>{eventInfo.event.title}</S.EventContent>
+      </S.EventContentContainer>
     );
   };
 
