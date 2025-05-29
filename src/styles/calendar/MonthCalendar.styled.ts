@@ -15,6 +15,18 @@ export const Bar = styled.div<{ isMeeting: boolean }>`
   margin: 0 2px;
 `;
 
+export const EventContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const EventContent = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+`;
+
 export const Calendar = styled.div`
   margin-bottom: 5px;
 

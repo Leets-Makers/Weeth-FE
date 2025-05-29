@@ -7,7 +7,7 @@ import PMIcon from '@/assets/images/ic_PM.svg';
 const positionIcons: Record<string, string> = {
   FE: FEIcon,
   BE: BEIcon,
-  DE: DEIcon,
+  D: DEIcon,
   AD: ADIcon,
   PM: PMIcon,
 };
