@@ -21,7 +21,7 @@ import 'dayjs/locale/ko';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import Loading from '../common/Loading';
+import Loading from '@/components/common/Loading';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

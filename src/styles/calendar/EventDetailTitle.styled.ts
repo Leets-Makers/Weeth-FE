@@ -16,6 +16,9 @@ export const Title = styled.div`
   font-family: ${theme.font.semiBold};
   font-size: 24px;
   padding-bottom: 10px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
 `;
 
 export const Writer = styled.div`

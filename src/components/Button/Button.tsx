@@ -11,7 +11,6 @@ interface ButtonProps {
   width?: string;
   borderRadius?: string;
   disabled?: boolean;
-  isAttend?: boolean;
   isSemibold?: boolean; // 폰트 두께 : true(기본값) - semibold, false - regular
 }
 
@@ -31,7 +30,6 @@ const BasicButton = styled.button<ButtonProps>`
   height: ${({ height }) => height || '50px'};
 
   &:disabled {
-    color: ${theme.color.gray[65]};
     cursor: not-allowed;
   }
 `;

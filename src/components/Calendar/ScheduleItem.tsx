@@ -39,6 +39,14 @@ const Text = styled.div`
 const Title = styled.div`
   font-size: 16px;
   font-family: ${theme.font.semiBold};
+  overflow-wrap: break-word;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 `;
 
 const Date = styled.div`
