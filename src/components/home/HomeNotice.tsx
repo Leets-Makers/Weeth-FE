@@ -17,7 +17,7 @@ const SCROLL_DURATION = 20;
 
 const AnimationLayout = styled.div`
   display: flex;
-  background-color: ${theme.color.mainDark};
+  background-color: ${theme.color.negativeDark};
   margin-top: 0.9375rem;
   cursor: pointer;
   height: 1.875rem;
