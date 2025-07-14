@@ -9,22 +9,36 @@ export const Container = styled.div`
   margin-bottom: 3.125rem;
 `;
 
+export const BoardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.875rem;
+  padding-top: 0.625rem;
+`;
+
+export const CardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.625rem 0.9375rem;
+  gap: 0.625rem;
+`;
+
 export const NoticeTextContainer = styled.div`
-  margin: 0.625rem 1.5625rem 0.625rem 0.9375rem;
+  padding-left: 0.3125rem;
   display: flex;
   flex-direction: row;
-  text-align: center;
   justify-content: space-between;
 `;
 
 export const NoticeTitleText = styled.div`
-  font-size: 1rem;
+  font-size: 19px;
   font-family: ${theme.font.semiBold};
-  line-height: 1.2rem;
+  line-height: 1;
 `;
 
 export const AllText = styled.div`
   font-size: 0.75rem;
+  line-height: 1.25rem;
   color: ${theme.color.gray[65]};
   cursor: pointer;
   margin-top: 0.1875rem;
@@ -32,9 +46,8 @@ export const AllText = styled.div`
 
 export const ScrollContainer = styled.div`
   display: flex;
-  margin-left: 0.9375rem;
   overflow-x: auto;
-  gap: 0.625rem;
+  gap: 0.9375rem;
   cursor: grab;
 
   &::-webkit-scrollbar {
@@ -49,22 +62,23 @@ export const ScrollContainer = styled.div`
 
 export const NoticeCard = styled.div`
   flex: 0 0 auto;
-  background-color: ${theme.color.gray[30]};
+  width: 17.125rem;
+  height: 7.5rem;
+  box-sizing: border-box;
+  background-color: ${theme.color.gray[18]};
   color: white;
-  font-family: ${theme.font.semiBold};
   border-radius: 0.625rem;
-  width: 13.25rem;
-  height: 3.75rem;
+  padding: 1.125rem 0.9375rem 0.625rem 0.9375rem;
+  gap: 0.9375rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-decoration: none;
-  font-size: 0.875rem;
-  line-height: 1.4;
 
   &:nth-child(1) {
-    background-color: ${theme.color.mainMiddle};
+    background-color: #291f1f;
     color: white;
+    border: 1px solid ${theme.color.negativeDark};
   }
 
   &:hover {
@@ -74,79 +88,147 @@ export const NoticeCard = styled.div`
   transition: filter 0.2s ease-in-out;
 `;
 
-export const NoticeTitle = styled.div`
-  font-size: 0.75rem;
-  font-family: ${theme.font.semiBold};
-  line-height: 0.9rem;
-  margin: 0.9375rem 1.3125rem 0 0.9375rem;
+export const NoticeTextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
 `;
 
-export const NoticeContent = styled.p`
-  font-size: 0.625rem;
-  color: ${theme.color.gray[65]};
-  margin: 0.3125rem 1.5625rem 0.8125rem 0.9375rem;
+export const NoticeTitle = styled.div`
+  font-size: 1rem;
+  font-family: ${theme.font.semiBold};
+  line-height: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-export const TabContainerWrapper = styled.div`
-  display: flex;
-  align-items: start;
-  margin: 1.875rem 1.5625rem 0.625rem 0.9375rem;
+export const NoticeContent = styled.p`
+  font-size: 0.75rem;
+  line-height: 1;
+  color: ${theme.color.gray[65]};
+  font-family: ${theme.font.regular};
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
 `;
 
-export const TabContainer = styled.div`
+export const NoticeBottomRow = styled.div`
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: space-between;
+`;
+
+export const ReadMoreText = styled.p`
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.3125rem;
+`;
+
+export const CommentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+`;
+
+export const CommentsText = styled.p`
+  font-size: 0.75rem;
+  line-height: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: ${theme.font.regular};
+  margin: 0;
+`;
+
+export const ImgContainer = styled.img`
+  width: 0.75rem;
+  height: 0.75rem;
+`;
+
+export const PartTitleText = styled.p`
+  display: flex;
+  padding-left: 0.3125rem;
+  color: white;
+  font-size: 1.1875rem;
+  font-family: ${theme.font.semiBold};
+  line-height: 1;
+  margin: 0;
+`;
+
+export const PartList = styled.div`
+  display: flex;
+  gap: 0.9375rem;
+`;
+
+export const PartItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  gap: 0.625rem;
 `;
 
-export const TabText = styled.div`
-  font-size: 1rem;
-  color: white;
+export const PartImage = styled.img`
+  width: 4.75rem;
+  height: 4.75rem;
+`;
+
+export const PartLabel = styled.p`
+  margin: 0;
   font-family: ${theme.font.semiBold};
+  font-size: 1.125rem;
+  line-height: 1;
+  color: ${theme.color.gray[80]};
 `;
 
-export const Underline = styled.div`
-  width: 5.625rem;
-  height: 0.125rem;
-  background-color: ${theme.color.main};
-  margin-top: 0.3125rem;
-`;
-
-export const PostListContainer = styled.div`
-  margin: 0 0.46875rem;
-`;
-
-export const PostListItemContainer = styled.div`
-  padding: 0 0.3125rem;
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: ${theme.color.gray[20]};
-  }
-`;
-
-export const Line = styled.div`
-  border: 1px solid;
-  margin: 0 0.3125rem;
-  color: ${(props) => props.theme.color.gray[18]};
-`;
-
-export const Text = styled.div`
-  text-align: center;
-  margin: 0.625rem;
-  font-family: ${theme.font.semiBold};
-`;
-
-export const PostingButtonContainer = styled.div`
-  position: fixed;
+export const EduTitle = styled.div`
   display: flex;
-  bottom: 0.9375rem;
-  justify-content: end;
-  width: 100%;
-  max-width: 23.4375rem;
-  z-index: 10;
+  flex-direction: column;
+  gap: 0.3125rem;
+`;
+
+export const EduAddContent = styled.p`
+  font-size: 0.75rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.5);
+  padding-left: 0.3125rem;
+  margin: 0;
+  font-family: ${theme.font.regular};
+`;
+
+export const EduCard = styled.div`
+  flex: 0 0 auto;
+  width: 11.3125rem;
+  height: 7.9375rem;
+  box-sizing: border-box;
+  border-radius: 0.625rem;
+  border: 1px solid ${theme.color.gray[20]};
+  background-color: ${theme.color.gray[18]};
+  padding: 0.9375rem 0.9375rem 0.625rem 0.9375rem;
+  gap: 0.9375rem;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const EduPart = styled.div`
+  display: flex;
+  gap: 0.3125rem;
+`;
+
+export const EduCardTitle = styled.p`
+  font-size: 1rem;
+  font-family: ${theme.font.semiBold};
+  color: ${theme.color.gray[100]};
+  line-height: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0;
 `;
