@@ -18,6 +18,7 @@ const theme = {
       20: '#333333',
       30: '#4D4D4D',
       65: '#A6A6A6',
+      80: '#CCCCCC',
     },
     lightGray: '#c1c1c1',
     kakao: '#FEE500',
