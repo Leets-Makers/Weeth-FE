@@ -25,14 +25,14 @@ const colorMap = {
 
 const Container = styled.div<PartProps>`
   flex: 0 0 auto;
-  width: 38px;
-  height: 20px;
+  width: 2.375rem;
+  height: 1.25rem;
   box-sizing: border-box;
-  border-radius: 5px;
-  padding: 5px 10px;
-  gap: 10px;
+  border-radius: 0.3125rem;
+  padding: 0.3125rem 0.625rem;
+  gap: 0.625rem;
   font-family: ${({ theme }) => theme.font.semiBold};
-  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1;
   display: flex;
   justify-content: center;

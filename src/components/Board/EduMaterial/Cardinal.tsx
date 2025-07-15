@@ -5,18 +5,18 @@ import styled from 'styled-components';
 
 const CardinalContainer = styled.div`
   display: flex;
-  gap: 5px;
+  gap: 0.3125rem;
 `;
 
 const CardinalBox = styled.div<{ selected: boolean }>`
-  width: 51px;
-  height: 32px;
-  min-width: 40px;
+  width: 3.1875rem;
+  height: 2rem;
+  min-width: 2.5rem;
   border: 1px solid ${theme.color.gray[18]};
-  border-radius: 20px;
+  border-radius: 1.25rem;
   background-color: ${({ selected }) =>
     selected ? theme.color.main : theme.color.gray[12]};
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
   font-family: ${theme.font.semiBold};
   color: ${({ selected }) => (selected ? 'white' : theme.color.gray[100])};

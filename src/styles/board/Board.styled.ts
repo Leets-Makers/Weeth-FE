@@ -31,7 +31,7 @@ export const NoticeTextContainer = styled.div`
 `;
 
 export const NoticeTitleText = styled.div`
-  font-size: 19px;
+  font-size: 1.1875rem;
   font-family: ${theme.font.semiBold};
   line-height: 1;
 `;
