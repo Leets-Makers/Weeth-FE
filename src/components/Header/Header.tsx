@@ -32,6 +32,7 @@ TEXT : 텍스트타입의 버튼입니다. 현재(2024.11.22)는 '완료'로만 
 MENU : 점 세개(⋮) 버튼입니다.
 PLUS : 캘린더에서 사용되는 +버튼입니다.
 EDIT : 마이페이지에서 사용되는 연필버튼입니다.
+WRITING: 게시판에서 글 작성 시 시용되는 글쓰기 버튼입니다.
 
 */
 
@@ -42,12 +43,20 @@ import LeftButton from '@/components/Header/LeftButton';
 import MenuButton from '@/components/Header/MenuButton';
 import PlusButton from '@/components/Header/PlusButton';
 import SearchButton from '@/components/Header/SearchButton';
+import WritingButton from '@/components/Header/WritingButton';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
   children?: React.ReactNode;
   onClickRightButton?: () => void;
-  RightButtonType: 'TEXT' | 'MENU' | 'PLUS' | 'EDIT' | 'SEARCH' | 'none';
+  RightButtonType:
+    | 'TEXT'
+    | 'MENU'
+    | 'PLUS'
+    | 'EDIT'
+    | 'SEARCH'
+    | 'WRITING'
+    | 'none';
   isComplete?: boolean;
   isAccessible: boolean;
   isWaiting?: boolean;
@@ -90,6 +99,10 @@ const Header = ({
           text="완료"
           isComplete={isComplete}
         />
+      )}
+
+      {RightButtonType === 'WRITING' && onClickRightButton && (
+        <WritingButton onClick={onClickRightButton} text="글쓰기" />
       )}
 
       {RightButtonType === 'MENU' && onClickRightButton && isAccessible && (
