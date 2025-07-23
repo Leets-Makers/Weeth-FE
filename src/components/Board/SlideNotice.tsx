@@ -1,6 +1,6 @@
 import { useDraggable } from '@/hooks/useDraggable';
 import * as S from '@/styles/board/Board.styled';
-import Vector from '@/assets/images/ic_vector.svg';
+import Vector from '@/assets/images/ic_vector.svg?react';
 import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
@@ -61,7 +61,7 @@ const SlideNotice = ({ error, recentNotices }: SlideNoticeProps) => {
               <S.NoticeBottomRow>
                 <S.ReadMoreText>자세히 &gt;</S.ReadMoreText>
                 <S.CommentContainer>
-                  <S.ImgContainer src={Vector} alt="댓글 아이콘" />
+                  <Vector />
                   <S.CommentsText>3</S.CommentsText>
                 </S.CommentContainer>
               </S.NoticeBottomRow>
