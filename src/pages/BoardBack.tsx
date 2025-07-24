@@ -1,6 +1,7 @@
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import ExpandableTagList from '@/components/Board/ExpandableTagList';
+import PartBoardTap from '@/components/Board/PartBoardTap';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import WeekDropdown from '@/components/Board/WeekDropdown';
 import Header from '@/components/Header/Header';
@@ -32,9 +33,6 @@ const BoardBack = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [observerLoading, setObserverLoading] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'studylog' | 'article'>(
-    'studylog',
-  );
   const navigate = useNavigate();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
@@ -93,19 +91,7 @@ const BoardBack = () => {
       >
         백엔드
       </Header>
-      <S.TabContainerWrapper>
-        <S.TabContainer>
-          <S.TabTextContainer onClick={() => setActiveTab('studylog')}>
-            <S.TabText>스터디로그</S.TabText>
-            {activeTab === 'studylog' && <S.Underline />}
-          </S.TabTextContainer>
-          <S.TabTextContainer onClick={() => setActiveTab('article')}>
-            <S.TabText>아티클</S.TabText>
-            {activeTab === 'article' && <S.Underline />}
-          </S.TabTextContainer>
-        </S.TabContainer>
-      </S.TabContainerWrapper>
-
+      <PartBoardTap />
       <S.InformationContainer>
         <S.DropdownContainer>
           <CardinalDropdown
