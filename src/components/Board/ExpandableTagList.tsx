@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import RereshIcon from '@/assets/images/ic_study_refresh.svg?react';
+import RefreshIcon from '@/assets/images/ic_study_refresh.svg?react';
 import open from '@/assets/images/ic_study_open.svg';
 import close from '@/assets/images/ic_study_close.svg';
 import { useRef, useState } from 'react';
@@ -96,7 +96,7 @@ const ExpandableTagList = () => {
           onMouseUp={() => setIsRefreshing(false)}
           onMouseLeave={() => setIsRefreshing(false)}
         >
-          <RereshIcon />
+          <RefreshIcon />
         </StudyTag>
         {tags.map((tag) => (
           <StudyTag
