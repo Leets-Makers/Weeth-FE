@@ -17,21 +17,21 @@ const EduMaterial = () => {
   }
 
   return (
-    <S.CardContainer>
-      <S.EduTitle>
-        <S.NoticeTextContainer>
-          <S.NoticeTitleText>교육자료</S.NoticeTitleText>
-          <S.AllText onClick={handleAllEdu}>전체보기 &gt;</S.AllText>
-        </S.NoticeTextContainer>
-        <S.EduAddContent>
-          참여하신 기수의 자료만 볼 수 있습니다.
-        </S.EduAddContent>
-      </S.EduTitle>
-      <Cardinal />
-      <S.ScrollContainer>
-        <SlideEdu error={error} recentNotices={recentNotices} />
-      </S.ScrollContainer>
-    </S.CardContainer>
+    <S.NoticePreviewContainer>
+      <S.CardContainer>
+        <S.EduTitle>
+          <S.NoticeTextContainer>
+            <S.NoticeTitleText>교육자료</S.NoticeTitleText>
+            <S.AllText onClick={handleAllEdu}>전체보기 &gt;</S.AllText>
+          </S.NoticeTextContainer>
+          <S.EduAddContent>
+            참여하신 기수의 자료만 볼 수 있습니다.
+          </S.EduAddContent>
+        </S.EduTitle>
+        <Cardinal />
+      </S.CardContainer>
+      <SlideEdu error={error} recentNotices={recentNotices} />
+    </S.NoticePreviewContainer>
   );
 };
 

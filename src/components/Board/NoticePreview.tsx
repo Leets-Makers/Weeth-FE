@@ -17,13 +17,15 @@ const NoticePreview = () => {
   }
 
   return (
-    <S.CardContainer>
-      <S.NoticeTextContainer>
-        <S.NoticeTitleText>공지사항</S.NoticeTitleText>
-        <S.AllText onClick={handleAllNotice}>전체보기 &gt;</S.AllText>
-      </S.NoticeTextContainer>
+    <S.NoticePreviewContainer>
+      <S.CardContainer>
+        <S.NoticeTextContainer>
+          <S.NoticeTitleText>공지사항</S.NoticeTitleText>
+          <S.AllText onClick={handleAllNotice}>전체보기 &gt;</S.AllText>
+        </S.NoticeTextContainer>
+      </S.CardContainer>
       <SlideNotice error={error} recentNotices={recentNotices} />
-    </S.CardContainer>
+    </S.NoticePreviewContainer>
   );
 };
 

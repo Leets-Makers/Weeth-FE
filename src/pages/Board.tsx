@@ -36,8 +36,8 @@ const Board = () => {
         게시판
       </Header>
       <S.BoardContainer>
-        <NoticePreview />
         <PartBoard />
+        <NoticePreview />
         <EduMaterial />
       </S.BoardContainer>
     </S.Container>

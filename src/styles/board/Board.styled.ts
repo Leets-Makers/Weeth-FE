@@ -19,8 +19,13 @@ export const BoardContainer = styled.div`
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0.625rem 0.9375rem;
+  padding: 0.625rem 0.9375rem 0rem 0.9375rem;
   gap: 0.625rem;
+`;
+
+export const NoticePreviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const NoticeTextContainer = styled.div`
@@ -49,6 +54,7 @@ export const ScrollContainer = styled.div`
   overflow-x: auto;
   gap: 0.9375rem;
   cursor: grab;
+  padding: 10px 0px 10px 15px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -204,8 +210,7 @@ export const EduAddContent = styled.p`
 
 export const EduCard = styled.div`
   flex: 0 0 auto;
-  width: 11.3125rem;
-  height: 7.9375rem;
+  width: 228px;
   box-sizing: border-box;
   border-radius: 0.625rem;
   border: 1px solid ${theme.color.gray[20]};
@@ -222,13 +227,28 @@ export const EduPart = styled.div`
 `;
 
 export const EduCardTitle = styled.p`
-  font-size: 1rem;
+  font-size: 16px;
+  height: 19px;
   font-family: ${theme.font.semiBold};
   color: ${theme.color.gray[100]};
-  line-height: 100%;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   margin: 0;
+`;
+
+export const Text = styled.div`
+  text-align: center;
+  margin: 10px;
+  font-family: ${theme.font.semiBold};
+`;
+
+export const PostingButtonContainer = styled.div`
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
 `;

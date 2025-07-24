@@ -9,9 +9,9 @@ import { useRef } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
 
 const parts = [
-  { key: 'D', label: '디자인', image: D, url: 'd' },
-  { key: 'BE', label: '백엔드', image: BE, url: 'be' },
-  { key: 'FE', label: '프론트', image: FE, url: 'fe' },
+  { key: 'D', label: '디자인', image: D, url: 'design' },
+  { key: 'BE', label: '백엔드', image: BE, url: 'back' },
+  { key: 'FE', label: '프론트', image: FE, url: 'front' },
   { key: 'PM', label: '기획', image: PM, url: 'pm' },
   { key: '', label: '전체', image: ENTIRE, url: 'entire' },
 ];
@@ -23,8 +23,10 @@ const PartBoard = () => {
     useDraggable(scrollerRef);
 
   return (
-    <S.CardContainer>
-      <S.PartTitleText>파트 게시판</S.PartTitleText>
+    <S.NoticePreviewContainer>
+      <S.CardContainer>
+        <S.PartTitleText>파트 게시판</S.PartTitleText>
+      </S.CardContainer>
       <S.ScrollContainer
         ref={scrollerRef}
         onMouseDown={onMouseDown}
@@ -44,7 +46,7 @@ const PartBoard = () => {
           ))}
         </S.PartList>
       </S.ScrollContainer>
-    </S.CardContainer>
+    </S.NoticePreviewContainer>
   );
 };
 
