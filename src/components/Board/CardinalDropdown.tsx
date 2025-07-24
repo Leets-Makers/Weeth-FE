@@ -33,7 +33,7 @@ const DropdownButton = styled.div<{ $hasValue: boolean }>`
 
 const DropdownList = styled.div`
   position: absolute;
-  width: 67px;
+  width: 144px;
   max-height: 190px;
   top: 100%;
   margin-top: 5px;
