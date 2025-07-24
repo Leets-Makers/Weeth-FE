@@ -2,8 +2,8 @@ import { useDraggable } from '@/hooks/useDraggable';
 import * as S from '@/styles/board/Board.styled';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Vector from '@/assets/images/ic_vector.svg';
-import FileIcon from '@/assets/images/ic_file.svg';
+import Vector from '@/assets/images/ic_vector.svg?react';
+import FileIcon from '@/assets/images/ic_file.svg?react';
 import Part from '@/components/Board/EduMaterial/Part';
 
 interface Notice {
@@ -49,7 +49,7 @@ const SlideEdu = ({ error, recentNotices }: SlideNoticeProps) => {
             onClick={(e) => handleNoticeCard(e, notice.id)}
           >
             <S.EduPart>
-              <Part part="FE" />
+              <Part part="ALL" />
               <Part part="BE" />
             </S.EduPart>
             <S.EduCardTitle>{notice.title}</S.EduCardTitle>
@@ -57,15 +57,11 @@ const SlideEdu = ({ error, recentNotices }: SlideNoticeProps) => {
               <S.ReadMoreText>
                 <S.ReadMoreText>
                   00/00 |
-                  <img
-                    src={FileIcon}
-                    alt="파일 아이콘"
-                    style={{ width: 12, height: 12 }}
-                  />
+                  <FileIcon />
                 </S.ReadMoreText>
               </S.ReadMoreText>
               <S.CommentContainer>
-                <S.ImgContainer src={Vector} alt="댓글 아이콘" />
+                <Vector />
                 <S.CommentsText>3</S.CommentsText>
               </S.CommentContainer>
             </S.NoticeBottomRow>
