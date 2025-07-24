@@ -37,6 +37,7 @@ export const TabText = styled.div`
 export const Underline = styled.div`
   height: 2px;
   background-color: ${theme.color.main};
+  margin-bottom: -2px;
 `;
 
 export const InformationContainer = styled.div`
