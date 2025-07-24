@@ -23,8 +23,10 @@ const PartBoard = () => {
     useDraggable(scrollerRef);
 
   return (
-    <S.CardContainer>
-      <S.PartTitleText>파트 게시판</S.PartTitleText>
+    <S.NoticePreviewContainer>
+      <S.CardContainer>
+        <S.PartTitleText>파트 게시판</S.PartTitleText>
+      </S.CardContainer>
       <S.ScrollContainer
         ref={scrollerRef}
         onMouseDown={onMouseDown}
@@ -44,7 +46,7 @@ const PartBoard = () => {
           ))}
         </S.PartList>
       </S.ScrollContainer>
-    </S.CardContainer>
+    </S.NoticePreviewContainer>
   );
 };
 
