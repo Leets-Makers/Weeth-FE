@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import open from '@/assets/images/ic_opened_dropdown.svg';
 import close from '@/assets/images/ic_default_dropdown.svg';
-import useGetAllCardinals from '@/api/useGetCardinals';
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -34,12 +33,15 @@ const DropdownButton = styled.div<{ $hasValue: boolean }>`
 const DropdownList = styled.div`
   position: absolute;
   width: 144px;
-  max-height: 290px;
+  max-height: 190px;
   top: 100%;
-  margin-top: 5px;
+  margin-top: 4px;
   z-index: 1000;
   overflow-y: auto;
   border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: ${theme.color.gray[20]};
+  padding: 5px 0px;
 `;
 
 const DropdownItem = styled.div`
@@ -55,36 +57,32 @@ const DropdownItem = styled.div`
 `;
 
 const WeekDropdown = ({
-  origValue,
-  editValue,
-  isMember,
+  origWeek,
+  editWeek,
+  isEntire,
 }: {
-  origValue: number | null;
-  editValue: (value: number | null) => void;
-  isMember?: boolean;
+  origWeek: number | null;
+  editWeek: (value: number | null) => void;
+  isEntire?: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<number | null>(origValue);
+  const [selectedWeek, setSelectedWeek] = useState<number | null>(origWeek);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { allCardinals } = useGetAllCardinals();
 
-  const options: { value: number | null; label: string }[] =
-    allCardinals
-      ?.map(({ cardinalNumber }) => ({
-        value: cardinalNumber,
-        label: `${cardinalNumber}주차`,
-      }))
-      .reverse() || [];
-
-  if (isMember === true) options.unshift({ value: null, label: '전체' });
-
+  const options: { value: number | null; label: string }[] = [
+    ...(isEntire ? [{ value: null, label: '전체' }] : []),
+    ...Array.from({ length: 10 }, (_, i) => ({
+      value: i + 1,
+      label: `${i + 1}주차`,
+    })),
+  ];
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
   const handleSelect = (value: number | null) => {
-    setSelectedValue(value);
-    editValue(value);
+    setSelectedWeek(value);
+    editWeek(value);
     setIsOpen(false);
   };
 
@@ -102,13 +100,13 @@ const WeekDropdown = ({
   }, []);
 
   useEffect(() => {
-    setSelectedValue(origValue);
-  }, [origValue]);
+    setSelectedWeek(origWeek);
+  }, [origWeek]);
 
   return (
     <DropdownContainer ref={dropdownRef}>
-      <DropdownButton onClick={handleToggle} $hasValue={!!selectedValue}>
-        {selectedValue ? `${selectedValue}주차` : '주차 수'}
+      <DropdownButton onClick={handleToggle} $hasValue={!!selectedWeek}>
+        {selectedWeek ? `${selectedWeek}주차` : '주차 수'}
         {isOpen ? (
           <img src={open} alt="open" />
         ) : (
