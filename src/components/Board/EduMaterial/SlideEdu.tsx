@@ -16,6 +16,7 @@ interface SlideNoticeProps {
   error: string | null;
   recentNotices: Notice[];
 }
+
 // 아직 교육 자료 API가 없어서 임의로 공지사항과 연결해둠
 const SlideEdu = ({ error, recentNotices }: SlideNoticeProps) => {
   const navigate = useNavigate();
@@ -54,12 +55,10 @@ const SlideEdu = ({ error, recentNotices }: SlideNoticeProps) => {
             </S.EduPart>
             <S.EduCardTitle>{notice.title}</S.EduCardTitle>
             <S.NoticeBottomRow>
-              <S.ReadMoreText>
-                <S.ReadMoreText>
-                  00/00 |
-                  <FileIcon />
-                </S.ReadMoreText>
-              </S.ReadMoreText>
+              <S.EduDateContainer>
+                00/00 |
+                <FileIcon />
+              </S.EduDateContainer>
               <S.CommentContainer>
                 <Vector />
                 <S.CommentsText>3</S.CommentsText>
