@@ -49,14 +49,16 @@ export const StudyTag = styled.div<{ refresh?: boolean; selected?: boolean }>`
 export const ExpandableButton = styled.div<{ expanded: boolean }>`
   width: 40px;
   height: 40px;
-  background-color: ${({ expanded }) =>
-    expanded ? `${theme.color.main}` : `${theme.color.gray[18]}`};
+  background-color: ${theme.color.gray[18]};
   border-radius: 10px;
+  border: ${({ expanded }) =>
+    expanded ? `1px solid ${theme.color.gray[65]}` : `none`};
   box-sizing: border-box;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 
 const ExpandableTagList = () => {
@@ -110,9 +112,9 @@ const ExpandableTagList = () => {
       </ScrollContainer>
       <ExpandableButton onClick={handleToggle} expanded={isOpen}>
         {isOpen ? (
-          <img src={open} alt="open" />
-        ) : (
           <img src={close} alt="close" />
+        ) : (
+          <img src={open} alt="open" />
         )}
       </ExpandableButton>
     </Container>
