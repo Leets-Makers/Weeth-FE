@@ -36,10 +36,13 @@ const DropdownList = styled.div`
   width: 144px;
   max-height: 190px;
   top: 100%;
-  margin-top: 5px;
+  margin-top: 4px;
   z-index: 1000;
   overflow-y: auto;
   border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: ${theme.color.gray[20]};
+  padding: 5px 0px;
 `;
 
 const DropdownItem = styled.div`
