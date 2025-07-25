@@ -41,7 +41,13 @@ import BoardSearch from '@/pages/BoardSearch';
 import BoardFront from '@/pages/BoardFront';
 import BoardBack from '@/pages/BoardBack';
 import BoardDesign from '@/pages/BoardDesign';
+import BoardPM from '@/pages/BoardPm';
 import BoardEntire from '@/pages/BoardEntire';
+import FrontStudy from '@/pages/board/post/FrontStudy';
+import BackStudy from '@/pages/board/post/BackStudy';
+import DesignStudy from '@/pages/board/post/DesignStudy';
+import EntireStudy from '@/pages/board/post/EntireStudy';
+import PmStudy from '@/pages/board/post/PmStudy';
 
 import PrivateRoute from '@/components/common/PrivateRoute';
 
@@ -86,7 +92,13 @@ const App = () => {
         <Route path="/board/front" element={<BoardFront />} />
         <Route path="/board/back" element={<BoardBack />} />
         <Route path="/board/design" element={<BoardDesign />} />
+        <Route path="/board/pm" element={<BoardPM />} />
         <Route path="/board/entire" element={<BoardEntire />} />
+        <Route path="/board/front/:postId" element={<FrontStudy />} />
+        <Route path="/board/back/:postId" element={<BackStudy />} />
+        <Route path="/board/design/:postId" element={<DesignStudy />} />
+        <Route path="/board/pm/:postId" element={<PmStudy />} />
+        <Route path="/board/entire/:postId" element={<EntireStudy />} />
 
         <Route
           path="/admin"
