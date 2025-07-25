@@ -44,6 +44,7 @@ import MenuButton from '@/components/Header/MenuButton';
 import PlusButton from '@/components/Header/PlusButton';
 import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
+import PostButton from '@/components/Header/PostButton';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
@@ -56,6 +57,7 @@ interface HeaderProps {
     | 'EDIT'
     | 'SEARCH'
     | 'WRITING'
+    | 'POST'
     | 'none';
   isComplete?: boolean;
   isAccessible: boolean;
@@ -103,6 +105,10 @@ const Header = ({
 
       {RightButtonType === 'WRITING' && onClickRightButton && (
         <WritingButton onClick={onClickRightButton} text="글쓰기" />
+      )}
+
+      {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
+        <PostButton onClick={onClickRightButton} text="게시하기" />
       )}
 
       {RightButtonType === 'MENU' && onClickRightButton && isAccessible && (
