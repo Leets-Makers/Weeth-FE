@@ -2,6 +2,7 @@ import useGetBoardInfo from '@/api/useGetBoardInfo';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import ExpandableTagList from '@/components/Board/ExpandableTagList';
 import PartBoardTap from '@/components/Board/PartBoardTap';
+import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import WeekDropdown from '@/components/Board/WeekDropdown';
 import Header from '@/components/Header/Header';
@@ -28,6 +29,7 @@ const BoardFront = () => {
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(
     Number(cardinal) || null,
   );
+  const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
   const [posts, setPosts] = useState<StudyLog[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
@@ -40,7 +42,7 @@ const BoardFront = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRightButton = () => {
-    navigate('/board/post');
+    navigate('/board/front/:postId');
   };
 
   const fetchData = async () => {
@@ -89,7 +91,7 @@ const BoardFront = () => {
         RightButtonType="WRITING"
         onClickRightButton={handleRightButton}
       >
-        프론트엔드
+        FE
       </Header>
       <PartBoardTap />
       <S.InformationContainer>
@@ -100,13 +102,14 @@ const BoardFront = () => {
             isMember
           />
           <WeekDropdown
-            origValue={selectedCardinal}
-            editValue={setSelectedCardinal}
-            isMember
+            origWeek={selectedWeek}
+            editWeek={setSelectedWeek}
+            isEntire
           />
         </S.DropdownContainer>
         <ExpandableTagList />
       </S.InformationContainer>
+      <StudyBoardSearch />
       <S.PostContainer>
         <S.TotalPostNumber>게시글 8개</S.TotalPostNumber>
         {posts.map((post) => (

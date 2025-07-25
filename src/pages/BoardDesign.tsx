@@ -28,6 +28,7 @@ const BoardDesign = () => {
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(
     Number(cardinal) || null,
   );
+  const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
   const [posts, setPosts] = useState<StudyLog[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
@@ -40,7 +41,7 @@ const BoardDesign = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRightButton = () => {
-    navigate('/board/post');
+    navigate('/board/design/:postId');
   };
 
   const fetchData = async () => {
@@ -100,9 +101,9 @@ const BoardDesign = () => {
             isMember
           />
           <WeekDropdown
-            origValue={selectedCardinal}
-            editValue={setSelectedCardinal}
-            isMember
+            origWeek={selectedWeek}
+            editWeek={setSelectedWeek}
+            isEntire
           />
         </S.DropdownContainer>
         <ExpandableTagList />

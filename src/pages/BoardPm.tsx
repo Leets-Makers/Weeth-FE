@@ -2,6 +2,7 @@ import useGetBoardInfo from '@/api/useGetBoardInfo';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import ExpandableTagList from '@/components/Board/ExpandableTagList';
 import PartBoardTap from '@/components/Board/PartBoardTap';
+import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import WeekDropdown from '@/components/Board/WeekDropdown';
 import Header from '@/components/Header/Header';
@@ -22,7 +23,7 @@ export interface StudyLog {
   role: string;
 }
 
-const BoardEntire = () => {
+const BoardPM = () => {
   const [searchParams] = useSearchParams();
   const cardinal = searchParams.get('cardinal');
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(
@@ -41,7 +42,7 @@ const BoardEntire = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const handleRightButton = () => {
-    navigate('/board/entire/:postId');
+    navigate('/board/pm/:postId');
   };
 
   const fetchData = async () => {
@@ -90,7 +91,7 @@ const BoardEntire = () => {
         RightButtonType="WRITING"
         onClickRightButton={handleRightButton}
       >
-        전체
+        PM
       </Header>
       <PartBoardTap />
       <S.InformationContainer>
@@ -108,6 +109,7 @@ const BoardEntire = () => {
         </S.DropdownContainer>
         <ExpandableTagList />
       </S.InformationContainer>
+      <StudyBoardSearch />
       <S.PostContainer>
         <S.TotalPostNumber>게시글 8개</S.TotalPostNumber>
         {posts.map((post) => (
@@ -140,4 +142,4 @@ const BoardEntire = () => {
   );
 };
 
-export default BoardEntire;
+export default BoardPM;
