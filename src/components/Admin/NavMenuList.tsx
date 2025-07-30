@@ -72,7 +72,7 @@ const NavMenuList: React.FC = () => {
       id: 'service',
       icon: <ArrowIcon />,
       label: '서비스로 이동',
-      path: 'https://weeth.site',
+      path: 'https://weeth.kr',
     },
     {
       id: 'manual',

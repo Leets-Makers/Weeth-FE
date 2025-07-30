@@ -136,6 +136,15 @@ export const ReadMoreText = styled.p`
   color: rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
+`;
+
+export const EduDateContainer = styled.p`
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
   gap: 0.3125rem;
 `;
 
@@ -251,4 +260,23 @@ export const PostingButtonContainer = styled.div`
   z-index: 10;
   display: flex;
   justify-content: center;
+`;
+
+export const PostListContainer = styled.div`
+  margin: 0 0.46875rem;
+`;
+
+export const PostListItemContainer = styled.div`
+  padding: 0 0.3125rem;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${theme.color.gray[20]};
+  }
+`;
+
+export const Line = styled.div`
+  border: 1px solid;
+  margin: 0 0.3125rem;
+  color: ${(props) => props.theme.color.gray[18]};
 `;

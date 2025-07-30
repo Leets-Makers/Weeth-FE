@@ -9,11 +9,11 @@ import { useRef } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
 
 const parts = [
+  { key: '', label: '전체', image: ENTIRE, url: 'entire' },
   { key: 'D', label: '디자인', image: D, url: 'design' },
   { key: 'BE', label: '백엔드', image: BE, url: 'back' },
   { key: 'FE', label: '프론트', image: FE, url: 'front' },
   { key: 'PM', label: '기획', image: PM, url: 'pm' },
-  { key: '', label: '전체', image: ENTIRE, url: 'entire' },
 ];
 
 const PartBoard = () => {

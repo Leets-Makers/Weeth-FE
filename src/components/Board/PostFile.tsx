@@ -19,8 +19,10 @@ const PostFile = ({
 
   return (
     <S.Container>
-      <S.FolderIcon src={FolderImage} alt="파일 폴더 아이콘" />
-      <S.FileName>{cuttedFileName}</S.FileName>
+      <S.FileContainer>
+        <S.FolderIcon src={FolderImage} alt="파일 폴더 아이콘" />
+        <S.FileName>{cuttedFileName}</S.FileName>
+      </S.FileContainer>
       {isDownload ? (
         <S.RightIcon
           src={DownloadImage}
