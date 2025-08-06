@@ -1,5 +1,4 @@
 import theme from '@/styles/theme';
-import { useState } from 'react';
 import styled from 'styled-components';
 
 const TabContainer = styled.div`
@@ -38,8 +37,12 @@ const Underline = styled.div`
   bottom: -2px;
 `;
 
-const MarkdownTap = () => {
-  const [activeTab, setActiveTab] = useState<'write' | 'preview'>('write');
+interface MarkdownTapProps {
+  activeTab: 'write' | 'preview';
+  setActiveTab: (tab: 'write' | 'preview') => void;
+}
+
+const MarkdownTap = ({ activeTab, setActiveTab }: MarkdownTapProps) => {
   return (
     <TabContainer>
       <TabTextContainer onClick={() => setActiveTab('write')}>
