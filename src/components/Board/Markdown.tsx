@@ -1,123 +1,83 @@
-import theme from '@/styles/theme';
-import styled from 'styled-components';
 import AddFile from '@/assets/images/ic_add_folder.svg?react';
-import Heading from '@/assets/images/ic_markdown_heading.svg?react';
-import Bold from '@/assets/images/ic_markdown_bold.svg?react';
-import Italic from '@/assets/images/ic_markdown_italic.svg?react';
-import Align from '@/assets/images/ic_markdown_align.svg?react';
-import Code from '@/assets/images/ic_markdown_code.svg?react';
-import LinkIcon from '@/assets/images/ic_markdown_link.svg?react';
-import OrderedList from '@/assets/images/ic_markdown_orderedList.svg?react';
-import UnorderedList from '@/assets/images/ic_markdown_unorderedList.svg?react';
-import TaskList from '@/assets/images/ic_markdown_taskList.svg?react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
-import MarkdownTap from './MarkdownTap';
-import ContentPost from './ContentPost';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  background-color: ${theme.color.gray[18]};
-  width: 345px;
-  height: 403.12px;
-  box-sizing: border-box;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const MarkdownTapContainer = styled.div`
-  display: flex;
-  height: 44px;
-  box-sizing: border-box;
-  overflow-x: auto;
-  cursor: grab;
-  border-bottom: 1px solid ${theme.color.gray[30]};
-  border-radius: 10px 10px 0 0;
-  padding: 2px 8px;
-  display: flex;
-  align-items: center;
-  background-color: #3567c0;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const StyledImg = styled.div`
-  display: flex;
-  width: 40px;
-  height: 40px;
-  box-sizing: border-box;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 5px;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #0000001a;
-  }
-`;
-
-const VerticalDivider = styled.div`
-  width: 1px;
-  height: 20px;
-  background-color: rgba(255, 255, 255, 0.2);
-  flex-shrink: 0;
-  margin: 0 5px;
-`;
+import useMarkdownEditor from '@/hooks/useMarkdownEditor';
+import ContentPost from '@/components/Board/ContentPost';
+import MarkdownTap from '@/components/Board/MarkdownTap';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
+import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
+import markdownActions from '@/constants/markdownAction';
+import * as S from '@/styles/board/Markdown.styled';
 
 const Markdown = () => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
 
+  const [markdown, setMarkdown] = useState('');
+  const { textareaRef, insertText } = useMarkdownEditor(markdown, setMarkdown);
+  const [activeTab, setActiveTab] = useState<'write' | 'preview'>('write');
+
   return (
-    <Container>
-      <MarkdownTapContainer
+    <S.Container>
+      <S.MarkdownTapContainer
         ref={scrollerRef}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
-        <StyledImg>
+        <S.StyledImg aria-label="파일 추가">
           <AddFile />
-        </StyledImg>
-        <VerticalDivider />
-        <StyledImg>
-          <Heading />
-        </StyledImg>
-        <StyledImg>
-          <Bold />
-        </StyledImg>
-        <StyledImg>
-          <Italic />
-        </StyledImg>
-        <StyledImg>
-          <Align />
-        </StyledImg>
-        <StyledImg>
-          <Code />
-        </StyledImg>
-        <StyledImg>
-          <LinkIcon />
-        </StyledImg>
-        <VerticalDivider />
-        <StyledImg>
-          <OrderedList />
-        </StyledImg>
-        <StyledImg>
-          <UnorderedList />
-        </StyledImg>
-        <StyledImg>
-          <TaskList />
-        </StyledImg>
-      </MarkdownTapContainer>
-      <MarkdownTap />
-      <ContentPost />
-    </Container>
+        </S.StyledImg>
+        <S.VerticalDivider />
+        <S.StyledImg aria-label="파일 추가">
+          <AddFile />
+        </S.StyledImg>
+        {markdownActions.map((action) => {
+          if (action === 'divider') return <S.VerticalDivider key="divider" />;
+
+          const { icon: Icon, label, insert } = action;
+          const [prefix, suffix] = insert;
+
+          return (
+            <S.StyledImg
+              key={label}
+              aria-label={label}
+              onClick={() => insertText(prefix, suffix)}
+            >
+              <Icon />
+            </S.StyledImg>
+          );
+        })}
+      </S.MarkdownTapContainer>
+      <MarkdownTap activeTab={activeTab} setActiveTab={setActiveTab} />
+      {activeTab === 'write' ? (
+        <ContentPost
+          textareaRef={textareaRef}
+          value={markdown}
+          onChange={setMarkdown}
+        />
+      ) : (
+        <S.PreviewContainer>
+          <S.PreviewWrapper>
+            <ReactMarkdown
+              rehypePlugins={[rehypeRaw]}
+              remarkPlugins={[remarkBreaks, remarkGfm]}
+              components={{
+                a: MarkdownLink,
+                input: CustomCheckbox,
+              }}
+            >
+              {markdown || '미리볼 내용이 없습니다.'}
+            </ReactMarkdown>
+          </S.PreviewWrapper>
+        </S.PreviewContainer>
+      )}
+    </S.Container>
   );
 };
 
