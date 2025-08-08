@@ -17,8 +17,8 @@ const Container = styled.div`
   color: ${theme.color.gray[65]};
 `;
 
-const WeekTag = () => {
-  return <Container>1주차</Container>;
+const WeekTag = ({ week }: { week: number }) => {
+  return <Container>{week}주차</Container>;
 };
 
 export default WeekTag;
