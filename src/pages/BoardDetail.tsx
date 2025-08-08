@@ -47,10 +47,11 @@ const TextButton = styled.div<{ $isLast?: boolean }>`
 `;
 
 const BoardDetail = () => {
-  const { postId } = useParams();
-  const url = new URL(window.location.href);
-  const pathArray = url.pathname.split('/');
-  const path = pathArray[1];
+  const { category, part, postId } = useParams<{
+    category: string;
+    part: string;
+    postId: string;
+  }>();
 
   // postId를 숫자로 변환
   const numericPostId = postId ? parseInt(postId, 10) : null;
@@ -65,9 +66,13 @@ const BoardDetail = () => {
   // 대댓글 작성시 부모 댓글 ID 상태
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
 
+  if (!part || !postId) {
+    return <div>잘못된 경로입니다.</div>;
+  }
+
   // refreshKey를 의존성으로 사용
   const { boardDetailInfo, error, loading } = useGetBoardDetail(
-    path,
+    part,
     numericPostId,
     refreshKey,
   );
@@ -91,7 +96,7 @@ const BoardDetail = () => {
 
   const confirmDelete = async () => {
     try {
-      await deletePost(numericPostId, path);
+      await deletePost(numericPostId, part);
       navigate('/board', { replace: true });
       setTimeout(() => {
         toastInfo('게시물이 삭제되었습니다');
@@ -124,6 +129,40 @@ const BoardDetail = () => {
   };
 
   const isMyPost = boardDetailInfo?.name === useGetUserName();
+
+  const getHeaderTitle = () => {
+    if (category === 'study') {
+      const studyMap: Record<string, string> = {
+        ALL: '전체 스터디',
+        PM: 'PM 스터디',
+        FE: 'FE 스터디',
+        BE: 'BE 스터디',
+        D: 'D 스터디',
+      };
+      return studyMap[part] || '스터디 게시판';
+    }
+
+    if (category === 'article') {
+      const articleMap: Record<string, string> = {
+        ALL: '전체 아티클',
+        PM: 'PM 아티클',
+        FE: 'FE 아티클',
+        BE: 'BE 아티클',
+        D: 'D 아티클',
+      };
+      return articleMap[part] || '아티클 게시판';
+    }
+
+    if (category === 'education') {
+      return '교육자료';
+    }
+
+    if (category === 'notices') {
+      return '공지사항';
+    }
+
+    return '게시판';
+  };
 
   if (error) return <div>오류: {error}</div>;
 
@@ -165,7 +204,7 @@ const BoardDetail = () => {
             setIsModalOpen(true);
           }}
         >
-          게시판
+          {getHeaderTitle()}
         </Header>
 
         {boardDetailInfo && (
@@ -174,7 +213,7 @@ const BoardDetail = () => {
             <PostCommentList
               comments={boardDetailInfo.comments}
               postId={boardDetailInfo.id}
-              path={path}
+              path={part}
               onCommentDelete={handleRefresh}
               onReply={handleReply}
               selectedComment={selectedComment}
