@@ -1,0 +1,175 @@
+import theme from '@/styles/theme';
+import styled from 'styled-components';
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: ${theme.color.gray[18]};
+  width: 345px;
+  height: 403.12px;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+`;
+
+export const MarkdownTapContainer = styled.div`
+  display: flex;
+  height: 44px;
+  box-sizing: border-box;
+  overflow-x: auto;
+  cursor: grab;
+  border-bottom: 1px solid ${theme.color.gray[30]};
+  border-radius: 10px 10px 0 0;
+  padding: 2px 8px;
+  display: flex;
+  align-items: center;
+  background-color: #3567c0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const StyledImg = styled.div`
+  display: flex;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #0000001a;
+  }
+`;
+
+export const VerticalDivider = styled.div`
+  width: 1px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  margin: 0 5px;
+`;
+
+export const PreviewContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+export const PreviewWrapper = styled.div`
+  padding: 15px 5px 0px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 264.12px;
+  color: ${theme.color.gray[100]};
+  background-color: ${theme.color.gray[18]};
+  border: none;
+  resize: none;
+  font-size: 16px;
+  font-family: ${theme.font.regular};
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  & h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.4;
+    padding: 0;
+  }
+
+  & code {
+    background-color: ${theme.color.gray[30]};
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  & pre {
+    background-color: ${theme.color.gray[30]};
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  & a {
+    color: ${theme.color.main};
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  & li {
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  & ul,
+  & ol {
+    margin: 0;
+    padding-left: 10px;
+    line-height: 1.4;
+    list-style-position: inside;
+  }
+
+  & p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+  }
+
+  li:has(p > input[type='checkbox']) {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 0;
+  }
+
+  & li:has(> input[type='checkbox']) > input[type='checkbox'] {
+    flex-shrink: 0;
+    transform: scale(0.9);
+    margin: 0;
+  }
+
+  li p {
+    display: inline;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+  }
+
+  & blockquote {
+    margin: 0;
+    padding-left: 8px;
+    border-left: 3px solid ${theme.color.main};
+    color: ${theme.color.gray[80]};
+    font-style: italic;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${theme.color.gray[65]};
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: ${theme.color.gray[65]} transparent;
+`;
