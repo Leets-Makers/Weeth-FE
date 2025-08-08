@@ -44,16 +44,28 @@ const useAutoList = (
         if (orderedMatch) {
           const indent = orderedMatch[1] || '';
           const currentNumber = parseInt(orderedMatch[2], 10);
-          insert += `${indent}${currentNumber + 1}. `;
-          handled = true;
+          const restText = orderedMatch[3] ?? '';
+
+          if (restText.trim() !== '') {
+            insert += `${indent}${currentNumber + 1}. `;
+            handled = true;
+          }
         } else if (taskMatch) {
           const indent = taskMatch[1] || '';
-          insert += `${indent}- [ ] `;
-          handled = true;
+          const restText = taskMatch[2] ?? '';
+
+          if (restText.trim() !== '') {
+            insert += `${indent}- [ ] `;
+            handled = true;
+          }
         } else if (unorderedMatch) {
           const indent = unorderedMatch[1] || '';
-          insert += `${indent}- `;
-          handled = true;
+          const restText = unorderedMatch[2] ?? '';
+
+          if (restText.trim() !== '') {
+            insert += `${indent}- `;
+            handled = true;
+          }
         }
       }
 
