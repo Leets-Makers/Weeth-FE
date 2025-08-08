@@ -7,35 +7,62 @@ import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useGetPartBoard from '@/api/useGetPartBoard';
 
 interface BoardPageTemplateProps {
-  part: 'front' | 'back' | 'design' | 'entire' | 'pm';
+  part: 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
   headerTitle: string;
-  navigateToPost: (id: number) => string;
 }
 
-const BoardPageTemplate = ({
-  part,
-  headerTitle,
-  navigateToPost,
-}: BoardPageTemplateProps) => {
+const BoardPageTemplate = ({ part, headerTitle }: BoardPageTemplateProps) => {
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
-  const url = new URL(window.location.href);
-  const pathArray = url.pathname.split('/');
-  const path = pathArray[1];
+  const [activeCategory, setActiveCategory] = useState<'StudyLog' | 'Article'>(
+    'StudyLog',
+  );
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const navigate = useNavigate();
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetPartBoard({
+      part,
+      category: activeCategory === 'StudyLog' ? 'StudyLog' : 'Article',
+      cardinalNumber: selectedCardinal || undefined,
+      week: selectedWeek || undefined,
+      studyName: selectedTag || undefined,
+      pageSize: 10,
+      pageNumber: 0,
+    });
+
+  const posts = data?.pages.flatMap((page) => page.content) ?? [];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (observerRef.current) observer.observe(observerRef.current);
+    return () => {
+      if (observerRef.current) observer.unobserve(observerRef.current);
+    };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const handleRightButton = () => {
-    navigate(`/board/${part}/write`);
+    navigate(`/board//${part}/write`);
   };
 
-  const { posts, observerRef, hasMore } = useInfiniteScroll({
-    path,
-  });
+  const handleDetail = (id: number) => {
+    const categoryPrefix = activeCategory === 'StudyLog' ? 'study' : 'article';
+    navigate(`/board/${categoryPrefix}/${part}/${id}`);
+  };
 
   return (
     <S.Container>
@@ -46,7 +73,10 @@ const BoardPageTemplate = ({
       >
         {headerTitle}
       </Header>
-      <PartBoardTap />
+      <PartBoardTap
+        activeTab={activeCategory}
+        onTabChange={setActiveCategory}
+      />
       <S.InformationContainer>
         <S.DropdownContainer>
           <CardinalDropdown
@@ -60,7 +90,10 @@ const BoardPageTemplate = ({
             isEntire
           />
         </S.DropdownContainer>
-        <ExpandableTagList />
+        <ExpandableTagList
+          selectedTag={selectedTag}
+          onSelectTag={setSelectedTag}
+        />
       </S.InformationContainer>
       <StudyBoardSearch />
       <S.PostContainer>
@@ -77,19 +110,24 @@ const BoardPageTemplate = ({
                 hasFile={post.hasFile}
                 position={post.position}
                 role={post.role}
-                onClick={() => navigate(navigateToPost(post.id))}
+                isNew={post.isNew}
+                studyName={post.studyName}
+                week={post.week}
+                onClick={() => handleDetail(post.id)}
               />
             </S.PostListItemContainer>
             <S.Line />
           </>
         ))}
-        {hasMore && (
+        {hasNextPage && (
           <div
             ref={observerRef}
             style={{ height: '20px', backgroundColor: 'transparent' }}
           />
         )}
-        {!hasMore && posts.length > 10 && <S.Text>마지막 게시물입니다.</S.Text>}
+        {!hasNextPage && posts.length > 10 && (
+          <S.Text>마지막 게시물입니다.</S.Text>
+        )}
       </S.PostContainer>
     </S.Container>
   );
