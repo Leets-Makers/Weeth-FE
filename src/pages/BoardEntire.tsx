@@ -1,11 +1,5 @@
 import BoardPageTemplate from '@/components/Board/BoardPageTemplate';
 
-const BoardEntire = () => (
-  <BoardPageTemplate
-    part="entire"
-    headerTitle="전체"
-    navigateToPost={(id) => `/board/entire/${id}`}
-  />
-);
+const BoardEntire = () => <BoardPageTemplate part="ALL" headerTitle="ALL" />;
 
 export default BoardEntire;

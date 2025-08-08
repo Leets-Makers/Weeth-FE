@@ -1,11 +1,5 @@
 import BoardPageTemplate from '@/components/Board/BoardPageTemplate';
 
-const BoardBack = () => (
-  <BoardPageTemplate
-    part="back"
-    headerTitle="백엔드"
-    navigateToPost={(id) => `/board/back/${id}`}
-  />
-);
+const BoardBack = () => <BoardPageTemplate part="BE" headerTitle="BE" />;
 
 export default BoardBack;
