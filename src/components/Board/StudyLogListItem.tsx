@@ -16,6 +16,9 @@ type ItemProps = {
   hasFile: boolean;
   position: string;
   role: string;
+  isNew: boolean;
+  studyName: string;
+  week: number;
 };
 
 const truncateText = (text: string, maxLength: number) => {
@@ -32,6 +35,9 @@ const StudyLogListItem = ({
   hasFile,
   position,
   role,
+  isNew,
+  studyName,
+  week,
 }: ItemProps) => {
   return (
     <S.Container onClick={onClick} style={{ cursor: 'pointer' }}>
@@ -39,13 +45,13 @@ const StudyLogListItem = ({
         <S.PostContentContainer>
           <S.TitleContainer>
             <S.TitleText>{title}</S.TitleText>
-            <NewIcon />
+            {isNew && <NewIcon />}
           </S.TitleContainer>
           <S.ContentText>{truncateText(content, 78)}</S.ContentText>
         </S.PostContentContainer>
         <S.StudyTagContainer>
-          <StudyTag />
-          <WeekTag />
+          <StudyTag studyName={studyName} />
+          <WeekTag week={week} />
         </S.StudyTagContainer>
       </S.PostTopSection>
 
