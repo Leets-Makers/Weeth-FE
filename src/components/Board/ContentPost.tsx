@@ -1,23 +1,24 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import PostFile from './PostFile';
+import { RefObject } from 'react';
+import useAutoList from '@/hooks/useAutoList';
+// import PostFile from '@/components/Board/PostFile';
 // import FolderImage from '@/assets/images/ic_folder.svg?react';
 // import CloseImage from '@/assets/images/ic_red_close.svg';
 
 const Container = styled.div`
-  position: relative;
+  // position: relative;
   display: flex;
   flex-direction: column;
-  //   height: 264.12px;
   gap: 10px;
 `;
 
 const ContentWrapper = styled.textarea`
+  all: unset;
   padding: 15px 5px 0px 10px;
   width: 100%;
   box-sizing: border-box;
-  height: auto;
-  min-height: 264.12px;
+  height: 264.12px;
   color: ${theme.color.gray[100]};
   background-color: ${theme.color.gray[18]};
   border: none;
@@ -76,12 +77,36 @@ const FileContainer = styled.div`
 //   font-family: ${theme.font.regular};
 // `;
 
-const ContentPost = () => {
+interface ContentPostProps {
+  textareaRef: RefObject<HTMLTextAreaElement>;
+  value: string;
+  onChange: (newValue: string) => void;
+}
+
+const ContentPost = ({ textareaRef, value, onChange }: ContentPostProps) => {
+  const { handleKeyDown, isComposingRef } = useAutoList(
+    textareaRef,
+    value,
+    onChange,
+  );
+
   return (
     <Container>
-      <ContentWrapper placeholder="내용을 입력하세요" />
+      <ContentWrapper
+        ref={textareaRef}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="내용을 입력하세요"
+        onKeyDown={handleKeyDown}
+        onCompositionStart={() => {
+          isComposingRef.current = true;
+        }}
+        onCompositionEnd={() => {
+          isComposingRef.current = false;
+        }}
+      />
       <FileContainer>
-        <PostFile fileName="파일명.pdf" isDownload={false} onClick={() => {}} />
+        {/* <PostFile fileName="파일명.pdf" isDownload={false} onClick={() => {}} /> */}
       </FileContainer>
     </Container>
   );
