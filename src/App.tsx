@@ -86,19 +86,22 @@ const App = () => {
         <Route path="/notice/:postId/edit" element={<BoardNoticeEdit />} />
 
         <Route path="/board" element={<Board />} />
-        <Route path="/board/:postId" element={<BoardDetail />} />
+        <Route
+          path="/board/:category/:part/:postId"
+          element={<BoardDetail />}
+        />
         <Route path="/board/:postId/edit" element={<BoardNoticeEdit />} />
         <Route path="/board/search" element={<BoardSearch />} />
-        <Route path="/board/front" element={<BoardFront />} />
-        <Route path="/board/back" element={<BoardBack />} />
-        <Route path="/board/design" element={<BoardDesign />} />
-        <Route path="/board/pm" element={<BoardPM />} />
-        <Route path="/board/entire" element={<BoardEntire />} />
-        <Route path="/board/front/:postId" element={<FrontStudy />} />
-        <Route path="/board/back/:postId" element={<BackStudy />} />
-        <Route path="/board/design/:postId" element={<DesignStudy />} />
-        <Route path="/board/pm/:postId" element={<PmStudy />} />
-        <Route path="/board/entire/:postId" element={<EntireStudy />} />
+        <Route path="/board/FE" element={<BoardFront />} />
+        <Route path="/board/BE" element={<BoardBack />} />
+        <Route path="/board/D" element={<BoardDesign />} />
+        <Route path="/board/PM" element={<BoardPM />} />
+        <Route path="/board/ALL" element={<BoardEntire />} />
+        <Route path="/board/FE/write" element={<FrontStudy />} />
+        <Route path="/board/BE/write" element={<BackStudy />} />
+        <Route path="/board/D/write" element={<DesignStudy />} />
+        <Route path="/board/PM/write" element={<PmStudy />} />
+        <Route path="/board/ALL/write" element={<EntireStudy />} />
 
         <Route
           path="/admin"
