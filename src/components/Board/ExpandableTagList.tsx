@@ -61,7 +61,12 @@ export const ExpandableButton = styled.div<{ expanded: boolean }>`
   cursor: pointer;
 `;
 
-const ExpandableTagList = () => {
+interface StudyTagProps {
+  selectedTag: string | null;
+  onSelectTag: (tag: string) => void;
+}
+
+const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
   const tags = [
     'React',
     '데이터분석',
@@ -71,7 +76,6 @@ const ExpandableTagList = () => {
     '스프링',
   ];
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
@@ -104,7 +108,13 @@ const ExpandableTagList = () => {
           <StudyTag
             key={tag}
             selected={selectedTag === tag}
-            onClick={() => setSelectedTag(tag)}
+            onClick={() => {
+              if (selectedTag === tag) {
+                onSelectTag('');
+              } else {
+                onSelectTag(tag);
+              }
+            }}
           >
             {tag}
           </StudyTag>
