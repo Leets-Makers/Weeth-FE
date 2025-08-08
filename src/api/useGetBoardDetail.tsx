@@ -36,14 +36,14 @@ const getBoardDetail = async (path: string, id: number) => {
 };
 
 export const useGetBoardDetail = (
-  path: string,
+  part: string,
   id: number,
   refreshKey?: number,
 ) => {
   const [boardDetailInfo, setBoardDetail] = useState<BoardDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const type = path === 'board' ? 'board' : 'notices';
+  const type = part === 'notices' ? 'notices' : 'board';
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
@@ -71,7 +71,7 @@ export const useGetBoardDetail = (
     };
 
     fetchBoardDetail();
-  }, [path, id, refreshKey]);
+  }, [part, id, refreshKey]);
 
   return { boardDetailInfo, error, loading };
 };
