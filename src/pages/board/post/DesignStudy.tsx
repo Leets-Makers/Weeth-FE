@@ -20,7 +20,7 @@ const DesignStudy = () => {
 
   return (
     <StudyWriteTemplate
-      headerTitle="DE 스터디"
+      headerTitle="D 스터디"
       title={title}
       setTitle={setTitle}
       selectedCardinal={selectedCardinal}
