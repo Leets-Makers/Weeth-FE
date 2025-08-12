@@ -97,7 +97,7 @@ const BoardDetail = () => {
   const confirmDelete = async () => {
     try {
       await deletePost(numericPostId, part);
-      navigate('/board', { replace: true });
+      navigate(`/board/${category}/${part}`, { replace: true });
       setTimeout(() => {
         toastInfo('게시물이 삭제되었습니다');
       }, 500);
