@@ -30,19 +30,23 @@ import AdminPenalty from '@/pages/admin/AdminPenalty';
 
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import Notice from '@/pages/Notice';
-import NoticeDetail from '@/pages/NoticeDetail';
+// import Notice from '@/pages/Notice';
+import NoticeDetail from '@/pages/board/notices/NoticeDetail';
 import BoardDetail from '@/pages/BoardDetail';
 import Board from '@/pages/Board';
 import BoardNoticePost from '@/pages/BoardNoticePost';
 import BoardNoticeEdit from '@/pages/BoardNoticeEdit';
 import { CustomToastContainer } from '@/components/common/ToastMessage';
 import BoardSearch from '@/pages/BoardSearch';
-import BoardFront from '@/pages/BoardFront';
-import BoardBack from '@/pages/BoardBack';
-import BoardDesign from '@/pages/BoardDesign';
-import BoardPM from '@/pages/BoardPm';
-import BoardEntire from '@/pages/BoardEntire';
+import PartBoard from '@/pages/board/part/PartBoard';
+
+import EduPost from '@/pages/board/education/EduPost';
+import EducationBoard from '@/pages/board/education/EducationBoard';
+
+import NoticePost from '@/pages/board/notices/NoticePost';
+import NoticeEdit from '@/pages/board/notices/NoticeEdit';
+
+import BoardNotice from '@/pages/board/notices/BoardNotice';
 import FrontStudy from '@/pages/board/post/FrontStudy';
 import BackStudy from '@/pages/board/post/BackStudy';
 import DesignStudy from '@/pages/board/post/DesignStudy';
@@ -50,6 +54,7 @@ import EntireStudy from '@/pages/board/post/EntireStudy';
 import PmStudy from '@/pages/board/post/PmStudy';
 
 import PrivateRoute from '@/components/common/PrivateRoute';
+import PartEdit from './pages/board/part/PartEdit';
 
 const App = () => {
   return (
@@ -81,9 +86,10 @@ const App = () => {
 
         <Route path="/:type/post" element={<BoardNoticePost />} />
 
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/notice/:postId" element={<NoticeDetail />} />
-        <Route path="/notice/:postId/edit" element={<BoardNoticeEdit />} />
+        <Route path="/board/notices" element={<BoardNotice />} />
+        <Route path="/board/notices/post" element={<NoticePost />} />
+        <Route path="/board/notices/:postId" element={<NoticeDetail />} />
+        <Route path="/board/notices/:postId/edit" element={<NoticeEdit />} />
 
         <Route path="/board" element={<Board />} />
         <Route
@@ -92,16 +98,15 @@ const App = () => {
         />
         <Route path="/board/:postId/edit" element={<BoardNoticeEdit />} />
         <Route path="/board/search" element={<BoardSearch />} />
-        <Route path="/board/FE" element={<BoardFront />} />
-        <Route path="/board/BE" element={<BoardBack />} />
-        <Route path="/board/D" element={<BoardDesign />} />
-        <Route path="/board/PM" element={<BoardPM />} />
-        <Route path="/board/ALL" element={<BoardEntire />} />
-        <Route path="/board/FE/write" element={<FrontStudy />} />
-        <Route path="/board/BE/write" element={<BackStudy />} />
-        <Route path="/board/D/write" element={<DesignStudy />} />
-        <Route path="/board/PM/write" element={<PmStudy />} />
-        <Route path="/board/ALL/write" element={<EntireStudy />} />
+        <Route path="/board/:category/:part" element={<PartBoard />} />
+        <Route path="/board/:category/:part/edit" element={<PartEdit />} />
+        <Route path="/board/education/:part" element={<EducationBoard />} />
+        <Route path="/board/education/:part/post" element={<EduPost />} />
+        <Route path="/board/:category/FE/post" element={<FrontStudy />} />
+        <Route path="/board/:category/BE/post" element={<BackStudy />} />
+        <Route path="/board/:category/D/post" element={<DesignStudy />} />
+        <Route path="/board/:category/PM/post" element={<PmStudy />} />
+        <Route path="/board/:category/ALL/post" element={<EntireStudy />} />
 
         <Route
           path="/admin"
