@@ -5,6 +5,9 @@ import setPositionIcon from '@/hooks/setPositionIcon';
 import StudyTag from '@/components/Board/StudyTag';
 import WeekTag from '@/components/Board/WeekTag';
 import * as S from '@/styles/board/StudyLogListItem.styled';
+import Part from './EduMaterial/Part';
+
+type EduPart = 'ALL' | 'FE' | 'BE' | 'D' | 'PM';
 
 type ItemProps = {
   name: string;
@@ -19,10 +22,13 @@ type ItemProps = {
   isNew: boolean;
   studyName: string;
   week: number;
+  parts?: EduPart[];
+  isStudy?: boolean;
 };
 
-const truncateText = (text: string, maxLength: number) => {
-  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+const truncateText = (text: string | null | undefined, maxLength: number) => {
+  const safe = text ?? '';
+  return safe.length > maxLength ? `${safe.slice(0, maxLength)}...` : safe;
 };
 
 const StudyLogListItem = ({
@@ -38,21 +44,32 @@ const StudyLogListItem = ({
   isNew,
   studyName,
   week,
+  parts,
+  isStudy,
 }: ItemProps) => {
   return (
     <S.Container onClick={onClick} style={{ cursor: 'pointer' }}>
       <S.PostTopSection>
         <S.PostContentContainer>
+          {parts ? (
+            <div>
+              {parts.map((p) => (
+                <Part key={p} part={p} />
+              ))}
+            </div>
+          ) : null}
           <S.TitleContainer>
             <S.TitleText>{title}</S.TitleText>
             {isNew && <NewIcon />}
           </S.TitleContainer>
           <S.ContentText>{truncateText(content, 78)}</S.ContentText>
         </S.PostContentContainer>
-        <S.StudyTagContainer>
-          <StudyTag studyName={studyName} />
-          <WeekTag week={week} />
-        </S.StudyTagContainer>
+        {isStudy && (
+          <S.StudyTagContainer>
+            <StudyTag studyName={studyName} />
+            <WeekTag week={week} />
+          </S.StudyTagContainer>
+        )}
       </S.PostTopSection>
 
       <S.BottomInfoContainer>
