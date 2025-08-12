@@ -39,6 +39,7 @@ const MarkdownContainer = styled.div`
 `;
 
 interface StudyWriteTemplateProps {
+  category: string;
   headerTitle: string;
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
@@ -49,9 +50,14 @@ interface StudyWriteTemplateProps {
   selectedStudy: string | null;
   setSelectedStudy: Dispatch<SetStateAction<string | null>>;
   onSave: () => void;
+  content: string;
+  setContent: Dispatch<SetStateAction<string>>;
+  files: File[];
+  setFiles: Dispatch<SetStateAction<File[]>>;
 }
 
 const StudyWriteTemplate = ({
+  category,
   headerTitle,
   title,
   setTitle,
@@ -61,8 +67,14 @@ const StudyWriteTemplate = ({
   setSelectedWeek,
   selectedStudy,
   setSelectedStudy,
+  content,
+  setContent,
+  files,
+  setFiles,
   onSave,
 }: StudyWriteTemplateProps) => {
+  const isStudyLog = category === 'StudyLog' || category === 'study';
+
   return (
     <Container>
       <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
@@ -77,19 +89,31 @@ const StudyWriteTemplate = ({
               origValue={selectedCardinal}
               editValue={setSelectedCardinal}
             />
-            <WeekDropdown origWeek={selectedWeek} editWeek={setSelectedWeek} />
+            {isStudyLog && (
+              <WeekDropdown
+                origWeek={selectedWeek}
+                editWeek={setSelectedWeek}
+              />
+            )}
           </DropdownContainer>
         </DivisionContainer>
-        <DivisionContainer>
-          <DivisionContainer>스터디</DivisionContainer>
-          <StudyDropdown
-            origStudy={selectedStudy}
-            editStudy={setSelectedStudy}
-          />
-        </DivisionContainer>
+        {isStudyLog && (
+          <DivisionContainer>
+            <DivisionContainer>스터디</DivisionContainer>
+            <StudyDropdown
+              origStudy={selectedStudy}
+              editStudy={setSelectedStudy}
+            />
+          </DivisionContainer>
+        )}
       </InformationContainer>
       <MarkdownContainer>
-        <Markdown />
+        <Markdown
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+        />
       </MarkdownContainer>
     </Container>
   );
