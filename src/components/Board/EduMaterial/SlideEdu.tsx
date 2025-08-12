@@ -5,32 +5,33 @@ import { useNavigate } from 'react-router-dom';
 import Vector from '@/assets/images/ic_vector.svg?react';
 import FileIcon from '@/assets/images/ic_file.svg?react';
 import Part from '@/components/Board/EduMaterial/Part';
+import { PartEduContent } from '@/api/useGetEducationBoard';
+import { PartTypes } from '@/types/part';
+import dayjs from 'dayjs';
 
-interface Notice {
-  id: number;
-  title: string;
-  content: string;
+interface SlideEduProps {
+  recentEdu: PartEduContent[];
 }
 
-interface SlideNoticeProps {
-  error: string | null;
-  recentNotices: Notice[];
-}
-
-// 아직 교육 자료 API가 없어서 임의로 공지사항과 연결해둠
-const SlideEdu = ({ error, recentNotices }: SlideNoticeProps) => {
+const SlideEdu = ({ recentEdu }: SlideEduProps) => {
   const navigate = useNavigate();
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
 
-  const handleNoticeCard = (
+  const formatMMDD = (iso?: string) => {
+    if (!iso) return '00/00';
+    const d = dayjs(iso);
+    return d.isValid() ? d.format('MM/DD') : '00/00';
+  };
+
+  const handleEducationCard = (
     e: React.MouseEvent<HTMLDivElement>,
+    part: string,
     id: number,
   ) => {
     e.preventDefault();
-    // navigate(`/education/${id}`);
-    navigate(`/notice/${id}`);
+    navigate(`/board/education/${part}/${id}`);
   };
 
   return (
@@ -41,32 +42,37 @@ const SlideEdu = ({ error, recentNotices }: SlideNoticeProps) => {
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseLeave}
     >
-      {error ? (
-        <S.EduCard>데이터를 불러오지 못했습니다.</S.EduCard>
-      ) : (
-        recentNotices.map((notice) => (
+      {recentEdu.map((edu) => {
+        const parts = (edu.parts?.length ? edu.parts : ['ALL']) as PartTypes[];
+        return (
           <S.EduCard
-            key={notice.id}
-            onClick={(e) => handleNoticeCard(e, notice.id)}
+            key={edu.id}
+            onClick={(e) => handleEducationCard(e, parts[0], edu.id)}
           >
             <S.EduPart>
-              <Part part="ALL" />
-              <Part part="BE" />
+              {parts.map((p) => (
+                <Part key={p} part={p} />
+              ))}
             </S.EduPart>
-            <S.EduCardTitle>{notice.title}</S.EduCardTitle>
+
+            <S.EduCardTitle>{edu.title}</S.EduCardTitle>
+
             <S.NoticeBottomRow>
               <S.EduDateContainer>
-                00/00 |
+                {formatMMDD(edu.time)}
+                {' | '}
+                {edu.hasFile && <FileIcon />}
                 <FileIcon />
               </S.EduDateContainer>
+
               <S.CommentContainer>
                 <Vector />
-                <S.CommentsText>3</S.CommentsText>
+                <S.CommentsText>{edu.commentCount}</S.CommentsText>
               </S.CommentContainer>
             </S.NoticeBottomRow>
           </S.EduCard>
-        ))
-      )}
+        );
+      })}
     </S.ScrollContainer>
   );
 };
