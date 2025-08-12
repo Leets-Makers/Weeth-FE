@@ -3,12 +3,15 @@ import SlideNotice from '@/components/Board/SlideNotice';
 import * as S from '@/styles/board/Board.styled';
 import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
+import useCustomBack from '@/hooks/useCustomBack';
 
 const NoticePreview = () => {
+  useCustomBack('/board');
+
   const navigate = useNavigate();
 
   const handleAllNotice = () => {
-    navigate('/notice');
+    navigate('/board/notices');
   };
 
   const { recentNotices, error, recentNoticeLoading } = useGetRecentNotice();
