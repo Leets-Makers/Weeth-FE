@@ -18,7 +18,7 @@ export const PostTopSection = styled.div`
 export const PostContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
 `;
 
 export const StudyTagContainer = styled.div`
@@ -63,6 +63,7 @@ export const ContentText = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 2px;
 `;
 
 export const LightText = styled.div`
