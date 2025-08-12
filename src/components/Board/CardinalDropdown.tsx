@@ -8,8 +8,8 @@ import useGetAllCardinals from '@/api/useGetCardinals';
 const DropdownContainer = styled.div`
   position: relative;
   display: flex;
-  width: 67px;
-  min-width: 67px;
+  width: 82px;
+  min-width: 82px;
   height: 32px;
   box-sizing: border-box;
   font-family: ${theme.font.semiBold};
