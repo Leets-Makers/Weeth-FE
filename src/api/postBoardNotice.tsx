@@ -58,7 +58,7 @@ export const postBoardNotice = async ({
     const updatedPostData = {
       ...postData,
       files: [
-        ...originFiles, // ✅ 기존 파일 유지
+        ...originFiles, // 기존 파일 유지
         ...files.map((file, index) => ({
           fileName: file.name,
           fileUrl: fileUrls[index],
