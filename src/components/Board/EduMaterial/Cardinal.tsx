@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import useGetAllCardinals from '@/api/useGetCardinals';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
@@ -26,14 +25,18 @@ const CardinalBox = styled.div<{ selected: boolean }>`
   cursor: pointer;
 `;
 
-const Cardinal = () => {
+type Props = {
+  value: number | null;
+  onChange: (v: number | null) => void;
+};
+
+const Cardinal = ({ value, onChange }: Props) => {
   const { allCardinals } = useGetAllCardinals();
-  const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
 
   const sortedCardinals = [...allCardinals].reverse();
 
-  const handleSelect = (id: number) => {
-    setSelectedCardinal(id);
+  const handleSelect = (cardinalNumber: number) => {
+    onChange(value === cardinalNumber ? null : cardinalNumber);
   };
 
   return (
@@ -41,8 +44,8 @@ const Cardinal = () => {
       {sortedCardinals.map((cardinal) => (
         <CardinalBox
           key={cardinal.id}
-          selected={selectedCardinal === cardinal.id}
-          onClick={() => handleSelect(cardinal.id)}
+          selected={value === cardinal.cardinalNumber}
+          onClick={() => handleSelect(cardinal.cardinalNumber)}
         >
           {cardinal.cardinalNumber}기
         </CardinalBox>
