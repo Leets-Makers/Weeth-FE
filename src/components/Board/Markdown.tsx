@@ -1,4 +1,3 @@
-import AddFile from '@/assets/images/ic_add_folder.svg?react';
 import { useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
 import useMarkdownEditor from '@/hooks/useMarkdownEditor';
@@ -11,14 +10,22 @@ import remarkGfm from 'remark-gfm';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
 import markdownActions from '@/constants/markdownAction';
 import * as S from '@/styles/board/Markdown.styled';
+import PostFile from '@/components/Board/PostFile';
+import FileUploader from '@/components/Board/FileUploader';
 
-const Markdown = () => {
+interface MarkdownProps {
+  content: string;
+  setContent: (value: string) => void;
+  files: File[];
+  setFiles: (files: File[]) => void;
+}
+
+const Markdown = ({ content, setContent, files, setFiles }: MarkdownProps) => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
 
-  const [markdown, setMarkdown] = useState('');
-  const { textareaRef, insertText } = useMarkdownEditor(markdown, setMarkdown);
+  const { textareaRef, insertText } = useMarkdownEditor(content, setContent);
   const [activeTab, setActiveTab] = useState<'write' | 'preview'>('write');
 
   return (
@@ -31,12 +38,9 @@ const Markdown = () => {
         onMouseLeave={onMouseLeave}
       >
         <S.StyledImg aria-label="파일 추가">
-          <AddFile />
+          <FileUploader files={files} setFiles={setFiles} />
         </S.StyledImg>
         <S.VerticalDivider />
-        <S.StyledImg aria-label="파일 추가">
-          <AddFile />
-        </S.StyledImg>
         {markdownActions.map((action) => {
           if (action === 'divider') return <S.VerticalDivider key="divider" />;
 
@@ -58,8 +62,8 @@ const Markdown = () => {
       {activeTab === 'write' ? (
         <ContentPost
           textareaRef={textareaRef}
-          value={markdown}
-          onChange={setMarkdown}
+          value={content}
+          onChange={setContent}
         />
       ) : (
         <S.PreviewContainer>
@@ -72,11 +76,14 @@ const Markdown = () => {
                 input: CustomCheckbox,
               }}
             >
-              {markdown || '미리볼 내용이 없습니다.'}
+              {content || '미리 볼 내용이 없습니다.'}
             </ReactMarkdown>
           </S.PreviewWrapper>
         </S.PreviewContainer>
       )}
+      <S.FileContainer>
+        <PostFile fileName="파일명.pdf" isDownload={false} onClick={() => {}} />
+      </S.FileContainer>
     </S.Container>
   );
 };
