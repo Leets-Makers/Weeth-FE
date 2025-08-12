@@ -5,6 +5,7 @@ const StyledText = styled.div`
   color: ${theme.color.main};
   font-size: 14px;
   font-family: ${theme.font.semiBold};
+  cursor: pointer;
 `;
 
 const PostButton = ({
