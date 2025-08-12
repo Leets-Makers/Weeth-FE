@@ -38,7 +38,7 @@ const PartBoard = () => {
           {parts.map((part) => (
             <S.PartItem
               key={part.key}
-              onClick={() => navigate(`/board/${part.url}`)}
+              onClick={() => navigate(`/board/study/${part.url}`)}
             >
               <S.PartImage src={part.image} alt={part.key} />
               <S.PartLabel>{part.key}</S.PartLabel>
