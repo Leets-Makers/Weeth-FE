@@ -13,13 +13,14 @@ const Container = styled.div`
   background-color: ${theme.color.gray[18]};
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ $isNew?: boolean }>`
   width: 100%;
   position: relative;
   background-color: ${theme.color.gray[18]};
   color: ${theme.color.gray[100]};
   font-family: ${theme.font.regular};
-  color: white;
+  color: ${({ $isNew }) =>
+    $isNew ? theme.color.gray[65] : theme.color.gray[100]};
   font-size: 14px;
   border: none;
   outline: none;
@@ -28,7 +29,7 @@ const Input = styled.input`
     color: ${theme.color.gray[65]};
   }
 
-  &::focus {
+  &:focus {
     border: none;
     outline: none;
   }
@@ -52,6 +53,7 @@ const DropdownList = styled.div`
 const DropdownItem = styled.div`
   padding: 10px;
   height: 40px;
+  left: 10px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -59,12 +61,19 @@ const DropdownItem = styled.div`
   cursor: pointer;
   font-size: 16px;
   font-family: ${theme.font.regular};
-  line-height: 24px;
+  // line-height: 24px;
+  // line-height: 20px;
+  // white-space: nowrap;
 
   &:hover {
     background-color: ${theme.color.gray[9]};
   }
 `;
+
+// const Text = styled.div`
+//   padding-top: 8px;
+//   line-height: 20px;
+// `;
 
 const InputWrapper = styled.div`
   display: flex;
@@ -73,6 +82,7 @@ const InputWrapper = styled.div`
 `;
 
 const ClearButton = styled.div`
+  padding-top: 3px;
   position: absolute;
   display: flex;
   align-items: center;
@@ -86,7 +96,7 @@ const HiddenText = styled.span`
   white-space: pre;
   font-size: 14px;
   font-family: ${theme.font.regular};
-  //   padding: 6px 10px;
+  color: ${theme.color.gray[65]};
 `;
 
 interface Props {
@@ -107,6 +117,11 @@ const StudyDropdown = ({ origStudy, editStudy }: Props) => {
   const textWidthRef = useRef<HTMLSpanElement>(null);
   const [textWidth, setTextWidth] = useState(0);
 
+  const isInList = studyList.some(
+    (s) => s.toLowerCase() === inputValue.trim().toLowerCase(),
+  );
+  const isNew = inputValue.trim().length > 0 && !isInList;
+
   useEffect(() => {
     if (textWidthRef.current) {
       setTextWidth(textWidthRef.current.offsetWidth);
@@ -117,8 +132,7 @@ const StudyDropdown = ({ origStudy, editStudy }: Props) => {
     item.toLowerCase().includes(inputValue.toLowerCase()),
   );
 
-  const showAddOption =
-    inputValue.trim().length > 0 && !studyList.includes(inputValue.trim());
+  const showAddOption = isNew;
 
   const handleClickOutside = (e: MouseEvent) => {
     if (
@@ -142,6 +156,11 @@ const StudyDropdown = ({ origStudy, editStudy }: Props) => {
     handleSelect(newStudy);
   };
 
+  const handleClear = () => {
+    setInputValue('');
+    editStudy(null);
+  };
+
   useEffect(() => {
     setInputValue(origStudy ?? '');
   }, [origStudy]);
@@ -158,6 +177,7 @@ const StudyDropdown = ({ origStudy, editStudy }: Props) => {
           value={inputValue}
           placeholder="옵션 검색"
           onFocus={() => setIsOpen(true)}
+          $isNew={isNew}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -171,8 +191,13 @@ const StudyDropdown = ({ origStudy, editStudy }: Props) => {
         />
         <HiddenText ref={textWidthRef}>{inputValue}</HiddenText>
 
-        {inputValue && (
-          <ClearButton style={{ left: textWidth + 10 }}>
+        {isNew && (
+          <ClearButton
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={handleClear}
+            style={{ left: textWidth + 10 }}
+            aria-label="입력 지우기"
+          >
             <Remove />
           </ClearButton>
         )}
