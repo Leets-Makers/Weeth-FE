@@ -4,13 +4,31 @@ import { useState, useEffect } from 'react';
 interface Content {
   id: number;
   name: string;
+  position: string;
+  role: string;
   title: string;
   content: string;
+  studyName: string;
+  week: number;
   time: string;
   commentCount: number;
   hasFile: boolean;
-  position: string;
-  role: string;
+  isNew: boolean;
+}
+
+interface Sort {
+  empty: boolean;
+  unsorted: boolean;
+  sorted: boolean;
+}
+
+interface Pageable {
+  offset: number;
+  sort: Sort;
+  unpaged: boolean;
+  pageNumber: number;
+  pageSize: number;
+  paged: boolean;
 }
 
 interface ApiResponse {
@@ -20,8 +38,12 @@ interface ApiResponse {
     size: number;
     content: Content[];
     number: number;
+    sort: Sort;
+    pageable: Pageable;
+    numberOfElements: number;
     first: boolean;
     last: boolean;
+    empty: boolean;
   };
 }
 
