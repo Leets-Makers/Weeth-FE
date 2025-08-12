@@ -11,6 +11,7 @@ interface Notice {
   id: number;
   title: string;
   content: string;
+  commentCount: number;
 }
 
 interface SlideNoticeProps {
@@ -29,7 +30,7 @@ const SlideNotice = ({ error, recentNotices }: SlideNoticeProps) => {
     id: number,
   ) => {
     e.preventDefault();
-    navigate(`/notice/${id}`);
+    navigate(`/board/notices/${id}`);
   };
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const SlideNotice = ({ error, recentNotices }: SlideNoticeProps) => {
                 </S.ReadMoreText>
                 <S.CommentContainer>
                   <Vector />
-                  <S.CommentsText>3</S.CommentsText>
+                  <S.CommentsText>{notice.commentCount}</S.CommentsText>
                 </S.CommentContainer>
               </S.NoticeBottomRow>
             </>
