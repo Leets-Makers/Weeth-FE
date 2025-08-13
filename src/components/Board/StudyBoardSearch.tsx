@@ -4,9 +4,24 @@ import DividerLine from '@/assets/images/ic_search_divider.svg';
 import Delete from '@/assets/images/ic_circle_close.svg';
 import search from '@/assets/images/ic_search.svg';
 import { useState } from 'react';
-import { BoardContent } from '@/pages/Board';
-import useGetBoardSearch from '@/api/useGetBoardSearch';
+import {
+  useGetPartSearch,
+  useGetEduSearch,
+  useGetNoticeSearch,
+} from '@/api/useGetBoardSearch';
 import { toastError } from '@/components/common/ToastMessage';
+import {
+  EduSearchContent,
+  PartSearchContent,
+  NoticeSearchContent,
+  SearchRequestType,
+  SearchContent,
+} from '@/types/search';
+import {
+  mapEduToBoard,
+  mapNoticeToBoard,
+  mapPartToBoard,
+} from '@/utils/searchMappers';
 
 const Container = styled.div`
   display: flex;
@@ -57,12 +72,14 @@ const SearchButton = styled.img<{ disabled?: boolean }>`
 `;
 
 type SearchProps = {
-  onSearchDone: (posts: BoardContent[]) => void;
+  requestType: SearchRequestType;
+  onSearchDone: (posts: SearchContent[]) => void;
   onClear: () => void;
   onLoading?: (loading: boolean) => void;
 };
 
 const StudyBoardSearch = ({
+  requestType,
   onSearchDone,
   onClear,
   onLoading,
@@ -75,9 +92,24 @@ const StudyBoardSearch = ({
 
     onLoading?.(true);
     try {
-      await useGetBoardSearch(q, 0, (newPosts) => {
-        onSearchDone(newPosts);
-      });
+      if (requestType === 'part') {
+        await useGetPartSearch(q, 0, (rows) => {
+          const normalized = (rows as PartSearchContent[]).map(mapPartToBoard);
+          onSearchDone(normalized);
+        });
+      } else if (requestType === 'education') {
+        await useGetEduSearch(q, 0, (rows) => {
+          const normalized = (rows as EduSearchContent[]).map(mapEduToBoard);
+          onSearchDone(normalized);
+        });
+      } else {
+        await useGetNoticeSearch(q, 0, (rows) => {
+          const normalized = (rows as NoticeSearchContent[]).map(
+            mapNoticeToBoard,
+          );
+          onSearchDone(normalized);
+        });
+      }
     } catch (error) {
       toastError('데이터를 불러오지 못했습니다.');
       console.log(error);
