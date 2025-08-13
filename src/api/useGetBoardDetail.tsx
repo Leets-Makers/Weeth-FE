@@ -21,11 +21,16 @@ interface FileUrls {
 interface BoardDetail {
   id: number;
   name: string;
-  title: string;
-  time: string;
-  content: string;
   position: string;
   role: string;
+  title: string;
+  content: string;
+  studyName: string | null;
+  week: number;
+  cardinalNumber: number;
+  part: string;
+  parts: string[];
+  time: string;
   commentCount: number;
   comments: Comments[];
   fileUrls: FileUrls[];
