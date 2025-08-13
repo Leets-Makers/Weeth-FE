@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
 import useMarkdownEditor from '@/hooks/useMarkdownEditor';
 import ContentPost from '@/components/Board/ContentPost';
@@ -12,21 +12,41 @@ import markdownActions from '@/constants/markdownAction';
 import * as S from '@/styles/board/Markdown.styled';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
+import { originFile } from '@/pages/board/part/PartEdit';
 
 interface MarkdownProps {
   content: string;
   setContent: (value: string) => void;
   files: File[];
-  setFiles: (files: File[]) => void;
+  setFiles: Dispatch<SetStateAction<File[]>>;
+  originFiles?: originFile[];
+  setOriginFiles?: Dispatch<SetStateAction<originFile[]>>;
 }
 
-const Markdown = ({ content, setContent, files, setFiles }: MarkdownProps) => {
+const Markdown = ({
+  content,
+  setContent,
+  files,
+  setFiles,
+  originFiles,
+  setOriginFiles,
+}: MarkdownProps) => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
 
   const { textareaRef, insertText } = useMarkdownEditor(content, setContent);
   const [activeTab, setActiveTab] = useState<'write' | 'preview'>('write');
+
+  const handleDeleteFile = (fileName: string) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  };
+
+  const handleDeleteOrigin = (fileName: string) => {
+    setOriginFiles?.((prev) =>
+      (prev ?? []).filter((f) => f.fileName !== fileName),
+    );
+  };
 
   return (
     <S.Container>
@@ -82,7 +102,30 @@ const Markdown = ({ content, setContent, files, setFiles }: MarkdownProps) => {
         </S.PreviewContainer>
       )}
       <S.FileContainer>
-        <PostFile fileName="파일명.pdf" isDownload={false} onClick={() => {}} />
+        {originFiles && (
+          <>
+            {originFiles.map((of) => (
+              <PostFile
+                key={of.fileName}
+                fileName={of.fileName}
+                isDownload={false}
+                onClick={() => handleDeleteOrigin(of.fileName)}
+              />
+            ))}
+          </>
+        )}
+        {files.length > 0 && (
+          <>
+            {files.map((file) => (
+              <PostFile
+                key={file.name}
+                fileName={file.name}
+                isDownload={false}
+                onClick={() => handleDeleteFile(file.name)}
+              />
+            ))}
+          </>
+        )}
       </S.FileContainer>
     </S.Container>
   );
