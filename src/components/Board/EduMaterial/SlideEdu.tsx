@@ -31,7 +31,7 @@ const SlideEdu = ({ recentEdu }: SlideEduProps) => {
     id: number,
   ) => {
     e.preventDefault();
-    navigate(`/board/education/${part}/${id}`);
+    navigate(`/education/${part}/${id}`);
   };
 
   return (
@@ -60,9 +60,8 @@ const SlideEdu = ({ recentEdu }: SlideEduProps) => {
             <S.NoticeBottomRow>
               <S.EduDateContainer>
                 {formatMMDD(edu.time)}
-                {' | '}
+                {edu.hasFile && ' | '}
                 {edu.hasFile && <FileIcon />}
-                <FileIcon />
               </S.EduDateContainer>
 
               <S.CommentContainer>
