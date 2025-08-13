@@ -6,7 +6,8 @@ import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import Markdown from '@/components/Board/Markdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { PartTypes } from '@/types/part';
-import PartDropdown from './PartDropdown';
+import PartDropdown from '@/components/Board/PartDropdown';
+import { originFile } from '@/pages/board/part/PartEdit';
 
 const Container = styled.div`
   display: flex;
@@ -53,6 +54,8 @@ interface StudyWriteTemplateProps {
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
   setFiles: Dispatch<SetStateAction<File[]>>;
+  originFiles?: originFile[];
+  setOriginFiles?: Dispatch<SetStateAction<originFile[]>>;
 }
 
 const EduWrite = ({
@@ -67,6 +70,8 @@ const EduWrite = ({
   setContent,
   files,
   setFiles,
+  originFiles,
+  setOriginFiles,
   onSave,
 }: StudyWriteTemplateProps) => {
   return (
@@ -98,6 +103,8 @@ const EduWrite = ({
           setContent={setContent}
           files={files}
           setFiles={setFiles}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
         />
       </MarkdownContainer>
     </Container>
