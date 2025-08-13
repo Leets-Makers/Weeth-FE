@@ -24,7 +24,6 @@ import AccountCheck from '@/pages/AccountCheck';
 import RegistrationSuccess from '@/pages/RegistrationSuccess';
 import WaitingApproval from '@/pages/WaitingApproval';
 import NoticeDetail from '@/pages/board/notices/NoticeDetail';
-import BoardSearch from '@/pages/BoardSearch';
 import PartBoard from '@/pages/board/part/PartBoard';
 import EduPost from '@/pages/board/education/EduPost';
 import EducationBoard from '@/pages/board/education/EducationBoard';
@@ -90,7 +89,6 @@ const App = () => {
           element={<PartEdit />}
         />
         <Route path="/board/:category/:part/post" element={<PartPost />} />
-        <Route path="/board/search" element={<BoardSearch />} />
 
         <Route
           path="/admin"
