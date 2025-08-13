@@ -36,14 +36,14 @@ const EduPost = () => {
         title,
         content,
         parts: partsToSend,
-        cardinal: selectedCardinal || undefined,
+        cardinalNumber: selectedCardinal || undefined,
         files: [],
       };
 
       await postBoardNotice({
         postData,
         files,
-        postType: 'postBoard',
+        postType: 'postEdu',
       });
 
       const backPart = partParam ?? 'ALL';
