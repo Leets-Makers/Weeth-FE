@@ -3,7 +3,7 @@ const getHeaderTitle = (category: string, part: string) => {
     ALL: '전체',
     FE: 'FE',
     BE: 'BE',
-    D: '디자인',
+    D: 'D',
     PM: 'PM',
   };
 
