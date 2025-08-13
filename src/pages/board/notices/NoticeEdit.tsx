@@ -4,12 +4,7 @@ import postBoardNotice from '@/api/postBoardNotice';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
-
-interface originFile {
-  fileId: number;
-  fileName: string;
-  fileUrl: string;
-}
+import { originFile } from '@/pages/board/part/PartEdit';
 
 const NoticeEdit = () => {
   const navigate = useNavigate();
@@ -27,16 +22,6 @@ const NoticeEdit = () => {
   const isTitleEmpty = title.trim() === '';
   const isContentEmpty = content.trim() === '';
   const numericPostId = postId ? parseInt(postId, 10) : 0;
-
-  //   const handleDeleteFile = (fileName: string) => {
-  //     setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
-  //   };
-
-  //   const handleDeleteOriginFile = (fileName: string) => {
-  //     setOriginFiles((prevFiles) =>
-  //       prevFiles.filter((file) => file.fileName !== fileName),
-  //     );
-  //   };
 
   const { boardDetailInfo } = useGetBoardDetail(path, numericPostId);
 
@@ -57,7 +42,6 @@ const NoticeEdit = () => {
     }
 
     try {
-      // 요청 타입 결정
       const postType = path === 'board' ? 'editBoard' : 'editNotice';
 
       if (title.length > 255) {
@@ -70,7 +54,6 @@ const NoticeEdit = () => {
         return;
       }
 
-      // 서버 요청
       await postBoardNotice({
         originFiles,
         files,
@@ -82,8 +65,7 @@ const NoticeEdit = () => {
         postType,
         id: numericPostId,
       });
-
-      // 게시글 수정 후 이동
+      toastInfo('게시글이 수정되었습니다.');
       navigate('/board/notices');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error: any) {
@@ -103,6 +85,8 @@ const NoticeEdit = () => {
       setContent={setContent}
       files={files}
       setFiles={setFiles}
+      originFiles={originFiles}
+      setOriginFiles={setOriginFiles}
       onSave={onSave}
     />
   );
