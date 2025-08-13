@@ -4,8 +4,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 23.125rem;
-  max-width: 23.125rem;
+  width: 375px;
+  max-width: 375px;
   margin-bottom: 3.125rem;
 `;
 
