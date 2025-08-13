@@ -1,61 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import theme from '@/styles/theme';
+import * as S from '@/styles/board/Dropdown.styled';
 import open from '@/assets/images/ic_opened_dropdown.svg';
 import close from '@/assets/images/ic_default_dropdown.svg';
 import useGetAllCardinals from '@/api/useGetCardinals';
-
-const DropdownContainer = styled.div`
-  position: relative;
-  display: flex;
-  width: 82px;
-  min-width: 82px;
-  height: 32px;
-  box-sizing: border-box;
-  font-family: ${theme.font.semiBold};
-`;
-
-const DropdownButton = styled.div<{ $hasValue: boolean }>`
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  background-color: ${theme.color.gray[20]};
-  color: ${theme.color.gray[100]};
-  font-size: 14px;
-  border-radius: 10px;
-  padding: 6px 6px 6px 10px;
-  cursor: pointer;
-`;
-
-const DropdownList = styled.div`
-  position: absolute;
-  width: 144px;
-  max-height: 190px;
-  top: 100%;
-  margin-top: 4px;
-  z-index: 1000;
-  overflow-y: auto;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: ${theme.color.gray[20]};
-  padding: 5px 0px;
-`;
-
-const DropdownItem = styled.div`
-  padding: 10px;
-  font-size: 14px;
-  color: white;
-  cursor: pointer;
-  background-color: ${theme.color.gray[20]};
-
-  &:hover {
-    background-color: ${theme.color.gray[9]};
-  }
-`;
 
 const CardinalDropdown = ({
   origValue,
@@ -109,29 +56,29 @@ const CardinalDropdown = ({
   }, [origValue]);
 
   return (
-    <DropdownContainer ref={dropdownRef}>
-      <DropdownButton onClick={handleToggle} $hasValue={!!selectedValue}>
+    <S.DropdownContainer ref={dropdownRef}>
+      <S.DropdownButton onClick={handleToggle} $hasValue={!!selectedValue}>
         {selectedValue ? `${selectedValue}기` : '기수'}
         {isOpen ? (
           <img src={open} alt="open" />
         ) : (
           <img src={close} alt="close" />
         )}
-      </DropdownButton>
+      </S.DropdownButton>
 
       {isOpen && (
-        <DropdownList>
+        <S.DropdownList>
           {options.map((option) => (
-            <DropdownItem
+            <S.DropdownItem
               key={option.value}
               onClick={() => handleSelect(option.value)}
             >
               {option.label}
-            </DropdownItem>
+            </S.DropdownItem>
           ))}
-        </DropdownList>
+        </S.DropdownList>
       )}
-    </DropdownContainer>
+    </S.DropdownContainer>
   );
 };
 
