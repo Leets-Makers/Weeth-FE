@@ -19,42 +19,33 @@ import Profile from '@/pages/Profile';
 import Receipt from '@/pages/Receipt';
 import theme from '@/styles/theme';
 import Redirect from '@/pages/Redirect';
+import Board from '@/pages/Board';
 import AccountCheck from '@/pages/AccountCheck';
 import RegistrationSuccess from '@/pages/RegistrationSuccess';
 import WaitingApproval from '@/pages/WaitingApproval';
+import NoticeDetail from '@/pages/board/notices/NoticeDetail';
+import BoardSearch from '@/pages/BoardSearch';
+import PartBoard from '@/pages/board/part/PartBoard';
+import EduPost from '@/pages/board/education/EduPost';
+import EducationBoard from '@/pages/board/education/EducationBoard';
+import NoticePost from '@/pages/board/notices/NoticePost';
+import NoticeEdit from '@/pages/board/notices/NoticeEdit';
+import PartEdit from '@/pages/board/part/PartEdit';
+import PartPost from '@/pages/board/part/PartPost';
+import PartDetail from '@/pages/board/part/PartDetail';
+import EduDetail from '@/pages/board/education/EduDetail';
+import EduEdit from '@/pages/board/education/EduEdit';
+import BoardNotice from '@/pages/board/notices/BoardNotice';
 
 import AdminAttendance from '@/pages/admin/AdminAttendance';
 import AdminMember from '@/pages/admin/AdminMember';
 import AdminDues from '@/pages/admin/AdminDues';
 import AdminPenalty from '@/pages/admin/AdminPenalty';
 
+import PrivateRoute from '@/components/common/PrivateRoute';
+import { CustomToastContainer } from '@/components/common/ToastMessage';
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-// import Notice from '@/pages/Notice';
-import NoticeDetail from '@/pages/board/notices/NoticeDetail';
-import BoardDetail from '@/pages/BoardDetail';
-import Board from '@/pages/Board';
-import BoardNoticePost from '@/pages/BoardNoticePost';
-import BoardNoticeEdit from '@/pages/BoardNoticeEdit';
-import { CustomToastContainer } from '@/components/common/ToastMessage';
-import BoardSearch from '@/pages/BoardSearch';
-import PartBoard from '@/pages/board/part/PartBoard';
-
-import EduPost from '@/pages/board/education/EduPost';
-import EducationBoard from '@/pages/board/education/EducationBoard';
-
-import NoticePost from '@/pages/board/notices/NoticePost';
-import NoticeEdit from '@/pages/board/notices/NoticeEdit';
-
-import BoardNotice from '@/pages/board/notices/BoardNotice';
-import FrontStudy from '@/pages/board/post/FrontStudy';
-import BackStudy from '@/pages/board/post/BackStudy';
-import DesignStudy from '@/pages/board/post/DesignStudy';
-import EntireStudy from '@/pages/board/post/EntireStudy';
-import PmStudy from '@/pages/board/post/PmStudy';
-
-import PrivateRoute from '@/components/common/PrivateRoute';
-import PartEdit from './pages/board/part/PartEdit';
 
 const App = () => {
   return (
@@ -83,30 +74,23 @@ const App = () => {
         <Route path="/edit" element={<Edit />} />
         <Route path="/dues" element={<Dues />} />
         <Route path="/receipt" element={<Receipt />} />
-
-        <Route path="/:type/post" element={<BoardNoticePost />} />
-
+        <Route path="/board" element={<Board />} />
         <Route path="/board/notices" element={<BoardNotice />} />
         <Route path="/board/notices/post" element={<NoticePost />} />
         <Route path="/board/notices/:postId" element={<NoticeDetail />} />
         <Route path="/board/notices/:postId/edit" element={<NoticeEdit />} />
-
-        <Route path="/board" element={<Board />} />
-        <Route
-          path="/board/:category/:part/:postId"
-          element={<BoardDetail />}
-        />
-        <Route path="/board/:postId/edit" element={<BoardNoticeEdit />} />
-        <Route path="/board/search" element={<BoardSearch />} />
-        <Route path="/board/:category/:part" element={<PartBoard />} />
-        <Route path="/board/:category/:part/edit" element={<PartEdit />} />
         <Route path="/board/education/:part" element={<EducationBoard />} />
         <Route path="/board/education/:part/post" element={<EduPost />} />
-        <Route path="/board/:category/FE/post" element={<FrontStudy />} />
-        <Route path="/board/:category/BE/post" element={<BackStudy />} />
-        <Route path="/board/:category/D/post" element={<DesignStudy />} />
-        <Route path="/board/:category/PM/post" element={<PmStudy />} />
-        <Route path="/board/:category/ALL/post" element={<EntireStudy />} />
+        <Route path="/education/:part/:postId" element={<EduDetail />} />
+        <Route path="/education/:part/:postId/edit" element={<EduEdit />} />
+        <Route path="/board/:category/:part" element={<PartBoard />} />
+        <Route path="/board/:category/:part/:postId" element={<PartDetail />} />
+        <Route
+          path="/board/:category/:part/:postId/edit"
+          element={<PartEdit />}
+        />
+        <Route path="/board/:category/:part/post" element={<PartPost />} />
+        <Route path="/board/search" element={<BoardSearch />} />
 
         <Route
           path="/admin"
