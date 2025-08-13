@@ -187,7 +187,9 @@ export const PreviewWrapper = styled.div`
 
 export const FileContainer = styled.div`
   display: flex;
-  box-sizing: content-box;
+  flex-direction: column;
+  min-height: 56px;
+  box-sizing: border-box;
   padding: 10px;
   gap: 10px;
 `;
