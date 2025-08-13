@@ -15,6 +15,10 @@ export interface BoardContent {
   hasFile: boolean;
   position: string;
   role: string;
+  isNew: boolean;
+  studyName: string;
+  week: number;
+  parts: string[];
 }
 
 const Board = () => {
