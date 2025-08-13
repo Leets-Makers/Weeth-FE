@@ -36,7 +36,14 @@ export const postBoardNotice = async ({
   originFiles?: originFile[];
   files: File[];
   postData: PostRequestType;
-  postType: 'postBoard' | 'postNotice' | 'editBoard' | 'editNotice';
+  postType:
+    | 'postBoard'
+    | 'postNotice'
+    | 'postEdu'
+    | 'editBoard'
+    | 'editNotice'
+    | 'editPart'
+    | 'editEdu';
   id?: number;
 }) => {
   try {
@@ -78,12 +85,24 @@ export const postBoardNotice = async ({
         endpoint = `/api/v1/admin/notices`;
         method = 'post';
         break;
+      case 'postEdu':
+        endpoint = `/api/v1/admin/educations/education`;
+        method = 'post';
+        break;
       case 'editBoard':
         endpoint = `/api/v1/board/${id}`;
         method = 'patch';
         break;
       case 'editNotice':
         endpoint = `/api/v1/admin/notices/${id}`;
+        method = 'patch';
+        break;
+      case 'editPart':
+        endpoint = `/api/v1/board/${id}/part`;
+        method = 'patch';
+        break;
+      case 'editEdu':
+        endpoint = `/api/v1/admin/educations/${id}`;
         method = 'patch';
         break;
       default:
