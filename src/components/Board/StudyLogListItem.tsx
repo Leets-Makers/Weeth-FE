@@ -5,7 +5,7 @@ import setPositionIcon from '@/hooks/setPositionIcon';
 import StudyTag from '@/components/Board/StudyTag';
 import WeekTag from '@/components/Board/WeekTag';
 import * as S from '@/styles/board/StudyLogListItem.styled';
-import Part from './EduMaterial/Part';
+import Part from '@/components/Board/EduMaterial/Part';
 
 type EduPart = 'ALL' | 'FE' | 'BE' | 'D' | 'PM';
 
@@ -52,11 +52,11 @@ const StudyLogListItem = ({
       <S.PostTopSection>
         <S.PostContentContainer>
           {parts ? (
-            <div>
+            <S.PartContainer>
               {parts.map((p) => (
                 <Part key={p} part={p} />
               ))}
-            </div>
+            </S.PartContainer>
           ) : null}
           <S.TitleContainer>
             <S.TitleText>{title}</S.TitleText>

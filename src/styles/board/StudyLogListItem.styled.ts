@@ -108,3 +108,8 @@ export const BottomInfoContainer = styled.div`
   height: 16px;
   box-sizing: border-box;
 `;
+
+export const PartContainer = styled.div`
+  display: flex;
+  gap: 5px;
+`;
