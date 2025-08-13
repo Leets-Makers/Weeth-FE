@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
+import { BoardContent } from '@/pages/Board';
 
 interface Content {
   id: number;
@@ -33,6 +34,11 @@ const BoardNotice = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [observerLoading, setObserverLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [searchMode, setSearchMode] = useState(false);
+  const [searchResults, setSearchResults] = useState<BoardContent[]>([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+
   useCustomBack('/board');
 
   const path = 'notices';
@@ -83,12 +89,23 @@ const BoardNotice = () => {
   }
 
   const handleRightButton = () => {
-    navigate(`/board/notice/post`);
+    navigate(`/board/notices/post`);
   };
 
   const handleDetail = (postId: number) => {
     navigate(`/board/notices/${postId}`);
   };
+
+  const handleSearchDone = (result: BoardContent[]) => {
+    setSearchMode(true);
+    setSearchResults(result);
+  };
+  const handleSearchClear = () => {
+    setSearchMode(false);
+    setSearchResults([]);
+  };
+
+  const list = searchMode ? searchResults : posts;
 
   return (
     <S.Container>
@@ -100,39 +117,53 @@ const BoardNotice = () => {
         공지사항
       </Header>
       <S.SearchContainer>
-        <StudyBoardSearch />
+        <StudyBoardSearch
+          onSearchDone={handleSearchDone}
+          onClear={handleSearchClear}
+          onLoading={setSearchLoading}
+        />
       </S.SearchContainer>
-      <S.PostContainer>
-        <S.TotalPostNumber>게시글 {posts.length}개</S.TotalPostNumber>
-        {posts.map((post) => (
-          <>
-            <S.PostListItemContainer key={post.id}>
-              <StudyLogListItem
-                name={post.name}
-                time={formatDate(post.time)}
-                title={post.title}
-                content={post.content}
-                totalComments={post.commentCount}
-                hasFile={post.hasFile}
-                position={post.position}
-                role={post.role}
-                isNew={post.isNew}
-                studyName={post.studyName}
-                week={post.week}
-                onClick={() => handleDetail(post.id)}
-              />
-            </S.PostListItemContainer>
-            <S.Line />
-          </>
-        ))}
-        {hasMore && (
-          <div
-            ref={observerRef}
-            style={{ height: '20px', backgroundColor: 'transparent' }}
-          />
-        )}
-        {!hasMore && posts.length > 10 && <S.Text>마지막 게시물입니다.</S.Text>}
-      </S.PostContainer>
+      {searchLoading ? (
+        <Loading />
+      ) : (
+        <S.PostContainer>
+          <S.TotalPostNumber>
+            {searchMode
+              ? `검색 결과 ${list.length}개`
+              : `게시글 ${posts.length}개`}
+          </S.TotalPostNumber>
+          {list.map((post) => (
+            <>
+              <S.PostListItemContainer key={post.id}>
+                <StudyLogListItem
+                  name={post.name}
+                  time={formatDate(post.time)}
+                  title={post.title}
+                  content={post.content}
+                  totalComments={post.commentCount}
+                  hasFile={post.hasFile}
+                  position={post.position}
+                  role={post.role}
+                  isNew={post.isNew}
+                  studyName={post.studyName}
+                  week={post.week}
+                  onClick={() => handleDetail(post.id)}
+                />
+              </S.PostListItemContainer>
+              <S.Line />
+            </>
+          ))}
+          {hasMore && (
+            <div
+              ref={observerRef}
+              style={{ height: '20px', backgroundColor: 'transparent' }}
+            />
+          )}
+          {!hasMore && posts.length > 10 && (
+            <S.Text>마지막 게시물입니다.</S.Text>
+          )}
+        </S.PostContainer>
+      )}
     </S.Container>
   );
 };
