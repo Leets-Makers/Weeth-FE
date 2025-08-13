@@ -4,57 +4,26 @@ import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
 import PostDetailMain from '@/components/Board/PostDetailMain';
 import Header from '@/components/Header/Header';
-import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetUserName from '@/hooks/useGetUserName';
 import MenuModal from '@/components/common/MenuModal';
-import theme from '@/styles/theme';
 import deletePost from '@/api/deletePost';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
 import getHeaderTitle from '@/utils/getHeaderTitle';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 370px;
-  margin: 0 auto;
-  padding-bottom: 60px;
-`;
-
-const CommentInputContainer = styled.div`
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 370px;
-  z-index: 10;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-`;
-
-const TextButton = styled.div<{ $isLast?: boolean }>`
-  width: calc(100% - 8px);
-  box-sizing: border-box;
-  padding: 12px 0 12px 16px;
-  margin: 0 4px;
-  border-bottom: ${(props) =>
-    props.$isLast ? 'none' : `1px solid ${theme.color.gray[30]}`};
-  color: ${(props) => (props.$isLast ? theme.color.negative : 'white')};
-`;
+import * as S from '@/styles/board/BoardDetail.tsyled';
 
 const PartDetail = () => {
-  const { postId } = useParams();
+  const { category, part, postId } = useParams<{
+    category: string;
+    part: string;
+    postId: string;
+  }>();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
-  const category = pathArray[2];
-  const part = pathArray[3];
 
   useCustomBack(`/board/${category}/${part}`);
 
@@ -131,6 +100,10 @@ const PartDetail = () => {
   if (error) return <div>오류: {error}</div>;
   if (loading) return <Loading />;
 
+  if (!category || !part || !postId) {
+    return <div>잘못된 경로입니다.</div>;
+  }
+
   return (
     <>
       {isModalOpen && (
@@ -139,16 +112,16 @@ const PartDetail = () => {
             setIsModalOpen(false);
           }}
         >
-          <TextButton
+          <S.TextButton
             onClick={() =>
               navigate(`/board/${category}/${part}/${postId}/edit`)
             }
           >
             수정
-          </TextButton>
-          <TextButton $isLast onClick={openSelectModal}>
+          </S.TextButton>
+          <S.TextButton $isLast onClick={openSelectModal}>
             삭제
-          </TextButton>
+          </S.TextButton>
         </MenuModal>
       )}
       {isSelectModalOpen && (
@@ -160,7 +133,7 @@ const PartDetail = () => {
         />
       )}
 
-      <Container>
+      <S.Container>
         <Header
           RightButtonType="MENU"
           isAccessible={isMyPost}
@@ -184,8 +157,8 @@ const PartDetail = () => {
             />
           </>
         )}
-      </Container>
-      <CommentInputContainer>
+      </S.Container>
+      <S.CommentInputContainer>
         {boardDetailInfo && (
           <CommentInput
             postId={boardDetailInfo.id}
@@ -193,7 +166,7 @@ const PartDetail = () => {
             onCommentSuccess={handleCommentSuccess}
           />
         )}
-      </CommentInputContainer>
+      </S.CommentInputContainer>
     </>
   );
 };
