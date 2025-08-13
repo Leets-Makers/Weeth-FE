@@ -1,12 +1,13 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { Dispatch, SetStateAction } from 'react';
-import CardinalDropdown from './CardinalDropdown';
-import Markdown from './Markdown';
-import StudyDropdown from './StudyDropdown';
-import StudyPostTitle from './StudyPostTitle';
-import WeekDropdown from './WeekDropdown';
-import Header from '../Header/Header';
+import { originFile } from '@/pages/board/part/PartEdit';
+import Header from '@/components/Header/Header';
+import WeekDropdown from '@/components/Board/WeekDropdown';
+import Markdown from '@/components/Board/Markdown';
+import CardinalDropdown from '@/components/Board/CardinalDropdown';
+import StudyDropdown from '@/components/Board/StudyDropdown';
+import StudyPostTitle from '@/components/Board/StudyPostTitle';
 
 const Container = styled.div`
   display: flex;
@@ -54,6 +55,8 @@ interface StudyWriteTemplateProps {
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
   setFiles: Dispatch<SetStateAction<File[]>>;
+  originFiles?: originFile[];
+  setOriginFiles?: Dispatch<SetStateAction<originFile[]>>;
 }
 
 const StudyWriteTemplate = ({
@@ -69,6 +72,8 @@ const StudyWriteTemplate = ({
   setSelectedStudy,
   content,
   setContent,
+  originFiles = [],
+  setOriginFiles,
   files,
   setFiles,
   onSave,
@@ -111,6 +116,8 @@ const StudyWriteTemplate = ({
         <Markdown
           content={content}
           setContent={setContent}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
           files={files}
           setFiles={setFiles}
         />
