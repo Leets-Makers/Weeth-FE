@@ -7,11 +7,6 @@ import { useState } from 'react';
 import { BoardContent } from '@/pages/Board';
 import useGetBoardSearch from '@/api/useGetBoardSearch';
 import { toastError } from '@/components/common/ToastMessage';
-import * as S from '@/styles/board/Board.styled';
-import { useNavigate } from 'react-router-dom';
-import formatDate from '@/hooks/formatDate';
-import PostListItem from '@/components/Board/PostListItem';
-import Loading from '@/components/common/Loading';
 
 const Container = styled.div`
   display: flex;
@@ -61,36 +56,44 @@ const SearchButton = styled.img<{ disabled?: boolean }>`
       : 'none'};
 `;
 
-const StudyBoardSearch = () => {
-  const [keyword, setKeyword] = useState('');
-  const [posts, setPosts] = useState<BoardContent[]>([]);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const fetchData = async () => {
-    if (!keyword.trim()) return;
+type SearchProps = {
+  onSearchDone: (posts: BoardContent[]) => void;
+  onClear: () => void;
+  onLoading?: (loading: boolean) => void;
+};
 
-    setLoading(true);
+const StudyBoardSearch = ({
+  onSearchDone,
+  onClear,
+  onLoading,
+}: SearchProps) => {
+  const [keyword, setKeyword] = useState('');
+
+  const fetchData = async () => {
+    const q = keyword.trim();
+    if (!q) return;
+
+    onLoading?.(true);
     try {
-      await useGetBoardSearch(keyword, 0, (newPosts) => {
-        setPosts(newPosts);
+      await useGetBoardSearch(q, 0, (newPosts) => {
+        onSearchDone(newPosts);
       });
     } catch (error) {
       toastError('데이터를 불러오지 못했습니다.');
       console.log(error);
     } finally {
-      setLoading(false);
+      onLoading?.(false);
     }
   };
 
   const handleSearch = () => {
     if (!keyword.trim()) return;
-    setPosts([]);
     fetchData();
   };
 
   const handleDelete = () => {
     setKeyword('');
-    setPosts([]);
+    onClear();
   };
 
   return (
@@ -121,31 +124,6 @@ const StudyBoardSearch = () => {
           />
         </div>
       </Search>
-
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          {posts.map((post) => (
-            <S.PostListContainer key={post.id}>
-              <S.PostListItemContainer>
-                <PostListItem
-                  name={post.name}
-                  time={formatDate(post.time)}
-                  title={post.title}
-                  content={post.content}
-                  totalComments={post.commentCount}
-                  hasFile={post.hasFile}
-                  position={post.position}
-                  role={post.role}
-                  onClick={() => navigate(`/board/${post.id}`)}
-                />
-              </S.PostListItemContainer>
-              <S.Line />
-            </S.PostListContainer>
-          ))}
-        </>
-      )}
     </Container>
   );
 };
