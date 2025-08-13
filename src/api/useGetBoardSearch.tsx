@@ -1,23 +1,12 @@
+import { BoardContent } from '@/pages/Board';
 import api from './api';
-
-interface Content {
-  id: number;
-  name: string;
-  title: string;
-  content: string;
-  time: string;
-  commentCount: number;
-  hasFile: boolean;
-  position: string;
-  role: string;
-}
 
 interface ApiResponse {
   code: number;
   message: string;
   data: {
     size: number;
-    content: Content[];
+    content: BoardContent[];
     number: number;
     first: boolean;
     last: boolean;
@@ -29,7 +18,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 const useGetBoardSearch = async (
   keyword: string,
   pageNumber: number,
-  appendPosts: (newPosts: Content[]) => void,
+  appendPosts: (newPosts: BoardContent[]) => void,
 ) => {
   try {
     const response = await api.get<ApiResponse>(
