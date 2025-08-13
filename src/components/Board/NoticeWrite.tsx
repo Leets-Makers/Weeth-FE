@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import Header from '@/components/Header/Header';
 import Markdown from '@/components/Board/Markdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
+import { originFile } from '@/pages/board/part/PartEdit';
 
 const Container = styled.div`
   display: flex;
@@ -22,6 +23,8 @@ interface StudyWriteTemplateProps {
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
   setFiles: Dispatch<SetStateAction<File[]>>;
+  originFiles?: originFile[];
+  setOriginFiles?: Dispatch<SetStateAction<originFile[]>>;
 }
 
 const NoticeWrite = ({
@@ -31,6 +34,8 @@ const NoticeWrite = ({
   setContent,
   files,
   setFiles,
+  originFiles,
+  setOriginFiles,
   onSave,
 }: StudyWriteTemplateProps) => {
   return (
@@ -43,6 +48,8 @@ const NoticeWrite = ({
         <Markdown
           content={content}
           setContent={setContent}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
           files={files}
           setFiles={setFiles}
         />
