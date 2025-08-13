@@ -10,7 +10,7 @@ import EduPartTap from '@/components/Board/EduPartTap';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import useCustomBack from '@/hooks/useCustomBack';
 import Loading from '@/components/common/Loading';
-import { BoardContent } from '@/pages/Board';
+import { SearchContent } from '@/types/search';
 
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
@@ -18,7 +18,7 @@ const EducationBoard = () => {
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
 
   const [searchMode, setSearchMode] = useState(false);
-  const [searchResults, setSearchResults] = useState<BoardContent[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchContent[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const EducationBoard = () => {
 
   const posts = data?.pages.flatMap((page) => page.content) ?? [];
 
-  const handleSearchDone = (result: BoardContent[]) => {
+  const handleSearchDone = (result: SearchContent[]) => {
     setSearchMode(true);
     setSearchResults(result);
   };
@@ -103,6 +103,7 @@ const EducationBoard = () => {
         </S.DropdownContainer>
       </S.InformationContainer>
       <StudyBoardSearch
+        requestType="education"
         onSearchDone={handleSearchDone}
         onClear={handleSearchClear}
         onLoading={setSearchLoading}

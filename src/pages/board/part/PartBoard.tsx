@@ -13,6 +13,7 @@ import useGetPartBoard from '@/api/useGetPartBoard';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/pages/Board';
 import Loading from '@/components/common/Loading';
+import { SearchContent } from '@/types/search';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -68,7 +69,7 @@ const PartBoard = () => {
 
   const posts = data?.pages.flatMap((page) => page.content) ?? [];
 
-  const handleSearchDone = (result: BoardContent[]) => {
+  const handleSearchDone = (result: SearchContent[]) => {
     setSearchMode(true);
     setSearchResults(result);
   };
@@ -145,6 +146,7 @@ const PartBoard = () => {
         )}
       </S.InformationContainer>
       <StudyBoardSearch
+        requestType="part"
         onSearchDone={handleSearchDone}
         onClear={handleSearchClear}
         onLoading={setSearchLoading}

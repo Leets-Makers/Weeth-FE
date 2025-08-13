@@ -9,6 +9,7 @@ import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/pages/Board';
+import { SearchContent } from '@/types/search';
 
 interface Content {
   id: number;
@@ -96,7 +97,7 @@ const BoardNotice = () => {
     navigate(`/board/notices/${postId}`);
   };
 
-  const handleSearchDone = (result: BoardContent[]) => {
+  const handleSearchDone = (result: SearchContent[]) => {
     setSearchMode(true);
     setSearchResults(result);
   };
@@ -118,6 +119,7 @@ const BoardNotice = () => {
       </Header>
       <S.SearchContainer>
         <StudyBoardSearch
+          requestType="notices"
           onSearchDone={handleSearchDone}
           onClear={handleSearchClear}
           onLoading={setSearchLoading}
