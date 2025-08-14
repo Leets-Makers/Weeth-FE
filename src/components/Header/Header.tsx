@@ -45,6 +45,7 @@ import PlusButton from '@/components/Header/PlusButton';
 import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
+import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
@@ -58,6 +59,7 @@ interface HeaderProps {
     | 'SEARCH'
     | 'WRITING'
     | 'POST'
+    | 'ADMINWRITING'
     | 'none';
   isComplete?: boolean;
   isAccessible: boolean;
@@ -68,8 +70,8 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 370px;
-  padding: 25px 25px 10px 20px;
+  width: 375px;
+  padding: 25px 25px 10px 25px;
   box-sizing: border-box;
 `;
 
@@ -90,6 +92,8 @@ const Header = ({
   isAccessible = false,
   isWaiting = false,
 }: HeaderProps) => {
+  const { isAdmin } = useGetUserInfo();
+
   return (
     <HeaderWrapper>
       <LeftButton isWaiting={isWaiting} />
@@ -106,6 +110,13 @@ const Header = ({
       {RightButtonType === 'WRITING' && onClickRightButton && (
         <WritingButton onClick={onClickRightButton} text="글쓰기" />
       )}
+
+      {isAdmin &&
+        RightButtonType === 'ADMINWRITING' &&
+        onClickRightButton &&
+        isAccessible && (
+          <PostButton onClick={onClickRightButton} text="게시하기" />
+        )}
 
       {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
         <PostButton onClick={onClickRightButton} text="게시하기" />

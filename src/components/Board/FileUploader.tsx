@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import AddPostFile from '@/components/Board/AddPostFile';
+import AddFile from '@/assets/images/ic_add_folder.svg?react';
 
 export const FileButton = styled.img`
   cursor: pointer;
@@ -35,7 +35,7 @@ const FileUploader = ({
 
   return (
     <>
-      <AddPostFile onClick={handleClick} />
+      <AddFile onClick={handleClick} />
       <input
         type="file"
         ref={fileInputRef}

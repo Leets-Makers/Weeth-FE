@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface PartProps {
-  part: 'PM' | 'D' | 'FE' | 'BE' | 'ALL';
+  part: '' | 'PM' | 'D' | 'FE' | 'BE' | 'ALL';
 }
 
 const colorMap = {
@@ -25,10 +25,15 @@ const colorMap = {
     background: '#EBEBEB1A',
     color: '#EBEBEB',
   },
+  '': {
+    background: 'EBEBEB1A',
+    color: '#EBEBEB',
+  },
 };
 
 const Container = styled.div<PartProps>`
   flex: 0 0 auto;
+  width: fit-content;
   height: 20px;
   box-sizing: border-box;
   border-radius: 0.3125rem;

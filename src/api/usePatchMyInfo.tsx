@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toastError } from '@/components/common/ToastMessage';
-import api from './api';
+import api from '@/api/api';
 
 export const patchMyInfo = async (data: Record<string, any>) => {
   return api.patch(`/api/v1/users`, data);

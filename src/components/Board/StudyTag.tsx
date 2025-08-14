@@ -17,8 +17,8 @@ const Container = styled.div`
   color: ${theme.color.gray[65]};
 `;
 
-const StudyTag = () => {
-  return <Container>데이터분석</Container>;
+const StudyTag = ({ studyName }: { studyName: string }) => {
+  return <Container>{studyName}</Container>;
 };
 
 export default StudyTag;

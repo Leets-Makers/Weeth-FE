@@ -4,9 +4,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 23.125rem;
-  max-width: 23.125rem;
+  width: 375px;
+  max-width: 375px;
   margin-bottom: 3.125rem;
+`;
+
+export const SearchContainer = styled.div`
+  display: flex;
+  padding-top: 15px;
 `;
 
 export const TabContainerWrapper = styled.div`
@@ -25,6 +30,7 @@ export const TabTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  cursor: pointer;
 `;
 
 export const TabText = styled.div`
@@ -43,7 +49,7 @@ export const Underline = styled.div`
 export const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border-bottom: 2px solid ${theme.color.gray[12]};
+  border-bottom: 1px solid ${theme.color.gray[12]};
   padding: 15px 10px;
   gap: 15px;
 `;

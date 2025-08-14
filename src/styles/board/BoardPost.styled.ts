@@ -5,7 +5,7 @@ export const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 23.125rem;
+  width: 375px;
   padding-bottom: 1.25rem;
 
   ul {

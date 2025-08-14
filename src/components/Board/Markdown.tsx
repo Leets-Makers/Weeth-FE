@@ -1,5 +1,4 @@
-import AddFile from '@/assets/images/ic_add_folder.svg?react';
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
 import useMarkdownEditor from '@/hooks/useMarkdownEditor';
 import ContentPost from '@/components/Board/ContentPost';
@@ -11,15 +10,43 @@ import remarkGfm from 'remark-gfm';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
 import markdownActions from '@/constants/markdownAction';
 import * as S from '@/styles/board/Markdown.styled';
+import PostFile from '@/components/Board/PostFile';
+import FileUploader from '@/components/Board/FileUploader';
+import { originFile } from '@/pages/board/part/PartEdit';
 
-const Markdown = () => {
+interface MarkdownProps {
+  content: string;
+  setContent: (value: string) => void;
+  files: File[];
+  setFiles: Dispatch<SetStateAction<File[]>>;
+  originFiles?: originFile[];
+  setOriginFiles?: Dispatch<SetStateAction<originFile[]>>;
+}
+
+const Markdown = ({
+  content,
+  setContent,
+  files,
+  setFiles,
+  originFiles,
+  setOriginFiles,
+}: MarkdownProps) => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
 
-  const [markdown, setMarkdown] = useState('');
-  const { textareaRef, insertText } = useMarkdownEditor(markdown, setMarkdown);
+  const { textareaRef, insertText } = useMarkdownEditor(content, setContent);
   const [activeTab, setActiveTab] = useState<'write' | 'preview'>('write');
+
+  const handleDeleteFile = (fileName: string) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  };
+
+  const handleDeleteOrigin = (fileName: string) => {
+    setOriginFiles?.((prev) =>
+      (prev ?? []).filter((f) => f.fileName !== fileName),
+    );
+  };
 
   return (
     <S.Container>
@@ -31,12 +58,9 @@ const Markdown = () => {
         onMouseLeave={onMouseLeave}
       >
         <S.StyledImg aria-label="파일 추가">
-          <AddFile />
+          <FileUploader files={files} setFiles={setFiles} />
         </S.StyledImg>
         <S.VerticalDivider />
-        <S.StyledImg aria-label="파일 추가">
-          <AddFile />
-        </S.StyledImg>
         {markdownActions.map((action) => {
           if (action === 'divider') return <S.VerticalDivider key="divider" />;
 
@@ -58,8 +82,8 @@ const Markdown = () => {
       {activeTab === 'write' ? (
         <ContentPost
           textareaRef={textareaRef}
-          value={markdown}
-          onChange={setMarkdown}
+          value={content}
+          onChange={setContent}
         />
       ) : (
         <S.PreviewContainer>
@@ -72,11 +96,37 @@ const Markdown = () => {
                 input: CustomCheckbox,
               }}
             >
-              {markdown || '미리볼 내용이 없습니다.'}
+              {content || '미리 볼 내용이 없습니다.'}
             </ReactMarkdown>
           </S.PreviewWrapper>
         </S.PreviewContainer>
       )}
+      <S.FileContainer>
+        {originFiles && (
+          <>
+            {originFiles.map((of) => (
+              <PostFile
+                key={of.fileName}
+                fileName={of.fileName}
+                isDownload={false}
+                onClick={() => handleDeleteOrigin(of.fileName)}
+              />
+            ))}
+          </>
+        )}
+        {files.length > 0 && (
+          <>
+            {files.map((file) => (
+              <PostFile
+                key={file.name}
+                fileName={file.name}
+                isDownload={false}
+                onClick={() => handleDeleteFile(file.name)}
+              />
+            ))}
+          </>
+        )}
+      </S.FileContainer>
     </S.Container>
   );
 };

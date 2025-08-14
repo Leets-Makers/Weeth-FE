@@ -4,56 +4,30 @@ import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
 import PostDetailMain from '@/components/Board/PostDetailMain';
 import Header from '@/components/Header/Header';
-import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetUserName from '@/hooks/useGetUserName';
 import MenuModal from '@/components/common/MenuModal';
-import theme from '@/styles/theme';
 import deletePost from '@/api/deletePost';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
+import getHeaderTitle from '@/utils/getHeaderTitle';
+import * as S from '@/styles/board/BoardDetail.styled';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 370px;
-  margin: 0 auto;
-  padding-bottom: 60px;
-`;
-
-const CommentInputContainer = styled.div`
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 370px;
-  z-index: 10;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-`;
-
-const TextButton = styled.div<{ $isLast?: boolean }>`
-  width: calc(100% - 8px);
-  box-sizing: border-box;
-  padding: 12px 0 12px 16px;
-  margin: 0 4px;
-  border-bottom: ${(props) =>
-    props.$isLast ? 'none' : `1px solid ${theme.color.gray[30]}`};
-  color: ${(props) => (props.$isLast ? theme.color.negative : 'white')};
-`;
-
-const NoticePostDetail = () => {
-  useCustomBack('/notice');
-  const { postId } = useParams();
+const PartDetail = () => {
+  const { category, part, postId } = useParams<{
+    category: string;
+    part: string;
+    postId: string;
+  }>();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
-  const type = path === 'board' ? 'board' : 'notices';
+
+  useCustomBack(`/board/${category}/${part}`);
+
+  const type = path === 'notices' ? 'notices' : 'board';
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
 
@@ -65,6 +39,8 @@ const NoticePostDetail = () => {
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
+  const [files, setFiles] = useState<File[]>([]);
 
   const { boardDetailInfo, error, loading } = useGetBoardDetail(
     type,
@@ -89,7 +65,7 @@ const NoticePostDetail = () => {
   const confirmDelete = async () => {
     try {
       await deletePost(numericPostId, type);
-      navigate('/notice', { replace: true });
+      navigate(`/board/${category}/${part}`, { replace: true });
       setTimeout(() => {
         toastInfo('게시물이 삭제되었습니다');
       }, 500);
@@ -126,6 +102,10 @@ const NoticePostDetail = () => {
   if (error) return <div>오류: {error}</div>;
   if (loading) return <Loading />;
 
+  if (!category || !part || !postId) {
+    return <div>잘못된 경로입니다.</div>;
+  }
+
   return (
     <>
       {isModalOpen && (
@@ -134,12 +114,16 @@ const NoticePostDetail = () => {
             setIsModalOpen(false);
           }}
         >
-          <TextButton onClick={() => navigate(`/notice/${postId}/edit`)}>
+          <S.TextButton
+            onClick={() =>
+              navigate(`/board/${category}/${part}/${postId}/edit`)
+            }
+          >
             수정
-          </TextButton>
-          <TextButton $isLast onClick={openSelectModal}>
+          </S.TextButton>
+          <S.TextButton $isLast onClick={openSelectModal}>
             삭제
-          </TextButton>
+          </S.TextButton>
         </MenuModal>
       )}
       {isSelectModalOpen && (
@@ -151,7 +135,7 @@ const NoticePostDetail = () => {
         />
       )}
 
-      <Container>
+      <S.Container>
         <Header
           RightButtonType="MENU"
           isAccessible={isMyPost}
@@ -159,7 +143,7 @@ const NoticePostDetail = () => {
             setIsModalOpen(true);
           }}
         >
-          📢 공지사항
+          {getHeaderTitle(category, part)}
         </Header>
 
         {boardDetailInfo && (
@@ -175,18 +159,20 @@ const NoticePostDetail = () => {
             />
           </>
         )}
-      </Container>
-      <CommentInputContainer>
+      </S.Container>
+      <S.CommentInputContainer>
         {boardDetailInfo && (
           <CommentInput
             postId={boardDetailInfo.id}
             initialParentCommentId={parentCommentId}
             onCommentSuccess={handleCommentSuccess}
+            files={files}
+            setFiles={setFiles}
           />
         )}
-      </CommentInputContainer>
+      </S.CommentInputContainer>
     </>
   );
 };
 
-export default NoticePostDetail;
+export default PartDetail;

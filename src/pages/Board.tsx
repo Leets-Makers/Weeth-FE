@@ -1,6 +1,5 @@
 import * as S from '@/styles/board/Board.styled';
 import Header from '@/components/Header/Header';
-import { useNavigate } from 'react-router-dom';
 import useCustomBack from '@/hooks/useCustomBack';
 import NoticePreview from '@/components/Board/NoticePreview';
 import PartBoard from '@/components/Board/PartBoard';
@@ -16,23 +15,18 @@ export interface BoardContent {
   hasFile: boolean;
   position: string;
   role: string;
+  isNew: boolean;
+  studyName: string;
+  week: number;
+  parts: string[];
 }
 
 const Board = () => {
   useCustomBack('/home');
-  const navigate = useNavigate();
-
-  const handleRightButton = () => {
-    navigate('/board/search');
-  };
 
   return (
     <S.Container>
-      <Header
-        isAccessible
-        RightButtonType="SEARCH"
-        onClickRightButton={handleRightButton}
-      >
+      <Header isAccessible RightButtonType="none">
         게시판
       </Header>
       <S.BoardContainer>

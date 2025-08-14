@@ -7,6 +7,7 @@ const TabContainer = styled.div`
   border-bottom: 2px solid ${theme.color.gray[20]};
   position: relative;
   box-sizing: border-box;
+  flex-shrink: 0;
   padding-right: 10px;
 `;
 
@@ -26,6 +27,7 @@ const TabText = styled.div<{ isActive: boolean }>`
   font-family: ${theme.font.semiBold};
   color: ${({ isActive }) =>
     isActive ? theme.color.gray[100] : theme.color.gray[65]};
+  cursor: pointer;
 `;
 
 const Underline = styled.div`

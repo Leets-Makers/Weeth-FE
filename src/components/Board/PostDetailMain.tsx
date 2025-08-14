@@ -1,12 +1,15 @@
 import { useCallback } from 'react';
-import parse from 'html-react-parser';
 import CommentImage from '@/assets/images/ic_comment_count.svg';
 import * as S from '@/styles/board/PostDetail.styled';
 import PostFile from '@/components/Board/PostFile';
 import formatDateTime from '@/hooks/formatDateTime';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import { toastSuccess, toastError } from '@/components/common/ToastMessage';
-import convertLinksInText from '@/hooks/convertLinksInText';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
+import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
 
 interface Comment {
   id: number;
@@ -82,7 +85,18 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
           </S.SmallText>
         </S.PostMainTitle>
         <S.PostingContianer>
-          {parse(convertLinksInText(info.content))}
+          {/* {parse(convertLinksInText(info.content))} */}
+          <ReactMarkdown
+            rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkBreaks, remarkGfm]}
+            components={{
+              a: MarkdownLink,
+              input: CustomCheckbox,
+              // img: (props) => <img {...props} style={{ maxWidth: '100%' }} />,
+            }}
+          >
+            {info.content || ''}
+          </ReactMarkdown>
         </S.PostingContianer>
       </S.PostContentContainer>
       <S.PostBottomContent>

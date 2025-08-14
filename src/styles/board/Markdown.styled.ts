@@ -7,7 +7,6 @@ export const Container = styled.div`
   border-radius: 10px;
   background-color: ${theme.color.gray[18]};
   width: 345px;
-  height: 403.12px;
   box-sizing: border-box;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -17,6 +16,7 @@ export const MarkdownTapContainer = styled.div`
   height: 44px;
   box-sizing: border-box;
   overflow-x: auto;
+  flex-shrink: 0;
   cursor: grab;
   border-bottom: 1px solid ${theme.color.gray[30]};
   border-radius: 10px 10px 0 0;
@@ -157,6 +157,17 @@ export const PreviewWrapper = styled.div`
     font-style: italic;
   }
 
+  & h1,
+  h2,
+  h3,
+  h4,
+  & ul,
+  ol,
+  li,
+  & p {
+    white-space: normal;
+  }
+
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -172,4 +183,13 @@ export const PreviewWrapper = styled.div`
 
   scrollbar-width: thin;
   scrollbar-color: ${theme.color.gray[65]} transparent;
+`;
+
+export const FileContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 56px;
+  box-sizing: border-box;
+  padding: 10px;
+  gap: 10px;
 `;

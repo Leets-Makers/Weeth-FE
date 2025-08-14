@@ -1,20 +1,21 @@
-import { useState } from 'react';
 import * as S from '@/styles/board/PartBoard.styled';
 
-const PartBoardTap = () => {
-  const [activeTab, setActiveTab] = useState<'studylog' | 'article'>(
-    'studylog',
-  );
+interface PartBoardTapProps {
+  activeTab: 'StudyLog' | 'Article';
+  onTabChange: (tab: 'StudyLog' | 'Article') => void;
+}
+
+const PartBoardTap = ({ activeTab, onTabChange }: PartBoardTapProps) => {
   return (
     <S.TabContainerWrapper>
       <S.TabContainer>
-        <S.TabTextContainer onClick={() => setActiveTab('studylog')}>
+        <S.TabTextContainer onClick={() => onTabChange('StudyLog')}>
           <S.TabText>스터디로그</S.TabText>
-          {activeTab === 'studylog' && <S.Underline />}
+          {activeTab === 'StudyLog' && <S.Underline />}
         </S.TabTextContainer>
-        <S.TabTextContainer onClick={() => setActiveTab('article')}>
+        <S.TabTextContainer onClick={() => onTabChange('Article')}>
           <S.TabText>아티클</S.TabText>
-          {activeTab === 'article' && <S.Underline />}
+          {activeTab === 'Article' && <S.Underline />}
         </S.TabTextContainer>
       </S.TabContainer>
     </S.TabContainerWrapper>

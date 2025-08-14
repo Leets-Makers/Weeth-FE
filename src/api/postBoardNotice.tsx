@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { PostRequestType } from '@/types/PostRequestType';
 import axios from 'axios';
-import api from './api';
+import api from '@/api/api';
 
 interface originFile {
   fileId: number;
@@ -36,7 +36,14 @@ export const postBoardNotice = async ({
   originFiles?: originFile[];
   files: File[];
   postData: PostRequestType;
-  postType: 'postBoard' | 'postNotice' | 'editBoard' | 'editNotice';
+  postType:
+    | 'postBoard'
+    | 'postNotice'
+    | 'postEdu'
+    | 'editBoard'
+    | 'editNotice'
+    | 'editPart'
+    | 'editEdu';
   id?: number;
 }) => {
   try {
@@ -58,7 +65,7 @@ export const postBoardNotice = async ({
     const updatedPostData = {
       ...postData,
       files: [
-        ...originFiles, // ✅ 기존 파일 유지
+        ...originFiles, // 기존 파일 유지
         ...files.map((file, index) => ({
           fileName: file.name,
           fileUrl: fileUrls[index],
@@ -78,12 +85,24 @@ export const postBoardNotice = async ({
         endpoint = `/api/v1/admin/notices`;
         method = 'post';
         break;
+      case 'postEdu':
+        endpoint = `/api/v1/admin/educations/education`;
+        method = 'post';
+        break;
       case 'editBoard':
         endpoint = `/api/v1/board/${id}`;
         method = 'patch';
         break;
       case 'editNotice':
         endpoint = `/api/v1/admin/notices/${id}`;
+        method = 'patch';
+        break;
+      case 'editPart':
+        endpoint = `/api/v1/board/${id}/part`;
+        method = 'patch';
+        break;
+      case 'editEdu':
+        endpoint = `/api/v1/admin/educations/${id}`;
         method = 'patch';
         break;
       default:

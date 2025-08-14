@@ -55,18 +55,105 @@ export const PositionIcon = styled.img`
 `;
 
 export const PostingContianer = styled.div`
-  font-size: 1rem;
-  line-height: 1.1931rem;
+  // font-size: 1rem;
+  // line-height: 1.1931rem;
   white-space: pre-wrap;
-  // margin: 1.25rem 0 1.25rem 0;
-
-  a {
-    color: ${theme.color.main};
-    text-decoration: none;
-  }
 
   a:hover {
     color: ${theme.color.mainDark};
+  }
+
+  & h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.4;
+    padding: 0;
+  }
+
+  & code {
+    background-color: ${theme.color.gray[30]};
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  & pre {
+    background-color: ${theme.color.gray[30]};
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  & a {
+    color: ${theme.color.main};
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  & li {
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  & ul,
+  & ol {
+    margin: 0;
+    padding-left: 10px;
+    line-height: 1.4;
+    list-style-position: inside;
+  }
+
+  & p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+  }
+
+  li:has(p > input[type='checkbox']) {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 0;
+  }
+
+  & li:has(> input[type='checkbox']) > input[type='checkbox'] {
+    flex-shrink: 0;
+    transform: scale(0.9);
+    margin: 0;
+  }
+
+  li p {
+    display: inline;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+  }
+
+  & blockquote {
+    margin: 0;
+    padding-left: 8px;
+    border-left: 3px solid ${theme.color.main};
+    color: ${theme.color.gray[80]};
+    font-style: italic;
+  }
+
+  & h1,
+  h2,
+  h3,
+  h4,
+  & ul,
+  ol,
+  li,
+  & p {
+    white-space: normal;
   }
 `;
 

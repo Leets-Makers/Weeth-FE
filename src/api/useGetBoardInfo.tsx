@@ -4,13 +4,31 @@ import { useState, useEffect } from 'react';
 interface Content {
   id: number;
   name: string;
+  position: string;
+  role: string;
   title: string;
   content: string;
+  studyName: string;
+  week: number;
   time: string;
   commentCount: number;
   hasFile: boolean;
-  position: string;
-  role: string;
+  isNew: boolean;
+}
+
+interface Sort {
+  empty: boolean;
+  unsorted: boolean;
+  sorted: boolean;
+}
+
+interface Pageable {
+  offset: number;
+  sort: Sort;
+  unpaged: boolean;
+  pageNumber: number;
+  pageSize: number;
+  paged: boolean;
 }
 
 interface ApiResponse {
@@ -20,12 +38,14 @@ interface ApiResponse {
     size: number;
     content: Content[];
     number: number;
+    sort: Sort;
+    pageable: Pageable;
+    numberOfElements: number;
     first: boolean;
     last: boolean;
+    empty: boolean;
   };
 }
-
-const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const useGetBoardInfo = async (
   path: string,
@@ -37,7 +57,7 @@ export const useGetBoardInfo = async (
   setObserverLoading(true);
 
   try {
-    const response = await api.get<ApiResponse>(`${BASE_URL}/api/v1/${path}`, {
+    const response = await api.get<ApiResponse>(`/api/v1/${path}`, {
       params: { pageNumber, pageSize: 10 },
     });
 
@@ -62,12 +82,9 @@ export const useGetRecentNotice = () => {
       try {
         setRecentNoticeLoading(true);
 
-        const response = await api.get<ApiResponse>(
-          `${BASE_URL}/api/v1/notices`,
-          {
-            params: { pageNumber: 0, pageSize: 10 },
-          },
-        );
+        const response = await api.get<ApiResponse>(`/api/v1/notices`, {
+          params: { pageNumber: 0, pageSize: 10 },
+        });
 
         const { content } = response.data.data;
         setRecentNotices(content);

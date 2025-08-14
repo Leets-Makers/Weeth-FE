@@ -1,4 +1,4 @@
-import api from './api';
+import api from '@/api/api';
 
 export const deleteUser = async () => {
   return api.delete('/api/v1/users');

@@ -2,11 +2,12 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 export const CommentContainer = styled.div<{ $isSelect: boolean }>`
-  width: calc(100% - 1.25rem);
+  width: 375px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  padding: 0.625rem;
+  padding: 9px 15px;
   background-color: ${(props) =>
     props.$isSelect ? '#508FFF1A' : 'transparent'};
   transition: background-color 0.3s ease;
