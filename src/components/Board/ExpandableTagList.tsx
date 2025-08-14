@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import RefreshIcon from '@/assets/images/ic_study_refresh.svg?react';
 import open from '@/assets/images/ic_study_open.svg';
 import close from '@/assets/images/ic_study_close.svg';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
+import getStudyLists from '@/api/useGetStudyList';
+import { RealPart } from '@/types/part';
+import { useParams } from 'react-router-dom';
+import { toastError } from '../common/ToastMessage';
 
 export const Container = styled.div`
   display: flex;
@@ -67,23 +71,31 @@ interface StudyTagProps {
 }
 
 const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
-  const tags = [
-    'React',
-    '데이터분석',
-    'Framer',
-    '알고리즘',
-    '자바스크립트',
-    '스프링',
-  ];
+  const [studyList, setStudyList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
+  const { part } = useParams<{ part: RealPart }>();
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    if (!part) return;
+
+    (async () => {
+      try {
+        const names = await getStudyLists(part);
+        setStudyList(names);
+      } catch (e) {
+        toastError('스터디 목록을 불러오지 못했습니다.');
+        console.error(e);
+      }
+    })();
+  }, [part, isRefreshing]);
 
   return (
     <Container>
@@ -104,7 +116,7 @@ const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
         >
           <RefreshIcon />
         </StudyTag>
-        {tags.map((tag) => (
+        {studyList.map((tag) => (
           <StudyTag
             key={tag}
             selected={selectedTag === tag}
