@@ -55,12 +55,18 @@ export const PositionIcon = styled.img`
 `;
 
 export const PostingContianer = styled.div`
-  // font-size: 1rem;
-  // line-height: 1.1931rem;
   white-space: pre-wrap;
 
   a:hover {
     color: ${theme.color.mainDark};
+  }
+
+  img,
+  video,
+  iframe {
+    display: block;
+    max-width: 100%;
+    height: auto;
   }
 
   & h1,

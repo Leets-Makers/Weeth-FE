@@ -75,6 +75,14 @@ export const PreviewWrapper = styled.div`
   overflow-y: auto;
   scrollbar-gutter: stable;
 
+  img,
+  video,
+  iframe {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
   & h1,
   h2,
   h3,
