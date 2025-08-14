@@ -13,7 +13,6 @@ export const Container = styled.div`
 export const CommentInputContainer = styled.div`
   position: fixed;
   bottom: 0;
-  background-color: ${theme.color.gray[18]};
   max-width: 375px;
   left: 50%;
   transform: translateX(-50%);
