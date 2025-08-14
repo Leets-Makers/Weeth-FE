@@ -28,6 +28,7 @@ const PartDetail = () => {
   useCustomBack(`/board/${category}/${part}`);
 
   const type = path === 'notices' ? 'notices' : 'board';
+  const commentType = 'board';
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
 
@@ -152,7 +153,7 @@ const PartDetail = () => {
             <PostCommentList
               comments={boardDetailInfo.comments}
               postId={boardDetailInfo.id}
-              path={type}
+              path={commentType}
               onCommentDelete={handleRefresh}
               onReply={handleReply}
               selectedComment={selectedComment}
