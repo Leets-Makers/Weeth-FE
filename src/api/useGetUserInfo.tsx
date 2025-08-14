@@ -5,7 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { toastError } from '@/components/common/ToastMessage';
-import api from './api';
+import api from '@/api/api';
 
 interface UserInfo {
   id: number;

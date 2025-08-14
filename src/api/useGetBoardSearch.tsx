@@ -7,9 +7,7 @@ import {
   PartApiResponse,
   PartSearchContent,
 } from '@/types/search';
-import api from './api';
-
-const BASE_URL = import.meta.env.VITE_API_URL;
+import api from '@/api/api';
 
 export const useGetPartSearch = async (
   keyword: string,
@@ -18,7 +16,7 @@ export const useGetPartSearch = async (
 ) => {
   try {
     const response = await api.get<PartApiResponse>(
-      `${BASE_URL}/api/v1/board/search/part`,
+      `/api/v1/board/search/part`,
       {
         params: { keyword, pageNumber, pageSize: 50 },
       },
@@ -40,7 +38,7 @@ export const useGetEduSearch = async (
 ) => {
   try {
     const response = await api.get<EduApiResponse>(
-      `${BASE_URL}/api/v1/board/search/education`,
+      `/api/v1/board/search/education`,
       {
         params: { keyword, pageNumber, pageSize: 50 },
       },
@@ -62,7 +60,7 @@ export const useGetNoticeSearch = async (
 ) => {
   try {
     const response = await api.get<NoticeApiResponse>(
-      `${BASE_URL}/api/v1/notices/search`,
+      `/api/v1/notices/search`,
       {
         params: { keyword, pageNumber, pageSize: 50 },
       },

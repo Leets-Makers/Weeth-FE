@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { PostRequestType } from '@/types/PostRequestType';
 import axios from 'axios';
-import api from './api';
+import api from '@/api/api';
 
 interface originFile {
   fileId: number;

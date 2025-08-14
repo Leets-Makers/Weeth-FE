@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toastError } from '@/components/common/ToastMessage';
-import api from './api';
+import api from '@/api/api';
 
 export const getYearlySchedule = async (year: number, semester: number) => {
   return api.get(`/api/v1/schedules/yearly`, {

@@ -47,8 +47,6 @@ interface ApiResponse {
   };
 }
 
-const BASE_URL = import.meta.env.VITE_API_URL;
-
 export const useGetBoardInfo = async (
   path: string,
   pageNumber: number,
@@ -59,7 +57,7 @@ export const useGetBoardInfo = async (
   setObserverLoading(true);
 
   try {
-    const response = await api.get<ApiResponse>(`${BASE_URL}/api/v1/${path}`, {
+    const response = await api.get<ApiResponse>(`/api/v1/${path}`, {
       params: { pageNumber, pageSize: 10 },
     });
 
@@ -84,12 +82,9 @@ export const useGetRecentNotice = () => {
       try {
         setRecentNoticeLoading(true);
 
-        const response = await api.get<ApiResponse>(
-          `${BASE_URL}/api/v1/notices`,
-          {
-            params: { pageNumber: 0, pageSize: 10 },
-          },
-        );
+        const response = await api.get<ApiResponse>(`/api/v1/notices`, {
+          params: { pageNumber: 0, pageSize: 10 },
+        });
 
         const { content } = response.data.data;
         setRecentNotices(content);

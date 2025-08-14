@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '@/api/api';
 
-const BASE_URL = import.meta.env.VITE_API_URL;
-
 interface Comments {
   id: number;
   name: string;
@@ -37,7 +35,7 @@ interface BoardDetail {
 }
 
 const getBoardDetail = async (path: string, id: number) => {
-  return api.get(`${BASE_URL}/api/v1/${path}/${id}`, {});
+  return api.get(`/api/v1/${path}/${id}`, {});
 };
 
 export const useGetBoardDetail = (
