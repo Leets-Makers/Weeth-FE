@@ -18,6 +18,13 @@ export const CommentContentContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: 10px;
+`;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -44,7 +51,6 @@ export const PositionIcon = styled.img`
 export const ContentText = styled.div`
   font-size: 1rem;
   line-height: 1.1931rem;
-  margin-top: 0.625rem;
 
   a {
     color: ${theme.color.main};
@@ -59,7 +65,6 @@ export const ContentText = styled.div`
 export const DateText = styled.div`
   color: ${theme.color.gray[65]};
   font-size: 0.75rem;
-  margin-top: 0.3125rem;
 `;
 
 export const ImageButton = styled.button`
@@ -70,29 +75,31 @@ export const ImageButton = styled.button`
 `;
 
 export const ReplyCommentContainer = styled.div`
-  width: 100%;
+  width: 375px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+  padding: 0 15px;
   align-items: flex-start;
-  padding: 0.625rem 0;
   word-break: break-all;
+  gap: 10px;
 `;
 
 export const ReplyArrow = styled.img`
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.3125rem;
+  width: 20px;
+  height: 20px;
 `;
 
 export const ReplyContentContainer = styled.div`
   flex: 1;
   background-color: ${theme.color.gray[18]};
   border-radius: 0.5rem;
-  padding: 0.625rem;
+  padding: 10px 0 10px 10px;
   display: flex;
   flex-direction: column;
   position: relative;
+  gap: 5px;
 `;
 
 export const ReplyImageButton = styled.button`

@@ -10,9 +10,9 @@ import { useDraggable } from '@/hooks/useDraggable';
 
 const parts = [
   { key: '', label: '전체', image: ENTIRE, url: 'ALL' },
-  { key: 'D', label: '디자인', image: D, url: 'D' },
-  { key: 'BE', label: '백엔드', image: BE, url: 'BE' },
   { key: 'FE', label: '프론트', image: FE, url: 'FE' },
+  { key: 'BE', label: '백엔드', image: BE, url: 'BE' },
+  { key: 'D', label: '디자인', image: D, url: 'D' },
   { key: 'PM', label: '기획', image: PM, url: 'PM' },
 ];
 

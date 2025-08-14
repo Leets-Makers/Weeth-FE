@@ -12,13 +12,12 @@ export const Container = styled.div`
 
 export const CommentInputContainer = styled.div`
   position: fixed;
-  bottom: 15px;
+  bottom: 0;
+  max-width: 375px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 370px;
   z-index: 10;
-  padding: 10px;
   display: flex;
   justify-content: center;
 `;

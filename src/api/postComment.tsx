@@ -41,7 +41,7 @@ const createComment = async (
     );
     // 현재 URL의 경로에서 "posts" 또는 "notice" 결정
     const currentPath = window.location.pathname;
-    const boardType = currentPath.includes('/notice') ? 'notices' : 'board';
+    const boardType = currentPath.includes('/notices') ? 'notices' : 'board';
 
     return api.post(`/api/v1/${boardType}/${postId}/comments`, {
       parentCommentId,
