@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import CommentSend from '@/assets/images/ic_send.svg';
 import createComment from '@/api/postComment';
 import { toastError } from '@/components/common/ToastMessage';
+import PostFile from '@/components/Board/PostFile';
+import FileUploader from '@/components/Board/FileUploader';
 
 const Container = styled.div`
   width: 314px;
@@ -14,6 +16,7 @@ const Container = styled.div`
   border-radius: 15px;
   background-color: ${theme.color.main};
   color: white;
+  gap: 3px;
 `;
 
 const Input = styled.input`
@@ -41,12 +44,16 @@ const CommentInput = ({
   postId,
   initialParentCommentId = null,
   onCommentSuccess,
+  files,
+  setFiles,
 }: {
   postId: number;
   initialParentCommentId?: number | null;
   onCommentSuccess?: () => void;
+  files: File[];
+  setFiles: Dispatch<SetStateAction<File[]>>;
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -64,7 +71,12 @@ const CommentInput = ({
     }
 
     try {
-      await createComment(postId, inputValue, parentCommentId ?? undefined);
+      await createComment(
+        postId,
+        inputValue,
+        parentCommentId ?? undefined,
+        files,
+      );
       setInputValue('');
       if (onCommentSuccess) onCommentSuccess();
     } catch (error: any) {
@@ -83,6 +95,10 @@ const CommentInput = ({
     }
   };
 
+  const handleDeleteFile = (fileName: string) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  };
+
   return (
     <Container>
       <Input
@@ -93,6 +109,19 @@ const CommentInput = ({
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
       />
+      {files.length > 0 && (
+        <>
+          {files.map((file) => (
+            <PostFile
+              key={file.name}
+              fileName={file.name}
+              isDownload={false}
+              onClick={() => handleDeleteFile(file.name)}
+            />
+          ))}
+        </>
+      )}
+      <FileUploader files={files} setFiles={setFiles} />
       <SendButton
         src={CommentSend}
         alt="댓글 입력 버튼"
