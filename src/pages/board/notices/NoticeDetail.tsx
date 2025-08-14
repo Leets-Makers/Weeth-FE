@@ -22,6 +22,7 @@ const NoticePostDetail = () => {
   const pathArray = url.pathname.split('/');
   const path = pathArray[2];
   const type = path === 'notices' ? 'notices' : 'board';
+  const commentType = 'notices';
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
 
@@ -140,7 +141,7 @@ const NoticePostDetail = () => {
             <PostCommentList
               comments={boardDetailInfo.comments}
               postId={boardDetailInfo.id}
-              path={type}
+              path={commentType}
               onCommentDelete={handleRefresh}
               onReply={handleReply}
               selectedComment={selectedComment}

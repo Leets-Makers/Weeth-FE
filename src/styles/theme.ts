@@ -27,6 +27,7 @@ const theme = {
   font: {
     semiBold: 'Pretendard SemiBold',
     regular: 'Pretendard Regular',
+    medium: 'Pretendard Medium',
   },
 };
 
