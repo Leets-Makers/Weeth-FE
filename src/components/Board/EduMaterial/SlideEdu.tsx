@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import Vector from '@/assets/images/ic_vector.svg?react';
 import FileIcon from '@/assets/images/ic_file.svg?react';
 import Part from '@/components/Board/EduMaterial/Part';
-import { PartEduContent } from '@/api/useGetEducationBoard';
 import { PartTypes } from '@/types/part';
-import dayjs from 'dayjs';
+import { PartEduContent } from '@/types/education';
+import formatMMDD from '@/utils/dataUtils';
 
 interface SlideEduProps {
   recentEdu: PartEduContent[];
@@ -18,12 +18,6 @@ const SlideEdu = ({ recentEdu }: SlideEduProps) => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
-
-  const formatMMDD = (iso?: string) => {
-    if (!iso) return '00/00';
-    const d = dayjs(iso);
-    return d.isValid() ? d.format('MM/DD') : '00/00';
-  };
 
   const handleEducationCard = (
     e: React.MouseEvent<HTMLDivElement>,
