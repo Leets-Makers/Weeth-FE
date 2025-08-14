@@ -70,8 +70,8 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 370px;
-  padding: 25px 25px 10px 20px;
+  width: 375px;
+  padding: 25px 25px 10px 25px;
   box-sizing: border-box;
 `;
 
