@@ -2,6 +2,11 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { RefObject } from 'react';
 import useAutoList from '@/hooks/useAutoList';
+import getFileUrl from '@/api/uploadFiles';
+import { toastError } from '@/components/common/ToastMessage';
+import useInsertAtCursor from '@/hooks/useInsertAtCursor';
+import useImageUpload from '@/hooks/useImageUpload';
+import useImagePasteDropHandlers from '@/hooks/useImagePasteDropHandlers';
 
 const Container = styled.div`
   display: flex;
@@ -64,6 +69,22 @@ const ContentPost = ({ textareaRef, value, onChange }: ContentPostProps) => {
     onChange,
   );
 
+  // 커서 삽입 훅
+  const { insertAtCursor } = useInsertAtCursor(textareaRef, value, onChange);
+
+  // 업로드+마크다운 삽입 훅
+  const { uploadFilesAndInsert, uploadImageUrlAndInsert } = useImageUpload(
+    getFileUrl,
+    insertAtCursor,
+  );
+
+  // 붙여넣기/드롭 핸들러 훅
+  const { onPaste, onDrop, onDragOver } = useImagePasteDropHandlers({
+    onFiles: uploadFilesAndInsert,
+    onImageUrl: uploadImageUrlAndInsert,
+    onNonImage: () => toastError('이미지 파일만 업로드 가능합니다.'),
+  });
+
   return (
     <Container>
       <ContentWrapper
@@ -78,6 +99,9 @@ const ContentPost = ({ textareaRef, value, onChange }: ContentPostProps) => {
         onCompositionEnd={() => {
           isComposingRef.current = false;
         }}
+        onPaste={onPaste}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
       />
     </Container>
   );
