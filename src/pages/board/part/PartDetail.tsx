@@ -13,7 +13,7 @@ import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
 import getHeaderTitle from '@/utils/getHeaderTitle';
-import * as S from '@/styles/board/BoardDetail.tsyled';
+import * as S from '@/styles/board/BoardDetail.styled';
 
 const PartDetail = () => {
   const { category, part, postId } = useParams<{
@@ -39,6 +39,8 @@ const PartDetail = () => {
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
+  const [files, setFiles] = useState<File[]>([]);
 
   const { boardDetailInfo, error, loading } = useGetBoardDetail(
     type,
@@ -164,6 +166,8 @@ const PartDetail = () => {
             postId={boardDetailInfo.id}
             initialParentCommentId={parentCommentId}
             onCommentSuccess={handleCommentSuccess}
+            files={files}
+            setFiles={setFiles}
           />
         )}
       </S.CommentInputContainer>

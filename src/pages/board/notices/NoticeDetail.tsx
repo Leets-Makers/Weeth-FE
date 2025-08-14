@@ -12,7 +12,7 @@ import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
-import * as S from '@/styles/board/BoardDetail.tsyled';
+import * as S from '@/styles/board/BoardDetail.styled';
 
 const NoticePostDetail = () => {
   useCustomBack('/board/notices');
@@ -33,6 +33,7 @@ const NoticePostDetail = () => {
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
 
   const { boardDetailInfo, error, loading } = useGetBoardDetail(
     type,
@@ -77,6 +78,7 @@ const NoticePostDetail = () => {
     setTimeout(() => {
       setParentCommentId(null);
       setSelectedComment({});
+      setFiles([]);
     }, 200);
     handleRefresh();
   };
@@ -152,6 +154,8 @@ const NoticePostDetail = () => {
             postId={boardDetailInfo.id}
             initialParentCommentId={parentCommentId}
             onCommentSuccess={handleCommentSuccess}
+            files={files}
+            setFiles={setFiles}
           />
         )}
       </S.CommentInputContainer>
