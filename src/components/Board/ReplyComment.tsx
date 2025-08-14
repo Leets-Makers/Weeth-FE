@@ -93,20 +93,22 @@ const ReplyComment = ({
           />
           {name}
         </S.NameText>
-        <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
-        {fileUrls.length > 0 && (
-          <S.ContentText>
-            {fileUrls.map((file) => (
-              <PostFile
-                key={file.fileId}
-                fileName={file.fileName}
-                isDownload
-                onClick={() => onClickDownload(file.fileUrl, file.fileName)}
-                isComment
-              />
-            ))}
-          </S.ContentText>
-        )}
+        <S.ContentContainer>
+          <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
+          {fileUrls.length > 0 && (
+            <S.ContentText>
+              {fileUrls.map((file) => (
+                <PostFile
+                  key={file.fileId}
+                  fileName={file.fileName}
+                  isDownload
+                  onClick={() => onClickDownload(file.fileUrl, file.fileName)}
+                  isComment
+                />
+              ))}
+            </S.ContentText>
+          )}
+        </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
         {isMyComment && (
           <S.ReplyImageButton onClick={onClickMenu}>

@@ -67,10 +67,6 @@ const Comment = ({
     }
   };
 
-  // const handleDeleteFile = (fileName: string) => {
-  //   setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
-  // };
-
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
     fetch(fileUrl, { method: 'GET' })
       .then((res) => res.blob())
@@ -107,20 +103,22 @@ const Comment = ({
           />
           {name}
         </S.NameText>
-        <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
-        {fileUrls.length > 0 && (
-          <S.ContentText>
-            {fileUrls.map((file) => (
-              <PostFile
-                key={file.fileId}
-                fileName={file.fileName}
-                isDownload
-                onClick={() => onClickDownload(file.fileUrl, file.fileName)}
-                isComment
-              />
-            ))}
-          </S.ContentText>
-        )}
+        <S.ContentContainer>
+          <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
+          {fileUrls.length > 0 && (
+            <S.ContentText>
+              {fileUrls.map((file) => (
+                <PostFile
+                  key={file.fileId}
+                  fileName={file.fileName}
+                  isDownload
+                  onClick={() => onClickDownload(file.fileUrl, file.fileName)}
+                  isComment
+                />
+              ))}
+            </S.ContentText>
+          )}
+        </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
       </S.CommentContentContainer>
       <S.ButtonContainer>
