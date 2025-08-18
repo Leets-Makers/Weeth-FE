@@ -1,15 +1,21 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { MOBILE, PC } from '@/styles';
 
 export const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 375px;
+  width: 100%;
+  max-width: ${MOBILE};
   padding-bottom: 1.25rem;
 
   ul {
     margin: 0;
+  }
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
   }
 `;
 

@@ -6,10 +6,17 @@ import createComment from '@/api/postComment';
 import { toastError } from '@/components/common/ToastMessage';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
+import { MOBILE, PC } from '@/styles';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: ${MOBILE};
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 const FileContainer = styled.div`
@@ -21,13 +28,14 @@ const FileContainer = styled.div`
 `;
 
 const CommentContainer = styled.div`
-  width: 375px;
+  width: 100%;
   display: flex;
   align-items: flex-end;
   padding: 10px 10px 22px 10px;
   gap: 10px;
   background-color: ${theme.color.gray[18]};
   color: white;
+  box-sizing: border-box;
 `;
 
 const Input = styled.textarea`

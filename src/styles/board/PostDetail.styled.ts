@@ -1,5 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { MOBILE, PC } from '@/styles';
 
 export const PostMainContainer = styled.div`
   display: flex;
@@ -8,6 +9,13 @@ export const PostMainContainer = styled.div`
   gap: 61px;
   word-break: break-all;
   border-bottom: 1px solid ${theme.color.gray[30]};
+  width: 100%;
+  max-width: ${MOBILE};
+  box-sizing: border-box;
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 export const PostMainTitleText = styled.div`
@@ -56,6 +64,7 @@ export const PositionIcon = styled.img`
 
 export const PostingContianer = styled.div`
   white-space: pre-wrap;
+  width: 100%;
 
   a:hover {
     color: ${theme.color.mainDark};

@@ -8,10 +8,17 @@ import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { PartTypes } from '@/types/part';
 import PartDropdown from '@/components/Board/PartDropdown';
 import { originFile } from '@/pages/board/part/PartEdit';
+import { MOBILE, PC } from '@/styles';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: ${MOBILE};
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 const InformationContainer = styled.div`
@@ -37,6 +44,7 @@ const DropdownContainer = styled.div`
 const MarkdownContainer = styled.div`
   display: flex;
   padding: 10px 15px;
+  box-sizing: border-box;
 `;
 
 type RealPart = Exclude<PartTypes, '' | 'ALL'>;

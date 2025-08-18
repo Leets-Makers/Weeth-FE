@@ -22,22 +22,31 @@ import {
   mapNoticeToBoard,
   mapPartToBoard,
 } from '@/utils/searchMappers';
+import { PC } from '@/styles';
 
 const Container = styled.div`
   display: flex;
   padding: 0px 15px;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 const Search = styled.div`
   display: flex;
+  align-items: center;
+  height: 44px;
   justify-content: space-between;
   border: 1px solid ${theme.color.gray[18]};
   border-radius: 0.25rem;
-  padding: 0.4375rem 0.75rem;
-  width: 345px;
+  gap: 10px;
   box-sizing: border-box;
   transition: border 0.2s;
+  padding: 13px 12px;
 
   &:focus-within {
     border: 1px solid ${theme.color.gray[65]};
@@ -51,7 +60,7 @@ export const SearchInput = styled.input`
   font-size: 1rem;
   color: #fff;
   padding: 0;
-  width: 14.375rem;
+  justify-content: center;
 
   &::placeholder {
     font-size: 1rem;
@@ -61,6 +70,7 @@ export const SearchInput = styled.input`
 
 const Divider = styled.img`
   margin: 0 0.75rem;
+  padding: 1px 0px 0px 0px;
 `;
 
 const SearchButton = styled.img<{ disabled?: boolean }>`

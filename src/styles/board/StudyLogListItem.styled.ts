@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { MOBILE, PC } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -7,6 +8,13 @@ export const Container = styled.div`
   padding: 15px;
   gap: 15px;
   cursor: pointer;
+  width: 100%;
+  max-width: ${MOBILE};
+  box-sizing: border-box;
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 export const PostTopSection = styled.div`

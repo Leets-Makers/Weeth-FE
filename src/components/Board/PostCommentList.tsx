@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Comment from '@/components/Board/Comment';
 import ReplyComment from '@/components/Board/ReplyComment';
 import { originFile } from '@/pages/board/part/PartEdit';
+import { MOBILE, PC } from '@/styles';
 
 interface CommentType {
   id: number;
@@ -19,6 +20,12 @@ const Container = styled.div`
   flex-direction: column;
   margin: 5px 5px 56px 5px;
   overflow-y: scroll;
+  width: 100%;
+  max-width: ${MOBILE};
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 const ReplyWrapper = styled.div`

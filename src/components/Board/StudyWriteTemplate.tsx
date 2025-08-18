@@ -8,10 +8,17 @@ import Markdown from '@/components/Board/Markdown';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyDropdown from '@/components/Board/StudyDropdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
+import { MOBILE, PC } from '@/styles';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: ${MOBILE};
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 const InformationContainer = styled.div`
@@ -37,6 +44,13 @@ const DropdownContainer = styled.div`
 const MarkdownContainer = styled.div`
   display: flex;
   padding: 10px 15px;
+  width: 100%;
+  max-width: ${MOBILE};
+  box-sizing: border-box;
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 interface StudyWriteTemplateProps {

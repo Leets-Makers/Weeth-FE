@@ -1,3 +1,4 @@
+import { MOBILE, PC } from '@/styles';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
@@ -6,6 +7,13 @@ const TitleWrapper = styled.div`
   flex-direction: column;
   padding: 10px 15px;
   gap: 10px;
+  width: 100%;
+  max-width: ${MOBILE};
+  box-sizing: border-box;
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+  }
 `;
 
 const Title = styled.div`
@@ -16,7 +24,7 @@ const Title = styled.div`
 
 const TitleInput = styled.input`
   height: 52px;
-  width: 345px;
+  width: 100%;
   box-sizing: border-box;
   border-radius: 10px;
   padding: 15px 10px;
