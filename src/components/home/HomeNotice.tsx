@@ -100,7 +100,7 @@ const HomeNotice = ({
 
   const handleNotice = () => {
     if (id) {
-      navi(`/notice/${id}`);
+      navi(`/board/notices/${id}`);
     }
   };
 
