@@ -1,8 +1,8 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const CommentContainer = styled.div<{ $isSelect: boolean }>`
-  width: 375px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -12,6 +12,11 @@ export const CommentContainer = styled.div<{ $isSelect: boolean }>`
     props.$isSelect ? '#508FFF1A' : 'transparent'};
   transition: background-color 0.3s ease;
   word-break: break-all;
+
+  width: 100%;
+  max-width: ${MOBILE};
+
+  ${pcResponsive}
 `;
 
 export const CommentContentContainer = styled.div`
@@ -75,7 +80,6 @@ export const ImageButton = styled.button`
 `;
 
 export const ReplyCommentContainer = styled.div`
-  width: 375px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -84,6 +88,11 @@ export const ReplyCommentContainer = styled.div`
   align-items: flex-start;
   word-break: break-all;
   gap: 10px;
+
+  width: 100%;
+  max-width: ${MOBILE};
+
+  ${pcResponsive}
 `;
 
 export const ReplyArrow = styled.img`

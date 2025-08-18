@@ -159,7 +159,7 @@ const PartBoard = () => {
             {searchMode
               ? `검색 결과 ${list.length}개`
               : `게시글 ${list.length}개`}
-          </S.TotalPostNumber>{' '}
+          </S.TotalPostNumber>
           {list.map((post) => (
             <>
               <S.PostListItemContainer key={post.id}>

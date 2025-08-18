@@ -1,17 +1,23 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { MOBILE, PC, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 375px;
-  max-width: 375px;
   margin-bottom: 3.125rem;
+  align-self: center;
+
+  width: 100%;
+  max-width: ${MOBILE};
+  ${pcResponsive}
 `;
 
 export const SearchContainer = styled.div`
   display: flex;
   padding-top: 15px;
+
+  ${pcResponsive}
 `;
 
 export const TabContainerWrapper = styled.div`
@@ -85,6 +91,10 @@ export const Line = styled.div`
   border: 1px solid;
   width: 366px;
   color: ${(props) => props.theme.color.gray[18]};
+
+  @media (min-width: ${PC}) {
+    width: ${PC};
+  }
 `;
 
 export const Text = styled.div`

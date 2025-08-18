@@ -46,6 +46,7 @@ import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
+import { pcResponsive } from '@/styles';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
@@ -70,9 +71,11 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 375px;
+  width: 100%;
   padding: 25px 25px 10px 25px;
   box-sizing: border-box;
+
+  ${pcResponsive}
 `;
 
 const Title = styled.div`

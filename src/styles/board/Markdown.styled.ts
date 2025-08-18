@@ -1,14 +1,18 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px;
   background-color: ${theme.color.gray[18]};
-  width: 345px;
   box-sizing: border-box;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: ${MOBILE};
+
+  ${pcResponsive}
 `;
 
 export const MarkdownTapContainer = styled.div`
@@ -24,6 +28,7 @@ export const MarkdownTapContainer = styled.div`
   display: flex;
   align-items: center;
   background-color: #3567c0;
+  width: 100%;
 
   &::-webkit-scrollbar {
     display: none;

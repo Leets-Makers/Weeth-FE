@@ -1,25 +1,31 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
+  width: 100%;
+  max-width: ${MOBILE};
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 375px;
   margin: 0 auto;
   padding-bottom: 60px;
+
+  ${pcResponsive}
 `;
 
 export const CommentInputContainer = styled.div`
   position: fixed;
   bottom: 0;
-  max-width: 375px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
   z-index: 10;
   display: flex;
   justify-content: center;
+  width: 100%;
+  max-width: ${MOBILE};
+
+  ${pcResponsive}
 `;
 
 export const TextButton = styled.div<{ $isLast?: boolean }>`

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { MOBILE, PC } from '@/styles';
 
 const Container = styled.div`
   position: absolute;
@@ -8,15 +9,24 @@ const Container = styled.div`
   z-index: 10;
   width: 100vw;
   height: 100vh;
-  // background-color: rgba(0, 0, 0, 0.5);
+
+  @media (max-width: ${PC}) {
+    width: ${PC};
+  }
 `;
 
 const ModalContainer = styled.div`
-  width: 370px;
+  width: 100%;
+  max-width: ${MOBILE};
   position: absolute;
   top: 55px;
-  left: 50%;
+  left: 45%;
   transform: translate(-50%);
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+    left: 50%;
+  }
 `;
 
 const Content = styled.div`

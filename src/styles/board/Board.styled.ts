@@ -1,12 +1,15 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { PC, MOBILE, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 375px;
-  max-width: 375px;
-  margin-bottom: 3.125rem;
+  width: 100%;
+  max-width: ${MOBILE};
+  margin: 0 auto;
+
+  ${pcResponsive}
 `;
 
 export const BoardContainer = styled.div`
@@ -14,6 +17,9 @@ export const BoardContainer = styled.div`
   flex-direction: column;
   gap: 1.875rem;
   padding-top: 0.625rem;
+  width: 100%;
+
+  ${pcResponsive}
 `;
 
 export const CardContainer = styled.div`
@@ -21,11 +27,16 @@ export const CardContainer = styled.div`
   flex-direction: column;
   padding: 0.625rem 0.9375rem 0rem 0.9375rem;
   gap: 0.625rem;
+
+  ${pcResponsive}
 `;
 
 export const NoticePreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+
+  ${pcResponsive}
 `;
 
 export const NoticeTextContainer = styled.div`
@@ -33,6 +44,8 @@ export const NoticeTextContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  ${pcResponsive}
 `;
 
 export const NoticeTitleText = styled.div`
@@ -47,6 +60,8 @@ export const AllText = styled.div`
   color: ${theme.color.gray[65]};
   cursor: pointer;
   margin-top: 0.1875rem;
+
+  ${pcResponsive}
 `;
 
 export const ScrollContainer = styled.div`
@@ -63,6 +78,32 @@ export const ScrollContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     border-radius: 0.25rem;
     background: ${theme.color.gray[65]};
+  }
+`;
+
+export const EduScrollContainer = styled.div`
+  display: flex;
+  overflow-x: auto;
+  gap: 0.9375rem;
+  cursor: grab;
+  padding: 10px 0px 10px 15px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem;
+    background: ${theme.color.gray[65]};
+  }
+
+  @media (min-width: ${PC}) {
+    width: 970px;
+    gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;
+    cursor: default;
   }
 `;
 
@@ -187,6 +228,9 @@ export const PartItem = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.625rem;
+  width: 100%;
+
+  ${pcResponsive}
 `;
 
 export const PartImage = styled.img`

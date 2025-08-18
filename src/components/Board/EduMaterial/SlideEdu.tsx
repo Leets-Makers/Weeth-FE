@@ -29,7 +29,7 @@ const SlideEdu = ({ recentEdu }: SlideEduProps) => {
   };
 
   return (
-    <S.ScrollContainer
+    <S.EduScrollContainer
       ref={scrollerRef}
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
@@ -66,7 +66,7 @@ const SlideEdu = ({ recentEdu }: SlideEduProps) => {
           </S.EduCard>
         );
       })}
-    </S.ScrollContainer>
+    </S.EduScrollContainer>
   );
 };
 export default SlideEdu;
