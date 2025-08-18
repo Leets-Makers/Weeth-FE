@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const PostWrapper = styled.div`
   display: flex;
@@ -14,9 +14,7 @@ export const PostWrapper = styled.div`
     margin: 0;
   }
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const TitleInput = styled.input`

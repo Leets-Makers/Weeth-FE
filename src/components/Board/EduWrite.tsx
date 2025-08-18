@@ -8,7 +8,7 @@ import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { PartTypes } from '@/types/part';
 import PartDropdown from '@/components/Board/PartDropdown';
 import { originFile } from '@/pages/board/part/PartEdit';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 
 const Container = styled.div`
   display: flex;
@@ -16,9 +16,7 @@ const Container = styled.div`
   width: 100%;
   max-width: ${MOBILE};
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 const InformationContainer = styled.div`

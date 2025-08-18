@@ -46,7 +46,7 @@ import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
-import { PC } from '@/styles';
+import { pcResponsive } from '@/styles';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
@@ -75,9 +75,7 @@ const HeaderWrapper = styled.div`
   padding: 25px 25px 10px 25px;
   box-sizing: border-box;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 const Title = styled.div`

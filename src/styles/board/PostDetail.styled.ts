@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const PostMainContainer = styled.div`
   display: flex;
@@ -13,9 +13,7 @@ export const PostMainContainer = styled.div`
   max-width: ${MOBILE};
   box-sizing: border-box;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const PostMainTitleText = styled.div`

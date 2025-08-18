@@ -1,4 +1,4 @@
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
@@ -11,9 +11,7 @@ const TitleWrapper = styled.div`
   max-width: ${MOBILE};
   box-sizing: border-box;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 const Title = styled.div`

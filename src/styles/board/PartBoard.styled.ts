@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, PC, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -10,18 +10,14 @@ export const Container = styled.div`
 
   width: 100%;
   max-width: ${MOBILE};
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const SearchContainer = styled.div`
   display: flex;
   padding-top: 15px;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const TabContainerWrapper = styled.div`

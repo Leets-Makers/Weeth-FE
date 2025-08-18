@@ -6,17 +6,14 @@ import createComment from '@/api/postComment';
 import { toastError } from '@/components/common/ToastMessage';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: ${MOBILE};
-
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 const FileContainer = styled.div`

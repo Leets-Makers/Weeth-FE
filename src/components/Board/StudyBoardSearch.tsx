@@ -22,7 +22,7 @@ import {
   mapNoticeToBoard,
   mapPartToBoard,
 } from '@/utils/searchMappers';
-import { PC } from '@/styles';
+import { pcResponsive } from '@/styles';
 
 const Container = styled.div`
   display: flex;
@@ -31,9 +31,7 @@ const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 const Search = styled.div`

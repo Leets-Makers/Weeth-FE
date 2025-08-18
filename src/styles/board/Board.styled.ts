@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { PC, MOBILE } from '@/styles';
+import { PC, MOBILE, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -9,9 +9,7 @@ export const Container = styled.div`
   max-width: ${MOBILE};
   margin: 0 auto;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const BoardContainer = styled.div`
@@ -21,9 +19,7 @@ export const BoardContainer = styled.div`
   padding-top: 0.625rem;
   width: 100%;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const CardContainer = styled.div`
@@ -32,9 +28,7 @@ export const CardContainer = styled.div`
   padding: 0.625rem 0.9375rem 0rem 0.9375rem;
   gap: 0.625rem;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const NoticePreviewContainer = styled.div`
@@ -42,9 +36,7 @@ export const NoticePreviewContainer = styled.div`
   flex-direction: column;
   width: 100%;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const NoticeTextContainer = styled.div`
@@ -53,9 +45,7 @@ export const NoticeTextContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const NoticeTitleText = styled.div`
@@ -71,9 +61,7 @@ export const AllText = styled.div`
   cursor: pointer;
   margin-top: 0.1875rem;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const ScrollContainer = styled.div`
@@ -242,9 +230,7 @@ export const PartItem = styled.div`
   gap: 0.625rem;
   width: 100%;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const PartImage = styled.img`

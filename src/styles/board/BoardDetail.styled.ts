@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   width: 100%;
@@ -10,9 +10,7 @@ export const Container = styled.div`
   margin: 0 auto;
   padding-bottom: 60px;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const CommentInputContainer = styled.div`
@@ -27,9 +25,7 @@ export const CommentInputContainer = styled.div`
   width: 100%;
   max-width: ${MOBILE};
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const TextButton = styled.div<{ $isLast?: boolean }>`

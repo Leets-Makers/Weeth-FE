@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const CommentContainer = styled.div<{ $isSelect: boolean }>`
   box-sizing: border-box;
@@ -16,9 +16,7 @@ export const CommentContainer = styled.div<{ $isSelect: boolean }>`
   width: 100%;
   max-width: ${MOBILE};
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const CommentContentContainer = styled.div`

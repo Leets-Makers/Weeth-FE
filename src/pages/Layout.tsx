@@ -1,4 +1,4 @@
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,9 +9,7 @@ const Shell = styled.div`
   align-items: center;
   box-sizing: border-box;
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 const BoardLayout = () => {

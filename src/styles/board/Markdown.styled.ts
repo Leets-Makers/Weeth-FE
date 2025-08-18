@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, PC } from '@/styles';
+import { MOBILE, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -12,9 +12,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: ${MOBILE};
 
-  @media (min-width: ${PC}) {
-    max-width: ${PC};
-  }
+  ${pcResponsive}
 `;
 
 export const MarkdownTapContainer = styled.div`
