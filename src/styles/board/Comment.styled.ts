@@ -80,7 +80,6 @@ export const ImageButton = styled.button`
 `;
 
 export const ReplyCommentContainer = styled.div`
-  width: ${MOBILE};
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -89,6 +88,11 @@ export const ReplyCommentContainer = styled.div`
   align-items: flex-start;
   word-break: break-all;
   gap: 10px;
+
+  width: 100%;
+  max-width: ${MOBILE};
+
+  ${pcResponsive}
 `;
 
 export const ReplyArrow = styled.img`
