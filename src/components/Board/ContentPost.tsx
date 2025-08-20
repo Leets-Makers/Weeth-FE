@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const ContentWrapper = styled.textarea`
   all: unset;
-  padding: 15px 5px 0px 10px;
+  padding: 15px 10px 0px 10px;
   width: 100%;
   box-sizing: border-box;
   height: 264.12px;
