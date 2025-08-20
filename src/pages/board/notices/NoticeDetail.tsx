@@ -11,12 +11,9 @@ import deletePost from '@/api/deletePost';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
-import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/board/BoardDetail.styled';
 
 const NoticePostDetail = () => {
-  useCustomBack('/board/notices');
-
   const { postId } = useParams();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');

@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
-import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/pages/Board';
 import { SearchContent } from '@/types/search';
 
@@ -39,8 +38,6 @@ const BoardNotice = () => {
   const [searchMode, setSearchMode] = useState(false);
   const [searchResults, setSearchResults] = useState<BoardContent[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
-
-  useCustomBack('/board');
 
   const path = 'notices';
 

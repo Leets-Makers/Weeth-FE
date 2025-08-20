@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import EduPartTap from '@/components/Board/EduPartTap';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
-import useCustomBack from '@/hooks/useCustomBack';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 
@@ -25,7 +24,6 @@ const EducationBoard = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const { part: partParam } = useParams<{ part: Part }>();
   const part = partParam as Part;
-  useCustomBack('/board');
 
   const handleTabChange = (nextPart: Part) => {
     if (nextPart !== part) {
