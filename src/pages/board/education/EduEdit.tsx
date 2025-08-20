@@ -1,7 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import postBoardNotice from '@/api/postBoardNotice';
-import { toastError, toastInfo } from '@/components/common/ToastMessage';
+import {
+  toastError,
+  toastInfo,
+  toastSuccess,
+} from '@/components/common/ToastMessage';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import EduWrite from '@/components/Board/EduWrite';
 import { RealPart } from '@/types/part';
@@ -70,7 +74,7 @@ const EduEdit = () => {
         postType: 'editEdu',
         id: numericPostId,
       });
-      toastInfo('게시글이 수정되었습니다.');
+      toastSuccess('게시글이 수정되었습니다.');
       navigate(`/board/education/${part}`);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error: any) {
