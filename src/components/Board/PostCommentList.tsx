@@ -29,6 +29,7 @@ const Container = styled.div`
 const ReplyWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
 `;
 
 const PostCommentList = ({
