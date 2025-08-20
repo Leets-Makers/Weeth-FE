@@ -8,7 +8,7 @@ import { useDraggable } from '@/hooks/useDraggable';
 import getStudyLists from '@/api/useGetStudyList';
 import { RealPart } from '@/types/part';
 import { useParams } from 'react-router-dom';
-import { toastError } from '../common/ToastMessage';
+import { toastError } from '@/components/common/ToastMessage';
 
 export const Container = styled.div`
   display: flex;
@@ -68,9 +68,14 @@ export const ExpandableButton = styled.div<{ expanded: boolean }>`
 interface StudyTagProps {
   selectedTag: string | null;
   onSelectTag: (tag: string) => void;
+  onRefresh?: () => void;
 }
 
-const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
+const ExpandableTagList = ({
+  selectedTag,
+  onSelectTag,
+  onRefresh,
+}: StudyTagProps) => {
   const [studyList, setStudyList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -97,6 +102,13 @@ const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
     })();
   }, [part, isRefreshing]);
 
+  const handleRefreshClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsRefreshing(true);
+    onRefresh?.();
+    requestAnimationFrame(() => setIsRefreshing(false));
+  };
+
   return (
     <Container>
       <ScrollContainer
@@ -113,6 +125,7 @@ const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
           onMouseDown={() => setIsRefreshing(true)}
           onMouseUp={() => setIsRefreshing(false)}
           onMouseLeave={() => setIsRefreshing(false)}
+          onClick={handleRefreshClick}
         >
           <RefreshIcon />
         </StudyTag>
