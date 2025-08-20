@@ -3,12 +3,11 @@ import theme from '@/styles/theme';
 import { MOBILE, PC } from '@/styles';
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
+  inset: 0;
   top: 0;
   left: 0;
-  z-index: 10;
-  width: 100vw;
-  height: 100vh;
+  z-index: 100;
 
   @media (max-width: ${PC}) {
     width: ${PC};
@@ -16,16 +15,15 @@ const Container = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  width: 100%;
-  max-width: ${MOBILE};
-  position: absolute;
+  position: fixed;
   top: 55px;
-  left: 45%;
-  transform: translate(-50%);
+  z-index: 1000;
+  right: calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px);
+  max-width: ${MOBILE};
 
   @media (min-width: ${PC}) {
+    right: calc((100vw - ${PC}) / 2 + 18px);
     max-width: ${PC};
-    left: 50%;
   }
 `;
 
@@ -44,6 +42,7 @@ const Content = styled.div`
   font-size: 14px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  z-index: 100;
 `;
 
 const MenuModal = ({
