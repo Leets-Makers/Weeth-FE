@@ -80,6 +80,7 @@ const CommentInput = ({
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
+  const [sending, setSending] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -95,6 +96,10 @@ const CommentInput = ({
 
   useEffect(() => {
     setParentCommentId(initialParentCommentId);
+
+    if (initialParentCommentId && inputRef.current) {
+      inputRef.current.focus();
+    }
   }, [initialParentCommentId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -103,11 +108,13 @@ const CommentInput = ({
   };
 
   const onClickSend = async () => {
+    if (sending) return;
     if (inputValue.trim() === '') {
       toastError('댓글을 입력하세요.');
       return;
     }
 
+    setSending(true);
     try {
       await createComment(
         postId,
@@ -124,13 +131,6 @@ const CommentInput = ({
         error.response?.data?.message || error.message,
       );
       toastError('댓글 작성에 실패했습니다.');
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onClickSend();
     }
   };
 
@@ -170,7 +170,6 @@ const CommentInput = ({
           }
           value={inputValue}
           onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
           onKeyDown={handleKeyDown}
         />
         <SendButton
