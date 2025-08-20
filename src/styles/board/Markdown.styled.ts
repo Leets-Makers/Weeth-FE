@@ -181,6 +181,22 @@ export const PreviewWrapper = styled.div`
     white-space: normal;
   }
 
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    vertical-align: top;
+  }
+
+  thead th {
+    background: ${theme.color.gray[30]};
+  }
+
   &::-webkit-scrollbar {
     width: 5px;
   }
