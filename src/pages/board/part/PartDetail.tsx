@@ -11,7 +11,6 @@ import deletePost from '@/api/deletePost';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
-import useCustomBack from '@/hooks/useCustomBack';
 import getHeaderTitle from '@/utils/getHeaderTitle';
 import * as S from '@/styles/board/BoardDetail.styled';
 
@@ -24,8 +23,6 @@ const PartDetail = () => {
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
-
-  useCustomBack(`/board/${category}/${part}`);
 
   const type = path === 'notices' ? 'notices' : 'board';
   const commentType = 'board';

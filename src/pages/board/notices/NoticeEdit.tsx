@@ -1,7 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import postBoardNotice from '@/api/postBoardNotice';
-import { toastError, toastInfo } from '@/components/common/ToastMessage';
+import {
+  toastError,
+  toastInfo,
+  toastSuccess,
+} from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import { originFile } from '@/pages/board/part/PartEdit';
@@ -65,7 +69,7 @@ const NoticeEdit = () => {
         postType,
         id: numericPostId,
       });
-      toastInfo('게시글이 수정되었습니다.');
+      toastSuccess('게시글이 수정되었습니다.');
       navigate('/board/notices');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error: any) {

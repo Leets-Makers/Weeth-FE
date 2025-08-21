@@ -92,7 +92,6 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
             components={{
               a: MarkdownLink,
               input: CustomCheckbox,
-              // img: (props) => <img {...props} style={{ maxWidth: '100%' }} />,
             }}
           >
             {info.content || ''}

@@ -76,6 +76,10 @@ const HeaderWrapper = styled.div`
   box-sizing: border-box;
 
   ${pcResponsive}
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  background-color: ${theme.color.gray[12]};
 `;
 
 const Title = styled.div`
@@ -110,7 +114,7 @@ const Header = ({
         />
       )}
 
-      {RightButtonType === 'WRITING' && onClickRightButton && (
+      {RightButtonType === 'WRITING' && isAccessible && onClickRightButton && (
         <WritingButton onClick={onClickRightButton} text="글쓰기" />
       )}
 
@@ -118,7 +122,7 @@ const Header = ({
         RightButtonType === 'ADMINWRITING' &&
         onClickRightButton &&
         isAccessible && (
-          <PostButton onClick={onClickRightButton} text="게시하기" />
+          <WritingButton onClick={onClickRightButton} text="글쓰기" />
         )}
 
       {RightButtonType === 'POST' && onClickRightButton && isAccessible && (

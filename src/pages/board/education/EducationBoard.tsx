@@ -5,10 +5,9 @@ import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EduPartTap from '@/components/Board/EduPartTap';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
-import useCustomBack from '@/hooks/useCustomBack';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 
@@ -25,11 +24,27 @@ const EducationBoard = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const { part: partParam } = useParams<{ part: Part }>();
   const part = partParam as Part;
-  useCustomBack('/board');
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const c = searchParams.get('cardinal');
+    setSelectedCardinal(c ? Number(c) : null);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    if (selectedCardinal != null)
+      params.set('cardinal', String(selectedCardinal));
+    else params.delete('cardinal');
+    setSearchParams(params, { replace: true });
+  }, [selectedCardinal, searchParams, setSearchParams]);
 
   const handleTabChange = (nextPart: Part) => {
     if (nextPart !== part) {
-      navigate(`/board/education/${nextPart}`, { replace: true });
+      navigate(`/board/education/${nextPart}?${searchParams.toString()}`, {
+        replace: true,
+      });
     }
   };
 
@@ -80,7 +95,7 @@ const EducationBoard = () => {
   };
 
   const handleDetail = (id: number) => {
-    navigate(`/education/${part}/${id}`);
+    navigate(`/education/${part}/${id}?${searchParams.toString()}`);
   };
 
   return (

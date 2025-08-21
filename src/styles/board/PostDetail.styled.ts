@@ -61,7 +61,7 @@ export const PositionIcon = styled.img`
 `;
 
 export const PostingContianer = styled.div`
-  white-space: pre-wrap;
+  white-space: normal;
   width: 100%;
 
   a:hover {
@@ -79,9 +79,12 @@ export const PostingContianer = styled.div`
   & h1,
   h2,
   h3,
-  h4 {
+  h4,
+  h5,
+  h6 {
+    white-space: pre-wrap;
     font-weight: bold;
-    margin: 0;
+    // margin: 0;
     line-height: 1.4;
     padding: 0;
   }
@@ -92,6 +95,7 @@ export const PostingContianer = styled.div`
     border-radius: 4px;
     font-size: 14px;
     line-height: 1.4;
+    white-space: pre-wrap;
   }
 
   & pre {
@@ -127,6 +131,7 @@ export const PostingContianer = styled.div`
     margin: 0;
     padding: 0;
     line-height: 1.2;
+    white-space: pre-wrap;
   }
 
   li:has(p > input[type='checkbox']) {
@@ -148,6 +153,7 @@ export const PostingContianer = styled.div`
     line-height: 1.2;
     margin: 0;
     padding: 0;
+    white-space: pre-wrap;
   }
 
   & blockquote {
@@ -158,15 +164,28 @@ export const PostingContianer = styled.div`
     font-style: italic;
   }
 
-  & h1,
-  h2,
-  h3,
-  h4,
-  & ul,
-  ol,
-  li,
-  & p {
-    white-space: normal;
+  &table {
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    vertical-align: top;
+  }
+  thead th {
+    background: ${theme.color.gray[30]};
+  }
+
+  & hr {
+    margin: 12px 0;
   }
 `;
 
