@@ -16,6 +16,9 @@ import weneed from '@/assets/images/ic_weneed.svg';
 import eatmate from '@/assets/images/ic_eatmate.svg';
 import gachtaxi from '@/assets/images/ic_gachtaxi.svg';
 import yes from '@/assets/images/ic_yes.svg';
+import chikahea from '@/assets/images/ic_chikahea.svg';
+import insightbox from '@/assets/images/ic_insightbox.svg';
+import seeat from '@/assets/images/ic_seeat.svg';
 
 const HomeFooter: React.FC = () => {
   const scrollerRef1 = useRef<HTMLDivElement | null>(null);
@@ -80,6 +83,27 @@ const HomeFooter: React.FC = () => {
         onMouseUp={draggableHandlers2.onMouseUp}
         onMouseLeave={draggableHandlers2.onMouseLeave}
       >
+        <S.GridItemWithImage
+          $image={seeat}
+          href="https://www.leets.land/project/17"
+          target="_blank"
+        >
+          <span>seeat</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={insightbox}
+          href="https://www.leets.land/project/18"
+          target="_blank"
+        >
+          <span>INSIGHT BOX</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={chikahea}
+          href="https://www.leets.land/project/19"
+          target="_blank"
+        >
+          <span>치카해</span>
+        </S.GridItemWithImage>
         <S.GridItemWithImage
           $image={yes}
           href="https://www.leets.land/project/14"
