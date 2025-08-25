@@ -44,6 +44,7 @@ const MyPage = () => {
     <S.Container>
       {isModalOpen && (
         <MenuModal
+          mobileOnly
           onClose={() => {
             setIsModalOpen(false);
           }}
