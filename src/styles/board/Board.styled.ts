@@ -25,7 +25,6 @@ export const BoardContainer = styled.div`
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0.625rem 0.9375rem 0rem 0.9375rem;
   gap: 0.625rem;
 
   ${pcResponsive}
@@ -35,6 +34,9 @@ export const NoticePreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  gap: 10px;
 
   ${pcResponsive}
 `;
@@ -69,7 +71,6 @@ export const ScrollContainer = styled.div`
   overflow-x: auto;
   gap: 0.9375rem;
   cursor: grab;
-  padding: 10px 0px 10px 15px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -86,7 +87,6 @@ export const EduScrollContainer = styled.div`
   overflow-x: auto;
   gap: 0.9375rem;
   cursor: grab;
-  padding: 10px 0px 10px 15px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -272,6 +272,10 @@ export const EduCard = styled.div`
   gap: 0.9375rem;
   display: flex;
   flex-direction: column;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
 `;
 
 export const EduPart = styled.div`
