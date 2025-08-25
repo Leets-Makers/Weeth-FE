@@ -9,6 +9,7 @@ import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
 import { BoardContent } from '@/pages/Board';
 import { SearchContent } from '@/types/search';
+import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 
 interface Content {
   id: number;
@@ -26,6 +27,8 @@ interface Content {
 }
 
 const BoardNotice = () => {
+  const { isAdmin } = useGetUserInfo();
+
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -108,8 +111,8 @@ const BoardNotice = () => {
   return (
     <S.Container>
       <Header
-        isAccessible
-        RightButtonType="ADMINWRITING"
+        isAccessible={isAdmin}
+        RightButtonType="WRITING"
         onClickRightButton={handleRightButton}
       >
         공지사항

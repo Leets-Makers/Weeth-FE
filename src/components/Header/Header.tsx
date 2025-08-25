@@ -45,7 +45,6 @@ import PlusButton from '@/components/Header/PlusButton';
 import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import { pcResponsive } from '@/styles';
 // import EditButton from '@/components/Header/EditButton';
 
@@ -60,7 +59,6 @@ interface HeaderProps {
     | 'SEARCH'
     | 'WRITING'
     | 'POST'
-    | 'ADMINWRITING'
     | 'none';
   isComplete?: boolean;
   isAccessible: boolean;
@@ -99,8 +97,6 @@ const Header = ({
   isAccessible = false,
   isWaiting = false,
 }: HeaderProps) => {
-  const { isAdmin } = useGetUserInfo();
-
   return (
     <HeaderWrapper>
       <LeftButton isWaiting={isWaiting} />
@@ -117,13 +113,6 @@ const Header = ({
       {RightButtonType === 'WRITING' && isAccessible && onClickRightButton && (
         <WritingButton onClick={onClickRightButton} text="글쓰기" />
       )}
-
-      {isAdmin &&
-        RightButtonType === 'ADMINWRITING' &&
-        onClickRightButton &&
-        isAccessible && (
-          <WritingButton onClick={onClickRightButton} text="글쓰기" />
-        )}
 
       {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
         <PostButton onClick={onClickRightButton} text="게시하기" />
