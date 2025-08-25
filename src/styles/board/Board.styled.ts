@@ -272,6 +272,7 @@ export const EduCard = styled.div`
   gap: 0.9375rem;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 
   &:hover {
     filter: brightness(1.2);
