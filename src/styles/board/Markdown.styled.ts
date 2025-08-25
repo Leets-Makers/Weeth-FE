@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, pcResponsive } from '@/styles';
+import { MOBILE, PC, pcResponsive } from '@/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ export const PreviewWrapper = styled.div`
   padding: 15px 5px 0px 10px;
   width: 100%;
   box-sizing: border-box;
-  height: 264.12px;
+  height: 340.12px;
   color: ${theme.color.gray[100]};
   background-color: ${theme.color.gray[18]};
   border: none;
@@ -79,6 +79,11 @@ export const PreviewWrapper = styled.div`
   font-family: ${theme.font.regular};
   overflow-y: auto;
   scrollbar-gutter: stable;
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+    height: 705px;
+  }
 
   img,
   video,
@@ -216,8 +221,8 @@ export const PreviewWrapper = styled.div`
 
 export const FileContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  min-height: 56px;
+  overflow-x: auto;
+  height: 56px;
   box-sizing: border-box;
   padding: 10px;
   gap: 10px;
