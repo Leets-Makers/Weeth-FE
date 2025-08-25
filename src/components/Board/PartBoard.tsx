@@ -4,12 +4,10 @@ import PressedD from '@/assets/images/ic_board_D.svg';
 import PressedBE from '@/assets/images/ic_board_BE.svg';
 import PressedFE from '@/assets/images/ic_board_FE.svg';
 import PressedPM from '@/assets/images/ic_board_PM.svg';
-import PressedENTIRE from '@/assets/images/ic_pressed_board_ENTIRE.svg';
 import DefaultD from '@/assets/images/ic_default_board_D.svg';
 import DefaultBE from '@/assets/images/ic_default_board_BE.svg';
 import DefaultFE from '@/assets/images/ic_default_board_FE.svg';
 import DefaultPM from '@/assets/images/ic_default_board_PM.svg';
-import DefaultENTIRE from '@/assets/images/ic_board_ENTIRE.svg';
 import { useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
 
@@ -21,12 +19,6 @@ type PartItem = {
 };
 
 const parts: PartItem[] = [
-  {
-    key: '',
-    url: 'ALL',
-    defaultImg: DefaultENTIRE,
-    pressedImg: PressedENTIRE,
-  },
   {
     key: 'FE',
     url: 'FE',

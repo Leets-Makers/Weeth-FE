@@ -7,6 +7,7 @@ import { toastError } from '@/components/common/ToastMessage';
 import useInsertAtCursor from '@/hooks/useInsertAtCursor';
 import useImageUpload from '@/hooks/useImageUpload';
 import useImagePasteDropHandlers from '@/hooks/useImagePasteDropHandlers';
+import { PC } from '@/styles';
 
 const Container = styled.div`
   display: flex;
@@ -15,11 +16,11 @@ const Container = styled.div`
 `;
 
 const ContentWrapper = styled.textarea`
-  all: unset;
+  // all: unset;
   padding: 15px 10px 0px 10px;
   width: 100%;
   box-sizing: border-box;
-  height: 264.12px;
+  height: 340.12px;
   color: ${theme.color.gray[100]};
   background-color: ${theme.color.gray[18]};
   border: none;
@@ -28,6 +29,11 @@ const ContentWrapper = styled.textarea`
   font-family: ${theme.font.regular};
   overflow-y: auto;
   scrollbar-gutter: stable;
+
+  @media (min-width: ${PC}) {
+    max-width: ${PC};
+    height: 705px;
+  }
 
   &::placeholder {
     color: ${theme.color.gray[65]};

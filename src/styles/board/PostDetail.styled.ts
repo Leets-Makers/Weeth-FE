@@ -84,7 +84,6 @@ export const PostingContianer = styled.div`
   h6 {
     white-space: pre-wrap;
     font-weight: bold;
-    // margin: 0;
     line-height: 1.4;
     padding: 0;
   }
@@ -186,6 +185,17 @@ export const PostingContianer = styled.div`
 
   & hr {
     margin: 12px 0;
+  }
+
+  ul.contains-task-list,
+  ol.contains-task-list {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  li.task-list-item {
+    list-style: none;
+    margin-left: 0;
   }
 `;
 

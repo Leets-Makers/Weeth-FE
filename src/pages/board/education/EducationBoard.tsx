@@ -10,10 +10,13 @@ import EduPartTap from '@/components/Board/EduPartTap';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
+import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
 const EducationBoard = () => {
+  const { isAdmin } = useGetUserInfo();
+
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
 
   const [searchMode, setSearchMode] = useState(false);
@@ -101,8 +104,8 @@ const EducationBoard = () => {
   return (
     <S.Container>
       <Header
-        isAccessible
-        RightButtonType="ADMINWRITING"
+        isAccessible={isAdmin}
+        RightButtonType="WRITING"
         onClickRightButton={handleRightButton}
       >
         교육자료
