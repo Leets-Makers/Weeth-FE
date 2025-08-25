@@ -69,6 +69,7 @@ export const PreviewContainer = styled.div`
 export const PreviewWrapper = styled.div`
   padding: 15px 5px 0px 10px;
   width: 100%;
+  white-space: normal;
   box-sizing: border-box;
   height: 340.12px;
   color: ${theme.color.gray[100]};
@@ -96,9 +97,11 @@ export const PreviewWrapper = styled.div`
   & h1,
   h2,
   h3,
-  h4 {
+  h4,
+  h5,
+  h6 {
+    white-space: pre-wrap;
     font-weight: bold;
-    margin: 0;
     line-height: 1.4;
     padding: 0;
   }
@@ -109,6 +112,7 @@ export const PreviewWrapper = styled.div`
     border-radius: 4px;
     font-size: 14px;
     line-height: 1.4;
+    white-space: pre-wrap;
   }
 
   & pre {
@@ -144,6 +148,7 @@ export const PreviewWrapper = styled.div`
     margin: 0;
     padding: 0;
     line-height: 1.2;
+    white-space: pre-wrap;
   }
 
   li:has(p > input[type='checkbox']) {
@@ -165,6 +170,7 @@ export const PreviewWrapper = styled.div`
     line-height: 1.2;
     margin: 0;
     padding: 0;
+    white-space: pre-wrap;
   }
 
   & blockquote {
@@ -175,18 +181,12 @@ export const PreviewWrapper = styled.div`
     font-style: italic;
   }
 
-  & h1,
-  h2,
-  h3,
-  h4,
-  & ul,
-  ol,
-  li,
-  & p {
-    white-space: normal;
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
   }
 
-  table {
+  &table {
     border-collapse: collapse;
     table-layout: fixed;
   }
@@ -200,6 +200,21 @@ export const PreviewWrapper = styled.div`
 
   thead th {
     background: ${theme.color.gray[30]};
+  }
+
+  & hr {
+    margin: 12px 0;
+  }
+
+  ul.contains-task-list,
+  ol.contains-task-list {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  li.task-list-item {
+    list-style: none;
+    margin-left: 0;
   }
 
   &::-webkit-scrollbar {
