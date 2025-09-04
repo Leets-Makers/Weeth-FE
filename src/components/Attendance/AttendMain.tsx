@@ -22,11 +22,13 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Loading from '@/components/common/Loading';
+import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
+dayjs.extend(isBetween);
 
 const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -76,8 +78,8 @@ const AttendMain: React.FC = () => {
 
     endDateTime = `(${startTime} ~ ${endTime})`;
 
-    const currentTime = dayjs().format('h:mm A');
-    isWithinTimeRange = currentTime >= startTime && currentTime <= endTime;
+    const current = dayjs();
+    isWithinTimeRange = current.isBetween(startDate, endDate, 'minute', '[]');
   }
 
   const handleOpenModal = () => {
