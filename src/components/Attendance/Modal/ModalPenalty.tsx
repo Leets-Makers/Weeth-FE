@@ -1,36 +1,22 @@
 /* eslint-disable no-nested-ternary */
 import warning from '@/assets/images/ic_warning.svg';
 import icClose from '@/assets/images/ic_close.svg';
-import theme from '@/styles/theme';
-
+import * as A from '@/styles/event/EventEditor.styled';
 import * as S from '@/styles/attend/ModalPenalty.styled';
-import useGetPenalty from '@/api/useGetPenalty';
-import useGetUserName from '@/hooks/useGetUserName';
 
 import {
   StyledModal,
   ModalContent,
   ModalHeader,
 } from '@/styles/attend/CommonModal.styled';
-import { formatDateTime } from '@/hooks/formatDate';
 
 interface CloseButtonProps {
   onClick: () => void;
-}
-interface PenaltyBoxProps {
-  date: string;
-  reason: string;
 }
 interface ModalPenaltyProps {
   open: boolean;
   close: () => void;
 }
-interface PenaltyProps {
-  penaltyId: number;
-  penaltyDescription: string;
-  time: string;
-}
-
 // CloseButton Component
 const CloseButton: React.FC<CloseButtonProps> = ({ onClick }) => {
   return (
@@ -40,24 +26,8 @@ const CloseButton: React.FC<CloseButtonProps> = ({ onClick }) => {
   );
 };
 
-const PenaltyBox: React.FC<PenaltyBoxProps> = ({ date, reason }) => {
-  return (
-    <S.PenaltyDetail>
-      <S.PenaltyIcon>+1</S.PenaltyIcon>
-      <S.PenaltyTextBox>
-        <div>{date}</div>
-        <div>사유 : {reason}</div>
-      </S.PenaltyTextBox>
-    </S.PenaltyDetail>
-  );
-};
-
 // ModalPenalty Component
 const ModalPenalty: React.FC<ModalPenaltyProps> = ({ open, close }) => {
-  const { penaltyInfo, error } = useGetPenalty();
-
-  const userName = useGetUserName();
-
   return (
     <StyledModal open={open}>
       <ModalContent>
@@ -65,34 +35,17 @@ const ModalPenalty: React.FC<ModalPenaltyProps> = ({ open, close }) => {
           <img src={warning} alt="warning" />
           <CloseButton onClick={close} />
         </ModalHeader>
-        <div>
-          {error ? (
-            <div>Error loading penalty data</div>
-          ) : !penaltyInfo || !penaltyInfo.Penalties.length ? (
-            <S.NullBox>저장된 패널티가 없습니다.</S.NullBox>
-          ) : (
-            <>
-              <S.Title>
-                {userName} 님의&nbsp;
-                <div style={{ color: theme.color.negative }}>패널티</div>
-                &nbsp;횟수
-              </S.Title>
-              <S.PenaltyCount className="modal-penalty">
-                {penaltyInfo?.penaltyCount}회
-              </S.PenaltyCount>
-              <S.Line />
-              {penaltyInfo.Penalties.map((penalty: PenaltyProps) => {
-                return (
-                  <PenaltyBox
-                    key={penalty.penaltyId}
-                    reason={penalty.penaltyDescription}
-                    date={formatDateTime(penalty.time)}
-                  />
-                );
-              })}
-            </>
-          )}
-        </div>
+        <A.Bold>Leets의 페널티 규정</A.Bold>
+        <A.Description>
+          페널티를 받는 기준은 아래와 같아요.
+          <br />
+          1. 정기 모임에 출석을 하지 않았을때 (=결석) 2. 과제를 제출하지 않았을
+          때 3. 경고를 2회 받았을 때
+          <br />
+          경고를 받는 기준을 아래와 같아요.
+          <br />
+          1.과제를 미완성했을 때
+        </A.Description>
       </ModalContent>
     </StyledModal>
   );

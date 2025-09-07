@@ -130,7 +130,7 @@ const AttendMain: React.FC = () => {
             ) : (
               <S.PenaltyContainer>
                 <S.NoPenaltyInfo>
-                  <S.SemiBold>패널티를 받은 이력이 없네요!</S.SemiBold>
+                  <S.SemiBold>페널티를 받은 이력이 없네요!</S.SemiBold>
                 </S.NoPenaltyInfo>
               </S.PenaltyContainer>
             )}

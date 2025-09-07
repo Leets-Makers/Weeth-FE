@@ -15,13 +15,13 @@ export const MyPenaltyInfo: React.FC<PenaltyInfoProps> = ({
     <S.PenaltyContainer>
       <S.ButtonContainer>
         <S.SemiBold>
-          패널티&nbsp;
+          페널티&nbsp;
           <div style={{ color: theme.color.negative }}>{penaltyCount}회</div>
         </S.SemiBold>
         <RightButton onClick={handleOpenPenaltyModal} />
       </S.ButtonContainer>
       <S.PenaltyCount>
-        패널티가 {penaltyCount}회 적립이 되었어요.
+        페널티가 {penaltyCount}회 적립이 되었어요.
         <br />
         어떤 이유인지 알아볼까요?
       </S.PenaltyCount>
@@ -31,15 +31,6 @@ export const MyPenaltyInfo: React.FC<PenaltyInfoProps> = ({
 
 export const PenaltyInfo = () => {
   return (
-    <S.PenaltyInfo>
-      패널티를 받는 기준은 아래와 같아요
-      <br />
-      - 정기 모임에 출석을 하지 않았을 때
-      <br />
-      - 미션을 제출하지 않았을 때
-      <br />
-      - 스터디 발표를 하지 않았을 때
-      <br />
-    </S.PenaltyInfo>
+    <S.PenaltyInfo>페널티 2회 누적 시 동아리 수료가 어려워요.</S.PenaltyInfo>
   );
 };

@@ -27,8 +27,8 @@ const PenaltySubHeaderRow: React.FC = () => {
       <td colSpan={8} style={{ padding: 0, margin: 0 }}>
         <SubHeaderRow>
           <GridCell area="reason">사유</GridCell>
-          <GridCell area="penalty">패널티</GridCell>
-          <GridCell area="penaltyDate">패널티 일자</GridCell>
+          <GridCell area="penalty">페널티</GridCell>
+          <GridCell area="penaltyDate">페널티 일자</GridCell>
         </SubHeaderRow>
       </td>
     </tr>
