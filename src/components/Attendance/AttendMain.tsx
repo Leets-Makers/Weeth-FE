@@ -32,7 +32,6 @@ dayjs.extend(isBetween);
 
 const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [penaltyModalOpen, setPenaltyModalOpen] = useState<boolean>(false);
   const [hasPenalty, setHasPenalty] = useState<boolean>(false);
 
   const { penaltyInfo, isLoading: penaltyLoading } = useGetPenalty();
@@ -92,9 +91,6 @@ const AttendMain: React.FC = () => {
     setModalOpen(false);
   };
 
-  const handleOpenPenaltyModal = () => setPenaltyModalOpen(true);
-  const handleClosePenaltyModal = () => setPenaltyModalOpen(false);
-
   return (
     <S.StyledAttend>
       <AttendRate attendRate={attendInfo?.attendanceRate} />
@@ -123,10 +119,7 @@ const AttendMain: React.FC = () => {
         ) : (
           <>
             {hasPenalty ? (
-              <MyPenaltyInfo
-                penaltyCount={penaltyInfo?.penaltyCount}
-                handleOpenPenaltyModal={handleOpenPenaltyModal}
-              />
+              <MyPenaltyInfo penaltyCount={penaltyInfo?.penaltyCount} />
             ) : (
               <S.PenaltyContainer>
                 <S.NoPenaltyInfo>
@@ -147,7 +140,6 @@ const AttendMain: React.FC = () => {
         close={handleCloseModal}
         handleAttend={setIsAttend}
       />
-      <ModalPenalty open={penaltyModalOpen} close={handleClosePenaltyModal} />
     </S.StyledAttend>
   );
 };
