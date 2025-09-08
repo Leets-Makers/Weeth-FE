@@ -4,25 +4,27 @@ import RightButton from '@/components/Header/RightButton';
 import { useNavigate } from 'react-router-dom';
 
 interface PenaltyInfoProps {
-  penaltyCount: number | undefined;
+  penaltyCount: number;
+  warningCount: number;
 }
 
-export const MyPenaltyInfo: React.FC<PenaltyInfoProps> = ({ penaltyCount }) => {
+export const MyPenaltyInfo: React.FC<PenaltyInfoProps> = ({
+  penaltyCount,
+  warningCount,
+}) => {
   const navi = useNavigate();
   return (
     <S.PenaltyContainer>
-      <S.ButtonContainer>
+      <S.TopRow>
+        <RightButton onClick={() => navi('/penalty')} />
+      </S.TopRow>
+      <S.BottomRow>
         <S.SemiBold>
           페널티&nbsp;
-          <div style={{ color: theme.color.negative }}>{penaltyCount}회</div>
+          <span style={{ color: theme.color.negative }}>{penaltyCount}회</span>
+          {warningCount === 0 ? '' : `, 경고 ${warningCount}회`}
         </S.SemiBold>
-        <RightButton onClick={() => navi('/penalty')} />
-      </S.ButtonContainer>
-      <S.PenaltyCount>
-        페널티가 {penaltyCount}회 적립이 되었어요.
-        <br />
-        어떤 이유인지 알아볼까요?
-      </S.PenaltyCount>
+      </S.BottomRow>
     </S.PenaltyContainer>
   );
 };

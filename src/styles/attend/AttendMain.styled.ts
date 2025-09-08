@@ -85,6 +85,17 @@ export const AttendPercent = styled.div`
 
 export const PenaltyContainer = styled.div`
   width: 100%;
+  flex-direction: column;
+`;
+
+export const TopRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const BottomRow = styled.div`
+  display: flex;
+  align-items: flex-end;
 `;
 
 export const NameContainer = styled.div`
@@ -98,15 +109,10 @@ export const AttendText = styled.div`
   margin-top: -2px;
 `;
 
-export const PenaltyCount = styled.div`
-  margin-top: 15px;
-  font-size: 14px;
-  line-height: 1.8;
-`;
-
 export const NoPenaltyInfo = styled.div`
   margin-top: 15px;
   font-size: 16px;
+  padding-top: 5px;
 `;
 
 export const AttendProject = styled.div`

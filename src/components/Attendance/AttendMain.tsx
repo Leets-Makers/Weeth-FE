@@ -118,7 +118,10 @@ const AttendMain: React.FC = () => {
         ) : (
           <>
             {hasPenalty ? (
-              <MyPenaltyInfo penaltyCount={penaltyInfo?.penaltyCount} />
+              <MyPenaltyInfo
+                penaltyCount={penaltyInfo?.penaltyCount || 0}
+                warningCount={penaltyInfo?.warningCount || 0}
+              />
             ) : (
               <S.PenaltyContainer>
                 <S.NoPenaltyInfo>
