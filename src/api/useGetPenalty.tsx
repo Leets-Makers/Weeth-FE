@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '@/api/api';
 
-interface Penalty {
-  penaltyId: number;
+export interface Penalty {
+  penaltyId?: number;
+  penaltyType: 'PENALTY' | 'WARNING';
   penaltyDescription: string;
   time: string;
 }

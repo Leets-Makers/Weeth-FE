@@ -1,13 +1,7 @@
+import { Penalty } from '@/api/useGetPenalty';
 import formatDate from '@/hooks/formatDate';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-
-export interface PenaltyProps {
-  penaltyId?: number;
-  penaltyType: 'PENALTY' | 'WARNING';
-  penaltyDescription: string;
-  time: string;
-}
 
 const Container = styled.div`
   padding: 15px;
@@ -47,7 +41,7 @@ const Line = styled.div`
   border: 1px solid;
   color: ${theme.color.gray[18]};
 `;
-const PenaltyItem: React.FC<PenaltyProps> = ({
+const PenaltyItem: React.FC<Penalty> = ({
   penaltyType,
   penaltyDescription,
   time,
