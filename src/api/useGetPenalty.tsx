@@ -10,6 +10,7 @@ interface Penalty {
 interface UserPenaltyData {
   userId: number;
   penaltyCount: number;
+  warningCount: number;
   name: string;
   Penalties: Penalty[];
 }

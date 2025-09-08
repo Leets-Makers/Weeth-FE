@@ -1,20 +1,26 @@
-import { Line } from '@/styles/board/PartBoard.styled';
+import formatDate from '@/hooks/formatDate';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 export interface PenaltyProps {
-  type: 'penalty' | 'warning';
-  content: string;
-  date: string;
+  penaltyId?: number;
+  penaltyType: 'PENALTY' | 'WARNING';
+  penaltyDescription: string;
+  time: string;
 }
 
 const Container = styled.div`
-  width: 100%;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const PenaltyBedge = styled.div<{ $type?: boolean }>`
-  padding: 3px 10px;
+  max-width: 52px;
+  padding: 3px 0px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 12px;
   background-color: ${({ $type }) => ($type ? '#FF585840' : '#FFB20040')};
   color: ${({ $type }) => ($type ? theme.color.negative : theme.color.caution)};
 `;
@@ -33,18 +39,32 @@ const DateText = styled.text`
   font-size: 12px;
   line-height: 1;
 `;
-const PenaltyItem: React.FC<PenaltyProps> = ({ type, content, date }) => {
-  const badgeType = type === 'penalty';
+const PaddingDiv = styled.div`
+  padding: 0 5px;
+`;
+
+const Line = styled.div`
+  border: 1px solid;
+  color: ${theme.color.gray[18]};
+`;
+const PenaltyItem: React.FC<PenaltyProps> = ({
+  penaltyType,
+  penaltyDescription,
+  time,
+}) => {
+  const badgeType = penaltyType === 'PENALTY';
   return (
     <div>
       <Container>
         <PenaltyBedge $type={badgeType}>
           {badgeType ? '페널티' : '경고'}
         </PenaltyBedge>
-        <ContentText>{content}</ContentText>
-        <DateText>{date}</DateText>
+        <ContentText>{penaltyDescription}</ContentText>
+        <DateText>{formatDate(time)}</DateText>
       </Container>
-      <Line />
+      <PaddingDiv>
+        <Line />
+      </PaddingDiv>
     </div>
   );
 };
