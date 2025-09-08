@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import warning from '@/assets/images/ic_warning.svg';
+import info from '@/assets/images/ic_info.svg';
 import icClose from '@/assets/images/ic_close.svg';
 import * as A from '@/styles/event/EventEditor.styled';
 import * as S from '@/styles/attend/ModalPenalty.styled';
@@ -32,7 +32,7 @@ const ModalPenalty: React.FC<ModalPenaltyProps> = ({ open, close }) => {
     <StyledModal open={open}>
       <ModalContent>
         <ModalHeader>
-          <img src={warning} alt="warning" />
+          <img src={info} alt="info" />
           <CloseButton onClick={close} />
         </ModalHeader>
         <A.Bold>Leets의 페널티 규정</A.Bold>
