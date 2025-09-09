@@ -1,4 +1,4 @@
-import AttendCheckMain from '@/components/Attendance/AttendCheckMain';
+import AttendCheckMain from '@/components/AttendCheck/AttendCheckMain';
 import useCustomBack from '@/hooks/useCustomBack';
 import styled from 'styled-components';
 

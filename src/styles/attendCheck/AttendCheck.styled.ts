@@ -49,66 +49,11 @@ export const SmallStyledBoxContainer = styled.div`
   margin: 15px 4% 0 4%;
 `;
 
-export const SmallStyledBox = styled.div`
-  background-color: ${theme.color.gray[30]};
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 95px;
-  height: 93px;
-  text-align: center;
-`;
-
-export const SmallBoxTitle = styled.div`
-  margin-top: 15px;
-  font-size: 14px;
-`;
-
-export const SmallBoxNum = styled.div`
-  margin-top: 20px;
-  font-size: 18px;
-  font-family: ${theme.font.semiBold};
-`;
-
 export const Line = styled.div`
   width: 94%;
   height: 1px;
   background-color: ${theme.color.gray[30]};
   margin: 30px 3% 0 3%;
-`;
-
-export const MeetingInfoBox = styled.div`
-  background-color: ${theme.color.gray[18]};
-  border-radius: 10px;
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  width: 100%;
-`;
-
-export const MeetingHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 5%;
-  width: 95%;
-`;
-
-export const MeetingTitle = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-left: 2%;
-  font-size: 16px;
-  font-family: ${theme.font.semiBold};
-`;
-
-export const MeetingInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 13px 5% 0 5%;
-  font-size: 14px;
-  line-height: 1.7;
 `;
 
 export const NullBox = styled.div`
