@@ -5,8 +5,8 @@ const ROLE_MAP: Record<string, string> = {
   BE: '백엔드',
 };
 
-const positionMapper = (code: string): string => {
-  return ROLE_MAP[code] ?? code;
+const positionMapper = (engPostion: string): string => {
+  return ROLE_MAP[engPostion] ?? engPostion;
 };
 
 export default positionMapper;

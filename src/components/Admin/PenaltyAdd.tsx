@@ -11,6 +11,7 @@ import {
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
 import formatDate from '@/utils/admin/dateUtils';
+import PenaltyRadioGroup, { PenaltyType } from './PenaltyRadioGroup';
 
 interface PenaltyAddProps {
   dispatch: React.Dispatch<PenaltyAction>;
@@ -101,10 +102,13 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
       alert('패널티 부여 실패');
     }
   };
+  const [type, setType] = useState<PenaltyType>('penalty');
+
   return (
     <S.PenaltyWrapper>
       <S.TitleWrapper>
         <S.Title>패널티 추가</S.Title>
+        <PenaltyRadioGroup value={type} onChange={setType} />
       </S.TitleWrapper>
       <S.Line />
       <S.ItemWrapper>
