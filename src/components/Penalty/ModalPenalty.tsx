@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import info from '@/assets/images/ic_info.svg';
 import icClose from '@/assets/images/ic_close.svg';
-import * as S from '@/styles/attend/ModalPenalty.styled';
+import * as S from '@/styles/penalty/ModalPenalty.styled';
 import {
   StyledModal,
   ModalContent,

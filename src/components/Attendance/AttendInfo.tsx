@@ -1,4 +1,5 @@
 import * as S from '@/styles/attend/AttendMain.styled';
+import * as A from '@/styles/attend/AttendInfo.styled';
 import theme from '@/styles/theme';
 import Button from '@/components/Button/Button';
 import checkTitle from '@/hooks/checkTitle';
@@ -39,17 +40,17 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   return (
     <div>
       <S.SemiBold>
-        <S.AttendProject>
+        <A.AttendProject>
           오늘은
           <span style={{ color: theme.color.main }}>&quot;{title}&quot;</span>
           {checkTitle(title)} 있는 날이에요
-        </S.AttendProject>
+        </A.AttendProject>
       </S.SemiBold>
-      <S.AttendDate>
+      <A.AttendDate>
         날짜: {startDateTime} {endDateTime}
-      </S.AttendDate>
-      <S.AttendPlace>장소: {location}</S.AttendPlace>
-      <S.AttendButton>
+      </A.AttendDate>
+      <A.AttendPlace>장소: {location}</A.AttendPlace>
+      <A.AttendButton>
         <Button
           width="315px"
           height="50px"
@@ -60,7 +61,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
         >
           {isAttend ? '출석완료' : '출석하기'}
         </Button>
-      </S.AttendButton>
+      </A.AttendButton>
     </div>
   );
 };
@@ -69,9 +70,9 @@ export const NoAttnedInfo = () => {
   return (
     <div>
       <S.SemiBold>
-        <S.AttendProject>오늘은 일정이 없어요</S.AttendProject>
+        <A.AttendProject>오늘은 일정이 없어요</A.AttendProject>
       </S.SemiBold>
-      <S.AttendPlace>동아리원과 스터디를 하는건 어때요?</S.AttendPlace>
+      <A.AttendPlace>동아리원과 스터디를 하는건 어때요?</A.AttendPlace>
     </div>
   );
 };

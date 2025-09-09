@@ -1,26 +1,32 @@
 import { useEffect, useState } from 'react';
 
-import ModalAttend from '@/components/Attendance/ModalAttend';
-
 import check from '@/assets/images/ic_check.svg';
 import warning from '@/assets/images/ic_warning.svg';
 
 import * as S from '@/styles/attend/AttendMain.styled';
+import { AttendProject } from '@/styles/attend/AttendInfo.styled';
+import {
+  PenaltyContainer,
+  NoPenaltyInfo,
+} from '@/styles/attend/PenaltyInfo.styled';
+
 import useGetAttend from '@/api/useGetAttend';
 import useGetPenalty from '@/api/useGetPenalty';
+
 import { AttendInfo, NoAttnedInfo } from '@/components/Attendance/AttendInfo';
 import AttendRate from '@/components/Attendance/AttendRate';
 import {
   MyPenaltyInfo,
   PenaltyInfo,
 } from '@/components/Attendance/PenaltyInfo';
+import Loading from '@/components/common/Loading';
+import ModalAttend from '@/components/Attendance/ModalAttend';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import Loading from '@/components/common/Loading';
 import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(utc);
@@ -113,7 +119,7 @@ const AttendMain: React.FC = () => {
         <img src={warning} alt="!" />
         {penaltyInfo?.penaltyCount === null ? (
           <S.SemiBold>
-            <S.AttendProject>등록된 데이터가 없습니다.</S.AttendProject>
+            <AttendProject>등록된 데이터가 없습니다.</AttendProject>
           </S.SemiBold>
         ) : (
           <>
@@ -123,11 +129,11 @@ const AttendMain: React.FC = () => {
                 warningCount={penaltyInfo?.warningCount || 0}
               />
             ) : (
-              <S.PenaltyContainer>
-                <S.NoPenaltyInfo>
+              <PenaltyContainer>
+                <NoPenaltyInfo>
                   <S.SemiBold>페널티를 받은 이력이 없네요!</S.SemiBold>
-                </S.NoPenaltyInfo>
-              </S.PenaltyContainer>
+                </NoPenaltyInfo>
+              </PenaltyContainer>
             )}
             <PenaltyInfo />
           </>

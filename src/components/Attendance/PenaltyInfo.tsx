@@ -1,4 +1,5 @@
-import * as S from '@/styles/attend/AttendMain.styled';
+import * as S from '@/styles/attend/PenaltyInfo.styled';
+import { SemiBold } from '@/styles/attend/AttendMain.styled';
 import theme from '@/styles/theme';
 import RightButton from '@/components/Header/RightButton';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +20,11 @@ export const MyPenaltyInfo: React.FC<PenaltyInfoProps> = ({
         <RightButton onClick={() => navi('/penalty')} />
       </S.TopRow>
       <S.BottomRow>
-        <S.SemiBold>
+        <SemiBold>
           페널티&nbsp;
           <span style={{ color: theme.color.negative }}>{penaltyCount}회</span>
           {warningCount === 0 ? '' : `, 경고 ${warningCount}회`}
-        </S.SemiBold>
+        </SemiBold>
       </S.BottomRow>
     </S.PenaltyContainer>
   );
