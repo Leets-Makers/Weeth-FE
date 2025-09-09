@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import ModalAttend from '@/components/Attendance/Modal/ModalAttend';
+import ModalAttend from '@/components/Attendance/ModalAttend';
 
 import check from '@/assets/images/ic_check.svg';
 import warning from '@/assets/images/ic_warning.svg';

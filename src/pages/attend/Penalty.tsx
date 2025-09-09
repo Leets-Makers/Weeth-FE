@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Header from '@/components/Header/Header';
 import React, { useState } from 'react';
-import ModalPenalty from '@/components/Attendance/Modal/ModalPenalty';
+import ModalPenalty from '@/components/Penalty/ModalPenalty';
 import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
 import PenaltyItem from '@/components/Penalty/PenaltyItem';
 import useGetPenalty from '@/api/useGetPenalty';
