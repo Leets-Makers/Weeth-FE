@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import theme from '@/styles/theme';
+import positionMapper from '@/utils/admin/positionMapper';
 
 export const DropdownContainer = styled.div`
   position: absolute;
@@ -75,8 +76,7 @@ const PenaltyMemberDropdown: React.FC<DropdownProps> = ({
         members.map((member) => (
           <DropdownItem key={member.id} onClick={() => onSelect(member.name)}>
             <DropdownText>{member.name}</DropdownText>
-            <DropdownText>{member.cardinals}</DropdownText>
-            <DropdownText>{member.position}</DropdownText>
+            <DropdownText>{positionMapper(member.position)}</DropdownText>
             <DropdownText>{member.department}</DropdownText>
           </DropdownItem>
         ))
