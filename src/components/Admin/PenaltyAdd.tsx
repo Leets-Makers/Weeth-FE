@@ -108,11 +108,11 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
     <S.PenaltyWrapper>
       <S.TitleWrapper>
         <S.Title>패널티 추가</S.Title>
-        <PenaltyRadioGroup value={type} onChange={setType} />
       </S.TitleWrapper>
       <S.Line />
       <S.ItemWrapper>
         <S.InputWrapper>
+          <PenaltyRadioGroup value={type} onChange={setType} />
           <S.SubTitle>이름</S.SubTitle>
           <S.Input
             placeholder="이름"
