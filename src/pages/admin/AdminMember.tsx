@@ -52,7 +52,10 @@ const AdminMember: React.FC = () => {
       <PageWrapper>
         <NavMenu />
         <ContentWrapper>
+          {/* 상단 바 - 선택된 멤버가 있을 때와 없을 때 다르게 표시 */}
           <DynamicTopBar />
+
+          {/* 검색 바 및 기수 정보, 멤버 테이블 */}
           <Container>
             <SearchBar searchName={searchName} setSearchName={setSearchName} />
             <CardinalInfo />

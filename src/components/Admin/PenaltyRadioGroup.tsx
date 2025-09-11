@@ -3,7 +3,7 @@ import RadioGroup, { type RadioOption } from '@/components/Admin/RadioGroup';
 export type PenaltyType = 'penalty' | 'warning';
 
 const OPTIONS: RadioOption<PenaltyType>[] = [
-  { label: '패널티', value: 'penalty' },
+  { label: '페널티', value: 'penalty' },
   { label: '경고', value: 'warning' },
 ];
 

@@ -43,7 +43,9 @@ const AdminPenalty: React.FC = () => {
             title="패널티 관리"
             description="기수를 선택하고, 해당 멤버에 대한 패널티를 수정하는 페이지입니다."
           />
+
           <PenaltyContainer>
+            {/* 왼쪽 섹션 - 패널티/경고 조회 */}
             <div>
               <CardinalSearchBar
                 isPenaltyPage
@@ -59,6 +61,8 @@ const AdminPenalty: React.FC = () => {
                 dispatch={dispatch}
               />
             </div>
+
+            {/* 오른쪽 섹션 - 패널티/경고 부여 */}
             <PenaltyAdd dispatch={dispatch} />
           </PenaltyContainer>
         </ContentWrapper>

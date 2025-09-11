@@ -1,3 +1,5 @@
+// 라디오 그룹 공통 컴포넌트(패널티/경고 추가에 사용 )
+
 import theme from '@/styles/theme';
 import { KeyboardEvent } from 'react';
 import styled from 'styled-components';
@@ -45,9 +47,6 @@ const RadioGroup = <T extends string>({
         return (
           <SegmentItem
             key={opt.value}
-            role="radio"
-            aria-checked={selected}
-            type="button"
             onClick={() => !disabled && onChange(opt.value)}
             disabled={disabled}
             $selected={selected}
@@ -74,12 +73,6 @@ const SegmentGroup = styled.div<{ $count: number; $disabled: boolean }>`
   border: 1px solid #dedede;
   border-radius: 4px;
   overflow: hidden;
-
-  ${({ $disabled }) => $disabled && `opacity: 0.6; pointer-events: none;`}
-
-  &:focus-visible {
-    box-shadow: 0 0 0 3px rgba(80, 120, 255, 0.28);
-  }
 `;
 
 const SegmentItem = styled.button<{
@@ -87,12 +80,10 @@ const SegmentItem = styled.button<{
   $index: number;
   $count: number;
 }>`
-  height: 40px;
-  padding: 0 16px;
+  height: 44px;
   border: 0;
-  border-radius: 0;
+  box-sizing: border-box;
   font-weight: 700;
-  cursor: pointer;
 
   background: ${({ $selected }) => ($selected ? '#323232' : '#f9f9f9')};
   color: ${({ $selected }) => ($selected ? '#fff' : `${theme.color.gray[65]}`)};
