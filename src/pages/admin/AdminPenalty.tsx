@@ -20,9 +20,22 @@ import styled from 'styled-components';
 export const PenaltyContainer = styled(Container)`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: flex-start;
   gap: 20px;
+`;
+
+const LeftCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* 검색바와 테이블 간격 */
+  flex: 1; /* 남는 공간 차지 */
+`;
+
+const RightCol = styled.div`
+  width: 360px; /* 원하는 고정 너비 */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 const AdminPenalty: React.FC = () => {
@@ -63,7 +76,9 @@ const AdminPenalty: React.FC = () => {
             </div>
 
             {/* 오른쪽 섹션 - 패널티/경고 부여 */}
-            <PenaltyAdd dispatch={dispatch} />
+            <div>
+              <PenaltyAdd dispatch={dispatch} />
+            </div>
           </PenaltyContainer>
         </ContentWrapper>
       </PageWrapper>

@@ -83,7 +83,8 @@ const SegmentItem = styled.button<{
   height: 44px;
   border: 0;
   box-sizing: border-box;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 16px;
 
   background: ${({ $selected }) => ($selected ? '#323232' : '#f9f9f9')};
   color: ${({ $selected }) => ($selected ? '#fff' : `${theme.color.gray[65]}`)};
