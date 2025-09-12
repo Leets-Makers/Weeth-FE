@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { MOBILE } from '@/styles';
 
 export const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
 
-  max-width: 370px;
+  max-width: ${MOBILE};
   padding: 17px 0px;
   margin: 20px 15px 10px 15px;
 

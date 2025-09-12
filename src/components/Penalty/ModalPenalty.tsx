@@ -1,6 +1,5 @@
-/* eslint-disable no-nested-ternary */
-import info from '@/assets/images/ic_info.svg';
-import icClose from '@/assets/images/ic_close.svg';
+import IcInfo from '@/assets/images/ic_info.svg?react';
+import IcClose from '@/assets/images/ic_close.svg?react';
 import * as S from '@/styles/penalty/ModalPenalty.styled';
 import {
   StyledModal,
@@ -15,7 +14,7 @@ interface ModalPenaltyProps {
 
 const CloseBtn = ({ onClick }: { onClick: () => void }) => (
   <S.ImgButton onClick={onClick}>
-    <img src={icClose} alt="닫기" />
+    <IcClose aria-label="닫기" />
   </S.ImgButton>
 );
 
@@ -24,7 +23,7 @@ const ModalPenalty: React.FC<ModalPenaltyProps> = ({ open, close }) => {
     <StyledModal open={open}>
       <ModalContent>
         <ModalHeader>
-          <img src={info} alt="info" />
+          <IcInfo aria-label="info" />
           <CloseBtn onClick={close} />
         </ModalHeader>
 

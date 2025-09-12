@@ -8,12 +8,13 @@ import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
 import PenaltyItem from '@/components/Penalty/PenaltyItem';
 import useGetPenalty from '@/api/useGetPenalty';
 import Loading from '@/components/common/Loading';
+import { MOBILE } from '@/styles';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 370px;
-  max-width: 370px;
+  width: ${MOBILE};
+  max-width: ${MOBILE};
   margin-bottom: 50px;
 `;
 
