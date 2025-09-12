@@ -10,6 +10,7 @@ const theme = {
     pointPurple: '#6F50CB',
     pointPink: '#D968D3',
     pintYellow: '#FFF600',
+    caution: '#FFB200',
     gray: {
       100: '#FFFFFF',
       9: '#171717',

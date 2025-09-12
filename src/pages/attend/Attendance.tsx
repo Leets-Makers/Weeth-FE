@@ -1,13 +1,14 @@
 import AttendMain from '@/components/Attendance/AttendMain';
 import Header from '@/components/Header/Header';
 import useCustomBack from '@/hooks/useCustomBack';
+import { MOBILE } from '@/styles';
 import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 370px;
-  max-width: 370px;
+  width: ${MOBILE};
+  max-width: ${MOBILE};
   margin-bottom: 50px;
 `;
 

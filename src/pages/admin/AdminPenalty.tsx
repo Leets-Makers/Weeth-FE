@@ -40,8 +40,8 @@ const AdminPenalty: React.FC = () => {
         <NavMenu />
         <ContentWrapper>
           <TopBar
-            title="패널티 관리"
-            description="기수를 선택하고, 해당 멤버에 대한 패널티를 수정하는 페이지입니다."
+            title="페널티 관리"
+            description="기수를 선택하고, 해당 멤버에 대한 페널티를 수정하는 페이지입니다."
           />
           <PenaltyContainer>
             <div>

@@ -2,7 +2,7 @@ import api from '@/api/api';
 
 const PATH = '/api/v1/admin/penalties';
 
-// 패널티 삭제
+// 페널티 삭제
 const deletePenaltyApi = async (penaltyId: number) => {
   try {
     const response = await api.delete(PATH, { params: { penaltyId } });
@@ -12,7 +12,7 @@ const deletePenaltyApi = async (penaltyId: number) => {
   }
 };
 
-// 패널티 수정
+// 페널티 수정
 const patchPenaltyApi = async (
   penaltyId: number,
   penaltyDescription: string,

@@ -56,7 +56,7 @@ const NavMenuList: React.FC = () => {
     {
       id: 'penalty',
       icon: <PenaltyIcon />,
-      label: '패널티 관리',
+      label: '페널티 관리',
       path: '/admin/penalty',
     },
     {

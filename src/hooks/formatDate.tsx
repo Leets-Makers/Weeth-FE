@@ -7,7 +7,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(weekday);
 dayjs.extend(advancedFormat);
 
-function formatDate(isoDate: string) {
+export function formatDate(isoDate: string) {
   return dayjs(isoDate).format('MM/DD');
 }
 

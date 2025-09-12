@@ -6,7 +6,7 @@ export const OpenModal = styled.div`
 export const StyledModal = styled.div<{ open: boolean }>`
   display: ${(props) => (props.open ? 'block' : 'none')};
   position: fixed;
-  z-index: 1;
+  z-index: 11;
   left: 0;
   top: -15%;
   width: 100%;

@@ -55,15 +55,15 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
       return;
     }
 
-    if (window.confirm('패널티를 삭제하시겠습니까?')) {
+    if (window.confirm('페널티를 삭제하시겠습니까?')) {
       try {
         console.log('penaltyData : ', penaltyData);
         await deletePenaltyApi(penaltyData.penaltyId);
-        alert('패널티가 성공적으로 삭제되었습니다.');
+        alert('페널티가 성공적으로 삭제되었습니다.');
         onDelete(penaltyData.penaltyId);
       } catch (error: any) {
-        alert(error.message || '패널티 삭제 실패');
-        console.error('패널티 삭제 오류:', error);
+        alert(error.message || '페널티 삭제 실패');
+        console.error('페널티 삭제 오류:', error);
       }
     }
   };
@@ -74,13 +74,13 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
     } else {
       try {
         await patchPenaltyApi(penaltyData.penaltyId, newDescription);
-        alert('패널티가 성공적으로 수정되었습니다.');
+        alert('페널티가 성공적으로 수정되었습니다.');
 
         onEdit(penaltyData.penaltyId, newDescription);
         setIsEditing(false);
       } catch (error: any) {
-        alert(error.message || '패널티 수정 실패');
-        console.error('패널티 수정 오류:', error);
+        alert(error.message || '페널티 수정 실패');
+        console.error('페널티 수정 오류:', error);
       }
     }
   };

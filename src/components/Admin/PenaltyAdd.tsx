@@ -11,6 +11,7 @@ import {
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
 import formatDate from '@/utils/admin/dateUtils';
+import { toastError, toastSuccess } from '@/components/common/ToastMessage';
 
 interface PenaltyAddProps {
   dispatch: React.Dispatch<PenaltyAction>;
@@ -41,12 +42,12 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
   const handleAddPenalty = async () => {
     const member = members.find((m) => m.name === selectedMember);
     if (!member) {
-      alert('선택한 멤버를 찾을 수 없습니다.');
+      toastError('선택한 멤버를 찾을 수 없습니다.');
       return;
     }
 
     if (!selectedMember || !penaltyDescription.trim()) {
-      alert(' 멤버 이름과 패널티 사유를 입력해주세요.');
+      toastError('멤버 이름과 페널티 사유를 입력해주세요.');
       return;
     }
 
@@ -61,7 +62,7 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
         requestData.penaltyDescription,
       );
       if (res.code === 200) {
-        alert('패널티가 성공적으로 부여되었습니다.');
+        toastSuccess('페널티가 성공적으로 부여되었습니다.');
 
         const penaltyTime = res.data?.time
           ? formatDate(res.data.time)
@@ -94,17 +95,17 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
         }
         handleReset();
       } else {
-        alert(`패널티 부여 실패: ${res.message}`);
+        toastError(`페널티 부여 실패: ${res.message}`);
       }
     } catch (error) {
-      console.error('패널티 부여 오류: ', error);
-      alert('패널티 부여 실패');
+      console.error('페널티 부여 오류: ', error);
+      toastError('페널티 부여 실패');
     }
   };
   return (
     <S.PenaltyWrapper>
       <S.TitleWrapper>
-        <S.Title>패널티 추가</S.Title>
+        <S.Title>페널티 추가</S.Title>
       </S.TitleWrapper>
       <S.Line />
       <S.ItemWrapper>
@@ -128,7 +129,7 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
           )}
         </S.InputWrapper>
         <S.InputWrapper>
-          <S.SubTitle>패널티 사유</S.SubTitle>
+          <S.SubTitle>페널티 사유</S.SubTitle>
           <S.Input
             placeholder="ex) 미션 과제 미제출"
             value={penaltyDescription}
