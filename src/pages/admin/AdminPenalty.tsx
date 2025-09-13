@@ -27,12 +27,12 @@ export const PenaltyContainer = styled(Container)`
 const LeftCol = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px; /* 검색바와 테이블 간격 */
-  flex: 1; /* 남는 공간 차지 */
+  gap: 12px;
+  flex: 1;
 `;
 
 const RightCol = styled.div`
-  width: 360px; /* 원하는 고정 너비 */
+  width: 360px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
