@@ -4,7 +4,7 @@ import {
   PenaltyAction,
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
-import { getPenaltyApi } from '@/api/admin/penalty/getPenalty';
+import { getPenaltyApi } from '@/api/admin/penalty/penalty.api';
 import {
   MemberData,
   useMemberContext,

@@ -4,7 +4,7 @@ import { ButtonWrapper } from '@/styles/admin/DuesRegisterDropDown.styled';
 import { useState } from 'react';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import PenaltyMemberDropdown from '@/components/Admin/PenaltyMemberDropdown';
-import { getPenaltyApi, postPenaltyApi } from '@/api/admin/penalty/getPenalty';
+import { getPenaltyApi, postPenaltyApi } from '@/api/admin/penalty/penalty.api';
 import {
   Penalty,
   PenaltyAction,
