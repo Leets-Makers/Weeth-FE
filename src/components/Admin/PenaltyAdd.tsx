@@ -12,6 +12,7 @@ import {
 } from '@/components/Admin/context/PenaltyReducer';
 import formatDate from '@/utils/admin/dateUtils';
 import PenaltyRadioGroup, { PenaltyType } from './PenaltyRadioGroup';
+import { ApiPenaltyType } from '@/types/adminPenalty';
 
 interface PenaltyAddProps {
   dispatch: React.Dispatch<PenaltyAction>;
@@ -23,9 +24,14 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<string>('');
   const [penaltyDescription, setPenaltyDescription] = useState<string>('');
+  const [type, setType] = useState<PenaltyType>('penalty'); // 탭 상태 (패널티/경고)
+
   const filteredMembers = members.filter((member) =>
     member.name.includes(searchTerm),
   );
+
+  const toApiType = (t: PenaltyType): ApiPenaltyType =>
+    t === 'warning' ? 'WARNING' : 'PENALTY';
 
   const handleSelectMember = (name: string) => {
     setSelectedMember(name);
@@ -50,17 +56,14 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
       alert(' 멤버 이름과 패널티 사유를 입력해주세요.');
       return;
     }
-
-    const requestData = {
-      userId: member.id,
-      penaltyDescription,
-    };
+    const apiType = toApiType(type);
 
     try {
-      const res = await postPenaltyApi(
-        requestData.userId,
-        requestData.penaltyDescription,
-      );
+      const res = await postPenaltyApi({
+        userId: member.id,
+        penaltyType: apiType,
+        penaltyDescription,
+      });
       if (res.code === 200) {
         alert('패널티가 성공적으로 부여되었습니다.');
 
@@ -77,7 +80,7 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
           },
         });
 
-        const response = await getPenaltyApi();
+        const response = await getPenaltyApi(0);
         if (response.code === 200) {
           dispatch({
             type: 'REFRESH_PENALTY_DATA',
@@ -102,7 +105,6 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
       alert('패널티 부여 실패');
     }
   };
-  const [type, setType] = useState<PenaltyType>('penalty');
 
   return (
     <S.PenaltyWrapper>

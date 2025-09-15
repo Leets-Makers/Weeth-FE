@@ -58,7 +58,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     try {
       if (loading || isAdmin === undefined || !isAdmin) return;
 
-      const response = await getPenaltyApi();
+      const response = await getPenaltyApi(selectedCardinal ?? 0);
 
       if (response.code === 200) {
         console.log('패널티 조회 결과:', response.data);

@@ -1,7 +1,7 @@
 import {
   deletePenaltyApi,
   patchPenaltyApi,
-} from '@/api/admin/penalty/modifyPenalty';
+} from '@/api/admin/penalty/penalty.api';
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from '@/styles/admin/penalty/Penalty.styled';
 import Button from '@/components/Admin/Button';

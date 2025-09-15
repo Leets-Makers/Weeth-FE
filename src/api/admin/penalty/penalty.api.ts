@@ -1,27 +1,29 @@
 import api from '@/api/api';
+import { PenaltyItem } from '@/types/adminPenalty';
 
 const PATH = '/api/v1/admin/penalties';
 
 // 페널티 조회
-const getPenaltyApi = async () => {
+const getPenaltyApi = async (cardinal: number) => {
   try {
-    const response = await api.get(PATH);
-    return response.data;
+    const response = await api.get(PATH, {
+      params: cardinal != null ? { cardinal } : undefined,
+    });
+    return response.data.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || '페널티 조회 실패');
   }
 };
 
 // 페널티 부여
-const postPenaltyApi = async (userId: number, penaltyDescription: string) => {
+const postPenaltyApi = async (payload: PenaltyItem) => {
   try {
-    const response = await api.post(PATH, { userId, penaltyDescription });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || '페널티 부여 실패');
+    const res = await api.post(PATH, payload);
+    return res.data;
+  } catch (err: any) {
+    throw new Error(err?.response?.data?.message ?? '페널티 부여 실패');
   }
 };
-export { getPenaltyApi, postPenaltyApi };
 
 // 패널티 삭제
 const deletePenaltyApi = async (penaltyId: number) => {
@@ -45,4 +47,5 @@ const patchPenaltyApi = async (
     throw new Error(error.response?.data?.message || '페널티 수정 실패');
   }
 };
-export { deletePenaltyApi, patchPenaltyApi };
+
+export { deletePenaltyApi, patchPenaltyApi, postPenaltyApi, getPenaltyApi };
