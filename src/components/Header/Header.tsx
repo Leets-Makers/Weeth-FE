@@ -46,6 +46,7 @@ import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
 import { pcResponsive } from '@/styles';
+import InfoButton from './InfoButton';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
@@ -59,6 +60,7 @@ interface HeaderProps {
     | 'SEARCH'
     | 'WRITING'
     | 'POST'
+    | 'INFO'
     | 'none';
   isComplete?: boolean;
   isAccessible: boolean;
@@ -130,6 +132,10 @@ const Header = ({
 
       {RightButtonType === 'SEARCH' && onClickRightButton && isAccessible && (
         <SearchButton onClick={onClickRightButton} />
+      )}
+
+      {RightButtonType === 'INFO' && onClickRightButton && isAccessible && (
+        <InfoButton onClick={onClickRightButton} />
       )}
 
       {RightButtonType !== 'none' && !isAccessible && <None />}

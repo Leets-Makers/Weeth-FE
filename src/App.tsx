@@ -2,8 +2,9 @@ import './App.css';
 import './assets/fonts/fonts.css';
 
 import ScrollToTop from '@/hooks/ScrollToTop';
-import Attendance from '@/pages/Attendance';
-import AttendCheck from '@/pages/AttendCheck';
+import Attendance from '@/pages/attend/Attendance';
+import AttendCheck from '@/pages/attend/AttendCheck';
+import Penalty from '@/pages/attend/Penalty';
 import Calendar from '@/pages/Calendar';
 import Dues from '@/pages/Dues';
 import Edit from '@/pages/Edit';
@@ -62,6 +63,8 @@ const App = () => {
         <Route path="/waiting-approval" element={<WaitingApproval />} />
 
         <Route path="/attendance" element={<Attendance />} />
+        <Route path="/penalty" element={<Penalty />} />
+
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/:type/:id" element={<EventDetail />} />
         <Route path="/events/create" element={<EventPost />} />

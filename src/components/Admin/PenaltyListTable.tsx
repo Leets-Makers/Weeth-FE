@@ -22,8 +22,8 @@ const columns = [
   { key: 'position', header: '역할' },
   { key: 'department', header: '학과' },
   { key: 'studentId', header: '학번' },
-  { key: 'penaltyCount', header: '패널티' },
-  { key: 'LatestPenalty', header: '최근 패널티' },
+  { key: 'penaltyCount', header: '페널티' },
+  { key: 'LatestPenalty', header: '최근 페널티' },
   { key: 'empty', header: '' },
 ];
 
@@ -61,7 +61,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
       const response = await getPenaltyApi(selectedCardinal ?? 0);
 
       if (response.code === 200) {
-        console.log('패널티 조회 결과:', response.data);
+        console.log('페널티 조회 결과:', response.data);
         const penalties = response.data.reduce(
           (
             acc: { [x: string]: any },
@@ -80,7 +80,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
         dispatch({ type: 'SET_PENALTY', payload: penalties });
       }
     } catch (error: any) {
-      console.error('패널티 조회 오류:', error.message);
+      console.error('페널티 조회 오류:', error.message);
     }
   };
 

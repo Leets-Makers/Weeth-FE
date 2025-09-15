@@ -1,4 +1,5 @@
 import * as S from '@/styles/attend/AttendMain.styled';
+import * as P from '@/styles/attend/AttendRate.styled';
 import useGetUserName from '@/hooks/useGetUserName';
 import { useNavigate } from 'react-router-dom';
 import RightButton from '@/components/Header/RightButton';
@@ -15,23 +16,23 @@ const AttendRate: React.FC<{ attendRate: number | undefined }> = ({
     <S.StyledAttend>
       <S.NameContainer>
         <S.SemiBold>
-          <S.AttendName>{userName}&nbsp;</S.AttendName>
+          <P.AttendName>{userName}&nbsp;</P.AttendName>
         </S.SemiBold>
-        <S.AttendText>님의 출석률은</S.AttendText>
+        <P.AttendText>님의 출석률은</P.AttendText>
       </S.NameContainer>
-      <S.AttendPercent>
-        <S.TitleWrapper>
+      <P.AttendPercent>
+        <P.TitleWrapper>
           <S.SemiBold>
             <div>{displayedRate}%</div>
           </S.SemiBold>
-        </S.TitleWrapper>
-        <S.RightButtonWrapper>
+        </P.TitleWrapper>
+        <P.RightButtonWrapper>
           <RightButton onClick={() => navi('/attendCheck')} />
-        </S.RightButtonWrapper>
-      </S.AttendPercent>
-      <S.Progress $attendPercent={displayedRate}>
-        <S.Dealt $dealt={Math.floor((displayedRate / 100) * 100)} />
-      </S.Progress>
+        </P.RightButtonWrapper>
+      </P.AttendPercent>
+      <P.Progress $attendPercent={displayedRate}>
+        <P.Dealt $dealt={Math.floor((displayedRate / 100) * 100)} />
+      </P.Progress>
     </S.StyledAttend>
   );
 };
