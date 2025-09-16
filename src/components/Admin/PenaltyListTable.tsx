@@ -16,7 +16,6 @@ import formatDate from '@/utils/admin/dateUtils';
 import dayjs from 'dayjs';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import PenaltySubHeaderRow from '@/components/Admin/PenaltySubHeaderRow';
-import { is } from 'date-fns/locale';
 
 const columns = [
   { key: 'name', header: '이름' },
