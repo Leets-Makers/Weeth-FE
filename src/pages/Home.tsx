@@ -10,7 +10,6 @@ import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import Loading from '@/components/common/Loading';
 import styled from 'styled-components';
-import DropdownMenu from '@/components/Button/DropdownMenu';
 
 const Container = styled.div`
   display: flex;
@@ -43,14 +42,6 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <DropdownMenu
-        isProfile
-        isCardinal
-        text="기수"
-        origValue="5"
-        editValue={(value) => console.log(value)}
-        type="mypage"
-      />
       <HeaderContainer>
         <Header src={logo} alt="leets로고" />
         <LogoutButton />
