@@ -133,7 +133,7 @@ const DropdownMenu = ({
     .filter((cardinal) => cardinal.cardinalNumber !== 0)
     .map((cardinal) => ({
       value: cardinal.cardinalNumber.toString(),
-      label: cardinal.cardinalNumber.toString(),
+      label: `${cardinal.cardinalNumber}기`,
     }))
     .sort((a, b) => Number(b.value) - Number(a.value));
 
