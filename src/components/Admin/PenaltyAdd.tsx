@@ -21,7 +21,7 @@ interface PenaltyAddProps {
 }
 
 const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
-  const { members } = useMemberContext();
+  const { members, selectedCardinal } = useMemberContext();
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<string>('');
@@ -81,26 +81,31 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
           type: 'ADD_PENALTY',
           userId: member.id,
           payload: {
+            penaltyId: res.data?.penaltyId ?? Date.now(),
+            penaltyType: apiType,
             penaltyDescription,
             time: penaltyTime,
           },
         });
 
-        const response = await getPenaltyApi(0);
+        const response = await getPenaltyApi(selectedCardinal ?? 0);
         if (response.code === 200) {
-          dispatch({
-            type: 'REFRESH_PENALTY_DATA',
-            payload: response.data.reduce(
-              (
-                acc: PenaltyState,
-                item: { userId: number; Penalties: Penalty[] },
-              ) => {
-                acc[item.userId] = item.Penalties;
-                return acc;
-              },
-              {} as PenaltyState,
-            ),
-          });
+          const normalized = (
+            Array.isArray(response.data) ? response.data : [response.data]
+          )
+            .flatMap((g: any) => g?.responses ?? [])
+            .reduce((acc: PenaltyState, u: any) => {
+              acc[u.userId] = (u.Penalties ?? []).map((p: any) => ({
+                penaltyId: p.penaltyId,
+                penaltyType:
+                  p.penaltyType === 'AUTO_PENALTY' ? 'PENALTY' : p.penaltyType,
+                penaltyDescription: p.penaltyDescription,
+                time: p.time,
+              }));
+              return acc;
+            }, {} as PenaltyState);
+
+          dispatch({ type: 'REFRESH_PENALTY_DATA', payload: normalized });
         }
         handleReset();
       } else {

@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as S from '@/styles/admin/penalty/Penalty.styled';
 import Button from '@/components/Admin/Button';
 import { ApiPenaltyType } from '@/types/adminPenalty';
+import { toastSuccess } from '../common/ToastMessage';
 
 interface PenaltyDetailProps {
   penaltyData: {
@@ -71,10 +72,10 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
       try {
         console.log('penaltyData : ', penaltyData);
         await deletePenaltyApi(penaltyData.penaltyId);
-        alert('패널티가 성공적으로 삭제되었습니다.');
+        toastSuccess('패널티가 성공적으로 삭제되었습니다.');
         onDelete(penaltyData.penaltyId);
       } catch (error: any) {
-        alert(error.message || '패널티 삭제 실패');
+        toastSuccess(error.message || '패널티 삭제 실패');
         console.error('패널티 삭제 오류:', error);
       }
     }
@@ -87,7 +88,7 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
     } else {
       try {
         await patchPenaltyApi(penaltyData.penaltyId, newDescription);
-        alert('패널티가 성공적으로 수정되었습니다.');
+        toastSuccess('패널티가 성공적으로 수정되었습니다.');
 
         onEdit(penaltyData.penaltyId, newDescription);
         setIsEditing(false);

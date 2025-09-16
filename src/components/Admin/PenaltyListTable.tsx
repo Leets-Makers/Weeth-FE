@@ -108,10 +108,22 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
 
         if (!matchedMember) return null;
 
+        const list = penaltyData[numericUserId] ?? [];
+
+        const { penalty, warning } = list.reduce(
+          (acc, p) => {
+            const t = (p as any).penaltyType;
+            if (t === 'WARNING') acc.warning += 1;
+            else acc.penalty += 1;
+            return acc;
+          },
+          { penalty: 0, warning: 0 },
+        );
         return {
           ...matchedMember,
-          penaltyCount: penaltyData[numericUserId].length,
-          LatestPenalty: getLatestPenaltyDate(penaltyData[numericUserId]),
+          penaltyCount: penalty,
+          warningCount: warning,
+          LatestPenalty: getLatestPenaltyDate(list),
         };
       })
       .filter(Boolean) as MemberData[];
