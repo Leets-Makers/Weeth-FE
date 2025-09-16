@@ -13,9 +13,9 @@ export const SubTitle = styled.div`
 
 export const PenaltyWrapper = styled(Wrapper)`
   border-radius: 4px;
-  width: 490px;
+  width: 468px;
   // height: max-content;
-  min-width: 490px;
+  min-width: 468px;
   max-height: 471px;
   border-top: 0px;
   padding: 0px;

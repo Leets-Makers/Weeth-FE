@@ -5,12 +5,15 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from '@/styles/admin/penalty/Penalty.styled';
 import Button from '@/components/Admin/Button';
+import { ApiPenaltyType } from '@/types/adminPenalty';
 
 interface PenaltyDetailProps {
   penaltyData: {
     penaltyId: number;
+    penaltyType: ApiPenaltyType;
     penaltyDescription: string;
     time: string;
+    isAuto?: boolean;
   };
   onEdit: (penaltyId: number, updatedDescription: string) => void;
   onDelete: (penaltyId: number) => void;
@@ -27,6 +30,15 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
   );
   const inputRef = useRef<HTMLInputElement | null>(null);
   const buttonRef = useRef<HTMLDivElement | null>(null);
+
+  const isPenalty =
+    penaltyData.penaltyType === 'PENALTY' ||
+    penaltyData.penaltyType === 'AUTO_PENALTY';
+
+  const penaltyCount = isPenalty ? 1 : 0;
+  const warningCount = penaltyData.penaltyType === 'WARNING' ? 1 : 0;
+
+  const editDisabled = !!penaltyData.isAuto;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -55,32 +67,33 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
       return;
     }
 
-    if (window.confirm('페널티를 삭제하시겠습니까?')) {
+    if (window.confirm('패널티를 삭제하시겠습니까?')) {
       try {
         console.log('penaltyData : ', penaltyData);
         await deletePenaltyApi(penaltyData.penaltyId);
-        alert('페널티가 성공적으로 삭제되었습니다.');
+        alert('패널티가 성공적으로 삭제되었습니다.');
         onDelete(penaltyData.penaltyId);
       } catch (error: any) {
-        alert(error.message || '페널티 삭제 실패');
-        console.error('페널티 삭제 오류:', error);
+        alert(error.message || '패널티 삭제 실패');
+        console.error('패널티 삭제 오류:', error);
       }
     }
   };
 
   const handleEdit = async () => {
+    if (editDisabled) return;
     if (!isEditing) {
       setIsEditing(true);
     } else {
       try {
         await patchPenaltyApi(penaltyData.penaltyId, newDescription);
-        alert('페널티가 성공적으로 수정되었습니다.');
+        alert('패널티가 성공적으로 수정되었습니다.');
 
         onEdit(penaltyData.penaltyId, newDescription);
         setIsEditing(false);
       } catch (error: any) {
-        alert(error.message || '페널티 수정 실패');
-        console.error('페널티 수정 오류:', error);
+        alert(error.message || '패널티 수정 실패');
+        console.error('패널티 수정 오류:', error);
       }
     }
   };
@@ -98,13 +111,17 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
       ) : (
         <S.DetailText>{penaltyData.penaltyDescription}</S.DetailText>
       )}
-      <S.DetailText>1</S.DetailText>
+      <S.DetailText>{penaltyCount}</S.DetailText>
+      <S.DetailText>{warningCount}</S.DetailText>
+
       <S.DetailText>{penaltyData.time}</S.DetailText>
       <S.ButtonWrapper ref={buttonRef}>
         <Button
-          color="#2f2f2f"
           description={isEditing ? '저장' : '수정'}
+          color={editDisabled ? '#a6a6a6' : '#2f2f2f'}
+          textColor={editDisabled ? '#ccc' : '#ffffff'}
           width="64px"
+          disabled={editDisabled}
           onClick={handleEdit}
         />
         <Button

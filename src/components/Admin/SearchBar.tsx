@@ -13,7 +13,7 @@ export const SearchBarWrapper = styled.div<{
   display: flex;
   align-items: center;
   width: ${({ isPenaltyPage }) => (isPenaltyPage ? '63%' : '100%')};
-  min-width: ${({ isPenaltyPage }) => (isPenaltyPage ? '870px' : '1400px')};
+  min-width: ${({ isPenaltyPage }) => (isPenaltyPage ? '950px' : '1400px')};
   padding: 15px 20px;
   border-radius: 4px;
   margin: ${({ isPenaltyPage }) => (isPenaltyPage ? '0px' : '30px 0 10px')};

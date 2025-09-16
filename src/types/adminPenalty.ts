@@ -1,4 +1,4 @@
-export type ApiPenaltyType = 'PENALTY' | 'WARNING';
+export type ApiPenaltyType = 'PENALTY' | 'WARNING' | 'AUTO_PENALTY';
 
 export interface PenaltyItem {
   userId: number;

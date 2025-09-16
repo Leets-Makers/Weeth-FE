@@ -3,12 +3,15 @@ import { styled } from 'styled-components';
 export const SubHeaderRow = styled.td`
   display: grid;
   grid-template-columns:
-    minmax(390px, auto) minmax(40px, 0.7fr) minmax(70px, 1fr)
-    minmax(60px, auto);
-  grid-template-areas: 'reason penalty penaltyDate empty';
+    minmax(390px, auto) minmax(40px, 0.7fr) minmax(40px, 0.7fr) minmax(
+      70px,
+      1fr
+    )
+    minmax(90px, auto);
+  grid-template-areas: 'reason penalty warning penaltyDate empty';
   border-bottom: 1px solid #dedede;
   padding: 5px;
-  padding-left: 149px;
+  padding-left: 120px;
   background-color: #e6fcf7;
   font-weight: bold;
   align-items: center;
@@ -24,10 +27,11 @@ export const GridCell = styled.th<{ area: string }>`
 const PenaltySubHeaderRow: React.FC = () => {
   return (
     <tr>
-      <td colSpan={8} style={{ padding: 0, margin: 0 }}>
+      <td colSpan={9} style={{ padding: 0, margin: 0 }}>
         <SubHeaderRow>
           <GridCell area="reason">사유</GridCell>
           <GridCell area="penalty">페널티</GridCell>
+          <GridCell area="warning">경고</GridCell>
           <GridCell area="penaltyDate">페널티 일자</GridCell>
         </SubHeaderRow>
       </td>

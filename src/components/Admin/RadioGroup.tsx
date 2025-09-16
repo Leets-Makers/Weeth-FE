@@ -50,8 +50,6 @@ const RadioGroup = <T extends string>({
             onClick={() => !disabled && onChange(opt.value)}
             disabled={disabled}
             $selected={selected}
-            $index={i}
-            $count={options.length}
           >
             {opt.label}
           </SegmentItem>
@@ -68,27 +66,37 @@ const SegmentGroup = styled.div<{ $count: number; $disabled: boolean }>`
   grid-template-columns: repeat(${({ $count }) => $count}, 1fr);
   max-width: 160px;
   gap: 0;
-
-  background: #ffffff;
-  border: 1px solid #dedede;
+  background: #fff;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: auto;
 `;
 
-const SegmentItem = styled.button<{
-  $selected: boolean;
-  $index: number;
-  $count: number;
-}>`
+const SegmentItem = styled.button<{ $selected: boolean }>`
+  position: relative;
   height: 44px;
-  border: 0;
+  padding: 0 16px;
   box-sizing: border-box;
-  font-weight: 600;
+
+  font-weight: 700;
   font-size: 16px;
 
-  background: ${({ $selected }) => ($selected ? '#323232' : '#f9f9f9')};
-  color: ${({ $selected }) => ($selected ? '#fff' : `${theme.color.gray[65]}`)};
+  border: 1px solid transparent;
 
-  ${({ $index, $selected }) =>
-    $index > 0 && !$selected && `border-left: 1px solid #dedede;`}
+  &:not(:first-child) {
+    margin-left: -1px;
+  }
+
+  background: ${({ $selected }) => ($selected ? '#323232' : '#f9f9f9')};
+  color: ${({ $selected }) => ($selected ? '#fff' : theme.color.gray[65])};
+
+  ${({ $selected }) => !$selected && `border-color: #dedede;`}
+
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  &:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
 `;

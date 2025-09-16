@@ -16,6 +16,7 @@ import formatDate from '@/utils/admin/dateUtils';
 import dayjs from 'dayjs';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import PenaltySubHeaderRow from '@/components/Admin/PenaltySubHeaderRow';
+import { is } from 'date-fns/locale';
 
 const columns = [
   { key: 'name', header: '이름' },
@@ -23,6 +24,7 @@ const columns = [
   { key: 'department', header: '학과' },
   { key: 'studentId', header: '학번' },
   { key: 'penaltyCount', header: '페널티' },
+  { key: 'warningCount', header: '경고' },
   { key: 'LatestPenalty', header: '최근 페널티' },
   { key: 'empty', header: '' },
 ];
@@ -69,11 +71,16 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
 
         const penalties = users.reduce((acc: PenaltyState, u: any) => {
           const list = Array.isArray(u?.Penalties) ? u.Penalties : [];
-          acc[u.userId] = list.map((p: any) => ({
-            penaltyId: p.penaltyId,
-            penaltyDescription: p.penaltyDescription,
-            time: p.time,
-          }));
+          acc[u.userId] = list.map((p: any) => {
+            const isAuto = p.penaltyType === 'AUTO_PENALTY';
+            return {
+              penaltyId: p.penaltyId,
+              penaltyType: isAuto ? 'PENALTY' : p.penaltyType,
+              penaltyDescription: p.penaltyDescription,
+              time: p.time,
+              isAuto,
+            };
+          });
           return acc;
         }, {} as PenaltyState);
 
@@ -211,6 +218,8 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                             <PenaltyDetail
                               penaltyData={{
                                 penaltyId: penalty.penaltyId,
+                                penaltyType: penalty.penaltyType,
+                                isAuto: penalty.isAuto,
                                 penaltyDescription: penalty.penaltyDescription,
                                 time: formatDate(penalty.time),
                               }}
