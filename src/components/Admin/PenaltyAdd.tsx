@@ -35,6 +35,11 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
   const toApiType = (t: PenaltyType): ApiPenaltyType =>
     t === 'warning' ? 'WARNING' : 'PENALTY';
 
+  const toLabel = (t: PenaltyType) => (t === 'warning' ? '경고' : '패널티');
+
+  const label = toLabel(type);
+  const apiType = toApiType(type);
+
   const handleSelectMember = (name: string) => {
     setSelectedMember(name);
     setSearchTerm(name);
@@ -55,10 +60,9 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
     }
 
     if (!selectedMember || !penaltyDescription.trim()) {
-      toastError('멤버 이름과 페널티 사유를 입력해주세요.');
+      toastError(`멤버 이름과 ${label} 사유를 입력해주세요.`);
       return;
     }
-    const apiType = toApiType(type);
 
     try {
       const res = await postPenaltyApi({
@@ -67,7 +71,7 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
         penaltyDescription,
       });
       if (res.code === 200) {
-        toastSuccess('페널티가 성공적으로 부여되었습니다.');
+        toastSuccess(`${label}가 성공적으로 부여되었습니다.`);
 
         const penaltyTime = res.data?.time
           ? formatDate(res.data.time)
@@ -100,11 +104,11 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
         }
         handleReset();
       } else {
-        toastError(`페널티 부여 실패: ${res.message}`);
+        toastError(`${label} 부여 실패: ${res.message}`);
       }
     } catch (error) {
-      console.error('페널티 부여 오류: ', error);
-      toastError('페널티 부여 실패');
+      console.error(`${label} 부여 오류: `, error);
+      toastError(`${label} 부여 실패`);
     }
   };
 

@@ -17,7 +17,6 @@ export const PenaltyWrapper = styled(Wrapper)`
   // height: max-content;
   min-width: 490px;
   max-height: 471px;
-  margin-top: 30px;
   border-top: 0px;
   padding: 0px;
 `;

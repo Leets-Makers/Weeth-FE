@@ -58,35 +58,35 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     try {
       if (loading || isAdmin === undefined || !isAdmin) return;
 
-      const response = await getPenaltyApi(selectedCardinal ?? 0);
+      const resp = await getPenaltyApi(selectedCardinal ?? 0);
 
-      if (response.code === 200) {
-        console.log('페널티 조회 결과:', response.data);
-        const penalties = response.data.reduce(
-          (
-            acc: { [x: string]: any },
-            item: { userId: string | number; Penalties: any[] },
-          ) => {
-            acc[item.userId] = item.Penalties.map((penalty: any) => ({
-              penaltyId: penalty.penaltyId,
-              penaltyDescription: penalty.penaltyDescription,
-              time: formatDate(penalty.time),
-            }));
-            return acc;
-          },
-          {} as PenaltyState,
-        );
+      if (resp.code === 200 || resp.code === 0) {
+        const data = resp.data;
+
+        const groups = Array.isArray(data) ? data : data ? [data] : [];
+
+        const users = groups.flatMap((g: any) => g?.responses ?? []);
+
+        const penalties = users.reduce((acc: PenaltyState, u: any) => {
+          const list = Array.isArray(u?.Penalties) ? u.Penalties : [];
+          acc[u.userId] = list.map((p: any) => ({
+            penaltyId: p.penaltyId,
+            penaltyDescription: p.penaltyDescription,
+            time: p.time,
+          }));
+          return acc;
+        }, {} as PenaltyState);
 
         dispatch({ type: 'SET_PENALTY', payload: penalties });
       }
-    } catch (error: any) {
-      console.error('페널티 조회 오류:', error.message);
+    } catch (e: any) {
+      console.error('패널티 조회 오류:', e.message);
     }
   };
 
   useEffect(() => {
     fetchPenaltyData();
-  }, [isAdmin, loading]);
+  }, [isAdmin, loading, selectedCardinal]);
 
   useEffect(() => {
     if (!penaltyData || !members.length) return;

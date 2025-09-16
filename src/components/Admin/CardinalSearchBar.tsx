@@ -1,6 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CardinalDropDown from '@/components/Admin/Cardinal';
 import SearchBar, { SearchBarWrapper } from '@/components/Admin/SearchBar';
+import useGetAllCardinals from '@/api/useGetCardinals';
 
 interface CombinedSearchBarProps {
   selectedCardinal: number | null;
@@ -8,6 +9,7 @@ interface CombinedSearchBarProps {
   isPenaltyPage?: boolean;
   searchName: string;
   setSearchName: Dispatch<SetStateAction<string>>;
+  autoSelectLatest?: boolean;
 }
 
 const CombinedSearchBar: React.FC<CombinedSearchBarProps> = ({
@@ -16,7 +18,19 @@ const CombinedSearchBar: React.FC<CombinedSearchBarProps> = ({
   isPenaltyPage,
   searchName,
   setSearchName,
+  autoSelectLatest = false,
 }) => {
+  const { allCardinals } = useGetAllCardinals();
+
+  useEffect(() => {
+    if (!autoSelectLatest) return;
+    if (selectedCardinal != null) return;
+    if (!Array.isArray(allCardinals) || allCardinals.length === 0) return;
+
+    const latest = Math.max(...allCardinals.map((c) => c.cardinalNumber));
+    setSelectedCardinal(latest);
+  }, [autoSelectLatest, selectedCardinal, allCardinals, setSelectedCardinal]);
+
   return (
     <SearchBarWrapper isPenaltyPage={isPenaltyPage}>
       <div>

@@ -9,7 +9,7 @@ const getPenaltyApi = async (cardinal: number) => {
     const response = await api.get(PATH, {
       params: cardinal != null ? { cardinal } : undefined,
     });
-    return response.data.data;
+    return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || '페널티 조회 실패');
   }
