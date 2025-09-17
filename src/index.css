@@ -36,6 +36,10 @@ body {
   -ms-overflow-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 input,
 textarea,
 select {

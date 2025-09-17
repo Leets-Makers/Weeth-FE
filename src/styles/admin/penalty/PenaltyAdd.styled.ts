@@ -3,7 +3,7 @@ import theme from '@/styles/theme';
 import { Wrapper } from '@/styles/admin/DuesRegisterDropDown.styled';
 
 export const TitleWrapper = styled.div`
-  padding: 25px 30px;
+  padding: 20px 30px;
 `;
 export const SubTitle = styled.div`
   font-size: 16px;
@@ -13,11 +13,10 @@ export const SubTitle = styled.div`
 
 export const PenaltyWrapper = styled(Wrapper)`
   border-radius: 4px;
-  width: 490px;
-  height: 450px;
-  min-width: 490px;
-  max-height: 450px;
-  margin-top: 30px;
+  width: 468px;
+  // height: max-content;
+  min-width: 468px;
+  max-height: 471px;
   border-top: 0px;
   padding: 0px;
 `;
@@ -27,11 +26,12 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 `;
 export const Input = styled.input`
   width: 100%;
   font-size: 18px;
+  font-weight: 500;
   border: 1px solid #dedede;
   border-radius: 4px;
   padding: 12px 16px;
@@ -54,5 +54,5 @@ export const ItemWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 30px;
-  padding: 30px;
+  padding: 15px 25px 30px 25px;
 `;
