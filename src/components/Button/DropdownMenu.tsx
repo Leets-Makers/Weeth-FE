@@ -1,4 +1,3 @@
-import useGetAllCardinals from '@/api/useGetCardinals';
 import SignupWhite from '@/components/Signup/SignupWhite';
 import theme from '@/styles/theme';
 import { useEffect, useRef, useState } from 'react';
@@ -110,8 +109,6 @@ const DropdownMenu = ({
   const [selectedValue, setSelectedValue] = useState(origValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const { allCardinals } = useGetAllCardinals();
-
   const options = [
     { value: '경영학과', label: '경영학과' },
     { value: '경제학과', label: '경제학과' },
@@ -129,13 +126,17 @@ const DropdownMenu = ({
     a.label.localeCompare(b.label, 'ko', { sensitivity: 'base' }),
   );
 
-  const cardinalOptions = allCardinals
-    .filter((cardinal) => cardinal.cardinalNumber !== 0)
-    .map((cardinal) => ({
-      value: cardinal.cardinalNumber.toString(),
-      label: `${cardinal.cardinalNumber}기`,
-    }))
-    .sort((a, b) => Number(b.value) - Number(a.value));
+  // 회원가입 진행 시 토큰이 없어서 api 연결 불가 -> 기수 상수로 진행
+  const cardinalOptions = [
+    { value: '1', label: '1' },
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+    { value: '4', label: '4' },
+    { value: '5', label: '5' },
+    { value: '6', label: '6' },
+  ].sort((a, b) =>
+    b.label.localeCompare(a.label, 'ko', { sensitivity: 'base' }),
+  );
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
