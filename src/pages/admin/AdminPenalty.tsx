@@ -1,4 +1,3 @@
-import CardinalSearchBar from '@/components/Admin/CardinalSearchBar';
 import TotalCardinal from '@/components/Admin/CardinalWrapper';
 import { MemberProvider } from '@/components/Admin/context/MemberContext';
 import {
@@ -24,20 +23,6 @@ export const PenaltyContainer = styled(Container)`
   flex-direction: row;
   align-items: flex-start;
   gap: 20px;
-`;
-
-const LeftCol = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex: 1;
-`;
-
-const RightCol = styled.div`
-  width: 360px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
 `;
 
 const TopContainer = styled.div`
@@ -78,19 +63,15 @@ const AdminPenalty: React.FC = () => {
           </TopContainer>
           <PenaltyContainer>
             {/* 왼쪽 섹션 - 패널티/경고 조회 */}
-            <div>
-              <PenaltyListTable
-                selectedCardinal={selectedCardinal}
-                searchName={searchName}
-                penaltyData={penaltyData}
-                dispatch={dispatch}
-              />
-            </div>
+            <PenaltyListTable
+              selectedCardinal={selectedCardinal}
+              searchName={searchName}
+              penaltyData={penaltyData}
+              dispatch={dispatch}
+            />
 
             {/* 오른쪽 섹션 - 패널티/경고 부여 */}
-            <div>
-              <PenaltyAdd dispatch={dispatch} />
-            </div>
+            <PenaltyAdd dispatch={dispatch} />
           </PenaltyContainer>
         </ContentWrapper>
       </PageWrapper>

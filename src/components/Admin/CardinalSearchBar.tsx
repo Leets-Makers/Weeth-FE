@@ -27,7 +27,7 @@ const CombinedSearchBar: React.FC<CombinedSearchBarProps> = ({
     if (selectedCardinal != null) return;
     if (!Array.isArray(allCardinals) || allCardinals.length === 0) return;
 
-    const latest = Math.max(...allCardinals.map((c) => c.cardinalNumber));
+    const latest = allCardinals.at(-1)!.cardinalNumber;
     setSelectedCardinal(latest);
   }, [autoSelectLatest, selectedCardinal, allCardinals, setSelectedCardinal]);
 

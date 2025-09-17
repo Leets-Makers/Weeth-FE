@@ -30,12 +30,15 @@ const TotalCardinal: React.FC<TotalCardinalProps> = ({
   const { allCardinals } = useGetAllCardinals();
 
   useEffect(() => {
-    if (autoSelectLatest && allCardinals.length > 0) {
-      const latestCardinal = Math.max(
-        ...allCardinals.map((c) => c.cardinalNumber),
-      );
-      setSelectedCardinal(latestCardinal);
-    }
+    if (!autoSelectLatest || allCardinals.length === 0) return;
+
+    const numbers = allCardinals
+      .map((c) => c.cardinalNumber)
+      .filter((n) => n > 0);
+
+    if (numbers.length === 0) return;
+    const latest = Math.max(...numbers);
+    setSelectedCardinal(latest);
   }, [allCardinals, setSelectedCardinal, autoSelectLatest]);
 
   return (

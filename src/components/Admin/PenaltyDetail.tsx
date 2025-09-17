@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as S from '@/styles/admin/penalty/Penalty.styled';
 import Button from '@/components/Admin/Button';
 import { ApiPenaltyType } from '@/types/adminPenalty';
-import { toastSuccess } from '../common/ToastMessage';
+import { toastError, toastSuccess } from '../common/ToastMessage';
 
 interface PenaltyDetailProps {
   penaltyData: {
@@ -64,7 +64,7 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
 
   const handleDelete = async () => {
     if (!penaltyData.penaltyId) {
-      alert('PenaltyId가 없습니다. 삭제할 수 없습니다.');
+      toastError('PenaltyId가 없습니다. 삭제할 수 없습니다.');
       return;
     }
 
@@ -75,7 +75,7 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
         toastSuccess('패널티가 성공적으로 삭제되었습니다.');
         onDelete(penaltyData.penaltyId);
       } catch (error: any) {
-        toastSuccess(error.message || '패널티 삭제 실패');
+        toastError(error.message || '패널티 삭제 실패');
         console.error('패널티 삭제 오류:', error);
       }
     }
@@ -93,7 +93,7 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
         onEdit(penaltyData.penaltyId, newDescription);
         setIsEditing(false);
       } catch (error: any) {
-        alert(error.message || '패널티 수정 실패');
+        toastError(error.message || '패널티 수정 실패');
         console.error('패널티 수정 오류:', error);
       }
     }
