@@ -52,6 +52,26 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
     setPenaltyDescription('');
   };
 
+  const normalizeToPenaltyState = (data: any): PenaltyState => {
+    const groups = Array.isArray(data) ? data : data ? [data] : [];
+    const users = groups.flatMap((g: any) => g?.responses ?? []);
+
+    return users.reduce((acc: PenaltyState, u: any) => {
+      const list = Array.isArray(u?.Penalties) ? u.Penalties : [];
+      acc[u.userId] = list.map((p: any) => {
+        const isAuto = p.penaltyType === 'AUTO_PENALTY';
+        return {
+          penaltyId: p.penaltyId,
+          penaltyType: isAuto ? 'PENALTY' : p.penaltyType,
+          penaltyDescription: p.penaltyDescription,
+          time: p.time,
+          isAuto,
+        };
+      });
+      return acc;
+    }, {} as PenaltyState);
+  };
+
   const handleAddPenalty = async () => {
     const member = members.find((m) => m.name === selectedMember);
     if (!member) {
@@ -88,25 +108,14 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
           },
         });
 
-        const response = await getPenaltyApi(selectedCardinal ?? 0);
-        if (response.code === 200) {
-          const normalized = (
-            Array.isArray(response.data) ? response.data : [response.data]
-          )
-            .flatMap((g: any) => g?.responses ?? [])
-            .reduce((acc: PenaltyState, u: any) => {
-              acc[u.userId] = (u.Penalties ?? []).map((p: any) => ({
-                penaltyId: p.penaltyId,
-                penaltyType:
-                  p.penaltyType === 'AUTO_PENALTY' ? 'PENALTY' : p.penaltyType,
-                penaltyDescription: p.penaltyDescription,
-                time: p.time,
-              }));
-              return acc;
-            }, {} as PenaltyState);
-
-          dispatch({ type: 'REFRESH_PENALTY_DATA', payload: normalized });
+        if (selectedCardinal != null) {
+          const response = await getPenaltyApi(selectedCardinal);
+          if (response.code === 200 || response.code === 0) {
+            const normalized = normalizeToPenaltyState(response.data);
+            dispatch({ type: 'SET_PENALTY', payload: normalized });
+          }
         }
+
         handleReset();
       } else {
         toastError(`${label} 부여 실패: ${res.message}`);
