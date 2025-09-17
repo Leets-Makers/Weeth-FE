@@ -27,7 +27,7 @@ const columns: Column[] = [
   { key: 'attendanceCount', header: '출석', width: '7%' },
   { key: 'absenceCount', header: '결석', width: '7%' },
   { key: 'penaltyCount', header: '페널티', width: '7%' },
-  { key: 'createdAt', header: '가입일', width: '10%' },
+  { key: 'warningCount', header: '경고', width: '7%' },
 ];
 
 const DynamicTopBar: React.FC = () => {
