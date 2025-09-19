@@ -46,7 +46,8 @@ import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
 import { pcResponsive } from '@/styles';
-import InfoButton from './InfoButton';
+import AdminButton from '@/components/Header/AdminButton';
+import InfoButton from '@/components/Header/InfoButton';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
@@ -61,6 +62,7 @@ interface HeaderProps {
     | 'WRITING'
     | 'POST'
     | 'INFO'
+    | 'ADMIN'
     | 'none';
   isComplete?: boolean;
   isAccessible: boolean;
@@ -118,6 +120,10 @@ const Header = ({
 
       {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
         <PostButton onClick={onClickRightButton} text="게시하기" />
+      )}
+
+      {RightButtonType === 'ADMIN' && onClickRightButton && isAccessible && (
+        <AdminButton onClick={onClickRightButton} text="관리자" />
       )}
 
       {RightButtonType === 'MENU' && onClickRightButton && isAccessible && (
