@@ -45,7 +45,7 @@ const HomeFooter: React.FC = () => {
           홈페이지
         </S.GridItem>
         <S.GridItem
-          href="https://www.instagram.com/leets.official/"
+          href="https://www.instagram.com/leets_official?igsh=bGI4bTJmMjB5OHk3"
           target="_blank"
         >
           <S.ImgContainer>

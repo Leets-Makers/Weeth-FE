@@ -74,8 +74,10 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 25px 25px 10px 25px;
+  padding: 25px 0 10px 0;
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   ${pcResponsive}
   position: sticky;
@@ -84,9 +86,31 @@ const HeaderWrapper = styled.div`
   background-color: ${theme.color.gray[12]};
 `;
 
+const HeaderLeft = styled.div`
+  display: flex;
+  align-items: center;
+  justify-self: start;
+  padding: 0 25px;
+`;
+
+const HeaderCenter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  text-align: center;
+`;
+
+const HeaderRight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  padding: 0 15px;
+`;
+
 const Title = styled.div`
   font-size: 18px;
   font-family: ${theme.font.semiBold};
+  white-space: nowrap;
 `;
 
 const None = styled.div`
@@ -103,49 +127,57 @@ const Header = ({
 }: HeaderProps) => {
   return (
     <HeaderWrapper>
-      <LeftButton isWaiting={isWaiting} />
-      <Title>{children}</Title>
+      <HeaderLeft>
+        <LeftButton isWaiting={isWaiting} />
+      </HeaderLeft>
+      <HeaderCenter>
+        <Title>{children}</Title>
+      </HeaderCenter>
 
-      {RightButtonType === 'TEXT' && onClickRightButton && (
-        <TextButton
-          onClick={onClickRightButton}
-          text="완료"
-          isComplete={isComplete}
-        />
-      )}
+      <HeaderRight>
+        {RightButtonType === 'TEXT' && onClickRightButton && (
+          <TextButton
+            onClick={onClickRightButton}
+            text="완료"
+            isComplete={isComplete}
+          />
+        )}
 
-      {RightButtonType === 'WRITING' && isAccessible && onClickRightButton && (
-        <WritingButton onClick={onClickRightButton} text="글쓰기" />
-      )}
+        {RightButtonType === 'WRITING' &&
+          isAccessible &&
+          onClickRightButton && (
+            <WritingButton onClick={onClickRightButton} text="글쓰기" />
+          )}
 
-      {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
-        <PostButton onClick={onClickRightButton} text="게시하기" />
-      )}
+        {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
+          <PostButton onClick={onClickRightButton} text="게시하기" />
+        )}
 
-      {RightButtonType === 'ADMIN' && onClickRightButton && isAccessible && (
-        <AdminButton onClick={onClickRightButton} text="관리자" />
-      )}
+        {RightButtonType === 'ADMIN' && onClickRightButton && isAccessible && (
+          <AdminButton onClick={onClickRightButton} text="관리자" />
+        )}
 
-      {RightButtonType === 'MENU' && onClickRightButton && isAccessible && (
-        <MenuButton onClick={onClickRightButton} />
-      )}
+        {RightButtonType === 'MENU' && onClickRightButton && isAccessible && (
+          <MenuButton onClick={onClickRightButton} />
+        )}
 
-      {RightButtonType === 'PLUS' && isAccessible && <PlusButton />}
+        {RightButtonType === 'PLUS' && isAccessible && <PlusButton />}
 
-      {/* {RightButtonType === 'EDIT' && onClickRightButton && (
+        {/* {RightButtonType === 'EDIT' && onClickRightButton && (
         <EditButton onClick={onClickRightButton} />
       )} */}
 
-      {RightButtonType === 'SEARCH' && onClickRightButton && isAccessible && (
-        <SearchButton onClick={onClickRightButton} />
-      )}
+        {RightButtonType === 'SEARCH' && onClickRightButton && isAccessible && (
+          <SearchButton onClick={onClickRightButton} />
+        )}
 
-      {RightButtonType === 'INFO' && onClickRightButton && isAccessible && (
-        <InfoButton onClick={onClickRightButton} />
-      )}
+        {RightButtonType === 'INFO' && onClickRightButton && isAccessible && (
+          <InfoButton onClick={onClickRightButton} />
+        )}
 
-      {RightButtonType !== 'none' && !isAccessible && <None />}
-      {RightButtonType === 'none' && <None />}
+        {RightButtonType !== 'none' && !isAccessible && <None />}
+        {RightButtonType === 'none' && <None />}
+      </HeaderRight>
     </HeaderWrapper>
   );
 };
