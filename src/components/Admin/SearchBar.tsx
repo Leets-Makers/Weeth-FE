@@ -13,10 +13,10 @@ export const SearchBarWrapper = styled.div<{
   display: flex;
   align-items: center;
   width: ${({ isPenaltyPage }) => (isPenaltyPage ? '63%' : '100%')};
-  min-width: ${({ isPenaltyPage }) => (isPenaltyPage ? '890px' : '1400px')};
+  min-width: ${({ isPenaltyPage }) => (isPenaltyPage ? '950px' : '1400px')};
   padding: 15px 20px;
   border-radius: 4px;
-  margin: 30px 0 10px;
+  margin: ${({ isPenaltyPage }) => (isPenaltyPage ? '0px' : '30px 0 10px')};
   box-shadow: 0px 3px 8px 0px rgba(133, 141, 138, 0.2);
   gap: 15px;
 `;
@@ -58,6 +58,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   isWrapped = true,
   searchName,
   setSearchName,
+  isPenaltyPage = false,
 }) => {
   const { members, setFilteredMembers, selectedCardinal } = useMemberContext();
 
@@ -89,7 +90,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
     </>
   );
 
-  return isWrapped ? <SearchBarWrapper>{content}</SearchBarWrapper> : content;
+  return isWrapped ? (
+    <SearchBarWrapper isPenaltyPage={isPenaltyPage}>{content}</SearchBarWrapper>
+  ) : (
+    content
+  );
 };
 
 export default SearchBar;

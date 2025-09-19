@@ -6,9 +6,12 @@ import deleteComment from '@/api/deleteComment';
 import formatDateTime from '@/hooks/formatDateTime';
 import useGetUserName from '@/hooks/useGetUserName';
 import setPositionIcon from '@/hooks/setPositionIcon';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import SelectModal from '@/components/Modal/SelectModal';
 import convertLinksInText from '@/hooks/convertLinksInText';
+import { originFile } from '@/pages/board/part/PartEdit';
+import PostFile from '@/components/Board/PostFile';
+import { toastError, toastSuccess } from '@/components/common/ToastMessage';
 
 interface ReplyCommentProps {
   name: string;
@@ -20,6 +23,7 @@ interface ReplyCommentProps {
   position: string;
   role: string;
   onDelete: () => void;
+  fileUrls: originFile[];
 }
 
 const ReplyComment = ({
@@ -31,6 +35,7 @@ const ReplyComment = ({
   path,
   position,
   role,
+  fileUrls,
   onDelete,
 }: ReplyCommentProps) => {
   const formattedTime = formatDateTime(time);
@@ -55,6 +60,28 @@ const ReplyComment = ({
     }
   };
 
+  const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
+    fetch(fileUrl, { method: 'GET' })
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          a.remove();
+        }, 1000);
+        toastSuccess('저장되었습니다');
+      })
+      .catch((err) => {
+        toastError('저장에 실패했습니다');
+        console.error('err', err);
+      });
+  }, []);
+
   return (
     <S.ReplyCommentContainer>
       <S.ReplyArrow src={ReplyArrowImage} alt="답댓글 화살표" />
@@ -66,7 +93,22 @@ const ReplyComment = ({
           />
           {name}
         </S.NameText>
-        <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
+        <S.ContentContainer>
+          <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
+          {fileUrls.length > 0 && (
+            <S.ContentText>
+              {fileUrls.map((file) => (
+                <PostFile
+                  key={file.fileId}
+                  fileName={file.fileName}
+                  isDownload
+                  onClick={() => onClickDownload(file.fileUrl, file.fileName)}
+                  isComment
+                />
+              ))}
+            </S.ContentText>
+          )}
+        </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
         {isMyComment && (
           <S.ReplyImageButton onClick={onClickMenu}>

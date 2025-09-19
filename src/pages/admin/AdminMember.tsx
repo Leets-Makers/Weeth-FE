@@ -26,8 +26,8 @@ const columns: Column[] = [
   { key: 'role', header: '직급', width: '10%' },
   { key: 'attendanceCount', header: '출석', width: '7%' },
   { key: 'absenceCount', header: '결석', width: '7%' },
-  { key: 'penaltyCount', header: '패널티', width: '7%' },
-  { key: 'createdAt', header: '가입일', width: '10%' },
+  { key: 'penaltyCount', header: '페널티', width: '7%' },
+  { key: 'warningCount', header: '경고', width: '7%' },
 ];
 
 const DynamicTopBar: React.FC = () => {
@@ -52,7 +52,10 @@ const AdminMember: React.FC = () => {
       <PageWrapper>
         <NavMenu />
         <ContentWrapper>
+          {/* 상단 바 - 선택된 멤버가 있을 때와 없을 때 다르게 표시 */}
           <DynamicTopBar />
+
+          {/* 검색 바 및 기수 정보, 멤버 테이블 */}
           <Container>
             <SearchBar searchName={searchName} setSearchName={setSearchName} />
             <CardinalInfo />

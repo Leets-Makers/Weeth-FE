@@ -1,7 +1,11 @@
+import { ApiPenaltyType } from '@/types/adminPenalty';
+
 export interface Penalty {
   penaltyDescription: string;
+  penaltyType: ApiPenaltyType;
   time: string;
   penaltyId: number;
+  isAuto?: boolean; // auto penalty 여부
 }
 
 export interface PenaltyState {

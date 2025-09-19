@@ -32,6 +32,7 @@ TEXT : 텍스트타입의 버튼입니다. 현재(2024.11.22)는 '완료'로만 
 MENU : 점 세개(⋮) 버튼입니다.
 PLUS : 캘린더에서 사용되는 +버튼입니다.
 EDIT : 마이페이지에서 사용되는 연필버튼입니다.
+WRITING: 게시판에서 글 작성 시 시용되는 글쓰기 버튼입니다.
 
 */
 
@@ -42,12 +43,27 @@ import LeftButton from '@/components/Header/LeftButton';
 import MenuButton from '@/components/Header/MenuButton';
 import PlusButton from '@/components/Header/PlusButton';
 import SearchButton from '@/components/Header/SearchButton';
+import WritingButton from '@/components/Header/WritingButton';
+import PostButton from '@/components/Header/PostButton';
+import { pcResponsive } from '@/styles';
+import AdminButton from '@/components/Header/AdminButton';
+import InfoButton from '@/components/Header/InfoButton';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {
   children?: React.ReactNode;
   onClickRightButton?: () => void;
-  RightButtonType: 'TEXT' | 'MENU' | 'PLUS' | 'EDIT' | 'SEARCH' | 'none';
+  RightButtonType:
+    | 'TEXT'
+    | 'MENU'
+    | 'PLUS'
+    | 'EDIT'
+    | 'SEARCH'
+    | 'WRITING'
+    | 'POST'
+    | 'INFO'
+    | 'ADMIN'
+    | 'none';
   isComplete?: boolean;
   isAccessible: boolean;
   isWaiting?: boolean;
@@ -57,9 +73,15 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 370px;
-  padding: 25px 25px 10px 20px;
+  width: 100%;
+  padding: 25px 25px 10px 25px;
   box-sizing: border-box;
+
+  ${pcResponsive}
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  background-color: ${theme.color.gray[12]};
 `;
 
 const Title = styled.div`
@@ -92,6 +114,18 @@ const Header = ({
         />
       )}
 
+      {RightButtonType === 'WRITING' && isAccessible && onClickRightButton && (
+        <WritingButton onClick={onClickRightButton} text="글쓰기" />
+      )}
+
+      {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
+        <PostButton onClick={onClickRightButton} text="게시하기" />
+      )}
+
+      {RightButtonType === 'ADMIN' && onClickRightButton && isAccessible && (
+        <AdminButton onClick={onClickRightButton} text="관리자" />
+      )}
+
       {RightButtonType === 'MENU' && onClickRightButton && isAccessible && (
         <MenuButton onClick={onClickRightButton} />
       )}
@@ -104,6 +138,10 @@ const Header = ({
 
       {RightButtonType === 'SEARCH' && onClickRightButton && isAccessible && (
         <SearchButton onClick={onClickRightButton} />
+      )}
+
+      {RightButtonType === 'INFO' && onClickRightButton && isAccessible && (
+        <InfoButton onClick={onClickRightButton} />
       )}
 
       {RightButtonType !== 'none' && !isAccessible && <None />}

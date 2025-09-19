@@ -1,39 +1,22 @@
-import api from './api';
+import { toastError } from '@/components/common/ToastMessage';
+import {
+  EduApiResponse,
+  EduSearchContent,
+  NoticeApiResponse,
+  NoticeSearchContent,
+  PartApiResponse,
+  PartSearchContent,
+} from '@/types/search';
+import api from '@/api/api';
 
-interface Content {
-  id: number;
-  name: string;
-  title: string;
-  content: string;
-  time: string;
-  commentCount: number;
-  hasFile: boolean;
-  position: string;
-  role: string;
-}
-
-interface ApiResponse {
-  code: number;
-  message: string;
-  data: {
-    size: number;
-    content: Content[];
-    number: number;
-    first: boolean;
-    last: boolean;
-  };
-}
-
-const BASE_URL = import.meta.env.VITE_API_URL;
-
-const useGetBoardSearch = async (
+export const useGetPartSearch = async (
   keyword: string,
   pageNumber: number,
-  appendPosts: (newPosts: Content[]) => void,
+  appendPosts: (newPosts: PartSearchContent[]) => void,
 ) => {
   try {
-    const response = await api.get<ApiResponse>(
-      `${BASE_URL}/api/v1/board/search`,
+    const response = await api.get<PartApiResponse>(
+      `/api/v1/board/search/part`,
       {
         params: { keyword, pageNumber, pageSize: 50 },
       },
@@ -42,8 +25,52 @@ const useGetBoardSearch = async (
     const { data } = response.data;
     appendPosts(data.content);
   } catch (error) {
+    toastError('검색된 내용이 없습니다.');
+    appendPosts([]);
     console.error('Error fetching data:', error);
   }
 };
 
-export default useGetBoardSearch;
+export const useGetEduSearch = async (
+  keyword: string,
+  pageNumber: number,
+  appendPosts: (newPosts: EduSearchContent[]) => void,
+) => {
+  try {
+    const response = await api.get<EduApiResponse>(
+      `/api/v1/board/search/education`,
+      {
+        params: { keyword, pageNumber, pageSize: 50 },
+      },
+    );
+
+    const { data } = response.data;
+    appendPosts(data.content);
+  } catch (error) {
+    toastError('검색된 내용이 없습니다.');
+    appendPosts([]);
+    console.error('Error fetching data:', error);
+  }
+};
+
+export const useGetNoticeSearch = async (
+  keyword: string,
+  pageNumber: number,
+  appendPosts: (newPosts: NoticeSearchContent[]) => void,
+) => {
+  try {
+    const response = await api.get<NoticeApiResponse>(
+      `/api/v1/notices/search`,
+      {
+        params: { keyword, pageNumber, pageSize: 50 },
+      },
+    );
+
+    const { data } = response.data;
+    appendPosts(data.content);
+  } catch (error) {
+    toastError('검색된 내용이 없습니다.');
+    appendPosts([]);
+    console.error('Error fetching data:', error);
+  }
+};

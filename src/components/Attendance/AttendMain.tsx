@@ -1,36 +1,42 @@
 import { useEffect, useState } from 'react';
 
-import ModalAttend from '@/components/Attendance/Modal/ModalAttend';
-import ModalPenalty from '@/components/Attendance/Modal/ModalPenalty';
-
 import check from '@/assets/images/ic_check.svg';
 import warning from '@/assets/images/ic_warning.svg';
 
 import * as S from '@/styles/attend/AttendMain.styled';
+import { AttendProject } from '@/styles/attend/AttendInfo.styled';
+import {
+  PenaltyContainer,
+  NoPenaltyInfo,
+} from '@/styles/attend/PenaltyInfo.styled';
+
 import useGetAttend from '@/api/useGetAttend';
 import useGetPenalty from '@/api/useGetPenalty';
+
 import { AttendInfo, NoAttnedInfo } from '@/components/Attendance/AttendInfo';
 import AttendRate from '@/components/Attendance/AttendRate';
 import {
   MyPenaltyInfo,
   PenaltyInfo,
 } from '@/components/Attendance/PenaltyInfo';
+import Loading from '@/components/common/Loading';
+import ModalAttend from '@/components/Attendance/ModalAttend';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import Loading from '@/components/common/Loading';
+import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(relativeTime);
 dayjs.locale('ko');
+dayjs.extend(isBetween);
 
 const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [penaltyModalOpen, setPenaltyModalOpen] = useState<boolean>(false);
   const [hasPenalty, setHasPenalty] = useState<boolean>(false);
 
   const { penaltyInfo, isLoading: penaltyLoading } = useGetPenalty();
@@ -76,8 +82,8 @@ const AttendMain: React.FC = () => {
 
     endDateTime = `(${startTime} ~ ${endTime})`;
 
-    const currentTime = dayjs().format('h:mm A');
-    isWithinTimeRange = currentTime >= startTime && currentTime <= endTime;
+    const current = dayjs();
+    isWithinTimeRange = current.isBetween(startDate, endDate, 'minute', '[]');
   }
 
   const handleOpenModal = () => {
@@ -89,9 +95,6 @@ const AttendMain: React.FC = () => {
   const handleCloseModal = () => {
     setModalOpen(false);
   };
-
-  const handleOpenPenaltyModal = () => setPenaltyModalOpen(true);
-  const handleClosePenaltyModal = () => setPenaltyModalOpen(false);
 
   return (
     <S.StyledAttend>
@@ -116,21 +119,21 @@ const AttendMain: React.FC = () => {
         <img src={warning} alt="!" />
         {penaltyInfo?.penaltyCount === null ? (
           <S.SemiBold>
-            <S.AttendProject>등록된 데이터가 없습니다.</S.AttendProject>
+            <AttendProject>등록된 데이터가 없습니다.</AttendProject>
           </S.SemiBold>
         ) : (
           <>
             {hasPenalty ? (
               <MyPenaltyInfo
-                penaltyCount={penaltyInfo?.penaltyCount}
-                handleOpenPenaltyModal={handleOpenPenaltyModal}
+                penaltyCount={penaltyInfo?.penaltyCount || 0}
+                warningCount={penaltyInfo?.warningCount || 0}
               />
             ) : (
-              <S.PenaltyContainer>
-                <S.NoPenaltyInfo>
-                  <S.SemiBold>패널티를 받은 이력이 없네요!</S.SemiBold>
-                </S.NoPenaltyInfo>
-              </S.PenaltyContainer>
+              <PenaltyContainer>
+                <NoPenaltyInfo>
+                  <S.SemiBold>페널티를 받은 이력이 없네요!</S.SemiBold>
+                </NoPenaltyInfo>
+              </PenaltyContainer>
             )}
             <PenaltyInfo />
           </>
@@ -145,7 +148,6 @@ const AttendMain: React.FC = () => {
         close={handleCloseModal}
         handleAttend={setIsAttend}
       />
-      <ModalPenalty open={penaltyModalOpen} close={handleClosePenaltyModal} />
     </S.StyledAttend>
   );
 };

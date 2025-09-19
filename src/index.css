@@ -36,6 +36,10 @@ body {
   -ms-overflow-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 input,
 textarea,
 select {
@@ -66,4 +70,10 @@ textarea::placeholder {
 code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

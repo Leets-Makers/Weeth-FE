@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from './api';
+import api from '@/api/api';
 
 export const getAllCardinals = async () => {
   return api.get(`/api/v1/cardinals`);

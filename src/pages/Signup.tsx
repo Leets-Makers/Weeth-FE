@@ -82,7 +82,7 @@ const Signup: React.FC = () => {
   ): Promise<boolean | null> => {
     try {
       const BASE_URL =
-        window.location.hostname === 'weeth.site'
+        window.location.hostname === 'weeth.kr'
           ? import.meta.env.VITE_API_URL
           : import.meta.env.VITE_API_URL_DEV;
       const response = await axios.get(

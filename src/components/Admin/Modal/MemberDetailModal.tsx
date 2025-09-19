@@ -77,7 +77,7 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
     { label: '가입일', value: data.createdAt },
     { label: '출석', value: data.attendanceCount },
     { label: '결석', value: data.absenceCount },
-    { label: '패널티', value: data.penaltyCount },
+    { label: '페널티', value: data.penaltyCount },
   ];
 
   return (
@@ -126,7 +126,7 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
                 {memberInfo.map((info) => (
                   <S.FontStyle
                     key={info.label}
-                    color={info.label === '패널티' ? '#ff5858' : undefined}
+                    color={info.label === '페널티' ? '#ff5858' : undefined}
                   >
                     {info.value}
                   </S.FontStyle>
@@ -148,7 +148,7 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
                 {activityInfo.map((info) => (
                   <S.FontStyle
                     key={info.label}
-                    color={info.label === '패널티' ? '#ff5858' : undefined}
+                    color={info.label === '페널티' ? '#ff5858' : undefined}
                   >
                     {info.value}
                   </S.FontStyle>

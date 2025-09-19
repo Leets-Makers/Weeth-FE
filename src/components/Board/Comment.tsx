@@ -3,12 +3,15 @@ import ReplyImage from '@/assets/images/ic_reply_comment.svg';
 import MenuImage from '@/assets/images/ic_comment_delete.svg';
 import * as S from '@/styles/board/Comment.styled';
 import deleteComment from '@/api/deleteComment';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import formatDateTime from '@/hooks/formatDateTime';
 import useGetUserName from '@/hooks/useGetUserName';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import SelectModal from '@/components/Modal/SelectModal';
 import convertLinksInText from '@/hooks/convertLinksInText';
+import { originFile } from '@/pages/board/part/PartEdit';
+import PostFile from '@/components/Board/PostFile';
+import { toastError, toastSuccess } from '@/components/common/ToastMessage';
 
 interface CommentProps {
   name: string;
@@ -19,6 +22,7 @@ interface CommentProps {
   path: string;
   position: string;
   role: string;
+  fileUrls: originFile[];
   onDelete: () => void;
   onReply: (commentId: number) => void;
   selectedComment: Record<number, boolean>;
@@ -33,6 +37,7 @@ const Comment = ({
   path,
   position,
   role,
+  fileUrls,
   onDelete,
   onReply,
   selectedComment,
@@ -62,6 +67,28 @@ const Comment = ({
     }
   };
 
+  const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
+    fetch(fileUrl, { method: 'GET' })
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          a.remove();
+        }, 1000);
+        toastSuccess('저장되었습니다');
+      })
+      .catch((err) => {
+        toastError('저장에 실패했습니다');
+        console.error('err', err);
+      });
+  }, []);
+
   const formattedTime = formatDateTime(time);
 
   const isMyComment = name === useGetUserName();
@@ -76,7 +103,22 @@ const Comment = ({
           />
           {name}
         </S.NameText>
-        <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
+        <S.ContentContainer>
+          <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
+          {fileUrls.length > 0 && (
+            <S.ContentText>
+              {fileUrls.map((file) => (
+                <PostFile
+                  key={file.fileId}
+                  fileName={file.fileName}
+                  isDownload
+                  onClick={() => onClickDownload(file.fileUrl, file.fileName)}
+                  isComment
+                />
+              ))}
+            </S.ContentText>
+          )}
+        </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
       </S.CommentContentContainer>
       <S.ButtonContainer>

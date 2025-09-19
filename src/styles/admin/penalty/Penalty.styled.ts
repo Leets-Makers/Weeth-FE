@@ -21,14 +21,13 @@ export const Wrapper = styled.div`
 `;
 
 export const TableContainer = styled.div`
-  min-width: 870px;
+  min-width: 950px;
   background-color: #fff;
   border: 1px solid #f2f2f2;
   border-radius: 8px;
   box-shadow: 0px 3px 8px rgba(133, 141, 138, 0.2);
   padding-top: 10px;
   padding: 20px;
-  margin-top: 30px;
   box-sizing: border-box;
 `;
 
@@ -84,10 +83,13 @@ export const ButtonWrapper = styled.div`
 export const DetailContainer = styled.td`
   display: grid;
   grid-template-columns:
-    minmax(390px, auto) minmax(40px, 0.9fr) minmax(70px, 1fr)
+    minmax(390px, auto) minmax(40px, 0.9fr) minmax(40px, 0.9fr) minmax(
+      70px,
+      1fr
+    )
     minmax(60px, 1fr);
-  grid-template-areas: ' reason penalty penaltyDate actions';
-  padding-left: 155px;
+  grid-template-areas: ' reason penalty warning penaltyDate actions';
+  padding-left: 120px;
   border-bottom: 1px solid #dedede;
   background-color: #ffffff;
   align-items: center;

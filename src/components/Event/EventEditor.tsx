@@ -288,14 +288,14 @@ const EventEditor = () => {
         />
       )}
 
-      <Header
-        onClickRightButton={checkValid}
-        RightButtonType="TEXT"
-        isAccessible
-      >
-        {isEditMode ? '일정 수정' : '일정 추가'}
-      </Header>
       <S.EventEditorWrapper>
+        <Header
+          onClickRightButton={checkValid}
+          RightButtonType="TEXT"
+          isAccessible
+        >
+          {isEditMode ? '일정 수정' : '일정 추가'}
+        </Header>
         <EventInputBlock>
           <EventInput
             origValue={eventRequest.title}

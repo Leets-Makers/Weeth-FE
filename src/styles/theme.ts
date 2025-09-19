@@ -10,6 +10,7 @@ const theme = {
     pointPurple: '#6F50CB',
     pointPink: '#D968D3',
     pintYellow: '#FFF600',
+    caution: '#FFB200',
     gray: {
       100: '#FFFFFF',
       9: '#171717',
@@ -18,6 +19,7 @@ const theme = {
       20: '#333333',
       30: '#4D4D4D',
       65: '#A6A6A6',
+      80: '#CCCCCC',
     },
     lightGray: '#c1c1c1',
     kakao: '#FEE500',
@@ -26,6 +28,7 @@ const theme = {
   font: {
     semiBold: 'Pretendard SemiBold',
     regular: 'Pretendard Regular',
+    medium: 'Pretendard Medium',
   },
 };
 

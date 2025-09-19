@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Comment from '@/components/Board/Comment';
 import ReplyComment from '@/components/Board/ReplyComment';
+import { originFile } from '@/pages/board/part/PartEdit';
+import { MOBILE, pcResponsive } from '@/styles';
 
 interface CommentType {
   id: number;
@@ -10,17 +12,24 @@ interface CommentType {
   position: string;
   role: string;
   children?: CommentType[];
+  fileUrls?: originFile[];
 }
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 5px 5px 0 5px;
+  margin: 5px 5px 56px 5px;
+  overflow-y: scroll;
+  width: 100%;
+  max-width: ${MOBILE};
+
+  ${pcResponsive}
 `;
 
 const ReplyWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
 `;
 
 const PostCommentList = ({
@@ -53,6 +62,7 @@ const PostCommentList = ({
           onDelete={onCommentDelete}
           onReply={() => onReply(comment.id)}
           selectedComment={selectedComment}
+          fileUrls={comment.fileUrls ?? []}
         />
 
         {comment.children && comment.children.length > 0 && (
@@ -69,6 +79,7 @@ const PostCommentList = ({
                 time={child.time}
                 path={path}
                 onDelete={onCommentDelete}
+                fileUrls={child.fileUrls ?? []}
               />
             ))}
           </ReplyWrapper>

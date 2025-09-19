@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import AddPostFile from '@/components/Board/AddPostFile';
+import AddFile from '@/assets/images/ic_add_folder.svg?react';
+import CommentFile from '@/assets/images/ic_comment_file.svg?react';
 
 export const FileButton = styled.img`
   cursor: pointer;
@@ -10,9 +11,11 @@ export const FileButton = styled.img`
 const FileUploader = ({
   files,
   setFiles,
+  isComment,
 }: {
   files: File[];
   setFiles: (value: File[]) => void;
+  isComment?: boolean;
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -35,7 +38,11 @@ const FileUploader = ({
 
   return (
     <>
-      <AddPostFile onClick={handleClick} />
+      {isComment ? (
+        <CommentFile onClick={handleClick} />
+      ) : (
+        <AddFile onClick={handleClick} />
+      )}
       <input
         type="file"
         ref={fileInputRef}

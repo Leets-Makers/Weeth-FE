@@ -111,7 +111,7 @@ const BoardNoticePost = () => {
         isAccessible
         isComplete={!isTitleEmpty && !isContentEmpty}
       >
-        글 쓰기
+        글쓰기
       </Header>
       <PostEditor
         title={title}

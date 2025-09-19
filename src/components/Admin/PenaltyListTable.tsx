@@ -4,7 +4,7 @@ import {
   PenaltyAction,
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
-import { getPenaltyApi } from '@/api/admin/penalty/getPenalty';
+import { getPenaltyApi } from '@/api/admin/penalty/penalty.api';
 import {
   MemberData,
   useMemberContext,
@@ -22,8 +22,9 @@ const columns = [
   { key: 'position', header: '역할' },
   { key: 'department', header: '학과' },
   { key: 'studentId', header: '학번' },
-  { key: 'penaltyCount', header: '패널티' },
-  { key: 'LatestPenalty', header: '최근 패널티' },
+  { key: 'penaltyCount', header: '페널티' },
+  { key: 'warningCount', header: '경고' },
+  { key: 'LatestPenalty', header: '최근 페널티' },
   { key: 'empty', header: '' },
 ];
 
@@ -58,35 +59,40 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     try {
       if (loading || isAdmin === undefined || !isAdmin) return;
 
-      const response = await getPenaltyApi();
+      const resp = await getPenaltyApi(selectedCardinal ?? 0);
 
-      if (response.code === 200) {
-        console.log('패널티 조회 결과:', response.data);
-        const penalties = response.data.reduce(
-          (
-            acc: { [x: string]: any },
-            item: { userId: string | number; Penalties: any[] },
-          ) => {
-            acc[item.userId] = item.Penalties.map((penalty: any) => ({
-              penaltyId: penalty.penaltyId,
-              penaltyDescription: penalty.penaltyDescription,
-              time: formatDate(penalty.time),
-            }));
-            return acc;
-          },
-          {} as PenaltyState,
-        );
+      if (resp.code === 200 || resp.code === 0) {
+        const data = resp.data;
+
+        const groups = Array.isArray(data) ? data : data ? [data] : [];
+
+        const users = groups.flatMap((g: any) => g?.responses ?? []);
+
+        const penalties = users.reduce((acc: PenaltyState, u: any) => {
+          const list = Array.isArray(u?.Penalties) ? u.Penalties : [];
+          acc[u.userId] = list.map((p: any) => {
+            const isAuto = p.penaltyType === 'AUTO_PENALTY';
+            return {
+              penaltyId: p.penaltyId,
+              penaltyType: isAuto ? 'PENALTY' : p.penaltyType,
+              penaltyDescription: p.penaltyDescription,
+              time: p.time,
+              isAuto,
+            };
+          });
+          return acc;
+        }, {} as PenaltyState);
 
         dispatch({ type: 'SET_PENALTY', payload: penalties });
       }
-    } catch (error: any) {
-      console.error('패널티 조회 오류:', error.message);
+    } catch (e: any) {
+      console.error('패널티 조회 오류:', e.message);
     }
   };
 
   useEffect(() => {
     fetchPenaltyData();
-  }, [isAdmin, loading]);
+  }, [isAdmin, loading, selectedCardinal]);
 
   useEffect(() => {
     if (!penaltyData || !members.length) return;
@@ -101,10 +107,22 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
 
         if (!matchedMember) return null;
 
+        const list = penaltyData[numericUserId] ?? [];
+
+        const { penalty, warning } = list.reduce(
+          (acc, p) => {
+            const t = (p as any).penaltyType;
+            if (t === 'WARNING') acc.warning += 1;
+            else acc.penalty += 1;
+            return acc;
+          },
+          { penalty: 0, warning: 0 },
+        );
         return {
           ...matchedMember,
-          penaltyCount: penaltyData[numericUserId].length,
-          LatestPenalty: getLatestPenaltyDate(penaltyData[numericUserId]),
+          penaltyCount: penalty,
+          warningCount: warning,
+          LatestPenalty: getLatestPenaltyDate(list),
         };
       })
       .filter(Boolean) as MemberData[];
@@ -211,6 +229,8 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                             <PenaltyDetail
                               penaltyData={{
                                 penaltyId: penalty.penaltyId,
+                                penaltyType: penalty.penaltyType,
+                                isAuto: penalty.isAuto,
                                 penaltyDescription: penalty.penaltyDescription,
                                 time: formatDate(penalty.time),
                               }}

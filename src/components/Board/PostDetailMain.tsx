@@ -1,13 +1,15 @@
 import { useCallback } from 'react';
-import parse from 'html-react-parser';
 import CommentImage from '@/assets/images/ic_comment_count.svg';
 import * as S from '@/styles/board/PostDetail.styled';
-import Line from '@/components/common/Line';
 import PostFile from '@/components/Board/PostFile';
 import formatDateTime from '@/hooks/formatDateTime';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import { toastSuccess, toastError } from '@/components/common/ToastMessage';
-import convertLinksInText from '@/hooks/convertLinksInText';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
+import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
 
 interface Comment {
   id: number;
@@ -70,31 +72,48 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
 
   return (
     <S.PostMainContainer>
-      <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
-      <S.SmallText>
-        <S.PositionIcon
-          src={setPositionIcon(info.role, info.position)}
-          alt="포지션 아이콘"
-        />
-        <div>{info.name}</div>
-        <S.DateText>{formattedDate}</S.DateText>
-      </S.SmallText>
-      <S.PostingContianer>
-        {parse(convertLinksInText(info.content))}
-      </S.PostingContianer>
-      {info.fileUrls.map((file) => (
-        <PostFile
-          key={file.fileId}
-          fileName={file.fileName}
-          isDownload
-          onClick={() => onClickDownload(file.fileUrl, file.fileName)}
-        />
-      ))}
-      <S.CommentText>
-        <img src={CommentImage} alt="댓글 이미지" />
-        <div>{info.commentCount}</div>
-      </S.CommentText>
-      <Line width="340px" />
+      <S.PostContentContainer>
+        <S.PostMainTitle>
+          <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
+          <S.SmallText>
+            <S.PositionIcon
+              src={setPositionIcon(info.role, info.position)}
+              alt="포지션 아이콘"
+            />
+            <div>{info.name}</div>
+            <S.DateText>{formattedDate}</S.DateText>
+          </S.SmallText>
+        </S.PostMainTitle>
+        <S.PostingContianer>
+          {/* {parse(convertLinksInText(info.content))} */}
+          <ReactMarkdown
+            rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkBreaks, remarkGfm]}
+            components={{
+              a: MarkdownLink,
+              input: CustomCheckbox,
+            }}
+          >
+            {info.content || ''}
+          </ReactMarkdown>
+        </S.PostingContianer>
+      </S.PostContentContainer>
+      <S.PostBottomContent>
+        <S.PostFileList>
+          {info.fileUrls.map((file) => (
+            <PostFile
+              key={file.fileId}
+              fileName={file.fileName}
+              isDownload
+              onClick={() => onClickDownload(file.fileUrl, file.fileName)}
+            />
+          ))}
+        </S.PostFileList>
+        <S.CommentText>
+          <img src={CommentImage} alt="댓글 이미지" />
+          <div>{info.commentCount}</div>
+        </S.CommentText>
+      </S.PostBottomContent>
     </S.PostMainContainer>
   );
 };

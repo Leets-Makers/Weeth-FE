@@ -18,8 +18,9 @@ export type MemberData = {
   attendanceCount: number;
   absenceCount: number;
   penaltyCount: number;
+  warningCount: number;
   LatestPenalty?: string;
-  createdAt: string;
+  createdAt?: string;
   email?: string;
   membershipType?: '활동 중' | '알럼나이' | '상태 없음';
 };

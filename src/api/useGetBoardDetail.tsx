@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '@/api/api';
 
-const BASE_URL = import.meta.env.VITE_API_URL;
-
 interface Comments {
   id: number;
   name: string;
@@ -21,29 +19,34 @@ interface FileUrls {
 interface BoardDetail {
   id: number;
   name: string;
-  title: string;
-  time: string;
-  content: string;
   position: string;
   role: string;
+  title: string;
+  content: string;
+  studyName: string | null;
+  week: number;
+  cardinalNumber: number;
+  part: string;
+  parts: string[];
+  time: string;
   commentCount: number;
   comments: Comments[];
   fileUrls: FileUrls[];
 }
 
 const getBoardDetail = async (path: string, id: number) => {
-  return api.get(`${BASE_URL}/api/v1/${path}/${id}`, {});
+  return api.get(`/api/v1/${path}/${id}`, {});
 };
 
 export const useGetBoardDetail = (
-  path: string,
+  part: string,
   id: number,
   refreshKey?: number,
 ) => {
   const [boardDetailInfo, setBoardDetail] = useState<BoardDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const type = path === 'board' ? 'board' : 'notices';
+  const type = part === 'notices' ? 'notices' : 'board';
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
@@ -71,7 +74,7 @@ export const useGetBoardDetail = (
     };
 
     fetchBoardDetail();
-  }, [path, id, refreshKey]);
+  }, [part, id, refreshKey]);
 
   return { boardDetailInfo, error, loading };
 };

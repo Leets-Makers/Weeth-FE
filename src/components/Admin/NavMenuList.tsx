@@ -56,7 +56,7 @@ const NavMenuList: React.FC = () => {
     {
       id: 'penalty',
       icon: <PenaltyIcon />,
-      label: '패널티 관리',
+      label: '페널티 관리',
       path: '/admin/penalty',
     },
     {
@@ -72,13 +72,13 @@ const NavMenuList: React.FC = () => {
       id: 'service',
       icon: <ArrowIcon />,
       label: '서비스로 이동',
-      path: 'https://weeth.site',
+      path: 'https://weeth.kr',
     },
     {
       id: 'manual',
       icon: <ManualIcon />,
       label: '관리자 매뉴얼',
-      path: '', // 추후 수정
+      path: '',
     },
   ];
 
@@ -88,7 +88,7 @@ const NavMenuList: React.FC = () => {
       window.open(path, '_blank');
     } else if (id === 'manual') {
       window.open(
-        'https://weeth-develop-2.s3.ap-northeast-2.amazonaws.com/Weeth+관리자+메뉴얼(v2).pdf',
+        'https://weeth-develop-2.s3.ap-northeast-2.amazonaws.com/Weeth_관리자_메뉴얼_v3.pdf',
         '_blank',
       );
     }

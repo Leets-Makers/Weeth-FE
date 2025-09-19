@@ -3,8 +3,8 @@ import { useDraggable } from '@/hooks/useDraggable';
 import * as S from '@/styles/home/HomeFooter.styled';
 
 import leets from '@/assets/images/ic_leets.svg';
-import notion from '@/assets/images/ic_notion.svg';
 import insta from '@/assets/images/ic_insta.svg';
+import leetsmakers from '@/assets/images/ic_leets_makers.svg';
 import discord from '@/assets/images/ic_discord.svg';
 import github from '@/assets/images/ic_github.svg';
 import gradu from '@/assets/images/ic_gradu.svg';
@@ -16,6 +16,9 @@ import weneed from '@/assets/images/ic_weneed.svg';
 import eatmate from '@/assets/images/ic_eatmate.svg';
 import gachtaxi from '@/assets/images/ic_gachtaxi.svg';
 import yes from '@/assets/images/ic_yes.svg';
+import chikahea from '@/assets/images/ic_chikahea.svg';
+import insightbox from '@/assets/images/ic_insightbox.svg';
+import seeat from '@/assets/images/ic_seeat.svg';
 
 const HomeFooter: React.FC = () => {
   const scrollerRef1 = useRef<HTMLDivElement | null>(null);
@@ -42,15 +45,6 @@ const HomeFooter: React.FC = () => {
           홈페이지
         </S.GridItem>
         <S.GridItem
-          href="https://www.notion.so/Leets-Study-1a9299491e3d80149234ef2f4b9ee968?pvs=4"
-          target="_blank"
-        >
-          <S.ImgContainer>
-            <img src={notion} alt="notion" />
-          </S.ImgContainer>
-          Notion
-        </S.GridItem>
-        <S.GridItem
           href="https://www.instagram.com/leets.official/"
           target="_blank"
         >
@@ -58,6 +52,15 @@ const HomeFooter: React.FC = () => {
             <img src={insta} alt="instagram" />
           </S.ImgContainer>
           Instagram
+        </S.GridItem>
+        <S.GridItem
+          href="https://www.instagram.com/leets_makers?igsh=MThnOXVqdDc2ZmJqYw%3D%3D&utm_source=qr"
+          target="_blank"
+        >
+          <S.ImgContainer>
+            <img src={leetsmakers} alt="leetsmakers" />
+          </S.ImgContainer>
+          Makers
         </S.GridItem>
         <S.GridItem href="https://discord.gg/XvZqeAca4K" target="_blank">
           <S.ImgContainer>
@@ -80,6 +83,27 @@ const HomeFooter: React.FC = () => {
         onMouseUp={draggableHandlers2.onMouseUp}
         onMouseLeave={draggableHandlers2.onMouseLeave}
       >
+        <S.GridItemWithImage
+          $image={seeat}
+          href="https://www.leets.land/project/17"
+          target="_blank"
+        >
+          <span>seeat</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={insightbox}
+          href="https://www.leets.land/project/18"
+          target="_blank"
+        >
+          <span>INSIGHT BOX</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={chikahea}
+          href="https://www.leets.land/project/19"
+          target="_blank"
+        >
+          <span>치카해</span>
+        </S.GridItemWithImage>
         <S.GridItemWithImage
           $image={yes}
           href="https://www.leets.land/project/14"

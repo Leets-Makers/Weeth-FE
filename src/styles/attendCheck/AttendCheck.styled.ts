@@ -1,0 +1,61 @@
+import theme from '@/styles/theme';
+import styled from 'styled-components';
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: ${theme.color.gray[100]};
+`;
+
+export const Header = styled.div`
+  margin-left: 8%;
+`;
+
+export const SemiTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 25px;
+  font-size: 16px;
+`;
+
+export const AttendCount = styled.div`
+  font-family: ${theme.font.semiBold};
+  margin-top: 19px;
+  font-size: 32px;
+`;
+
+export const SemiBold = styled.div`
+  font-family: ${theme.font.semiBold};
+  include-font-padding: false;
+  display: flex;
+  flex-direction: row;
+`;
+
+export const StyledBox = styled.div`
+  background-color: ${theme.color.gray[18]};
+  border-radius: 10px;
+  margin: 26px 4% 0 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 92%;
+`;
+
+export const SmallStyledBoxContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 92%;
+  margin: 15px 4% 0 4%;
+`;
+
+export const Line = styled.div`
+  width: 94%;
+  height: 1px;
+  background-color: ${theme.color.gray[30]};
+  margin: 30px 3% 0 3%;
+`;
+
+export const NullBox = styled.div`
+  margin: 20px 0;
+`;

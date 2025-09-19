@@ -1,14 +1,17 @@
 import { useDraggable } from '@/hooks/useDraggable';
 import * as S from '@/styles/board/Board.styled';
+import Vector from '@/assets/images/ic_vector.svg?react';
 import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastError } from '@/components/common/ToastMessage';
+import ViewAll from '@/assets/images/ic_view_all.svg?react';
 
 interface Notice {
   id: number;
   title: string;
   content: string;
+  commentCount: number;
 }
 
 interface SlideNoticeProps {
@@ -27,7 +30,7 @@ const SlideNotice = ({ error, recentNotices }: SlideNoticeProps) => {
     id: number,
   ) => {
     e.preventDefault();
-    navigate(`/notice/${id}`);
+    navigate(`/board/notices/${id}`);
   };
 
   useEffect(() => {
@@ -52,8 +55,21 @@ const SlideNotice = ({ error, recentNotices }: SlideNoticeProps) => {
             key={notice.id}
             onClick={(e) => handleNoticeCard(e, notice.id)}
           >
-            <S.NoticeTitle>{notice.title}</S.NoticeTitle>
-            <S.NoticeContent>{notice.content}</S.NoticeContent>
+            <>
+              <S.NoticeTextBox>
+                <S.NoticeTitle>{notice.title}</S.NoticeTitle>
+                <S.NoticeContent>{notice.content}</S.NoticeContent>
+              </S.NoticeTextBox>
+              <S.NoticeBottomRow>
+                <S.ReadMoreText>
+                  자세히 <ViewAll />
+                </S.ReadMoreText>
+                <S.CommentContainer>
+                  <Vector />
+                  <S.CommentsText>{notice.commentCount}</S.CommentsText>
+                </S.CommentContainer>
+              </S.NoticeBottomRow>
+            </>
           </S.NoticeCard>
         ))
       )}

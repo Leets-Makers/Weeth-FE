@@ -19,7 +19,7 @@ const CardinalWrapper = styled.div`
   align-items: center;
   border-radius: 5px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 const TotalCardinal: React.FC<TotalCardinalProps> = ({
@@ -30,12 +30,15 @@ const TotalCardinal: React.FC<TotalCardinalProps> = ({
   const { allCardinals } = useGetAllCardinals();
 
   useEffect(() => {
-    if (autoSelectLatest && allCardinals.length > 0) {
-      const latestCardinal = Math.max(
-        ...allCardinals.map((c) => c.cardinalNumber),
-      );
-      setSelectedCardinal(latestCardinal);
-    }
+    if (!autoSelectLatest || allCardinals.length === 0) return;
+
+    const numbers = allCardinals
+      .map((c) => c.cardinalNumber)
+      .filter((n) => n > 0);
+
+    if (numbers.length === 0) return;
+    const latest = Math.max(...numbers);
+    setSelectedCardinal(latest);
   }, [allCardinals, setSelectedCardinal, autoSelectLatest]);
 
   return (

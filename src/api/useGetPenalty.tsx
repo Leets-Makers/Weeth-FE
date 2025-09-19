@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import api from './api';
+import api from '@/api/api';
 
-interface Penalty {
-  penaltyId: number;
+export interface Penalty {
+  penaltyId?: number;
+  penaltyType: 'PENALTY' | 'WARNING';
   penaltyDescription: string;
   time: string;
 }
@@ -10,6 +11,7 @@ interface Penalty {
 interface UserPenaltyData {
   userId: number;
   penaltyCount: number;
+  warningCount: number;
   name: string;
   Penalties: Penalty[];
 }

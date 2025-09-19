@@ -10,7 +10,7 @@ import DuesRegister from '@/components/Admin/DuesRegister';
 import TotalCardinal from '@/components/Admin/CardinalWrapper';
 import AdminOnly from '@/components/common/AdminOnly';
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
   max-width: 1400px;
   min-width: 1400px;
@@ -20,12 +20,12 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const CardinalWrapper = styled.div`
+export const CardinalWrapper = styled.div`
   padding: 1% 0 1.5% 1%;
   flex-shrink: 0;
 `;
 
-const DuesWrapper = styled.div`
+export const DuesWrapper = styled.div`
   width: 45%;
   padding: 1% 3%;
   background-color: #fff;
@@ -36,11 +36,11 @@ const DuesWrapper = styled.div`
   align-items: center;
 `;
 
-const DuesRegisterWrapper = styled.div`
+export const DuesRegisterWrapper = styled.div`
   width: 45%;
 `;
 
-const DuesTotalWrapper = styled.div`
+export const DuesTotalWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
