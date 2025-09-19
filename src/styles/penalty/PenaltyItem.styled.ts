@@ -13,8 +13,8 @@ export const PenaltyBedge = styled.div<{ $type?: boolean }>`
   border-radius: 5px;
   text-align: center;
   font-size: 12px;
-  background-color: ${({ $type }) => ($type ? '#FF585840' : '#FFB20040')};
-  color: ${({ $type }) => ($type ? theme.color.negative : theme.color.caution)};
+  background-color: ${({ $type }) => ($type ? '#FFB20040' : '#FF585840')};
+  color: ${({ $type }) => ($type ? theme.color.caution : theme.color.negative)};
 `;
 export const ContentText = styled.text`
   font-size: 16px;

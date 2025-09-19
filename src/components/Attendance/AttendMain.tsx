@@ -48,10 +48,11 @@ const AttendMain: React.FC = () => {
   } = useGetAttend(isAttend);
 
   useEffect(() => {
-    setHasPenalty(
-      penaltyInfo?.penaltyCount ? penaltyInfo.penaltyCount > 0 : false,
-    );
-  }, [penaltyInfo]);
+    const has =
+      (penaltyInfo?.penaltyCount ?? 0) > 0 ||
+      (penaltyInfo?.warningCount ?? 0) > 0;
+    setHasPenalty(has);
+  }, [penaltyInfo?.penaltyCount, penaltyInfo?.warningCount]);
 
   useEffect(() => {
     if (attendInfo?.status === 'ATTEND') {
