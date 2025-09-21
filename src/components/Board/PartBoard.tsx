@@ -1,47 +1,50 @@
 import * as S from '@/styles/board/Board.styled';
 import { useNavigate } from 'react-router-dom';
-import PressedD from '@/assets/images/ic_board_D.svg';
-import PressedBE from '@/assets/images/ic_board_BE.svg';
-import PressedFE from '@/assets/images/ic_board_FE.svg';
-import PressedPM from '@/assets/images/ic_board_PM.svg';
-import DefaultD from '@/assets/images/ic_default_board_D.svg';
-import DefaultBE from '@/assets/images/ic_default_board_BE.svg';
-import DefaultFE from '@/assets/images/ic_default_board_FE.svg';
-import DefaultPM from '@/assets/images/ic_default_board_PM.svg';
+import PressedD from '@/assets/images/ic_board_D.svg?react';
+import PressedBE from '@/assets/images/ic_board_BE.svg?react';
+import PressedFE from '@/assets/images/ic_board_FE.svg?react';
+import PressedPM from '@/assets/images/ic_board_PM.svg?react';
+import DefaultD from '@/assets/images/ic_default_board_D.svg?react';
+import DefaultBE from '@/assets/images/ic_default_board_BE.svg?react';
+import DefaultFE from '@/assets/images/ic_default_board_FE.svg?react';
+import DefaultPM from '@/assets/images/ic_default_board_PM.svg?react';
 import { useRef, useState } from 'react';
+import type { ComponentType, SVGProps } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
+
+type SvgCmp = ComponentType<SVGProps<SVGSVGElement>>;
 
 type PartItem = {
   key: '' | 'FE' | 'BE' | 'D' | 'PM';
   url: 'ALL' | 'FE' | 'BE' | 'D' | 'PM';
-  defaultImg: string;
-  pressedImg: string;
+  defaultIcon: SvgCmp;
+  pressedIcon: SvgCmp;
 };
 
 const parts: PartItem[] = [
   {
     key: 'FE',
     url: 'FE',
-    defaultImg: DefaultFE,
-    pressedImg: PressedFE,
+    defaultIcon: DefaultFE,
+    pressedIcon: PressedFE,
   },
   {
     key: 'BE',
     url: 'BE',
-    defaultImg: DefaultBE,
-    pressedImg: PressedBE,
+    defaultIcon: DefaultBE,
+    pressedIcon: PressedBE,
   },
   {
     key: 'D',
     url: 'D',
-    defaultImg: DefaultD,
-    pressedImg: PressedD,
+    defaultIcon: DefaultD,
+    pressedIcon: PressedD,
   },
   {
     key: 'PM',
     url: 'PM',
-    defaultImg: DefaultPM,
-    pressedImg: PressedPM,
+    defaultIcon: DefaultPM,
+    pressedIcon: PressedPM,
   },
 ];
 
@@ -74,7 +77,7 @@ const PartBoard = () => {
         <S.PartList>
           {parts.map((part) => {
             const isPressed = pressedKey === part.key;
-            const imgSrc = isPressed ? part.pressedImg : part.defaultImg;
+            const Icon = isPressed ? part.pressedIcon : part.defaultIcon;
 
             return (
               <S.PartItem
@@ -91,7 +94,11 @@ const PartBoard = () => {
                   }
                 }}
               >
-                <S.PartImage src={imgSrc} alt={part.key} />
+                <Icon
+                  width={76}
+                  height={76}
+                  style={{ pointerEvents: 'none' }}
+                />
                 <S.PartLabel>{part.key}</S.PartLabel>
               </S.PartItem>
             );

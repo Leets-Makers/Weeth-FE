@@ -41,7 +41,6 @@ const Search = styled.div`
   justify-content: space-between;
   border: 1px solid ${theme.color.gray[18]};
   border-radius: 0.25rem;
-  gap: 10px;
   box-sizing: border-box;
   transition: border 0.2s;
   padding: 13px 12px;
@@ -49,6 +48,11 @@ const Search = styled.div`
   &:focus-within {
     border: 1px solid ${theme.color.gray[65]};
   }
+`;
+
+const SearchRightButton = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const SearchInput = styled.input`
@@ -59,6 +63,7 @@ export const SearchInput = styled.input`
   color: #fff;
   padding: 0;
   justify-content: center;
+  width: 100%;
 
   &::placeholder {
     font-size: 1rem;
@@ -67,8 +72,7 @@ export const SearchInput = styled.input`
 `;
 
 const Divider = styled.img`
-  margin: 0 0.75rem;
-  padding: 1px 0px 0px 0px;
+  margin: 0 12px;
 `;
 
 const SearchButton = styled.img<{ disabled?: boolean }>`
@@ -147,7 +151,7 @@ const StudyBoardSearch = ({
             if (e.key === 'Enter') handleSearch();
           }}
         />
-        <div>
+        <SearchRightButton>
           {keyword && (
             <SearchButton
               src={Delete}
@@ -162,7 +166,7 @@ const StudyBoardSearch = ({
             onClick={handleSearch}
             disabled={!keyword}
           />
-        </div>
+        </SearchRightButton>
       </Search>
     </Container>
   );

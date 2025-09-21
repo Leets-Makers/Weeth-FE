@@ -7,12 +7,12 @@ const PenaltyItem: React.FC<Penalty> = ({
   penaltyDescription,
   time,
 }) => {
-  const badgeType = penaltyType === 'PENALTY';
+  const badgeType = penaltyType === 'WARNING';
   return (
     <div>
       <S.Container>
         <S.PenaltyBedge $type={badgeType}>
-          {badgeType ? '페널티' : '경고'}
+          {badgeType ? '경고' : '페널티'}
         </S.PenaltyBedge>
         <S.ContentText>{penaltyDescription}</S.ContentText>
         <S.DateText>{formatDate(time)}</S.DateText>
