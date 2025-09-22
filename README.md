@@ -29,66 +29,110 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
 </details>
 
 
+<details>
+  <summary>v2 팀원</summary>
+  
 ### 유저 페이지
+  
 |<img src="https://avatars.githubusercontent.com/u/92977621?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/84452202?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/101498350?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|
 |박예진<br/>[@yezzan9](https://github.com/yezzan9)|이유진<br/>[@JIN921](https://github.com/JIN921)|조혜원<br/>[@One-HyeWon](https://github.com/One-HyeWon)|
 ### 어드민 페이지
+
 |<img src="https://avatars.githubusercontent.com/u/134191693?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/143994508?v=4" width="150" height="150"/>|
 |:-:|:-:|
 |계다현<br/>[@dalzzy](https://github.com/dalzzy)|김지원<br/>[@woneeeee](https://github.com/woneeeee)|
+</details>
 
+### v3 팀원
+
+|<img src="https://avatars.githubusercontent.com/u/134191693?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/143994508?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/84452202?v=4" width="150" height="150"/>|
+|:-:|:-:|:-:|
+|계다현<br/>[@dalzzy](https://github.com/dalzzy)|김지원<br/>[@woneeeee](https://github.com/woneeeee)|이유진<br/>[@JIN921](https://github.com/JIN921)|
   
 <br/>  
   
 ## 🛠 기술 스택  
-  
-  
-<table>  
-<thead>  
-<tr>  
-<th>분류</th>  
-<th>기술 스택</th>  
-</tr>  
-</thead>  
-<tbody>  
-<tr>  
-<td>  
-<p>FE</p>  
-</td>  
-<td>  
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">  
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">  
-<img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=black">  
-<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">  
-  
-</td>  
-</tr>  
-<tr>  
-<td>  
-<p>BE</p>  
-</td>  
-<td>  
-<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">  
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">  
-<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">  
-<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">  
-</td>  
-</tr>  
-<tr>  
-<td>  
-<p>협업</p>  
-</td>  
-<td>  
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">  
-<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">  
-<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=ffffff">  
-</td>  
-</tr>  
-</tbody>  
-  
-</table>  
-  
+
+<details>
+  <summary>v1 기술스택</summary>
+
+  <table>
+    <thead>
+      <tr>
+        <th>분류</th>
+        <th>기술 스택</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><p>FE</p></td>
+        <td>
+          <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+          <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+          <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
+          <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+        </td>
+      </tr>
+      <tr>
+        <td><p>BE</p></td>
+        <td>
+          <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+          <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+          <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+          <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+        </td>
+      </tr>
+      <tr>
+        <td><p>협업</p></td>
+        <td>
+          <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+          <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
+          <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=ffffff">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</details>
+
+  <table>
+    <thead>
+      <tr>
+        <th>분류</th>
+        <th>기술 스택</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><p>FE</p></td>
+        <td> 
+          <img src="https://img.shields.io/badge/vite-646cff?style=for-the-badge&logo=vite&logoColor=white">
+          <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+          <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
+          <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+        </td>
+      </tr>
+      <tr>
+        <td><p>BE</p></td>
+        <td>
+          <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+          <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+          <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+          <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+        </td>
+      </tr>
+      <tr>
+        <td><p>협업</p></td>
+        <td>
+          <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+          <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
+          <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=ffffff">
+        </td>
+      </tr>
+    </tbody>
+  </table>
 <br />  
   
 ## ⚙️ 개발환경  
