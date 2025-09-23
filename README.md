@@ -226,30 +226,27 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
 
 </details>
 
-<details>
-  <summary>v3 화면 구성</summary>
+ ### v3 화면 구성
 
-  ### 로그인&회원가입
-  <img width="1928" height="1088" alt="로그인" src="https://github.com/user-attachments/assets/681486e3-a7fb-41e5-a23e-53e9a392d110" />
+  #### 로그인&회원가입
+  <img width="1920" height="1080" alt="로그인" src="https://github.com/user-attachments/assets/2bd43e95-5f3f-4b92-9097-1a5af0f43504" />
   
-  ### 홈&멤버
+  #### 홈&멤버
   <img width="1920" height="1080" alt="홈 멤버" src="https://github.com/user-attachments/assets/09621eb5-18ec-4742-be37-f13c608d0de8" />
 
-  ### 출석
+  #### 출석
   <img width="1920" height="1080" alt="출석" src="https://github.com/user-attachments/assets/221f773b-ddc4-491d-ba6e-68043a306a1e" />
 
-  ### 캘린더
+  #### 캘린더
   <img width="1920" height="1080" alt="캘린더" src="https://github.com/user-attachments/assets/74549da5-97dd-427c-9984-8da0ab1fd387" />
 
-  ### 게시판
+  #### 게시판
   <img width="1920" height="1080" alt="게시판 v3" src="https://github.com/user-attachments/assets/d2bfbabb-aad0-41a0-8d63-72a268a5385b" />
 
-  ### 회비
+  #### 회비
   <img width="1920" height="1080" alt="회비" src="https://github.com/user-attachments/assets/466445a1-2390-4ef0-9feb-2c58ee778788" />
 
 
-
-</details>
 
   
 <details>
