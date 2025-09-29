@@ -250,7 +250,7 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
 
   
 <details>
-<summary>관리자 페이지</summary>
+<summary>v1 관리자 페이지</summary>
 <img width="1512" alt="스크린샷 2024-08-16 오후 3 03 12" src="https://github.com/user-attachments/assets/f97839d7-06f9-4d98-af40-ac97b6b205da">
 <img width="1512" alt="스크린샷 2024-08-16 오후 3 03 29" src="https://github.com/user-attachments/assets/f17be493-97c7-4bff-8d6a-e72396a19321">
 <img width="1512" alt="스크린샷 2024-08-16 오후 2 59 41" src="https://github.com/user-attachments/assets/c9a46ef8-8b09-4a3e-9774-4d6a1093b358">
@@ -260,6 +260,17 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
 
 </details>
 
+<details>
+<summary>현 관리자 페이지</summary>
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/26a17d98-3661-4334-b936-aa5521b5564d" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/f0d98a6a-2de3-4ebb-8b39-5fdbeed3914c" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/3e8f053a-b0a5-4a98-bdfe-2d10f3123993" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/deda38b0-b32a-446c-876c-69a0c328732b" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/eeed7575-9ac4-4c78-b1a3-a1f3dfebec4d" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/fbd4e0cd-59e2-42fa-9270-e09d6a4c618d" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/a22fa9a0-8308-471e-ba62-9d4049232fa7" />
+
+</details>
 
 ## 시스템 아키텍처  
   
