@@ -16,14 +16,18 @@ interface PenaltyDetailProps {
     time: string;
     isAuto?: boolean;
   };
-  onEdit: (penaltyId: number, updatedDescription: string) => void;
-  onDelete: (penaltyId: number) => void;
+
+  // onEdit: (penaltyId: number, updatedDescription: string) => void;
+  // onDelete: (penaltyId: number) => void;
+
+  onRefresh: () => Promise<void>;
 }
 
 const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
   penaltyData,
-  onDelete,
-  onEdit,
+  // onDelete,
+  // onEdit,
+  onRefresh,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newDescription, setNewDescription] = useState(
@@ -38,6 +42,8 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
 
   const penaltyCount = isPenalty ? 1 : 0;
   const warningCount = penaltyData.penaltyType === 'WARNING' ? 1 : 0;
+
+  const typeLabel = penaltyData.penaltyType === 'WARNING' ? '경고' : '페널티';
 
   const editDisabled = !!penaltyData.isAuto;
 
@@ -68,15 +74,16 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
       return;
     }
 
-    if (window.confirm('패널티를 삭제하시겠습니까?')) {
+    if (window.confirm(`${typeLabel}를 삭제하시겠습니까?`)) {
       try {
         console.log('penaltyData : ', penaltyData);
         await deletePenaltyApi(penaltyData.penaltyId);
-        toastSuccess('패널티가 성공적으로 삭제되었습니다.');
-        onDelete(penaltyData.penaltyId);
+        toastSuccess(`${typeLabel}가 성공적으로 삭제되었습니다.`);
+        // onDelete(penaltyData.penaltyId);
+        await onRefresh();
       } catch (error: any) {
-        toastError(error.message || '패널티 삭제 실패');
-        console.error('패널티 삭제 오류:', error);
+        toastError(error.message || `${typeLabel} 삭제에 실패했습니다.`);
+        console.error(`${typeLabel} 삭제 오류:`, error);
       }
     }
   };
@@ -88,13 +95,14 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
     } else {
       try {
         await patchPenaltyApi(penaltyData.penaltyId, newDescription);
-        toastSuccess('패널티가 성공적으로 수정되었습니다.');
+        toastSuccess(`${typeLabel} 사유가 성공적으로 수정되었습니다.`);
 
-        onEdit(penaltyData.penaltyId, newDescription);
+        // onEdit(penaltyData.penaltyId, newDescription);
+        await onRefresh();
         setIsEditing(false);
       } catch (error: any) {
-        toastError(error.message || '패널티 수정 실패');
-        console.error('패널티 수정 오류:', error);
+        toastError(error.message || `${typeLabel} 사유 수정에 실패했습니다.`);
+        console.error(`${typeLabel} 수정 오류:`, error);
       }
     }
   };
