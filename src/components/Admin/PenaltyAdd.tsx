@@ -92,6 +92,11 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
       });
       if (res.code === 200) {
         toastSuccess(`${label}가 성공적으로 부여되었습니다.`);
+        setTimeout(() => {
+          if (typeof window !== 'undefined') {
+            window.location.reload();
+          }
+        }, 700);
 
         const penaltyTime = res.data?.time
           ? formatDate(res.data.time)
