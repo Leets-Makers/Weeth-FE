@@ -83,7 +83,7 @@ export const PreviewWrapper = styled.div`
 
   @media (min-width: ${PC}) {
     max-width: ${PC};
-    height: 55vh;
+    height: calc(100vh - 400px);
   }
 
   img,
