@@ -129,6 +129,7 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
           <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
           <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
           <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=ffffff">
+          <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=ffffff">
         </td>
       </tr>
     </tbody>
