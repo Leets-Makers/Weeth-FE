@@ -104,7 +104,7 @@ const ReplyComment = ({
         <S.ContentContainer>
           <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
           {fileUrls.length > 0 && (
-            <S.ContentText>
+            <S.FileListContainer>
               {fileUrls.map((file) => (
                 <PostFile
                   key={file.fileId}
@@ -114,7 +114,7 @@ const ReplyComment = ({
                   isComment
                 />
               ))}
-            </S.ContentText>
+            </S.FileListContainer>
           )}
         </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>

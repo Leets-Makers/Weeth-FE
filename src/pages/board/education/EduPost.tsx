@@ -4,6 +4,7 @@ import postBoardNotice from '@/api/postBoardNotice';
 import { PostRequestType } from '@/types/PostRequestType';
 import EduWrite from '@/components/Board/EduWrite';
 import { PartTypes } from '@/types/part';
+import { toastError } from '@/components/common/ToastMessage';
 
 type RealPart = Exclude<PartTypes, '' | 'ALL'>;
 const REAL_PARTS: RealPart[] = ['FE', 'BE', 'D', 'PM'];
@@ -26,6 +27,19 @@ const EduPost = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const onSave = async () => {
+    if (!title) {
+      toastError('제목을 입력해주세요.');
+      return;
+    }
+    if (!content) {
+      toastError('내용을 입력해주세요.');
+      return;
+    }
+    if (!selectedCardinal) {
+      toastError('기수를 선택해주세요.');
+      return;
+    }
+
     const partsToSend: PartTypes[] =
       selectedPart.length === REAL_PARTS.length || selectedPart.length === 0
         ? ['ALL']

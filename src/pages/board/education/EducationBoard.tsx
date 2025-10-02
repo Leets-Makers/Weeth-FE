@@ -11,18 +11,21 @@ import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
+import useCustomBack from '@/hooks/useCustomBack';
 
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
 const EducationBoard = () => {
+  useCustomBack('/board');
+
   const { isAdmin } = useGetUserInfo();
+
+  const [searchLoading, setSearchLoading] = useState(false);
 
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
 
   const [searchMode, setSearchMode] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchContent[]>([]);
-  const [searchLoading, setSearchLoading] = useState(false);
-
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
   const { part: partParam } = useParams<{ part: Part }>();
@@ -64,6 +67,7 @@ const EducationBoard = () => {
   const handleSearchDone = (result: SearchContent[]) => {
     setSearchMode(true);
     setSearchResults(result);
+    setSelectedCardinal(null);
   };
   const handleSearchClear = () => {
     setSearchMode(false);
