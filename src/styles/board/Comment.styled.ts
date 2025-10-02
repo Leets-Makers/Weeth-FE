@@ -67,6 +67,12 @@ export const ContentText = styled.div`
   }
 `;
 
+export const FileListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+
 export const DateText = styled.div`
   color: ${theme.color.gray[65]};
   font-size: 0.75rem;
