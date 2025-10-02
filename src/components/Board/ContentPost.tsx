@@ -32,7 +32,7 @@ const ContentWrapper = styled.textarea`
 
   @media (min-width: ${PC}) {
     max-width: ${PC};
-    height: calc(100vh - 400px);
+    height: 55vh;
   }
 
   &::placeholder {
