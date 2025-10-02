@@ -129,6 +129,7 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
           <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
           <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
           <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=ffffff">
+          <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=ffffff">
         </td>
       </tr>
     </tbody>
@@ -159,9 +160,10 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
 <br>  
   
 ## 💻 화면 구성  
-  
-  
-### 로그인, 홈  
+<details>
+  <summary>v1 화면 구성</summary>
+
+  ### 로그인, 홈  
   
 <p align="center">    
 <img src="https://github.com/user-attachments/assets/f1d8ee1c-d26b-4079-92f3-2535f8255d20" height="500px">  
@@ -218,10 +220,38 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
    <img src="https://github.com/user-attachments/assets/72002051-9f8f-48f8-99f1-3107f04772e4" height="500px">  
 </p>  
 <hr>
-
+</details>
 <details>
+  <summary>v2 게시판</summary>
+  <img width="1920" height="1080" alt="게시판 v2" src="https://github.com/user-attachments/assets/1738189c-4b21-432b-a59d-72d084764b4f" />
 
-<summary>관리자 페이지</summary>
+</details>
+
+ ### v3 화면 구성
+
+  #### 로그인&회원가입
+  <img width="1920" height="1080" alt="로그인" src="https://github.com/user-attachments/assets/2bd43e95-5f3f-4b92-9097-1a5af0f43504" />
+  
+  #### 홈&멤버
+  <img width="1920" height="1080" alt="홈 멤버" src="https://github.com/user-attachments/assets/09621eb5-18ec-4742-be37-f13c608d0de8" />
+
+  #### 출석
+  <img width="1920" height="1080" alt="출석" src="https://github.com/user-attachments/assets/221f773b-ddc4-491d-ba6e-68043a306a1e" />
+
+  #### 캘린더
+  <img width="1920" height="1080" alt="캘린더" src="https://github.com/user-attachments/assets/74549da5-97dd-427c-9984-8da0ab1fd387" />
+
+  #### 게시판
+  <img width="1920" height="1080" alt="게시판 v3" src="https://github.com/user-attachments/assets/d2bfbabb-aad0-41a0-8d63-72a268a5385b" />
+
+  #### 회비
+  <img width="1920" height="1080" alt="회비" src="https://github.com/user-attachments/assets/466445a1-2390-4ef0-9feb-2c58ee778788" />
+
+
+
+  
+<details>
+<summary>v1 관리자 페이지</summary>
 <img width="1512" alt="스크린샷 2024-08-16 오후 3 03 12" src="https://github.com/user-attachments/assets/f97839d7-06f9-4d98-af40-ac97b6b205da">
 <img width="1512" alt="스크린샷 2024-08-16 오후 3 03 29" src="https://github.com/user-attachments/assets/f17be493-97c7-4bff-8d6a-e72396a19321">
 <img width="1512" alt="스크린샷 2024-08-16 오후 2 59 41" src="https://github.com/user-attachments/assets/c9a46ef8-8b09-4a3e-9774-4d6a1093b358">
@@ -231,6 +261,17 @@ Weeth는 가천대학교 IT 학술동아리 Leets를 위한 동아리 관리 서
 
 </details>
 
+<details>
+<summary>현 관리자 페이지</summary>
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/26a17d98-3661-4334-b936-aa5521b5564d" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/f0d98a6a-2de3-4ebb-8b39-5fdbeed3914c" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/3e8f053a-b0a5-4a98-bdfe-2d10f3123993" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/deda38b0-b32a-446c-876c-69a0c328732b" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/eeed7575-9ac4-4c78-b1a3-a1f3dfebec4d" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/fbd4e0cd-59e2-42fa-9270-e09d6a4c618d" />
+<img width="1710" height="1107" alt="image" src="https://github.com/user-attachments/assets/a22fa9a0-8308-471e-ba62-9d4049232fa7" />
+
+</details>
 
 ## 시스템 아키텍처  
   
