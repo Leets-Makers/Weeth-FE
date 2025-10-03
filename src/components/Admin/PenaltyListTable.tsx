@@ -234,16 +234,17 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                                 penaltyDescription: penalty.penaltyDescription,
                                 time: formatDate(penalty.time),
                               }}
-                              onEdit={(penaltyId, updatedDescription) =>
-                                handleEditPenalty(
-                                  member.id,
-                                  index,
-                                  updatedDescription,
-                                )
-                              }
-                              onDelete={() =>
-                                handleDeletePenalty(member.id, index)
-                              }
+                              // onEdit={(penaltyId, updatedDescription) =>
+                              //   handleEditPenalty(
+                              //     member.id,
+                              //     index,
+                              //     updatedDescription,
+                              //   )
+                              // }
+                              // onDelete={() =>
+                              //   handleDeletePenalty(member.id, index)
+                              // }
+                              onRefresh={fetchPenaltyData}
                             />
                           </td>
                         </tr>

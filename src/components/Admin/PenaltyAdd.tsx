@@ -26,7 +26,7 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<string>('');
   const [penaltyDescription, setPenaltyDescription] = useState<string>('');
-  const [type, setType] = useState<PenaltyType>('penalty'); // 탭 상태 (패널티/경고)
+  const [type, setType] = useState<PenaltyType>('penalty'); // 탭 상태 (페널티/경고)
 
   const filteredMembers = members.filter((member) =>
     member.name.includes(searchTerm),
@@ -35,7 +35,7 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
   const toApiType = (t: PenaltyType): ApiPenaltyType =>
     t === 'warning' ? 'WARNING' : 'PENALTY';
 
-  const toLabel = (t: PenaltyType) => (t === 'warning' ? '경고' : '패널티');
+  const toLabel = (t: PenaltyType) => (t === 'warning' ? '경고' : '페널티');
 
   const label = toLabel(type);
   const apiType = toApiType(type);
@@ -92,21 +92,26 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
       });
       if (res.code === 200) {
         toastSuccess(`${label}가 성공적으로 부여되었습니다.`);
+        setTimeout(() => {
+          if (typeof window !== 'undefined') {
+            window.location.reload();
+          }
+        }, 700);
 
         const penaltyTime = res.data?.time
           ? formatDate(res.data.time)
           : formatDate(new Date().toISOString());
 
-        dispatch({
-          type: 'ADD_PENALTY',
-          userId: member.id,
-          payload: {
-            penaltyId: res.data?.penaltyId ?? Date.now(),
-            penaltyType: apiType,
-            penaltyDescription,
-            time: penaltyTime,
-          },
-        });
+        // dispatch({
+        //   type: 'ADD_PENALTY',
+        //   userId: member.id,
+        //   payload: {
+        //     penaltyId: res.data?.penaltyId ?? Date.now(),
+        //     penaltyType: apiType,
+        //     penaltyDescription,
+        //     time: penaltyTime,
+        //   },
+        // });
 
         if (selectedCardinal != null) {
           const response = await getPenaltyApi(selectedCardinal);
@@ -118,18 +123,18 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
 
         handleReset();
       } else {
-        toastError(`${label} 부여 실패: ${res.message}`);
+        toastError(`${label} 부여에 실패했습니다.: ${res.message}`);
       }
     } catch (error) {
       console.error(`${label} 부여 오류: `, error);
-      toastError(`${label} 부여 실패`);
+      toastError(`${label} 부여에 실패했습니다.`);
     }
   };
 
   return (
     <S.PenaltyWrapper>
       <S.TitleWrapper>
-        <S.Title>페널티 추가</S.Title>
+        <S.Title>{label} 추가</S.Title>
       </S.TitleWrapper>
       <S.Line />
       <S.ItemWrapper>
@@ -154,7 +159,7 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
           )}
         </S.InputWrapper>
         <S.InputWrapper>
-          <S.SubTitle>페널티 사유</S.SubTitle>
+          <S.SubTitle>{label} 사유</S.SubTitle>
           <S.Input
             placeholder="ex) 미션 과제 미제출"
             value={penaltyDescription}
