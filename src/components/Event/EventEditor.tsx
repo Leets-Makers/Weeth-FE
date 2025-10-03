@@ -26,6 +26,7 @@ import {
   toastSuccess,
 } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
+import useGetAllCardinals from '@/api/useGetCardinals';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -52,6 +53,7 @@ const EventEditor = () => {
   const path = pathArray[3];
 
   const { id } = useParams();
+  const { currentCardinal } = useGetAllCardinals();
   const { data: eventDetailData, loading, error } = useGetEventInfo(type, id);
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
@@ -67,8 +69,7 @@ const EventEditor = () => {
 
   const [eventRequest, setEventRequest] = useState<EventRequestType>({
     title: '',
-    // TODO: (refactor) 서버로부터 받은 기수값을 이용하여 초기값 설정하는 로직 추가
-    cardinal: 5,
+    cardinal: currentCardinal ?? 0,
     type: 'EVENT',
     start: '',
     end: '',
@@ -89,6 +90,12 @@ const EventEditor = () => {
       [key]: value,
     }));
   };
+
+  useEffect(() => {
+    if (typeof currentCardinal === 'number') {
+      setEventRequest((prev) => ({ ...prev, cardinal: currentCardinal }));
+    }
+  }, [currentCardinal]);
 
   useEffect(() => {
     if (startDate && startTime) {

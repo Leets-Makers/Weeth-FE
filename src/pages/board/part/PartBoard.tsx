@@ -14,6 +14,7 @@ import { BoardContent } from '@/pages/Board';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetUserInfo';
+import useCustomBack from '@/hooks/useCustomBack';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -25,6 +26,8 @@ const enumToSlug = (c: CatEnum): CatSlug =>
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
 const PartBoard = () => {
+  useCustomBack('/board');
+
   const { userInfo } = useGetUserInfo();
 
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
@@ -106,11 +109,14 @@ const PartBoard = () => {
     });
 
   const posts = data?.pages.flatMap((page) => page.content) ?? [];
-
   const handleSearchDone = (result: SearchContent[]) => {
     setSearchMode(true);
     setSearchResults(result);
+    setSelectedCardinal(null);
+    setSelectedWeek(null);
+    setSelectedTag(null);
   };
+
   const handleSearchClear = () => {
     setSearchMode(false);
     setSearchResults([]);

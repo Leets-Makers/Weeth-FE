@@ -30,6 +30,15 @@ const PartPost = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const onSave = async () => {
+    if (!title) {
+      toastError('제목을 입력해주세요.');
+      return;
+    }
+    if (!content) {
+      toastError('내용을 입력해주세요.');
+      return;
+    }
+
     if (category === 'StudyLog') {
       if (!selectedCardinal) {
         toastError('기수를 선택해주세요.');

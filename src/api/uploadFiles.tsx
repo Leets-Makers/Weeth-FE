@@ -3,8 +3,6 @@ import axios from 'axios';
 import qs from 'qs';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-const accessToken = localStorage.getItem('accessToken');
-const refreshToken = localStorage.getItem('refreshToken');
 
 // 파일을 Presigned URL로 업로드하는 함수
 const uploadFileToS3 = async (presignedUrl: string, file: File) => {
@@ -28,6 +26,8 @@ export const getFileUrl = async (fileNames: string[], files: File[]) => {
     console.log('No files to upload, skipping the request.');
     return [];
   }
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
 
   // 1. 서버에서 Presigned URL 요청
   const response = await axios.get(`${BASE_URL}/files/`, {

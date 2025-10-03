@@ -56,7 +56,6 @@ export const PositionIcon = styled.img`
 export const ContentText = styled.div`
   font-size: 1rem;
   line-height: 1.1931rem;
-
   a {
     color: ${theme.color.main};
     text-decoration: none;
@@ -65,6 +64,12 @@ export const ContentText = styled.div`
   a:hover {
     color: ${theme.color.mainDark};
   }
+`;
+
+export const FileListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 export const DateText = styled.div`
@@ -104,11 +109,17 @@ export const ReplyContentContainer = styled.div`
   flex: 1;
   background-color: ${theme.color.gray[18]};
   border-radius: 0.5rem;
-  padding: 10px 0 10px 10px;
+  padding: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 5px;
+`;
+
+export const ReplyHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const ReplyImageButton = styled.button`
@@ -116,7 +127,4 @@ export const ReplyImageButton = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-  position: absolute;
-  top: 0.625rem;
-  right: 0.625rem;
 `;

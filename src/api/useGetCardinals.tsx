@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import api from '@/api/api';
 
 export const getAllCardinals = async () => {
@@ -8,7 +8,7 @@ export const getAllCardinals = async () => {
 export const useGetAllCardinals = () => {
   const [allCardinals, setAllCardinals] = useState<
     {
-      status: string; // 기수 상태값 추가 ( IN_PROGRESS 이면 현재 기수 )
+      status: string;
       id: number;
       cardinalNumber: number;
     }[]
@@ -33,7 +33,11 @@ export const useGetAllCardinals = () => {
     fetchUsers();
   }, []);
 
-  return { allCardinals, error };
+  const currentCardinal = useMemo<number | null>(() => {
+    const cur = allCardinals.find((c) => c.status === 'IN_PROGRESS');
+    return cur?.cardinalNumber ?? null;
+  }, [allCardinals]);
+  return { allCardinals, currentCardinal, error };
 };
 
 export default useGetAllCardinals;

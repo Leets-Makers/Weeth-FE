@@ -10,6 +10,7 @@ import Loading from '@/components/common/Loading';
 import { BoardContent } from '@/pages/Board';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
+import useCustomBack from '@/hooks/useCustomBack';
 
 interface Content {
   id: number;
@@ -27,6 +28,8 @@ interface Content {
 }
 
 const BoardNotice = () => {
+  useCustomBack('/board');
+
   const { isAdmin } = useGetUserInfo();
 
   const navigate = useNavigate();
