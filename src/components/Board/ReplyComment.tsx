@@ -86,17 +86,25 @@ const ReplyComment = ({
     <S.ReplyCommentContainer>
       <S.ReplyArrow src={ReplyArrowImage} alt="답댓글 화살표" />
       <S.ReplyContentContainer>
-        <S.NameText>
-          <S.PositionIcon
-            src={setPositionIcon(role, position)}
-            alt="포지션 아이콘"
-          />
-          {name}
-        </S.NameText>
+        <S.ReplyHeaderContainer>
+          <S.NameText>
+            <S.PositionIcon
+              src={setPositionIcon(role, position)}
+              alt="포지션 아이콘"
+            />
+            {name}
+          </S.NameText>
+          {isMyComment && (
+            <S.ReplyImageButton onClick={onClickMenu}>
+              <img src={MenuImage} alt="메뉴 버튼" />
+            </S.ReplyImageButton>
+          )}
+        </S.ReplyHeaderContainer>
+
         <S.ContentContainer>
           <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
           {fileUrls.length > 0 && (
-            <S.ContentText>
+            <S.FileListContainer>
               {fileUrls.map((file) => (
                 <PostFile
                   key={file.fileId}
@@ -106,15 +114,10 @@ const ReplyComment = ({
                   isComment
                 />
               ))}
-            </S.ContentText>
+            </S.FileListContainer>
           )}
         </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
-        {isMyComment && (
-          <S.ReplyImageButton onClick={onClickMenu}>
-            <img src={MenuImage} alt="메뉴 버튼" />
-          </S.ReplyImageButton>
-        )}
       </S.ReplyContentContainer>
       {isModalOpen && (
         <SelectModal
