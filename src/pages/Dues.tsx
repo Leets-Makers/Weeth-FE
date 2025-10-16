@@ -52,7 +52,7 @@ const Dues: React.FC = () => {
   }
 
   const handleRightButton = () => {
-    navi(`/admin/attendance`);
+    navi(`/admin/dues`);
   };
   if (loading || userLoading) return <Loading />;
 
