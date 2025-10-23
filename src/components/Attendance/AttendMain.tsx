@@ -84,7 +84,13 @@ const AttendMain: React.FC = () => {
     endDateTime = `(${startTime} ~ ${endTime})`;
 
     const current = dayjs();
-    isWithinTimeRange = current.isBetween(startDate, endDate, 'minute', '[]');
+    const adjustedStart = startDate.subtract(10, 'minute');
+    isWithinTimeRange = current.isBetween(
+      adjustedStart,
+      endDate,
+      'minute',
+      '[]',
+    );
   }
 
   const handleOpenModal = () => {
