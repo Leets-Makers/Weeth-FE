@@ -36,8 +36,10 @@ WRITING: 게시판에서 글 작성 시 시용되는 글쓰기 버튼입니다.
 
 */
 
-import theme from '@/styles/theme';
+// components/Header/index.tsx
+
 import styled from 'styled-components';
+import theme from '@/styles/theme';
 import TextButton from '@/components/Header/TextButton';
 import LeftButton from '@/components/Header/LeftButton';
 import MenuButton from '@/components/Header/MenuButton';
@@ -45,45 +47,24 @@ import PlusButton from '@/components/Header/PlusButton';
 import SearchButton from '@/components/Header/SearchButton';
 import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
-import { pcResponsive } from '@/styles';
 import AdminButton from '@/components/Header/AdminButton';
 import InfoButton from '@/components/Header/InfoButton';
-// import EditButton from '@/components/Header/EditButton';
-
-interface HeaderProps {
-  children?: React.ReactNode;
-  onClickRightButton?: () => void;
-  RightButtonType:
-    | 'TEXT'
-    | 'MENU'
-    | 'PLUS'
-    | 'EDIT'
-    | 'SEARCH'
-    | 'WRITING'
-    | 'POST'
-    | 'INFO'
-    | 'ADMIN'
-    | 'none';
-  isComplete?: boolean;
-  isAccessible: boolean;
-  isWaiting?: boolean;
-}
+import { pcResponsive } from '@/styles';
+import useHeaderStore from '@/stores/useHeaderStore';
 
 const HeaderWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   padding: 25px 0 10px 0;
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-
-  ${pcResponsive}
   position: sticky;
   z-index: 10;
   top: 0;
   background-color: ${theme.color.gray[12]};
+  ${pcResponsive}
 `;
 
 const HeaderLeft = styled.div`
@@ -117,25 +98,28 @@ const None = styled.div`
   width: 24px;
 `;
 
-const Header = ({
-  children,
-  onClickRightButton,
-  RightButtonType,
-  isComplete = true,
-  isAccessible = false,
-  isWaiting = false,
-}: HeaderProps) => {
+const Header = () => {
+  const {
+    title,
+    rightButtonType,
+    onClickRightButton,
+    isComplete,
+    isAccessible,
+    isWaiting,
+  } = useHeaderStore();
+
   return (
     <HeaderWrapper>
       <HeaderLeft>
         <LeftButton isWaiting={isWaiting} />
       </HeaderLeft>
+
       <HeaderCenter>
-        <Title>{children}</Title>
+        <Title>{title}</Title>
       </HeaderCenter>
 
       <HeaderRight>
-        {RightButtonType === 'TEXT' && onClickRightButton && (
+        {rightButtonType === 'TEXT' && onClickRightButton && (
           <TextButton
             onClick={onClickRightButton}
             text="완료"
@@ -143,40 +127,36 @@ const Header = ({
           />
         )}
 
-        {RightButtonType === 'WRITING' &&
+        {rightButtonType === 'WRITING' &&
           isAccessible &&
           onClickRightButton && (
             <WritingButton onClick={onClickRightButton} text="글쓰기" />
           )}
 
-        {RightButtonType === 'POST' && onClickRightButton && isAccessible && (
+        {rightButtonType === 'POST' && onClickRightButton && isAccessible && (
           <PostButton onClick={onClickRightButton} text="게시하기" />
         )}
 
-        {RightButtonType === 'ADMIN' && onClickRightButton && isAccessible && (
+        {rightButtonType === 'ADMIN' && onClickRightButton && isAccessible && (
           <AdminButton onClick={onClickRightButton} text="관리자" />
         )}
 
-        {RightButtonType === 'MENU' && onClickRightButton && isAccessible && (
+        {rightButtonType === 'MENU' && onClickRightButton && isAccessible && (
           <MenuButton onClick={onClickRightButton} />
         )}
 
-        {RightButtonType === 'PLUS' && isAccessible && <PlusButton />}
+        {rightButtonType === 'PLUS' && isAccessible && <PlusButton />}
 
-        {/* {RightButtonType === 'EDIT' && onClickRightButton && (
-        <EditButton onClick={onClickRightButton} />
-      )} */}
-
-        {RightButtonType === 'SEARCH' && onClickRightButton && isAccessible && (
+        {rightButtonType === 'SEARCH' && onClickRightButton && isAccessible && (
           <SearchButton onClick={onClickRightButton} />
         )}
 
-        {RightButtonType === 'INFO' && onClickRightButton && isAccessible && (
+        {rightButtonType === 'INFO' && onClickRightButton && isAccessible && (
           <InfoButton onClick={onClickRightButton} />
         )}
 
-        {RightButtonType !== 'none' && !isAccessible && <None />}
-        {RightButtonType === 'none' && <None />}
+        {rightButtonType !== 'none' && !isAccessible && <None />}
+        {rightButtonType === 'none' && <None />}
       </HeaderRight>
     </HeaderWrapper>
   );
