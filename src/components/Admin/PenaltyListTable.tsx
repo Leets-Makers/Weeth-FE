@@ -4,29 +4,19 @@ import {
   PenaltyAction,
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
-import { getPenaltyApi } from '@/api/admin/penalty/penalty.api';
 import {
   MemberData,
   useMemberContext,
 } from '@/components/Admin/context/MemberContext';
 import PenaltyDetail from '@/components/Admin/PenaltyDetail';
+import { columns } from '@/constants/admin/penaltyColumns';
 import { statusColors } from '@/components/Admin/StatusIndicator';
 import { StatusCell } from '@/components/Admin/MemberListTableRow';
-import formatDate from '@/utils/admin/dateUtils';
-import dayjs from 'dayjs';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import PenaltySubHeaderRow from '@/components/Admin/PenaltySubHeaderRow';
-
-const columns = [
-  { key: 'name', header: '이름' },
-  { key: 'position', header: '역할' },
-  { key: 'department', header: '학과' },
-  { key: 'studentId', header: '학번' },
-  { key: 'penaltyCount', header: '페널티' },
-  { key: 'warningCount', header: '경고' },
-  { key: 'LatestPenalty', header: '최근 페널티' },
-  { key: 'empty', header: '' },
-];
+import { usePenaltyData } from '@/hooks/admin/usePenaltyData';
+import dayjs from 'dayjs';
+import formatDate from '@/utils/admin/dateUtils';
+import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 
 interface PenaltyListTableProps {
   selectedCardinal: number | null;
@@ -44,7 +34,14 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
   const { members } = useMemberContext();
   const [filteredMembers, setFilteredMembers] = useState<MemberData[]>([]);
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
+
   const { isAdmin, loading } = useGetUserInfo();
+  const { fetchPenaltyData } = usePenaltyData({
+    selectedCardinal,
+    isAdmin,
+    loading,
+    dispatch,
+  });
 
   const getLatestPenaltyDate = (penalties: { time: string }[] | undefined) => {
     if (!penalties || penalties.length === 0) return '없음';
@@ -54,45 +51,6 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
       .sort((a, b) => b.valueOf() - a.valueOf())[0]
       .format('YYYY.MM.DD');
   };
-
-  const fetchPenaltyData = async () => {
-    try {
-      if (loading || isAdmin === undefined || !isAdmin) return;
-
-      const resp = await getPenaltyApi(selectedCardinal ?? 0);
-
-      if (resp.code === 200 || resp.code === 0) {
-        const data = resp.data;
-
-        const groups = Array.isArray(data) ? data : data ? [data] : [];
-
-        const users = groups.flatMap((g: any) => g?.responses ?? []);
-
-        const penalties = users.reduce((acc: PenaltyState, u: any) => {
-          const list = Array.isArray(u?.Penalties) ? u.Penalties : [];
-          acc[u.userId] = list.map((p: any) => {
-            const isAuto = p.penaltyType === 'AUTO_PENALTY';
-            return {
-              penaltyId: p.penaltyId,
-              penaltyType: isAuto ? 'PENALTY' : p.penaltyType,
-              penaltyDescription: p.penaltyDescription,
-              time: p.time,
-              isAuto,
-            };
-          });
-          return acc;
-        }, {} as PenaltyState);
-
-        dispatch({ type: 'SET_PENALTY', payload: penalties });
-      }
-    } catch (e: any) {
-      console.error('패널티 조회 오류:', e.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchPenaltyData();
-  }, [isAdmin, loading, selectedCardinal]);
 
   useEffect(() => {
     if (!penaltyData || !members.length) return;
@@ -150,26 +108,6 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
 
   const handleRowClick = (userId: number) => {
     setExpandedRow((prev) => (prev === userId ? null : userId));
-  };
-
-  const handleEditPenalty = (
-    userId: number,
-    index: number,
-    updatedDescription: string,
-  ) => {
-    dispatch({
-      type: 'EDIT_PENALTY',
-      userId,
-      index,
-      payload: {
-        ...penaltyData[userId][index],
-        penaltyDescription: updatedDescription,
-      },
-    });
-  };
-
-  const handleDeletePenalty = (userId: number, index: number) => {
-    dispatch({ type: 'DELETE_PENALTY', userId, index });
   };
 
   const renderColumns = (member: Record<string, any>) =>
@@ -234,16 +172,6 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                                 penaltyDescription: penalty.penaltyDescription,
                                 time: formatDate(penalty.time),
                               }}
-                              // onEdit={(penaltyId, updatedDescription) =>
-                              //   handleEditPenalty(
-                              //     member.id,
-                              //     index,
-                              //     updatedDescription,
-                              //   )
-                              // }
-                              // onDelete={() =>
-                              //   handleDeletePenalty(member.id, index)
-                              // }
                               onRefresh={fetchPenaltyData}
                             />
                           </td>
