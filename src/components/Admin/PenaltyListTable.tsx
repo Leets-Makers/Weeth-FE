@@ -5,16 +5,14 @@ import {
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
-import PenaltyDetail from '@/components/Admin/PenaltyDetail';
 import { columns } from '@/constants/admin/penaltyColumns';
 import { statusColors } from '@/components/Admin/StatusIndicator';
 import { StatusCell } from '@/components/Admin/MemberListTableRow';
-import PenaltySubHeaderRow from '@/components/Admin/PenaltySubHeaderRow';
 import { usePenaltyData } from '@/hooks/admin/usePenaltyData';
-import formatDate from '@/utils/admin/dateUtils';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import { getLatestPenaltyDate } from '@/utils/admin/getLatestPenaltyDate';
 import { useFilteredMembers } from '@/hooks/admin/usePenaltyFilteredMembers';
+import ExpandedPenaltyRow from './ExpandedPenaltyRow';
 
 interface PenaltyListTableProps {
   selectedCardinal: number | null;
@@ -103,26 +101,11 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                   </S.Row>
 
                   {expandedRow === member.id && (
-                    <>
-                      <PenaltySubHeaderRow />
-
-                      {penaltyData[member.id]?.map((penalty, index) => (
-                        <tr key={`${member.id}-${penalty.penaltyId}`}>
-                          <td colSpan={columns.length + 2}>
-                            <PenaltyDetail
-                              penaltyData={{
-                                penaltyId: penalty.penaltyId,
-                                penaltyType: penalty.penaltyType,
-                                isAuto: penalty.isAuto,
-                                penaltyDescription: penalty.penaltyDescription,
-                                time: formatDate(penalty.time),
-                              }}
-                              onRefresh={fetchPenaltyData}
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </>
+                    <ExpandedPenaltyRow
+                      memberId={member.id}
+                      penaltyData={penaltyData}
+                      onRefresh={fetchPenaltyData}
+                    />
                   )}
                 </React.Fragment>
               ))
