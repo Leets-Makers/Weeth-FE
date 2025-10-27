@@ -10,3 +10,14 @@ export const columns = [
   { key: 'LatestPenalty', header: '최근 페널티' },
   { key: 'empty', header: '' },
 ] as const;
+
+export const subColumns = [
+  { key: 'empty', header: '' },
+  { key: 'reason', header: '사유' },
+  { key: 'empty', header: '' },
+  { key: 'empty', header: '' },
+  { key: 'penaltyCount', header: '페널티' },
+  { key: 'warningCount', header: '경고' },
+  { key: 'PenaltyDate', header: '페널티 일자' },
+  { key: 'empty', header: '' },
+] as const;

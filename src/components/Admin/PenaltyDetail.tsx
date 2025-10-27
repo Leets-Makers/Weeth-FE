@@ -16,17 +16,11 @@ interface PenaltyDetailProps {
     time: string;
     isAuto?: boolean;
   };
-
-  // onEdit: (penaltyId: number, updatedDescription: string) => void;
-  // onDelete: (penaltyId: number) => void;
-
   onRefresh: () => Promise<void>;
 }
 
 const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
   penaltyData,
-  // onDelete,
-  // onEdit,
   onRefresh,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -79,7 +73,6 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
         console.log('penaltyData : ', penaltyData);
         await deletePenaltyApi(penaltyData.penaltyId);
         toastSuccess(`${typeLabel}가 성공적으로 삭제되었습니다.`);
-        // onDelete(penaltyData.penaltyId);
         await onRefresh();
       } catch (error: any) {
         toastError(error.message || `${typeLabel} 삭제에 실패했습니다.`);
@@ -96,8 +89,6 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
       try {
         await patchPenaltyApi(penaltyData.penaltyId, newDescription);
         toastSuccess(`${typeLabel} 사유가 성공적으로 수정되었습니다.`);
-
-        // onEdit(penaltyData.penaltyId, newDescription);
         await onRefresh();
         setIsEditing(false);
       } catch (error: any) {
