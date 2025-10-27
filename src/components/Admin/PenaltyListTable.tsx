@@ -14,9 +14,9 @@ import { statusColors } from '@/components/Admin/StatusIndicator';
 import { StatusCell } from '@/components/Admin/MemberListTableRow';
 import PenaltySubHeaderRow from '@/components/Admin/PenaltySubHeaderRow';
 import { usePenaltyData } from '@/hooks/admin/usePenaltyData';
-import dayjs from 'dayjs';
 import formatDate from '@/utils/admin/dateUtils';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
+import { getLatestPenaltyDate } from '@/utils/admin/getLatestPenaltyDate';
 
 interface PenaltyListTableProps {
   selectedCardinal: number | null;
@@ -42,15 +42,6 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     loading,
     dispatch,
   });
-
-  const getLatestPenaltyDate = (penalties: { time: string }[] | undefined) => {
-    if (!penalties || penalties.length === 0) return '없음';
-
-    return penalties
-      .map((penalty) => dayjs(penalty.time).tz('Asia/Seoul'))
-      .sort((a, b) => b.valueOf() - a.valueOf())[0]
-      .format('YYYY.MM.DD');
-  };
 
   useEffect(() => {
     if (!penaltyData || !members.length) return;
