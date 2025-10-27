@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as S from '@/styles/admin/penalty/Penalty.styled';
 import {
   PenaltyAction,
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
-import {
-  MemberData,
-  useMemberContext,
-} from '@/components/Admin/context/MemberContext';
+import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import PenaltyDetail from '@/components/Admin/PenaltyDetail';
 import { columns } from '@/constants/admin/penaltyColumns';
 import { statusColors } from '@/components/Admin/StatusIndicator';
@@ -17,6 +14,7 @@ import { usePenaltyData } from '@/hooks/admin/usePenaltyData';
 import formatDate from '@/utils/admin/dateUtils';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import { getLatestPenaltyDate } from '@/utils/admin/getLatestPenaltyDate';
+import { useFilteredMembers } from '@/hooks/admin/usePenaltyFilteredMembers';
 
 interface PenaltyListTableProps {
   selectedCardinal: number | null;
@@ -32,10 +30,8 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
   dispatch,
 }) => {
   const { members } = useMemberContext();
-  const [filteredMembers, setFilteredMembers] = useState<MemberData[]>([]);
-  const [expandedRow, setExpandedRow] = useState<number | null>(null);
-
   const { isAdmin, loading } = useGetUserInfo();
+
   const { fetchPenaltyData } = usePenaltyData({
     selectedCardinal,
     isAdmin,
@@ -43,59 +39,14 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     dispatch,
   });
 
-  useEffect(() => {
-    if (!penaltyData || !members.length) return;
+  const filteredMembers = useFilteredMembers(
+    penaltyData,
+    members,
+    selectedCardinal,
+    searchName,
+  );
 
-    let penalizedMembers = Object.keys(penaltyData)
-      .map((userId) => {
-        const numericUserId = Number(userId);
-
-        const matchedMember = members.find(
-          (member) => member.id === numericUserId,
-        );
-
-        if (!matchedMember) return null;
-
-        const list = penaltyData[numericUserId] ?? [];
-
-        const { penalty, warning } = list.reduce(
-          (acc, p) => {
-            const t = (p as any).penaltyType;
-            if (t === 'WARNING') acc.warning += 1;
-            else acc.penalty += 1;
-            return acc;
-          },
-          { penalty: 0, warning: 0 },
-        );
-        return {
-          ...matchedMember,
-          penaltyCount: penalty,
-          warningCount: warning,
-          LatestPenalty: getLatestPenaltyDate(list),
-        };
-      })
-      .filter(Boolean) as MemberData[];
-
-    if (selectedCardinal) {
-      penalizedMembers = penalizedMembers.filter((member) => {
-        let cardinalNumbers: number[] = [];
-        if (typeof member.cardinals === 'string') {
-          cardinalNumbers = (member.cardinals as string).split('.').map(Number);
-        } else if (Array.isArray(member.cardinals)) {
-          cardinalNumbers = member.cardinals;
-        }
-        return cardinalNumbers.includes(selectedCardinal);
-      });
-    }
-
-    if (searchName.trim()) {
-      penalizedMembers = penalizedMembers.filter((member) =>
-        member.name.toLowerCase().includes(searchName.toLowerCase()),
-      );
-    }
-
-    setFilteredMembers(penalizedMembers);
-  }, [penaltyData, members, selectedCardinal, searchName, isAdmin, loading]);
+  const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   const handleRowClick = (userId: number) => {
     setExpandedRow((prev) => (prev === userId ? null : userId));
@@ -122,6 +73,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     <S.TableContainer>
       <S.TableWrapper hasData={filteredMembers.length > 0}>
         <table>
+          {/* 테이블 상단 헤더 */}
           <thead>
             <tr>
               <StatusCell statusColor={statusColors['승인 완료']} />
@@ -130,7 +82,9 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
               ))}
             </tr>
           </thead>
+
           <tbody>
+            {/* 검색된 멤버가 없을 경우 */}
             {filteredMembers.length === 0 ? (
               <tr>
                 <td colSpan={columns.length}>
@@ -175,6 +129,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
             )}
           </tbody>
 
+          {/* 테이블 하단 헤더 */}
           {filteredMembers.length > 0 && (
             <>
               <StatusCell statusColor={statusColors['승인 완료']} />
