@@ -2,7 +2,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 
 interface StatusIndicatorProps {
-  status: '승인 완료' | '대기 중' | '추방';
+  status: '승인 완료' | '대기 중' | '추방' | '상태 없음';
 }
 
 export const StatusDot = styled.span<{ color: string }>`
@@ -19,10 +19,14 @@ const StatusWrapper = styled.div`
   color: #333;
 `;
 
-export const statusColors: Record<'승인 완료' | '대기 중' | '추방', string> = {
+export const statusColors: Record<
+  '승인 완료' | '대기 중' | '추방' | '상태 없음',
+  string
+> = {
   '승인 완료': `${theme.color.main}`,
   '대기 중': `${theme.color.pintYellow}`,
   추방: `${theme.color.negative}`,
+  '상태 없음': '#e6fcf7',
 };
 
 const StatusIndicator: React.FC<StatusIndicatorProps> = ({ status }) => {

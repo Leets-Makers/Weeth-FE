@@ -18,7 +18,7 @@ export const HeaderCell = styled.th`
 const PenaltySubHeaderRow: React.FC = () => {
   return (
     <SubHeaderRow>
-      <StatusCell statusColor={statusColors['승인 완료']} />
+      <StatusCell statusColor={statusColors['상태 없음']} />
 
       {subColumns.map((column, idx) => (
         <HeaderCell key={idx}>{column.header || ''}</HeaderCell>
