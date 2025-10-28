@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as S from '@/styles/admin/penalty/Penalty.styled';
+import * as S from '@/styles/admin/penalty/PenaltyListTable.styled';
 import {
   PenaltyAction,
   PenaltyState,
@@ -30,6 +30,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
   const { members } = useMemberContext();
   const { isAdmin, loading } = useGetUserInfo();
 
+  // 페널티 데이터 가져오기 훅
   const { fetchPenaltyData } = usePenaltyData({
     selectedCardinal,
     isAdmin,
@@ -37,6 +38,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     dispatch,
   });
 
+  // 필터링된 멤버 목록 가져오기 훅
   const filteredMembers = useFilteredMembers(
     penaltyData,
     members,
@@ -44,12 +46,15 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     searchName,
   );
 
+  // 확장된 행 상태 관리
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
+  // 행 클릭 시 확장 토글
   const handleRowClick = (userId: number) => {
     setExpandedRow((prev) => (prev === userId ? null : userId));
   };
 
+  // 멤버의 각 컬럼 렌더링
   const renderColumns = (member: Record<string, any>) =>
     columns.map((column) => {
       if (column.key === 'empty') {
@@ -74,7 +79,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
           {/* 테이블 상단 헤더 */}
           <thead>
             <tr>
-              <StatusCell statusColor={statusColors['승인 완료']} />
+              <StatusCell $statusColor={statusColors['승인 완료']} />
               {columns.map((column) => (
                 <S.HeaderCell key={column.key}>{column.header}</S.HeaderCell>
               ))}
@@ -96,7 +101,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                     isSelected={expandedRow === member.id}
                     onClick={() => handleRowClick(member.id)}
                   >
-                    <StatusCell statusColor={statusColors[member.status]} />
+                    <StatusCell $statusColor={statusColors[member.status]} />
                     {renderColumns(member)}
                   </S.Row>
 
@@ -115,7 +120,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
           {/* 테이블 하단 헤더 */}
           {filteredMembers.length > 0 && (
             <>
-              <StatusCell statusColor={statusColors['승인 완료']} />
+              <StatusCell $statusColor={statusColors['승인 완료']} />
               {columns.map((column) => (
                 <S.HeaderCell key={column.key}>{column.header}</S.HeaderCell>
               ))}

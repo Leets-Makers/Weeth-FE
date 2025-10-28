@@ -3,7 +3,7 @@ import {
   patchPenaltyApi,
 } from '@/api/admin/penalty/penalty.api';
 import React, { useEffect, useRef, useState } from 'react';
-import * as S from '@/styles/admin/penalty/Penalty.styled';
+import * as S from '@/styles/admin/penalty/PenaltyListTable.styled';
 import Button from '@/components/Admin/Button';
 import { ApiPenaltyType } from '@/types/adminPenalty';
 import { toastError, toastSuccess } from '../common/ToastMessage';

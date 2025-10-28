@@ -4,19 +4,19 @@ import icSearch from '@/assets/images/ic_admin_search.svg';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 
 export const SearchBarWrapper = styled.div<{
-  isWrapped?: boolean;
-  isPenaltyPage?: boolean;
+  $isWrapped?: boolean;
+  $isPenaltyPage?: boolean;
 }>`
   position: relative;
   background-color: #ffffff;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  width: ${({ isPenaltyPage }) => (isPenaltyPage ? '63%' : '100%')};
-  min-width: ${({ isPenaltyPage }) => (isPenaltyPage ? '950px' : '1400px')};
+  width: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '63%' : '100%')};
+  min-width: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '950px' : '1400px')};
   padding: 15px 20px;
   border-radius: 4px;
-  margin: ${({ isPenaltyPage }) => (isPenaltyPage ? '0px' : '30px 0 10px')};
+  margin: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '0px' : '30px 0 10px')};
   box-shadow: 0px 3px 8px 0px rgba(133, 141, 138, 0.2);
   gap: 15px;
 `;
@@ -38,9 +38,9 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const SearchBarIcon = styled.img<{ isWrapped?: boolean }>`
+export const SearchBarIcon = styled.img<{ $isWrapped?: boolean }>`
   position: absolute;
-  left: ${({ isWrapped }) => (isWrapped ? '32px' : '165px')};
+  left: ${({ $isWrapped }) => ($isWrapped ? '32px' : '165px')};
   top: 50%;
   width: 20px;
   height: 20px;
@@ -81,7 +81,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   const content = (
     <>
-      <SearchBarIcon src={icSearch} alt="search" isWrapped={isWrapped} />
+      <SearchBarIcon src={icSearch} alt="search" $isWrapped={isWrapped} />
       <StyledInput
         placeholder="Search for name"
         value={searchName}
@@ -91,7 +91,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   );
 
   return isWrapped ? (
-    <SearchBarWrapper isPenaltyPage={isPenaltyPage}>{content}</SearchBarWrapper>
+    <SearchBarWrapper $isPenaltyPage={isPenaltyPage}>
+      {content}
+    </SearchBarWrapper>
   ) : (
     content
   );
