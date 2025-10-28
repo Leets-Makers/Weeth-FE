@@ -14,10 +14,30 @@ interface HeaderType {
 const useSetHeader = (config: HeaderType) => {
   const { setHeader, resetHeader } = useHeaderStore();
 
+  const {
+    title,
+    rightButtonType,
+    isComplete,
+    isAccessible,
+    isWaiting,
+    onClickRightButton,
+  } = config;
+
   useLayoutEffect(() => {
-    resetHeader();
     setHeader(config);
-  }, []);
+    return () => {
+      resetHeader();
+    };
+  }, [
+    setHeader,
+    resetHeader,
+    title,
+    rightButtonType,
+    isComplete,
+    isAccessible,
+    isWaiting,
+    onClickRightButton,
+  ]);
 };
 
 export default useSetHeader;

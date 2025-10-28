@@ -3,7 +3,6 @@ import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
 import PostDetailMain from '@/components/Board/PostDetailMain';
-import Header from '@/components/Header/Header';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetUserName from '@/hooks/useGetUserName';
 import MenuModal from '@/components/common/MenuModal';
@@ -12,6 +11,7 @@ import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const NoticePostDetail = () => {
   const { postId } = useParams();
@@ -91,6 +91,16 @@ const NoticePostDetail = () => {
 
   const isMyPost = boardDetailInfo?.name === useGetUserName();
 
+  if (isMyPost === undefined) return <Loading />;
+  useSetHeader({
+    title: '공지사항',
+    rightButtonType: 'MENU',
+    isAccessible: isMyPost,
+    onClickRightButton: () => {
+      setIsModalOpen(true);
+    },
+  });
+
   if (error) return <div>오류: {error}</div>;
   if (loading) return <Loading />;
 
@@ -122,16 +132,6 @@ const NoticePostDetail = () => {
       )}
 
       <S.Container>
-        <Header
-          RightButtonType="MENU"
-          isAccessible={isMyPost}
-          onClickRightButton={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          공지사항
-        </Header>
-
         {boardDetailInfo && (
           <>
             <PostDetailMain info={boardDetailInfo} />

@@ -4,7 +4,7 @@ import { ko } from 'date-fns/locale';
 import { EventRequestType, createEvent, editEvent } from '@/api/EventAdminAPI';
 import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/event/EventEditor.styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetEventInfo from '@/api/getEventInfo';
 import replaceNewLines from '@/hooks/newLine';
@@ -26,7 +26,7 @@ import {
 } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import useGetAllCardinals from '@/api/useGetCardinals';
-import useSetHeader from '@/hooks/useSetHeader'; // ✅ 추가
+import useSetHeader from '@/hooks/useSetHeader';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -161,29 +161,33 @@ const EventEditor = () => {
     }
   }, [endDate, endTime]);
 
-  const checkValid = async () => {
-    setEventRequest({
+  const checkValid = useCallback(async () => {
+    const finalContent =
+      typeof eventRequest.content === 'string'
+        ? replaceNewLines(eventRequest.content)
+        : '';
+
+    const finalEventRequest = {
       ...eventRequest,
-      content:
-        typeof eventRequest.content === 'string'
-          ? replaceNewLines(eventRequest.content)
-          : '',
-    });
+      content: finalContent,
+    };
+
+    setEventRequest(finalEventRequest);
 
     if (
-      checkEmpty(eventRequest.title, '제목을 입력해 주세요.') ||
-      checkEmpty(eventRequest.cardinal, '기수를 입력해 주세요.') ||
-      checkEmpty(eventRequest.start, '시작 시간을 입력해 주세요.') ||
-      checkEmpty(eventRequest.end, '종료 시간을 입력해 주세요.') ||
-      checkEmpty(eventRequest.location, '장소를 입력해 주세요.') ||
-      checkEmpty(eventRequest.requiredItem, '준비물을 입력해 주세요.') ||
-      checkEmpty(eventRequest.content, '내용을 입력해 주세요.')
+      checkEmpty(finalEventRequest.title, '제목을 입력해 주세요.') ||
+      checkEmpty(finalEventRequest.cardinal, '기수를 입력해 주세요.') ||
+      checkEmpty(finalEventRequest.start, '시작 시간을 입력해 주세요.') ||
+      checkEmpty(finalEventRequest.end, '종료 시간을 입력해 주세요.') ||
+      checkEmpty(finalEventRequest.location, '장소를 입력해 주세요.') ||
+      checkEmpty(finalEventRequest.requiredItem, '준비물을 입력해 주세요.') ||
+      checkEmpty(finalEventRequest.content, '내용을 입력해 주세요.')
     ) {
       return;
     }
 
-    const startDateTime = new Date(eventRequest.start);
-    const endDateTime = new Date(eventRequest.end);
+    const startDateTime = new Date(finalEventRequest.start);
+    const endDateTime = new Date(finalEventRequest.end);
 
     const startISO = startDateTime
       .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
@@ -200,9 +204,9 @@ const EventEditor = () => {
     } else {
       setIsSelectModalOpen(true);
     }
-  };
+  }, [eventRequest, setIsSelectModalOpen]);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     try {
       if (isEditMode) await editEvent(eventRequest, Number(id));
       else await createEvent(eventRequest);
@@ -216,7 +220,7 @@ const EventEditor = () => {
       }
       toastError('저장 중 오류가 발생했습니다.');
     }
-  };
+  }, [isEditMode, eventRequest, id, navigate]);
 
   useSetHeader({
     title: headerTitle,

@@ -110,6 +110,8 @@ const Header = () => {
 
   const { isAdmin } = useGetUserInfo();
 
+  console.log(title);
+
   return (
     <HeaderWrapper>
       <HeaderLeft>

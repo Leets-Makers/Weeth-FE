@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import DropdownMenu from '@/components/Button/DropdownMenu';
@@ -113,15 +113,17 @@ const Edit = () => {
 
     return true;
   };
+
+  const handleRightButton = useCallback(() => {
+    if (validateUserData(userData)) {
+      setIsSelectModalOpen(true);
+    }
+  }, []);
   useSetHeader({
     title: 'MY 수정',
     rightButtonType: 'TEXT',
     isAccessible: true,
-    onClickRightButton: () => {
-      if (validateUserData(userData)) {
-        setIsSelectModalOpen(true);
-      }
-    },
+    onClickRightButton: handleRightButton,
   });
 
   const onSave = async () => {

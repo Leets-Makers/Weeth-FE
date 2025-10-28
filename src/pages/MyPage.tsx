@@ -7,7 +7,7 @@ import useCustomBack from '@/hooks/useCustomBack';
 import useLogout from '@/hooks/useLogout';
 import useSetHeader from '@/hooks/useSetHeader';
 import * as S from '@/styles/mypage/Mypage.styled';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const MyPage = () => {
@@ -39,13 +39,16 @@ const MyPage = () => {
     }
     closeSelectModal();
   };
+
+  const handleHeaderMenu = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
   useSetHeader({
     title: 'MY',
     rightButtonType: 'MENU',
     isAccessible: true,
-    onClickRightButton: () => {
-      setIsModalOpen(true);
-    },
+    onClickRightButton: handleHeaderMenu,
   });
 
   return (

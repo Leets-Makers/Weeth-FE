@@ -8,7 +8,7 @@ import DuesTitle from '@/components/Dues/DuesTitle';
 import useCustomBack from '@/hooks/useCustomBack';
 import useSetHeader from '@/hooks/useSetHeader';
 import * as S from '@/styles/dues/Dues.styled';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Dues: React.FC = () => {
@@ -19,7 +19,7 @@ const Dues: React.FC = () => {
   const [selected, setSelectedDues] = useState<string | null>(null);
   const [cardinal, setCardinal] = useState<number | null>(null);
 
-  const navi = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCardinal(globalInfo?.cardinals?.length ? globalInfo.cardinals[0] : null);
@@ -48,9 +48,9 @@ const Dues: React.FC = () => {
     setSelectedDues('회비');
   }
 
-  const handleRightButton = () => {
-    navi(`/admin/dues`);
-  };
+  const handleRightButton = useCallback(() => {
+    navigate(`/admin/dues`);
+  }, [navigate]);
 
   useSetHeader({
     title: '회비',

@@ -1,9 +1,8 @@
-import Header from '@/components/Header/Header';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
@@ -11,6 +10,8 @@ import { BoardContent } from '@/pages/Board';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
+import useSetHeader from '@/hooks/useSetHeader';
+import Header from '@/components/Header/Header';
 
 interface Content {
   id: number;
@@ -31,7 +32,6 @@ const BoardNotice = () => {
   useCustomBack('/board');
 
   const { isAdmin } = useGetUserInfo();
-
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -64,7 +64,7 @@ const BoardNotice = () => {
   };
 
   useEffect(() => {
-    // 초기 데이터 로드드
+    // 초기 데이터 로드
     fetchData();
     const observer = new IntersectionObserver(
       (entries) => {
@@ -88,13 +88,9 @@ const BoardNotice = () => {
     };
   }, [hasMore, observerLoading, pageNumber]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  const handleRightButton = () => {
+  const handleRightButton = useCallback(() => {
     navigate(`/board/notices/post`);
-  };
+  }, [navigate]);
 
   const handleDetail = (postId: number) => {
     navigate(`/board/notices/${postId}`);
@@ -104,6 +100,7 @@ const BoardNotice = () => {
     setSearchMode(true);
     setSearchResults(result);
   };
+
   const handleSearchClear = () => {
     setSearchMode(false);
     setSearchResults([]);
@@ -111,15 +108,18 @@ const BoardNotice = () => {
 
   const list = searchMode ? searchResults : posts;
 
+  useSetHeader({
+    title: '공지사항',
+    rightButtonType: 'WRITING',
+    isAccessible: isAdmin,
+    onClickRightButton: handleRightButton,
+  });
+
+  if (loading) return <Loading />;
+
   return (
     <S.Container>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="WRITING"
-        onClickRightButton={handleRightButton}
-      >
-        공지사항
-      </Header>
+      <Header />
       <S.SearchContainer>
         <StudyBoardSearch
           requestType="notices"
@@ -128,6 +128,7 @@ const BoardNotice = () => {
           onLoading={setSearchLoading}
         />
       </S.SearchContainer>
+
       {searchLoading ? (
         <Loading />
       ) : (
@@ -137,6 +138,7 @@ const BoardNotice = () => {
               ? `검색 결과 ${list.length}개`
               : `게시글 ${posts.length}개`}
           </S.TotalPostNumber>
+
           {list.map((post) => (
             <>
               <S.PostListItemContainer key={post.id}>
@@ -158,6 +160,7 @@ const BoardNotice = () => {
               <S.Line />
             </>
           ))}
+
           {hasMore && (
             <div
               ref={observerRef}

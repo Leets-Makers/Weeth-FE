@@ -4,6 +4,7 @@ import useCustomBack from '@/hooks/useCustomBack';
 import NoticePreview from '@/components/Board/NoticePreview';
 import PartBoard from '@/components/Board/PartBoard';
 import EduMaterial from '@/components/Board/EduMaterial/EduMaterial';
+import useSetHeader from '@/hooks/useSetHeader';
 
 export interface BoardContent {
   id: number;
@@ -24,11 +25,14 @@ export interface BoardContent {
 const Board = () => {
   useCustomBack('/home');
 
+  useSetHeader({
+    title: '게시판',
+    rightButtonType: 'none',
+  });
+
   return (
     <S.Container>
-      <Header isAccessible RightButtonType="none">
-        게시판
-      </Header>
+      <Header />
       <S.BoardContainer>
         <PartBoard />
         <NoticePreview />

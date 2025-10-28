@@ -7,14 +7,14 @@ import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/calendar/Calendar.styled';
 import icLeftArrow from '@/assets/images/ic_leftArrow.svg';
 import icRightArrow from '@/assets/images/ic_rightArrow.svg';
-import { useEffect, useState } from 'react';
+import { useState, useCallback, useMemo, useLayoutEffect } from 'react';
 import useHeaderStore from '@/stores/useHeaderStore';
 
 const Calendar = () => {
   useCustomBack('/home');
   const [isMonth, setIsMonth] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { setHeader } = useHeaderStore();
+  const { setHeader, resetHeader } = useHeaderStore();
 
   const year = Number(searchParams.get('year')) || CURRENT_YEAR;
   const month = Number(searchParams.get('month')) || CURRENT_MONTH;
@@ -25,22 +25,21 @@ const Calendar = () => {
     return CURRENT_MONTH >= 3 && CURRENT_MONTH <= 9 ? 1 : 2;
   })();
 
-  const updateParams = (
-    newYear: number,
-    newMonth?: number,
-    newTerm?: number,
-  ) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('year', String(newYear));
+  const updateParams = useCallback(
+    (newYear: number, newMonth?: number, newTerm?: number) => {
+      const params = new URLSearchParams(searchParams);
+      params.set('year', String(newYear));
 
-    if (newMonth !== undefined) params.set('month', String(newMonth));
-    if (newTerm !== undefined) params.set('term', String(newTerm));
+      if (newMonth !== undefined) params.set('month', String(newMonth));
+      if (newTerm !== undefined) params.set('term', String(newTerm));
 
-    setSearchParams(params);
-  };
+      setSearchParams(params);
+    },
+    [searchParams, setSearchParams],
+  );
 
-  useEffect(() => {
-    const headerContent = (
+  const headerContent = useMemo(
+    () => (
       <S.DateWrapper>
         <S.ImgButton
           src={icLeftArrow}
@@ -53,10 +52,12 @@ const Calendar = () => {
             else updateParams(year, undefined, term - 1);
           }}
         />
+
         <S.Title>
           {!isMonth && month <= 2 ? year - 2001 : year - 2000}년{' '}
           {isMonth ? `${month}월` : `${term}학기`}
         </S.Title>
+
         <S.ImgButton
           src={icRightArrow}
           alt="right"
@@ -69,14 +70,19 @@ const Calendar = () => {
           }}
         />
       </S.DateWrapper>
-    );
-
+    ),
+    [isMonth, month, term, year, updateParams],
+  );
+  useLayoutEffect(() => {
     setHeader({
       centerContent: headerContent,
       rightButtonType: 'PLUS',
     });
-  }, [isMonth, month, term, year]);
 
+    return () => {
+      resetHeader();
+    };
+  }, [headerContent, setHeader, resetHeader]);
   return (
     <S.CalendarWrapper>
       <S.Content>
