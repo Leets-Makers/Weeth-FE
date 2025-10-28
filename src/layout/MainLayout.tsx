@@ -21,8 +21,8 @@ const Content = styled.main`
 const MainLayout = () => {
   return (
     <Container>
-      <Header />
       <Content>
+        <Header />
         <Outlet />
       </Content>
     </Container>

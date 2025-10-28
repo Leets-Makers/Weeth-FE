@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Header from '@/components/Header/Header';
 import Title from '@/components/AccountCheck/Title';
 import AccountButton from '@/components/AccountCheck/AccountButton';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Container = styled.div`
   display: flex;
@@ -21,9 +21,13 @@ const AccountCheck: React.FC = () => {
       navigate('/');
     }
   }, []);
+
+  useSetHeader({
+    rightButtonType: 'none',
+    isAccessible: true,
+  });
   return (
     <Container>
-      <Header isAccessible RightButtonType="none" />
       <Title />
       <AccountButton />
     </Container>

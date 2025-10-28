@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import weeth from '@/assets/images/ic_register_weeth.svg';
 import success from '@/assets/images/ic_register_success.svg';
 import styled from 'styled-components';
-import Header from '@/components/Header/Header';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Container = styled.div`
   display: flex;
@@ -77,9 +77,14 @@ const RegistrationSuccess = () => {
     }
   }, []);
 
+  useSetHeader({
+    rightButtonType: 'none',
+    isAccessible: false,
+    isWaiting: true,
+  });
+
   return (
     <Container>
-      <Header isWaiting RightButtonType="none" isAccessible={false} />
       <Content>
         <img
           src={weeth}

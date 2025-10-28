@@ -1,7 +1,6 @@
 import useCustomBack from '@/hooks/useCustomBack';
 import styled from 'styled-components';
 
-import Header from '@/components/Header/Header';
 import React, { useState } from 'react';
 import ModalPenalty from '@/components/Penalty/ModalPenalty';
 import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
@@ -9,6 +8,7 @@ import PenaltyItem from '@/components/Penalty/PenaltyItem';
 import useGetPenalty from '@/api/useGetPenalty';
 import Loading from '@/components/common/Loading';
 import { MOBILE } from '@/styles';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Container = styled.div`
   display: flex;
@@ -27,6 +27,13 @@ const Penalty: React.FC = () => {
     setModalOpen(true);
   };
 
+  useSetHeader({
+    title: '페널티',
+    rightButtonType: 'INFO',
+    isAccessible: true,
+    onClickRightButton: handleOpenModal,
+  });
+
   const handleCloseModal = () => {
     setModalOpen(false);
   };
@@ -35,13 +42,6 @@ const Penalty: React.FC = () => {
 
   return (
     <Container>
-      <Header
-        RightButtonType="INFO"
-        isAccessible
-        onClickRightButton={handleOpenModal}
-      >
-        페널티
-      </Header>
       <PenaltyInfoBox
         penaltyCount={penaltyInfo?.penaltyCount || 0}
         warningCount={penaltyInfo?.warningCount || 0}

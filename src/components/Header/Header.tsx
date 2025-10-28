@@ -71,7 +71,7 @@ const HeaderLeft = styled.div`
   display: flex;
   align-items: center;
   justify-self: start;
-  padding: 0 25px;
+  padding: 0 15px;
 `;
 
 const HeaderCenter = styled.div`
