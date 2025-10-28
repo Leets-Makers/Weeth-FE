@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DropdownMenu from '@/components/Button/DropdownMenu';
-import Header from '@/components/Header/Header';
 import PositionSector from '@/components/Signup/PositionSector';
 import useCustomBack from '@/hooks/useCustomBack';
 import api from '@/api/api';
@@ -12,6 +11,7 @@ import SelectModal from '@/components/Modal/SelectModal';
 import theme from '@/styles/theme';
 import Line from '@/components/common/Line';
 import InfoInput from '@/components/MyPage/InfoInput';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const ProfileContainer = styled.div`
   width: 370px;
@@ -104,7 +104,6 @@ const roleMapping: Record<string, string> = {
   PM: 'PM',
 };
 
-// Member info state type
 interface MemberInfo {
   name?: string;
   studentId?: string;
@@ -115,7 +114,6 @@ interface MemberInfo {
   email?: string;
 }
 
-// Define a type for the valid keys of MemberInfo
 type MemberInfoKeys = keyof MemberInfo;
 
 const Profile: React.FC = () => {
@@ -136,12 +134,11 @@ const Profile: React.FC = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>('');
 
-  // useEffect(() => {
-  //   const kakaoId = localStorage.getItem('kakaoId');
-  //   if (!kakaoId) {
-  //     navigate('/');
-  //   }
-  // }, []);
+  useSetHeader({
+    rightButtonType: 'none',
+    isAccessible: true,
+    isComplete: isNextEnabled,
+  });
 
   const validateEmail = (validEmail: string): boolean => {
     const emailRegex =
@@ -236,7 +233,6 @@ const Profile: React.FC = () => {
 
   return (
     <ProfileContainer>
-      <Header isAccessible isComplete={isNextEnabled} RightButtonType="none" />
       <ProfileTitle>회원 정보 입력하기</ProfileTitle>
       <ProfileSubTitle>신규 회원님의 정보를 입력해주세요.</ProfileSubTitle>
       <ProfileSubTitle>

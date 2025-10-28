@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type RightButtonType =
+export type RightButtonType =
   | 'TEXT'
   | 'MENU'
   | 'PLUS'

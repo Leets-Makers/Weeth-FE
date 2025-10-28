@@ -47,6 +47,8 @@ import PrivateRoute from '@/components/common/PrivateRoute';
 import { CustomToastContainer } from '@/components/common/ToastMessage';
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import BaseLayout from '@/layout/BaseLayout';
+import MainLayout from '@/layout/MainLayout';
 
 const App = () => {
   return (
@@ -54,29 +56,37 @@ const App = () => {
       <CustomToastContainer limit={1} />
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/kakao/oauth" element={<Redirect />} />
-        <Route path="/accountcheck" element={<AccountCheck />} />
-        <Route path="/register-success" element={<RegistrationSuccess />} />
-        <Route path="/waiting-approval" element={<WaitingApproval />} />
+        {/* 헤더 없는 페이지 */}
+        <Route element={<BaseLayout />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/kakao/oauth" element={<Redirect />} />
+        </Route>
 
-        <Route path="/attendance" element={<Attendance />} />
-        <Route path="/penalty" element={<Penalty />} />
+        {/* 헤더 있는 페이지 */}
+        <Route element={<MainLayout />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/accountcheck" element={<AccountCheck />} />
+          <Route path="/register-success" element={<RegistrationSuccess />} />
+          <Route path="/waiting-approval" element={<WaitingApproval />} />
+          <Route path="/attendance" element={<Attendance />} />
+          <Route path="/penalty" element={<Penalty />} />
 
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/:type/:id" element={<EventDetail />} />
-        <Route path="/events/create" element={<EventPost />} />
-        <Route path="/:type/:id/edit" element={<EventPost />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/attendCheck" element={<AttendCheck />} />
-        <Route path="/member" element={<Member />} />
-        <Route path="/member/:userId" element={<MemberDetail />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/edit" element={<Edit />} />
-        <Route path="/dues" element={<Dues />} />
-        <Route path="/receipt" element={<Receipt />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/:type/:id" element={<EventDetail />} />
+          <Route path="/events/create" element={<EventPost />} />
+          <Route path="/:type/:id/edit" element={<EventPost />} />
+
+          <Route path="/attendCheck" element={<AttendCheck />} />
+          <Route path="/member" element={<Member />} />
+          <Route path="/member/:userId" element={<MemberDetail />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/edit" element={<Edit />} />
+          <Route path="/dues" element={<Dues />} />
+          <Route path="/receipt" element={<Receipt />} />
+        </Route>
+        {/* 게시판 페이지 */}
         <Route path="/board" element={<BoardLayout />}>
           <Route index element={<Board />} />
           <Route path="notices" element={<BoardNotice />} />
