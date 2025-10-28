@@ -62,6 +62,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/kakao/oauth" element={<Redirect />} />
+          <Route path="/:type/:id" element={<EventDetail />} />
         </Route>
 
         {/* 헤더 있는 페이지 */}
@@ -74,7 +75,6 @@ const App = () => {
           <Route path="/penalty" element={<Penalty />} />
 
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/:type/:id" element={<EventDetail />} />
           <Route path="/events/create" element={<EventPost />} />
           <Route path="/:type/:id/edit" element={<EventPost />} />
 

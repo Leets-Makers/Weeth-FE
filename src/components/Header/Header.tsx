@@ -36,8 +36,6 @@ WRITING: 게시판에서 글 작성 시 시용되는 글쓰기 버튼입니다.
 
 */
 
-// components/Header/index.tsx
-
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import TextButton from '@/components/Header/TextButton';
@@ -51,6 +49,7 @@ import AdminButton from '@/components/Header/AdminButton';
 import InfoButton from '@/components/Header/InfoButton';
 import { pcResponsive } from '@/styles';
 import useHeaderStore from '@/stores/useHeaderStore';
+import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 
 const HeaderWrapper = styled.div`
   display: grid;
@@ -71,7 +70,7 @@ const HeaderLeft = styled.div`
   display: flex;
   align-items: center;
   justify-self: start;
-  padding: 0 15px;
+  padding: 0 10px;
 `;
 
 const HeaderCenter = styled.div`
@@ -85,7 +84,7 @@ const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   justify-self: end;
-  padding: 0 15px;
+  padding: 0 10px;
 `;
 
 const Title = styled.div`
@@ -103,10 +102,13 @@ const Header = () => {
     title,
     rightButtonType,
     onClickRightButton,
+    centerContent,
     isComplete,
     isAccessible,
     isWaiting,
   } = useHeaderStore();
+
+  const { isAdmin } = useGetUserInfo();
 
   return (
     <HeaderWrapper>
@@ -114,9 +116,7 @@ const Header = () => {
         <LeftButton isWaiting={isWaiting} />
       </HeaderLeft>
 
-      <HeaderCenter>
-        <Title>{title}</Title>
-      </HeaderCenter>
+      <HeaderCenter>{centerContent || <Title>{title}</Title>}</HeaderCenter>
 
       <HeaderRight>
         {rightButtonType === 'TEXT' && onClickRightButton && (
@@ -137,7 +137,7 @@ const Header = () => {
           <PostButton onClick={onClickRightButton} text="게시하기" />
         )}
 
-        {rightButtonType === 'ADMIN' && onClickRightButton && isAccessible && (
+        {rightButtonType === 'ADMIN' && onClickRightButton && isAdmin && (
           <AdminButton onClick={onClickRightButton} text="관리자" />
         )}
 
@@ -145,7 +145,7 @@ const Header = () => {
           <MenuButton onClick={onClickRightButton} />
         )}
 
-        {rightButtonType === 'PLUS' && isAccessible && <PlusButton />}
+        {rightButtonType === 'PLUS' && isAdmin && <PlusButton />}
 
         {rightButtonType === 'SEARCH' && onClickRightButton && isAccessible && (
           <SearchButton onClick={onClickRightButton} />

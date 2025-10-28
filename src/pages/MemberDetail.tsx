@@ -1,4 +1,4 @@
-import Header from '@/components/Header/Header';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import useGetMemberDetail from '@/api/useGetMemberDetail';
 import FE from '@/assets/images/ic_char_FE.svg';
 import BE from '@/assets/images/ic_char_BE.svg';
@@ -14,6 +14,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import CardinalTag from '@/components/common/CardinalTag';
 import Loading from '@/components/common/Loading';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Wrapper = styled.div`
   display: flex;
@@ -142,11 +143,14 @@ const MemberDetail = () => {
     ? positionMap[position as keyof typeof positionMap]
     : undefined;
 
+  useSetHeader({
+    title: '멤버',
+    rightButtonType: 'none',
+    isAccessible: true,
+  });
+
   return (
     <Wrapper>
-      <Header RightButtonType="none" isAccessible>
-        멤버
-      </Header>
       {positionData && (
         <PostionCharicter src={positionData.char} alt={position} />
       )}

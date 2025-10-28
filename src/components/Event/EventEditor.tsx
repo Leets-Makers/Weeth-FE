@@ -2,7 +2,6 @@ import { DayPicker } from 'react-day-picker';
 import '@/styles/event/DatePicker.css';
 import { ko } from 'date-fns/locale';
 import { EventRequestType, createEvent, editEvent } from '@/api/EventAdminAPI';
-import Header from '@/components/Header/Header';
 import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/event/EventEditor.styled';
 import { useEffect, useState } from 'react';
@@ -27,6 +26,7 @@ import {
 } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import useGetAllCardinals from '@/api/useGetCardinals';
+import useSetHeader from '@/hooks/useSetHeader'; // ✅ 추가
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -67,6 +67,8 @@ const EventEditor = () => {
   const [startTime, setStartTime] = useState('12:00 AM');
   const [endTime, setEndTime] = useState('11:59 PM');
 
+  const [headerTitle, setHeaderTitle] = useState('일정 추가');
+
   const [eventRequest, setEventRequest] = useState<EventRequestType>({
     title: '',
     cardinal: currentCardinal ?? 0,
@@ -83,6 +85,12 @@ const EventEditor = () => {
       setEventRequest(eventDetailData);
     }
   }, [eventDetailData]);
+
+  useEffect(() => {
+    if (isEditMode) {
+      setHeaderTitle('일정 수정');
+    }
+  }, [isEditMode]);
 
   const editEventInfo = (key: keyof EventRequestType, value: any) => {
     setEventRequest((prevInfo) => ({
@@ -210,8 +218,14 @@ const EventEditor = () => {
     }
   };
 
-  if (loading) return <Loading />;
+  useSetHeader({
+    title: headerTitle,
+    rightButtonType: 'TEXT',
+    isAccessible: true,
+    onClickRightButton: checkValid,
+  });
 
+  if (loading) return <Loading />;
   if (error) return <S.Error>{error}</S.Error>;
 
   return (
@@ -296,13 +310,6 @@ const EventEditor = () => {
       )}
 
       <S.EventEditorWrapper>
-        <Header
-          onClickRightButton={checkValid}
-          RightButtonType="TEXT"
-          isAccessible
-        >
-          {isEditMode ? '일정 수정' : '일정 추가'}
-        </Header>
         <EventInputBlock>
           <EventInput
             origValue={eventRequest.title}

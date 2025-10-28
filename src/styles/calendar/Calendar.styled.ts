@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 
 export const CalendarWrapper = styled.div`
   width: 370px;
@@ -20,8 +19,13 @@ export const DateWrapper = styled.div`
 `;
 
 export const Title = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 18px;
-  font-family: ${theme.font.semiBold};
+  font-weight: 600;
+  white-space: nowrap;
+  color: white;
 `;
 
 export const ImgButton = styled.img`

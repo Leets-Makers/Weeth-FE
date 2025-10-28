@@ -1,14 +1,12 @@
 import useGetDuesInfo from '@/api/useGetDuesInfo';
-import useGetGlobaluserInfo, {
-  useGetUserInfo,
-} from '@/api/useGetGlobaluserInfo';
+import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import Loading from '@/components/common/Loading';
 import { toastError } from '@/components/common/ToastMessage';
 import DueCategory from '@/components/Dues/DueCategory';
 import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
-import Header from '@/components/Header/Header';
 import useCustomBack from '@/hooks/useCustomBack';
+import useSetHeader from '@/hooks/useSetHeader';
 import * as S from '@/styles/dues/Dues.styled';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -21,7 +19,6 @@ const Dues: React.FC = () => {
   const [selected, setSelectedDues] = useState<string | null>(null);
   const [cardinal, setCardinal] = useState<number | null>(null);
 
-  const { isAdmin } = useGetUserInfo();
   const navi = useNavigate();
 
   useEffect(() => {
@@ -54,17 +51,16 @@ const Dues: React.FC = () => {
   const handleRightButton = () => {
     navi(`/admin/dues`);
   };
+
+  useSetHeader({
+    title: '회비',
+    rightButtonType: 'ADMIN',
+    onClickRightButton: handleRightButton,
+  });
   if (loading || userLoading) return <Loading />;
 
   return (
     <S.StyledDues>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="ADMIN"
-        onClickRightButton={handleRightButton}
-      >
-        회비
-      </Header>
       <DuesTitle time={duesInfo?.time ?? ''} />
       <S.CategoryWrapper>
         <DueCategory setSelectedDues={setSelectedDues} />

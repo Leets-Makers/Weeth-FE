@@ -1,11 +1,11 @@
 import deleteUser from '@/api/deleteUser';
 import MenuModal from '@/components/common/MenuModal';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
-import Header from '@/components/Header/Header';
 import SelectModal from '@/components/Modal/SelectModal';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import useLogout from '@/hooks/useLogout';
+import useSetHeader from '@/hooks/useSetHeader';
 import * as S from '@/styles/mypage/Mypage.styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -39,6 +39,14 @@ const MyPage = () => {
     }
     closeSelectModal();
   };
+  useSetHeader({
+    title: 'MY',
+    rightButtonType: 'MENU',
+    isAccessible: true,
+    onClickRightButton: () => {
+      setIsModalOpen(true);
+    },
+  });
 
   return (
     <S.Container>
@@ -71,15 +79,6 @@ const MyPage = () => {
           onDelete={onClickLeave}
         />
       )}
-      <Header
-        RightButtonType="MENU"
-        onClickRightButton={() => {
-          setIsModalOpen(true);
-        }}
-        isAccessible
-      >
-        MY
-      </Header>
       <MyInfo />
     </S.Container>
   );

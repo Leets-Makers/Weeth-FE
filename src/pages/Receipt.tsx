@@ -1,6 +1,6 @@
-import Header from '@/components/Header/Header';
 import ReceiptMain from '@/components/Receipt/ReceiptMain';
 import useCustomBack from '@/hooks/useCustomBack';
+import useSetHeader from '@/hooks/useSetHeader';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -14,11 +14,14 @@ const Container = styled.div`
 const Receipt: React.FC = () => {
   useCustomBack('/dues');
 
+  useSetHeader({
+    title: '영수증',
+    rightButtonType: 'none',
+    isAccessible: true,
+  });
+
   return (
     <Container>
-      <Header RightButtonType="none" isAccessible>
-        영수증
-      </Header>
       <ReceiptMain />
     </Container>
   );

@@ -1,10 +1,9 @@
 import AttendCheckMain from '@/components/AttendCheck/AttendCheckMain';
 import useCustomBack from '@/hooks/useCustomBack';
 import styled from 'styled-components';
-
-import Header from '@/components/Header/Header';
 import React from 'react';
 import { MOBILE } from '@/styles';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Container = styled.div`
   display: flex;
@@ -16,11 +15,13 @@ const Container = styled.div`
 
 const AttendCheck: React.FC = () => {
   useCustomBack('/attendance');
+  useSetHeader({
+    title: '출석 조회',
+    rightButtonType: 'none',
+    isAccessible: true,
+  });
   return (
     <Container>
-      <Header RightButtonType="none" isAccessible>
-        출석 조회
-      </Header>
       <AttendCheckMain />
     </Container>
   );

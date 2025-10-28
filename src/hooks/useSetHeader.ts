@@ -7,15 +7,16 @@ interface HeaderType {
   isComplete?: boolean;
   isAccessible?: boolean;
   isWaiting?: boolean;
+  centerContent?: React.ReactNode;
   onClickRightButton?: () => void;
 }
 
 const useSetHeader = (config: HeaderType) => {
-  const { setHeader } = useHeaderStore();
+  const { setHeader, resetHeader } = useHeaderStore();
 
   useLayoutEffect(() => {
+    resetHeader();
     setHeader(config);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 

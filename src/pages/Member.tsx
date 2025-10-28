@@ -1,5 +1,4 @@
 import CardinalDropdown from '@/components/common/CardinalDropdown';
-import Header from '@/components/Header/Header';
 import MemberList from '@/components/Member/MemberList';
 import useCustomBack from '@/hooks/useCustomBack';
 import theme from '@/styles/theme';
@@ -10,6 +9,7 @@ import search from '@/assets/images/ic_search.svg';
 import getSearchMember from '@/api/getSearchMember';
 import { User } from '@/types/user';
 import { toastError } from '@/components/common/ToastMessage';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Wrapper = styled.div`
   width: 370px;
@@ -87,11 +87,14 @@ const Member = () => {
     }
   };
 
+  useSetHeader({
+    title: '멤버',
+    rightButtonType: 'none',
+    isAccessible: true,
+  });
+
   return (
     <Wrapper>
-      <Header RightButtonType="none" isAccessible>
-        멤버
-      </Header>
       <Search>
         <CardinalDropdown
           origValue={selectedCardinal}
