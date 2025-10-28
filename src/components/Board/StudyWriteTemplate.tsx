@@ -9,6 +9,7 @@ import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyDropdown from '@/components/Board/StudyDropdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { MOBILE, pcResponsive } from '@/styles';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Container = styled.div`
   display: flex;
@@ -89,12 +90,15 @@ const StudyWriteTemplate = ({
   onSave,
 }: StudyWriteTemplateProps) => {
   const isStudyLog = category === 'StudyLog' || category === 'study';
-
+  useSetHeader({
+    title: headerTitle,
+    rightButtonType: 'POST',
+    isAccessible: true,
+    onClickRightButton: onSave,
+  });
   return (
     <Container>
-      <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
-        {headerTitle}
-      </Header>
+      <Header />
       <StudyPostTitle title={title} setTitle={setTitle} />
       <InformationContainer>
         <DivisionContainer>

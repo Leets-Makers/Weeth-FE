@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
@@ -12,6 +12,7 @@ import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const EduDetail = () => {
   const { category, part, postId } = useParams<{
@@ -96,6 +97,17 @@ const EduDetail = () => {
 
   const isMyPost = boardDetailInfo?.name === useGetUserName();
 
+  const handleHeaderMenu = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  useSetHeader({
+    title: `${part} 교육자료`,
+    rightButtonType: 'MENU',
+    isAccessible: isMyPost,
+    onClickRightButton: handleHeaderMenu,
+  });
+
   if (error) return <div>오류: {error}</div>;
   if (loading) return <Loading />;
 
@@ -127,15 +139,7 @@ const EduDetail = () => {
       )}
 
       <S.Container>
-        <Header
-          RightButtonType="MENU"
-          isAccessible={isMyPost}
-          onClickRightButton={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          {part} 교육자료
-        </Header>
+        <Header />
 
         {boardDetailInfo && (
           <>

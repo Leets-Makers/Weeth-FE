@@ -1,10 +1,9 @@
-import Header from '@/components/Header/Header';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EduPartTap from '@/components/Board/EduPartTap';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
@@ -12,6 +11,8 @@ import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
+import useSetHeader from '@/hooks/useSetHeader';
+import Header from '@/components/Header/Header';
 
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
@@ -97,23 +98,24 @@ const EducationBoard = () => {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleRightButton = () => {
+  const handleRightButton = useCallback(() => {
     navigate(`/board/education/${part}/post`);
-  };
+  }, [navigate]);
 
   const handleDetail = (id: number) => {
     navigate(`/education/${part}/${id}?${searchParams.toString()}`);
   };
 
+  useSetHeader({
+    title: '교육자료',
+    rightButtonType: 'WRITING',
+    isAccessible: isAdmin,
+    onClickRightButton: handleRightButton,
+  });
+
   return (
     <S.Container>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="WRITING"
-        onClickRightButton={handleRightButton}
-      >
-        교육자료
-      </Header>
+      <Header />
       <EduPartTap activePart={part} onPartChange={handleTabChange} />
       <S.InformationContainer>
         <S.DropdownContainer>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
@@ -89,6 +89,10 @@ const NoticePostDetail = () => {
     }));
   };
 
+  const handleHeaderMenu = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
   const isMyPost = boardDetailInfo?.name === useGetUserName();
 
   if (isMyPost === undefined) return <Loading />;
@@ -96,9 +100,7 @@ const NoticePostDetail = () => {
     title: '공지사항',
     rightButtonType: 'MENU',
     isAccessible: isMyPost,
-    onClickRightButton: () => {
-      setIsModalOpen(true);
-    },
+    onClickRightButton: handleHeaderMenu,
   });
 
   if (error) return <div>오류: {error}</div>;

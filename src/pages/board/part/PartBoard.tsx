@@ -7,7 +7,7 @@ import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useGetPartBoard from '@/api/useGetPartBoard';
 import { BoardContent } from '@/pages/Board';
@@ -15,6 +15,7 @@ import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetUserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
+import useSetHeader from '@/hooks/useSetHeader';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -145,10 +146,10 @@ const PartBoard = () => {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleRightButton = () => {
+  const handleRightButton = useCallback(() => {
     const slug = enumToSlug(activeCategory);
     navigate(`/board/${slug}/${part}/post`);
-  };
+  }, []);
 
   const handleDetail = (id: number) => {
     const categoryPrefix = activeCategory === 'StudyLog' ? 'study' : 'article';
@@ -161,15 +162,16 @@ const PartBoard = () => {
     setSelectedTag(null);
   };
 
+  useSetHeader({
+    title: part,
+    rightButtonType: 'WRITING',
+    isAccessible: canWrite,
+    onClickRightButton: handleRightButton,
+  });
+
   return (
     <S.Container>
-      <Header
-        isAccessible={canWrite}
-        RightButtonType="WRITING"
-        onClickRightButton={handleRightButton}
-      >
-        {part}
-      </Header>
+      <Header />
       <PartBoardTap activeTab={activeCategory} onTabChange={handleTabChange} />
       <S.InformationContainer>
         <S.DropdownContainer>

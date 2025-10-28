@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
@@ -13,6 +13,7 @@ import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import getHeaderTitle from '@/utils/getHeaderTitle';
 import * as S from '@/styles/board/BoardDetail.styled';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const PartDetail = () => {
   const { category, part, postId } = useParams<{
@@ -97,6 +98,17 @@ const PartDetail = () => {
 
   const isMyPost = boardDetailInfo?.name === useGetUserName();
 
+  const handleHeaderMenu = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  useSetHeader({
+    title: getHeaderTitle(category || 'FE', part || 'FE'),
+    rightButtonType: 'MENU',
+    isAccessible: isMyPost,
+    onClickRightButton: handleHeaderMenu,
+  });
+
   if (error) return <div>오류: {error}</div>;
   if (loading) return <Loading />;
 
@@ -134,15 +146,7 @@ const PartDetail = () => {
       )}
 
       <S.Container>
-        <Header
-          RightButtonType="MENU"
-          isAccessible={isMyPost}
-          onClickRightButton={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          {getHeaderTitle(category, part)}
-        </Header>
+        <Header />
 
         {boardDetailInfo && (
           <>

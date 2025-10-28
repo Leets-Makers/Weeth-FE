@@ -9,6 +9,7 @@ import { PartTypes } from '@/types/part';
 import PartDropdown from '@/components/Board/PartDropdown';
 import { originFile } from '@/pages/board/part/PartEdit';
 import { MOBILE, pcResponsive } from '@/styles';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Container = styled.div`
   display: flex;
@@ -80,11 +81,15 @@ const EduWrite = ({
   setOriginFiles,
   onSave,
 }: StudyWriteTemplateProps) => {
+  useSetHeader({
+    title: headerTitle,
+    rightButtonType: 'POST',
+    isAccessible: true,
+    onClickRightButton: onSave,
+  });
   return (
     <Container>
-      <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
-        {headerTitle}
-      </Header>
+      <Header />
       <StudyPostTitle title={title} setTitle={setTitle} />
       <InformationContainer>
         <DivisionContainer>
