@@ -130,6 +130,12 @@ const MemberDetail = () => {
     },
   };
 
+  useSetHeader({
+    title: memberDetail?.name,
+    rightButtonType: 'none',
+    isAccessible: true,
+  });
+
   if (loading) {
     return <Loading />;
   }
@@ -142,12 +148,6 @@ const MemberDetail = () => {
   const positionData = position
     ? positionMap[position as keyof typeof positionMap]
     : undefined;
-
-  useSetHeader({
-    title: '멤버',
-    rightButtonType: 'none',
-    isAccessible: true,
-  });
 
   return (
     <Wrapper>

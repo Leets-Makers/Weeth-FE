@@ -3,11 +3,12 @@ import { deleteEvent } from '@/api/EventAdminAPI';
 import Header from '@/components/Header/Header';
 import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/calendar/EventDetailTitle.styled';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
 import MenuModal from '@/components/common/MenuModal';
 import SelectModal from '@/components/Modal/SelectModal';
+import useSetHeader from '@/hooks/useSetHeader';
 import { toastSuccess, toastError } from '../common/ToastMessage';
 
 const EventTitle = ({
@@ -41,15 +42,19 @@ const EventTitle = ({
     }
   };
 
+  const handleMenuModal = useCallback(() => {
+    setIsMenuModalOpen(true);
+  }, []);
+
+  useSetHeader({
+    rightButtonType: 'MENU',
+    isAccessible: isAdmin,
+    onClickRightButton: handleMenuModal,
+  });
+
   return (
     <>
-      <Header
-        isAccessible={isAdmin}
-        onClickRightButton={() => {
-          setIsMenuModalOpen(true);
-        }}
-        RightButtonType="MENU"
-      />
+      <Header />
 
       <S.EventTitleWrapper>
         <S.SpaceBetween>

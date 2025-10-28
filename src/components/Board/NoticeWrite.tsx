@@ -4,6 +4,7 @@ import Header from '@/components/Header/Header';
 import Markdown from '@/components/Board/Markdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { originFile } from '@/pages/board/part/PartEdit';
+import useSetHeader from '@/hooks/useSetHeader';
 
 const Container = styled.div`
   display: flex;
@@ -38,11 +39,15 @@ const NoticeWrite = ({
   setOriginFiles,
   onSave,
 }: StudyWriteTemplateProps) => {
+  useSetHeader({
+    title: '공지사항',
+    rightButtonType: 'POST',
+    isAccessible: true,
+    onClickRightButton: onSave,
+  });
   return (
     <Container>
-      <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
-        공지사항
-      </Header>
+      <Header />
       <StudyPostTitle title={title} setTitle={setTitle} />
       <MarkdownContainer>
         <Markdown

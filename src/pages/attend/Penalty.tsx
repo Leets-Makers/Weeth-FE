@@ -1,7 +1,7 @@
 import useCustomBack from '@/hooks/useCustomBack';
 import styled from 'styled-components';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import ModalPenalty from '@/components/Penalty/ModalPenalty';
 import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
 import PenaltyItem from '@/components/Penalty/PenaltyItem';
@@ -23,9 +23,9 @@ const Penalty: React.FC = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { penaltyInfo, isLoading } = useGetPenalty();
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setModalOpen(true);
-  };
+  }, []);
 
   useSetHeader({
     title: '페널티',

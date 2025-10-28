@@ -12,6 +12,7 @@ import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
 import useSetHeader from '@/hooks/useSetHeader';
+import Header from '@/components/Header/Header';
 
 const NoticePostDetail = () => {
   const { postId } = useParams();
@@ -132,6 +133,7 @@ const NoticePostDetail = () => {
           onDelete={confirmDelete}
         />
       )}
+      <Header />
 
       <S.Container>
         {boardDetailInfo && (
