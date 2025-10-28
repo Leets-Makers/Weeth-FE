@@ -12,7 +12,7 @@ import { usePenaltyData } from '@/hooks/admin/usePenaltyData';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import { getLatestPenaltyDate } from '@/utils/admin/getLatestPenaltyDate';
 import { useFilteredMembers } from '@/hooks/admin/usePenaltyFilteredMembers';
-import ExpandedPenaltyRow from './ExpandedPenaltyRow';
+import ExpandedPenaltyRow from '@/components/Admin/ExpandedPenaltyRow';
 
 interface PenaltyListTableProps {
   selectedCardinal: number | null;

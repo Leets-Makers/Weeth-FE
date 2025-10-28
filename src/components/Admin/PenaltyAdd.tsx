@@ -97,10 +97,6 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
           }
         }, 700);
 
-        const penaltyTime = res.data?.time
-          ? formatDate(res.data.time)
-          : formatDate(new Date().toISOString());
-
         if (selectedCardinal != null) {
           const response = await getPenaltyApi(selectedCardinal);
           if (response.code === 200 || response.code === 0) {
