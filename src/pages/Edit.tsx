@@ -118,7 +118,8 @@ const Edit = () => {
     if (validateUserData(userData)) {
       setIsSelectModalOpen(true);
     }
-  }, []);
+  }, [validateUserData, userData]);
+
   useSetHeader({
     title: 'MY 수정',
     rightButtonType: 'TEXT',

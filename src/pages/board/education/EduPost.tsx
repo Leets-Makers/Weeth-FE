@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import postBoardNotice from '@/api/postBoardNotice';
 import { PostRequestType } from '@/types/PostRequestType';
 import EduWrite from '@/components/Board/EduWrite';
@@ -26,7 +26,7 @@ const EduPost = () => {
   const [content, setContent] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
 
-  const onSave = async () => {
+  const onSave = useCallback(async () => {
     if (!title) {
       toastError('제목을 입력해주세요.');
       return;
@@ -64,9 +64,9 @@ const EduPost = () => {
       navigate(`/board/education/${backPart}`);
     } catch (err) {
       console.error('게시 실패:', err);
-      alert('게시 중 오류가 발생했습니다.');
+      toastError('게시 중 오류가 발생했습니다.');
     }
-  };
+  }, [title, content, selectedCardinal]);
 
   return (
     <EduWrite

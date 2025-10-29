@@ -149,7 +149,7 @@ const PartBoard = () => {
   const handleRightButton = useCallback(() => {
     const slug = enumToSlug(activeCategory);
     navigate(`/board/${slug}/${part}/post`);
-  }, []);
+  }, [activeCategory, navigate, part]);
 
   const handleDetail = (id: number) => {
     const categoryPrefix = activeCategory === 'StudyLog' ? 'study' : 'article';

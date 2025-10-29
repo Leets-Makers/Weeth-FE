@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import postBoardNotice from '@/api/postBoardNotice';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
@@ -24,7 +24,7 @@ const NoticePost = () => {
   //     setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
   //   };
 
-  const onSave = async () => {
+  const onSave = useCallback(async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -70,7 +70,7 @@ const NoticePost = () => {
           : '공지사항 작성 중 문제가 발생했습니다.',
       );
     }
-  };
+  }, [title, content]);
 
   return (
     <NoticeWrite
