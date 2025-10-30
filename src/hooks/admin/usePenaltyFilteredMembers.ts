@@ -12,7 +12,10 @@ export const useFilteredMembers = (
   const [filteredMembers, setFilteredMembers] = useState<MemberData[]>([]);
 
   useEffect(() => {
-    if (!penaltyData || !members.length) return;
+    if (!penaltyData || !members.length) {
+      setFilteredMembers([]);
+      return;
+    }
 
     let penalizedMembers = Object.keys(penaltyData)
       .map((userId) => {
