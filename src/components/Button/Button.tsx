@@ -5,22 +5,22 @@ import theme from '../../styles/theme';
 interface ButtonProps {
   children: React.ReactNode;
   color?: string;
-  textcolor?: string;
+  $textcolor?: string;
   onClick?: () => void;
   height?: string;
   width?: string;
-  borderRadius?: string;
+  $borderRadius?: string;
   disabled?: boolean;
-  isSemibold?: boolean; // 폰트 두께 : true(기본값) - semibold, false - regular
+  $isSemibold?: boolean; // 폰트 두께 : true(기본값) - semibold, false - regular
 }
 
 const BasicButton = styled.button<ButtonProps>`
   background-color: ${({ color }) => color || theme.color.gray[30]};
-  font-family: ${({ isSemibold }) =>
-    isSemibold ? theme.font.semiBold : theme.font.regular};
-  color: ${({ textcolor }) => textcolor || theme.color.gray[100]};
+  font-family: ${({ $isSemibold }) =>
+    $isSemibold ? theme.font.semiBold : theme.font.regular};
+  color: ${({ $textcolor }) => $textcolor || theme.color.gray[100]};
   border: none;
-  border-radius: ${({ borderRadius }) => borderRadius || '10px'};
+  border-radius: ${({ $borderRadius }) => $borderRadius || '10px'};
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -38,23 +38,23 @@ const BasicButton = styled.button<ButtonProps>`
 const Button: FC<ButtonProps> = ({
   children,
   color,
-  textcolor,
+  $textcolor,
   onClick,
   height,
   width,
-  borderRadius,
+  $borderRadius,
   disabled,
-  isSemibold = true,
+  $isSemibold = true,
 }) => (
   <BasicButton
     color={color}
-    textcolor={textcolor}
+    $textcolor={$textcolor}
     onClick={onClick}
     height={height}
     width={width}
-    borderRadius={borderRadius}
+    $borderRadius={$borderRadius}
     disabled={disabled}
-    isSemibold={isSemibold}
+    $isSemibold={$isSemibold}
   >
     {children}
   </BasicButton>

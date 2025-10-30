@@ -6,7 +6,6 @@ import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import PenaltyMemberDropdown from '@/components/Admin/PenaltyMemberDropdown';
 import { getPenaltyApi, postPenaltyApi } from '@/api/admin/penalty/penalty.api';
 import {
-  Penalty,
   PenaltyAction,
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
@@ -97,21 +96,6 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
             window.location.reload();
           }
         }, 700);
-
-        const penaltyTime = res.data?.time
-          ? formatDate(res.data.time)
-          : formatDate(new Date().toISOString());
-
-        // dispatch({
-        //   type: 'ADD_PENALTY',
-        //   userId: member.id,
-        //   payload: {
-        //     penaltyId: res.data?.penaltyId ?? Date.now(),
-        //     penaltyType: apiType,
-        //     penaltyDescription,
-        //     time: penaltyTime,
-        //   },
-        // });
 
         if (selectedCardinal != null) {
           const response = await getPenaltyApi(selectedCardinal);

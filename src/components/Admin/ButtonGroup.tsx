@@ -65,10 +65,10 @@ const ButtonGroup: React.FC<ButtonGroupProps & { isHeader?: boolean }> = ({
         <Button
           key={label}
           color={style?.backgroundColor || '#fff'}
-          textcolor={style?.color || '#000'}
+          $textcolor={style?.color || '#000'}
           width="auto"
           height="45px"
-          borderRadius="4px"
+          $borderRadius="4px"
           onClick={onClick}
           disabled={disabled}
         >
