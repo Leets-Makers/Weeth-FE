@@ -184,7 +184,6 @@ const Edit = () => {
             text="학과"
             origValue={userInfo.department}
             editValue={(value) => editValue('department', value)}
-            type="mypage"
           />
           <InfoInput
             text="학번"

@@ -13,7 +13,7 @@ const PositionContainer = styled.div`
 const PositionLabel = styled.div`
   width: 42px;
   text-align: left;
-  color: ${theme.color.gray[65]};
+  color: ${theme.color.gray[100]};
 `;
 
 const Positions = styled.div`
