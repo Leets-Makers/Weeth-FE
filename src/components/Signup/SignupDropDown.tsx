@@ -1,7 +1,7 @@
-import SignupWhite from '@/components/Signup/SignupWhite';
 import theme from '@/styles/theme';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { SignupTexts } from './SignupTextComponent';
 
 interface SignupDropDownProps {
   text: string;
@@ -114,7 +114,7 @@ const SignupDropDown: React.FC<SignupDropDownProps> = ({
   return (
     <SignupDropdownContainer ref={dropdownRef}>
       <Label>
-        <SignupWhite text={text} />
+        <SignupTexts>{text}</SignupTexts>
       </Label>
       <SignupDropDownButton onClick={handleToggle} $hasValue={!!selectedValue}>
         {selectedValue || '학과를 선택해주세요'}

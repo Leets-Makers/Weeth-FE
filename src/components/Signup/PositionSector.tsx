@@ -34,6 +34,12 @@ const PositionName = styled.div`
   color: #ffffff;
 `;
 
+const PositionBoxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+`;
+
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
   display: none;
 `;
@@ -101,20 +107,13 @@ const PositionSector: React.FC<PositionSectorProps> = ({
       <PositionLabel>{labelName}</PositionLabel>
       <Positions>
         {positions.map((position) => (
-          <div
-            key={position}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginLeft: '10px',
-            }}
-          >
+          <PositionBoxContainer key={position}>
             <PositionCheckbox
               checked={value === position}
               onChange={() => onChange(position)}
             />
             <PositionName>{position}</PositionName>
-          </div>
+          </PositionBoxContainer>
         ))}
       </Positions>
     </PositionContainer>

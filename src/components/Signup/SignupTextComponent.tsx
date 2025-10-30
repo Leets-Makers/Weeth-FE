@@ -1,4 +1,3 @@
-import SignupWhite from '@/components/Signup/SignupWhite';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
@@ -65,6 +64,17 @@ const IconWrapper = styled.div`
   }
 `;
 
+export const SignupTexts = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  font-family: ${theme.font.semiBold};
+  color: ${theme.color.gray[100]};
+  margin-bottom: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+`;
+
 const SignupTextComponent: React.FC<SignupTextComponentProps> = ({
   text,
   value,
@@ -77,7 +87,7 @@ const SignupTextComponent: React.FC<SignupTextComponentProps> = ({
   return (
     <SignupContainer>
       <SignupWhiteMargin>
-        <SignupWhite text={text} />
+        <SignupTexts>{text}</SignupTexts>
       </SignupWhiteMargin>
       <Margin />
       <InputWrapper>
