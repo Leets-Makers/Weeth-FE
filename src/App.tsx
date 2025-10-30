@@ -13,7 +13,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CustomToastContainer limit={1} />
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <RouterProvider router={router} />
     </ThemeProvider>
   );
