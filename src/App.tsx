@@ -21,7 +21,7 @@ import Receipt from '@/pages/Receipt';
 import theme from '@/styles/theme';
 import Redirect from '@/pages/Redirect';
 import Board from '@/pages/board/Board';
-import AccountCheck from '@/pages/AccountCheck';
+import AccountCheck from '@/pages/Login/AccountCheck';
 import RegistrationSuccess from '@/pages/Login/RegistrationSuccess';
 import WaitingApproval from '@/pages/Login/WaitingApproval';
 import NoticeDetail from '@/pages/board/notices/NoticeDetail';

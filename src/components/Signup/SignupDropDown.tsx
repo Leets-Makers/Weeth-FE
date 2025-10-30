@@ -1,7 +1,5 @@
-import theme from '@/styles/theme';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { SignupTexts } from './SignupTextComponent';
 
 interface SignupDropDownProps {
   text: string;
@@ -9,56 +7,59 @@ interface SignupDropDownProps {
   editValue: (value: string) => void;
 }
 
-const SignupDropdownContainer = styled.div`
+const Container = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
+  width: 370px;
+  max-width: 370px;
+  margin-bottom: 16px;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-left: 7%;
+  margin-bottom: 8px;
+  font-family: ${({ theme }) => theme.font.semiBold};
+  color: ${({ theme }) => theme.color.gray[100]};
   font-size: 16px;
 `;
 
-const SignupDropDownButton = styled.div<{ $hasValue: boolean }>`
-  width: 58%;
-  height: 25px;
+const DropdownButton = styled.button<{ $hasValue: boolean }>`
+  width: 87%;
+  margin: 0 7%;
+  padding: 10px 12px;
   font-size: 16px;
-  outline: none;
-  border-bottom: 1px solid ${theme.color.gray[20]};
-  background-color: ${theme.color.gray[12]};
-  color: ${(props) => (props.$hasValue ? 'white' : theme.color.gray[20])};
+  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.color.gray[25]};
+  background-color: ${({ theme }) => theme.color.gray[12]};
+  color: ${({ $hasValue, theme }) =>
+    $hasValue ? theme.color.gray[100] : theme.color.gray[45]};
+  text-align: left;
   cursor: pointer;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-`;
-
-const Label = styled.div`
-  width: 7%;
-  height: 19px;
-  margin-left: 10%;
-  margin-right: 9%;
-  font-size: 16px;
-  line-height: 19.09px;
 `;
 
 const DropdownList = styled.div`
   position: absolute;
-  width: 244px;
-  top: calc(100% - 8px);
-  right: 25px;
+  width: 87%;
+  margin: 0 7%;
+  background-color: ${({ theme }) => theme.color.gray[20]};
   border-radius: 4px;
-  margin-top: 5px;
-  z-index: 1000;
-  background-color: #2c2c2c;
+  top: calc(100% + 4px);
+  z-index: 100;
+  overflow: hidden;
 `;
 
 const DropdownItem = styled.div`
-  padding: 10px;
-  font-size: 16px;
-  color: white;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.gray[20]};
   cursor: pointer;
-  background-color: #2c2c2c;
 
   &:hover {
-    background-color: ${theme.color.mainMiddle};
+    background-color: ${({ theme }) => theme.color.mainMiddle};
   }
 `;
 
@@ -68,70 +69,61 @@ const SignupDropDown: React.FC<SignupDropDownProps> = ({
   editValue,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<string>(origValue);
+  const [selectedValue, setSelectedValue] = useState(origValue);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const options = [
-    { value: '경영학과', label: '경영학과' },
-    { value: '경제학과', label: '경제학과' },
-    { value: '시각디자인학과', label: '시각디자인학과' },
-    { value: '산업공학과', label: '산업공학과' },
-    { value: '소프트웨어전공', label: '소프트웨어전공' },
-    { value: '인공지능전공', label: '인공지능전공' },
-    { value: '컴퓨터공학과', label: '컴퓨터공학과' },
+    '경영학과',
+    '경제학과',
+    '시각디자인학과',
+    '산업공학과',
+    '소프트웨어전공',
+    '인공지능전공',
+    '컴퓨터공학과',
   ];
 
-  const handleToggle = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const handleSelect = (label: string, value: string) => {
-    setSelectedValue(label);
-    editValue(value);
-    setIsOpen(false);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
     };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   useEffect(() => {
     setSelectedValue(origValue);
   }, [origValue]);
 
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    editValue(value);
+    setIsOpen(false);
+  };
+
   return (
-    <SignupDropdownContainer ref={dropdownRef}>
-      <Label>
-        <SignupTexts>{text}</SignupTexts>
-      </Label>
-      <SignupDropDownButton onClick={handleToggle} $hasValue={!!selectedValue}>
+    <Container ref={dropdownRef}>
+      <Label>{text}</Label>
+      <DropdownButton
+        onClick={() => setIsOpen((prev) => !prev)}
+        $hasValue={!!selectedValue}
+      >
         {selectedValue || '학과를 선택해주세요'}
-      </SignupDropDownButton>
+      </DropdownButton>
       {isOpen && (
         <DropdownList>
           {options.map((option) => (
-            <DropdownItem
-              key={option.value}
-              onClick={() => handleSelect(option.label, option.value)}
-            >
-              {option.label}
+            <DropdownItem key={option} onClick={() => handleSelect(option)}>
+              {option}
             </DropdownItem>
           ))}
         </DropdownList>
       )}
-    </SignupDropdownContainer>
+    </Container>
   );
 };
 
