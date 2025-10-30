@@ -71,7 +71,7 @@ const ReceiptMain: React.FC = () => {
               receipts.map((receipt) => (
                 <div key={receipt.id}>
                   <ReceiptInfo
-                    money={receipt.amount.toLocaleString()}
+                    money={receipt.amount}
                     date={new Date(receipt.date).toLocaleDateString('ko-KR')}
                     memo={receipt.description}
                   />
