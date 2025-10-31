@@ -46,11 +46,13 @@ const MemberItem: React.FC<MemberItemProps> = ({
   return (
     <S.Wrapper>
       <S.Content onClick={onClickMember}>
-        <img src={positionIcon} alt={String(positionIcon)} />
+        <img src={positionIcon} alt={String(positionIcon)} loading="lazy" />
         <S.TextWrapper>
           <S.Title>{name}</S.Title>
           <S.Caption>
-            {role === 'ADMIN' ? <img src={Master} alt="MA" /> : null}
+            {role === 'ADMIN' ? (
+              <img src={Master} alt="master" loading="lazy" />
+            ) : null}
             <span>{positionName}</span>
             <span>|</span>
             <span>{cardinal.map((num) => `${num}기`).join(' · ')}</span>
