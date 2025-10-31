@@ -51,8 +51,6 @@ const Dues: React.FC = () => {
   // 필터링된 데이터 계산
   const filteredReceipts = useMemo(() => {
     if (!duesInfo?.receipts) return [];
-    if (!selectedCategory || selectedCategory === '회비')
-      return duesInfo.receipts;
     return duesInfo.receipts.filter(
       (receipt) => receipt.description !== `${cardinal}기 회비 등록`,
     );
@@ -88,7 +86,7 @@ const Dues: React.FC = () => {
           <S.Line />
 
           <S.DuesList>
-            {/* 회비 항목 */}
+            {/* 회비 탭일 때 */}
             {(selectedCategory === null || selectedCategory === '회비') && (
               <DuesInfo
                 key="dues"
@@ -100,17 +98,18 @@ const Dues: React.FC = () => {
               />
             )}
 
-            {/* 지출 항목 */}
-            {filteredReceipts.map((receipt) => (
-              <DuesInfo
-                key={receipt.id}
-                dues={receipt.amount}
-                category="지출"
-                date={receipt.date}
-                memo={receipt.description}
-                source={receipt.source}
-              />
-            ))}
+            {/* 지출 탭일 때만 렌더링 */}
+            {selectedCategory !== '회비' &&
+              filteredReceipts.map((receipt) => (
+                <DuesInfo
+                  key={receipt.id}
+                  dues={receipt.amount}
+                  category="지출"
+                  date={receipt.date}
+                  memo={receipt.description}
+                  source={receipt.source}
+                />
+              ))}
           </S.DuesList>
         </S.DuesListBox>
       )}
