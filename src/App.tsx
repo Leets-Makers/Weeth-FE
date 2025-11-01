@@ -1,4 +1,3 @@
-import './App.css';
 import './assets/fonts/fonts.css';
 
 import router from '@/routes/route';
