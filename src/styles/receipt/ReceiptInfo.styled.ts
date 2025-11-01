@@ -1,49 +1,51 @@
 import styled from 'styled-components';
+import theme from '@/styles/theme';
 
-export const MemberWrapper = styled.div`
-  width; 88%;
+export const Container = styled.div`
+  width: 88%;
   margin: 16px 6% 0 6%;
 `;
 
-export const StyledReceiptBox = styled.div`
+export const Box = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 `;
 
-export const StyledCaptionBox = styled.div`
+export const LeftSection = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 `;
 
-export const StyledTextBox = styled.div`
+export const RightSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 10px;
   margin-top: -2px;
 `;
 
-export const StyledMemoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-left: 10px;
+export const MemoText = styled.div<{ $isTruncated: boolean }>`
+  font-size: 16px;
+  color: ${theme.color.gray[100]};
+  overflow-wrap: break-word;
+  ${({ $isTruncated }) => $isTruncated && `max-width: 80%;`}
 `;
 
-export const Text = styled.div<{ $isLong: boolean }>`
+export const Amount = styled.div`
   font-size: 16px;
-  word-wrap: break-word;
-  ${({ $isLong }) => $isLong && `max-width: 80%;`}
-`;
-
-export const MoneyText = styled.div`
-  font-size: 16px;
+  color: ${theme.color.gray[100]};
   white-space: nowrap;
 `;
 
-export const SmallText = styled.div`
-  margin-top: 7px;
+export const SubText = styled.div`
+  margin-top: 6px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: ${theme.color.gray[65]};
 `;

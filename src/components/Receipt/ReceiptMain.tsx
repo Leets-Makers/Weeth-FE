@@ -1,100 +1,105 @@
-import { useState } from 'react';
-import ReceiptInfo from '@/components/Receipt/ReceiptInfo';
-import * as S from '@/styles/receipt/ReceiptMain.styled';
-import useGetDuesInfo, { Receipt } from '@/api/useGetDuesInfo';
+import { useMemo, useState } from 'react';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
+import useGetDuesInfo, { Receipt } from '@/api/useGetDuesInfo';
+import ReceiptInfo from '@/components/Receipt/ReceiptInfo';
 import ReceiptImageModal from '@/components/Receipt/ReceiptImageModal';
 import Loading from '@/components/common/Loading';
+import * as S from '@/styles/receipt/ReceiptMain.styled';
 
 interface GroupedByMonth {
-  [key: string]: Receipt[];
+  [month: string]: Receipt[];
 }
+
+// 월별로 영수증을 그룹화하는 유틸 함수
+const groupReceiptsByMonth = (receipts: Receipt[]): GroupedByMonth => {
+  return receipts.reduce((acc, receipt) => {
+    const date = new Date(receipt.date);
+    const monthKey = String(date.getMonth() + 1);
+
+    if (!acc[monthKey]) acc[monthKey] = [];
+    acc[monthKey].push(receipt);
+    return acc;
+  }, {} as GroupedByMonth);
+};
+
+// 현재 날짜 기준 학기 월 범위 계산
+const getSemesterMonths = (): number[] => {
+  const month = new Date().getMonth() + 1;
+  return month >= 3 && month <= 8 ? [3, 4, 5, 6, 7, 8] : [9, 10, 11, 12, 1, 2];
+};
 
 const ReceiptMain: React.FC = () => {
   const { globalInfo } = useGetGlobaluserInfo();
-  const cardinal = globalInfo?.cardinals?.length
-    ? globalInfo.cardinals[0]
-    : null;
+  const cardinal = globalInfo?.cardinals?.[0] ?? null;
   const { duesInfo, loading } = useGetDuesInfo(cardinal);
 
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [selectedImage, setSelectedImage] = useState<string>('');
+  // 모달 상태
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
-  const openImageModal = (image: string) => {
+  const openModal = (image: string) => {
     setSelectedImage(image);
-    setModalIsOpen(true);
+    setIsModalOpen(true);
   };
 
-  const closeModals = () => {
-    setModalIsOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
     setSelectedImage('');
   };
 
-  const groupedByMonth: GroupedByMonth =
-    duesInfo?.receipts?.reduce<GroupedByMonth>((acc, curr) => {
-      const dateParts = curr.date.split('-').map((part) => parseInt(part, 10));
-      const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
-      const month = date.getMonth() + 1;
-      const monthKey = month.toString();
+  // 데이터 준비
+  const groupedReceipts = useMemo(
+    () => (duesInfo?.receipts ? groupReceiptsByMonth(duesInfo.receipts) : {}),
+    [duesInfo],
+  );
 
-      if (!acc[monthKey]) {
-        acc[monthKey] = [];
-      }
-      acc[monthKey].push(curr);
-      return acc;
-    }, {} as GroupedByMonth) || {};
+  const months = useMemo(() => getSemesterMonths(), []);
 
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1;
-
-  let months: number[] = [];
-  if (currentMonth >= 3 && currentMonth <= 8) {
-    months = [3, 4, 5, 6, 7, 8];
-  } else {
-    months = [9, 10, 11, 12, 1, 2];
-  }
   if (loading) return <Loading />;
 
   return (
     <S.StyledReceipt>
-      {months.map((month) => (
-        <div key={month.toString()}>
-          <S.StyledMonth>{month}월</S.StyledMonth>
-          {groupedByMonth[month.toString()] ? (
-            groupedByMonth[month.toString()].map((receipt) => (
-              <div key={receipt.id}>
-                <ReceiptInfo
-                  money={`${receipt.amount.toLocaleString()}`}
-                  date={new Date(receipt.date).toLocaleDateString('ko-KR')}
-                  memo={receipt.description}
-                />
-                <S.ScrollContainer>
-                  {receipt.fileUrls.map((file) => (
-                    <S.GridItem
-                      key={file.fileId}
-                      onClick={() => openImageModal(file.fileUrl)}
-                    >
-                      <S.GridItemImage
-                        src={file.fileUrl}
-                        title="영수증 이미지"
-                      />
-                    </S.GridItem>
-                  ))}
-                </S.ScrollContainer>
-              </div>
-            ))
-          ) : (
-            <div> </div>
-          )}
-          <S.Line />
-        </div>
-      ))}
+      {months.map((month) => {
+        const monthKey = String(month);
+        const receipts = groupedReceipts[monthKey] || [];
 
-      {/* 이미지 미리보기 모달 */}
+        return (
+          <div key={monthKey}>
+            <S.StyledMonth>{month}월</S.StyledMonth>
+
+            {receipts.length > 0 ? (
+              receipts.map((receipt) => (
+                <div key={receipt.id}>
+                  <ReceiptInfo
+                    money={receipt.amount}
+                    date={new Date(receipt.date).toLocaleDateString('ko-KR')}
+                    memo={receipt.description}
+                  />
+                  <S.ScrollContainer>
+                    {receipt.fileUrls.map((file) => (
+                      <S.GridItem
+                        key={file.fileId}
+                        onClick={() => openModal(file.fileUrl)}
+                      >
+                        <S.GridItemImage src={file.fileUrl} />
+                      </S.GridItem>
+                    ))}
+                  </S.ScrollContainer>
+                </div>
+              ))
+            ) : (
+              <div> </div>
+            )}
+
+            <S.Line />
+          </div>
+        );
+      })}
+
       <ReceiptImageModal
-        isOpen={modalIsOpen}
+        isOpen={isModalOpen}
         selectedImage={selectedImage}
-        onRequestClose={closeModals}
+        onRequestClose={closeModal}
       />
     </S.StyledReceipt>
   );
