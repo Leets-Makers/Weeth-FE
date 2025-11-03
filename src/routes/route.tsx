@@ -18,12 +18,12 @@ const EventDetail = lazy(() => import('@/pages/EventDetail'));
 const Home = lazy(() => import('@/pages/Home'));
 
 const Landing = lazy(() => import('@/pages/Landing'));
-const Login = lazy(() => import('@/pages/Login/Login'));
-const WaitingApproval = lazy(() => import('@/pages/Login/WaitingApproval'));
-const Profile = lazy(() => import('@/pages/Login/Profile'));
-const AccountCheck = lazy(() => import('@/pages/Login/AccountCheck'));
+const Login = lazy(() => import('@/pages/login/Login'));
+const WaitingApproval = lazy(() => import('@/pages/login/WaitingApproval'));
+const Profile = lazy(() => import('@/pages/login/Profile'));
+const AccountCheck = lazy(() => import('@/pages/login/AccountCheck'));
 const RegistrationSuccess = lazy(
-  () => import('@/pages/Login/RegistrationSuccess'),
+  () => import('@/pages/login/RegistrationSuccess'),
 );
 
 const Member = lazy(() => import('@/pages/Member'));
