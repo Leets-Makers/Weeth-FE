@@ -26,6 +26,7 @@ export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
+  padding: 0 15px 0 0;
 
   ${pcResponsive}
 `;
@@ -35,7 +36,7 @@ export const NoticePreviewContainer = styled.div`
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 15px;
+  padding: 10px 0 10px 15px;
   gap: 10px;
 
   ${pcResponsive}
