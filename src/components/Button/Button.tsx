@@ -11,13 +11,13 @@ interface ButtonProps {
   width?: string;
   borderRadius?: string;
   disabled?: boolean;
-  isSemibold?: boolean; // 폰트 두께 : true(기본값) - semibold, false - regular
+  $isSemibold?: boolean; // 폰트 두께 : true(기본값) - semibold, false - regular
 }
 
 const BasicButton = styled.button<ButtonProps>`
   background-color: ${({ color }) => color || theme.color.gray[30]};
-  font-family: ${({ isSemibold }) =>
-    isSemibold ? theme.font.semiBold : theme.font.regular};
+  font-family: ${({ $isSemibold }) =>
+    $isSemibold ? theme.font.semiBold : theme.font.regular};
   color: ${({ textcolor }) => textcolor || theme.color.gray[100]};
   border: none;
   border-radius: ${({ borderRadius }) => borderRadius || '10px'};
@@ -44,7 +44,7 @@ const Button: FC<ButtonProps> = ({
   width,
   borderRadius,
   disabled,
-  isSemibold = true,
+  $isSemibold = true,
 }) => (
   <BasicButton
     color={color}
@@ -54,7 +54,7 @@ const Button: FC<ButtonProps> = ({
     width={width}
     borderRadius={borderRadius}
     disabled={disabled}
-    isSemibold={isSemibold}
+    $isSemibold={$isSemibold}
   >
     {children}
   </BasicButton>

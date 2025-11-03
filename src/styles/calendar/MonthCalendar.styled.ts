@@ -7,10 +7,11 @@ export const Container = styled.div`
   z-index: 2;
 `;
 
-export const Bar = styled.div<{ isMeeting: boolean }>`
+export const Bar = styled.div<{ $isMeeting: boolean }>`
   width: 1.5px;
   height: 10px;
-  background-color: ${(props) => (props.isMeeting ? theme.color.main : '#fff')};
+  background-color: ${({ $isMeeting }) =>
+    $isMeeting ? theme.color.main : '#fff'};
   border-radius: 20px;
   margin: 0 2px;
 `;

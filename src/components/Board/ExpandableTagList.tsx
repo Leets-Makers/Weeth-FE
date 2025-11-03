@@ -15,10 +15,10 @@ export const Container = styled.div`
   gap: 5px;
 `;
 
-export const ScrollContainer = styled.div<{ expanded: boolean }>`
+export const ScrollContainer = styled.div<{ $expanded: boolean }>`
   display: flex;
-  flex-wrap: ${({ expanded }) => (expanded ? 'wrap' : 'nowrap')};
-  overflow-x: ${({ expanded }) => (expanded ? 'visible' : 'auto')};
+  flex-wrap: ${({ $expanded }) => ($expanded ? 'wrap' : 'nowrap')};
+  overflow-x: ${({ $expanded }) => ($expanded ? 'visible' : 'auto')};
   gap: 5px;
   cursor: grab;
   user-select: none;
@@ -30,14 +30,14 @@ export const ScrollContainer = styled.div<{ expanded: boolean }>`
   }
 `;
 
-export const StudyTag = styled.div<{ refresh?: boolean; selected?: boolean }>`
+export const StudyTag = styled.div<{ $refresh?: boolean; $selected?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
   border: 1px solid ${theme.color.gray[18]};
   border-radius: 24px;
-  padding: ${({ refresh }) => (refresh ? '8px 10px' : '8px 15px')};
+  padding: ${({ $refresh }) => ($refresh ? '8px 10px' : '8px 15px')};
   gap: 8px;
   color: ${theme.color.gray[100]};
   font-family: ${theme.font.semiBold};
@@ -46,17 +46,17 @@ export const StudyTag = styled.div<{ refresh?: boolean; selected?: boolean }>`
   flex: 0 0 auto;
   box-sizing: border-box;
   transition: filter 0.2s ease-in-out;
-  background-color: ${({ selected }) =>
-    selected ? `${theme.color.main}` : 'transparent'};
+  background-color: ${({ $selected }) =>
+    $selected ? `${theme.color.main}` : 'transparent'};
 `;
 
-export const ExpandableButton = styled.div<{ expanded: boolean }>`
+export const ExpandableButton = styled.div<{ $expanded: boolean }>`
   width: 40px;
   height: 40px;
   background-color: ${theme.color.gray[18]};
   border-radius: 10px;
-  border: ${({ expanded }) =>
-    expanded ? `1px solid ${theme.color.gray[65]}` : `none`};
+  border: ${({ $expanded }) =>
+    $expanded ? `1px solid ${theme.color.gray[65]}` : `none`};
   box-sizing: border-box;
   flex-shrink: 0;
   display: flex;
@@ -113,15 +113,15 @@ const ExpandableTagList = ({
     <Container>
       <ScrollContainer
         ref={scrollerRef}
-        expanded={isOpen}
+        $expanded={isOpen}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
         <StudyTag
-          refresh
-          selected={isRefreshing}
+          $refresh
+          $selected={isRefreshing}
           onMouseDown={() => setIsRefreshing(true)}
           onMouseUp={() => setIsRefreshing(false)}
           onMouseLeave={() => setIsRefreshing(false)}
@@ -132,7 +132,7 @@ const ExpandableTagList = ({
         {studyList.map((tag) => (
           <StudyTag
             key={tag}
-            selected={selectedTag === tag}
+            $selected={selectedTag === tag}
             onClick={() => {
               if (selectedTag === tag) {
                 onSelectTag('');
@@ -145,7 +145,7 @@ const ExpandableTagList = ({
           </StudyTag>
         ))}
       </ScrollContainer>
-      <ExpandableButton onClick={handleToggle} expanded={isOpen}>
+      <ExpandableButton onClick={handleToggle} $expanded={isOpen}>
         {isOpen ? (
           <img src={close} alt="close" />
         ) : (

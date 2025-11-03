@@ -16,10 +16,10 @@ const DropdownContainer = styled.div<{ type: 'mypage' | 'signup' }>`
     `}
 `;
 
-const Title = styled.div<{ isProfile?: boolean }>`
+const Title = styled.div<{ $isProfile?: boolean }>`
   width: 42px;
   color: ${(props) =>
-    props.isProfile ? theme.color.gray[100] : theme.color.gray[65]};
+    props.$isProfile ? theme.color.gray[100] : theme.color.gray[65]};
 `;
 
 const DropdownButton = styled.div`
@@ -167,7 +167,7 @@ const DropdownMenu = ({
     <DropdownContainer ref={dropdownRef} type={type as 'mypage' | 'signup'}>
       {type === 'mypage' ? (
         <>
-          <Title isProfile={isProfile}>{text}</Title>
+          <Title $isProfile={isProfile}>{text}</Title>
           <DropdownButton onClick={handleToggle}>
             {selectedValue ||
               (isCardinal ? '기수를 선택해주세요' : '학과를 선택해주세요')}

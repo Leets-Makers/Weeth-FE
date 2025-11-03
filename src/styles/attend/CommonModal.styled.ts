@@ -3,8 +3,9 @@ import styled from 'styled-components';
 export const OpenModal = styled.div`
   display: block;
 `;
-export const StyledModal = styled.div<{ open: boolean }>`
-  display: ${(props) => (props.open ? 'block' : 'none')};
+
+export const StyledModal = styled.div<{ $open: boolean }>`
+  display: ${({ $open }) => ($open ? 'block' : 'none')};
   position: fixed;
   z-index: 11;
   left: 0;
@@ -14,8 +15,9 @@ export const StyledModal = styled.div<{ open: boolean }>`
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(2px);
-  webkitbackdropfilter: 'blur(5px)';
+  -webkit-backdrop-filter: blur(5px);
 `;
+
 export const ModalContent = styled.div`
   position: absolute;
   top: 50%;

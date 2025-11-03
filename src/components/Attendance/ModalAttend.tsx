@@ -117,7 +117,7 @@ const ModalAttend: React.FC<{
   };
 
   return (
-    <StyledModal open={open}>
+    <StyledModal $open={open}>
       <ModalContent>
         <ModalHeader>
           <img src={check} alt="체크" />
