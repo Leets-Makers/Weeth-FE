@@ -124,7 +124,7 @@ const StudyBoardSearch = ({
       }
     } catch (error) {
       toastError('데이터를 불러오지 못했습니다.');
-      console.log(error);
+      console.error(error);
     } finally {
       onLoading?.(false);
     }
