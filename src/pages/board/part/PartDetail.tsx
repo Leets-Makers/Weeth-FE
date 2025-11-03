@@ -13,6 +13,7 @@ import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import getHeaderTitle from '@/utils/getHeaderTitle';
 import * as S from '@/styles/board/BoardDetail.styled';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 const PartDetail = () => {
   const { category, part, postId } = useParams<{
@@ -80,10 +81,8 @@ const PartDetail = () => {
   };
 
   const handleCommentSuccess = () => {
-    setTimeout(() => {
-      setParentCommentId(null);
-      setSelectedComment({});
-    }, 200);
+    setParentCommentId(null);
+    setSelectedComment({});
     handleRefresh();
   };
 
@@ -97,8 +96,14 @@ const PartDetail = () => {
 
   const isMyPost = boardDetailInfo?.name === useGetUserName();
 
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+
   if (error) return <div>오류: {error}</div>;
-  if (loading) return <Loading />;
+  if (smartLoading) return <Loading />;
 
   if (!category || !part || !postId) {
     return <div>잘못된 경로입니다.</div>;

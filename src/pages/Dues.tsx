@@ -9,6 +9,7 @@ import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
 import Header from '@/components/Header/Header';
 import useCustomBack from '@/hooks/useCustomBack';
+import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import * as S from '@/styles/dues/Dues.styled';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -54,7 +55,9 @@ const Dues: React.FC = () => {
   const handleRightButton = () => {
     navi(`/admin/dues`);
   };
-  if (loading || userLoading) return <Loading />;
+
+  const smartLoading = useSmartCombinedLoading(loading, userLoading);
+  if (smartLoading) return <Loading />;
 
   return (
     <S.StyledDues>

@@ -14,6 +14,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import CardinalTag from '@/components/common/CardinalTag';
 import Loading from '@/components/common/Loading';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 const Wrapper = styled.div`
   display: flex;
@@ -129,7 +130,12 @@ const MemberDetail = () => {
     },
   };
 
-  if (loading) {
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+  if (smartLoading) {
     return <Loading />;
   }
 

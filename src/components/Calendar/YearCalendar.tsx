@@ -1,6 +1,7 @@
 import { FALL_SEMESTER, SPRING_SEMESTER } from '@/constants/dateConstants';
 import * as S from '@/styles/calendar/YearCalendar.styled';
 import useGetYearlySchedule from '@/api/useGetYearlySchedule';
+import useSmartLoading from '@/hooks/useSmartLoading';
 import YearlyCard from './YearlyCard';
 import Loading from '../common/Loading';
 
@@ -10,8 +11,13 @@ const YearCalendar = ({ year, term }: { year: number; term: number }) => {
     semester: term,
   });
 
-  if (loading) {
-    <Loading />;
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+  if (smartLoading) {
+    return <Loading />;
   }
 
   return (

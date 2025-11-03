@@ -3,6 +3,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import InfoItem from '@/components/MyPage/InfoItem';
 import CardinalTag from '@/components/common/CardinalTag';
+import useSmartLoading from '@/hooks/useSmartLoading';
 import Loading from '../common/Loading';
 
 const Container = styled.div`
@@ -40,6 +41,15 @@ const Error = styled.div`
 const MyInfo = () => {
   const { userInfo, loading } = useGetUserInfo();
 
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+  if (smartLoading) {
+    return <Loading />;
+  }
+
   if (!userInfo) {
     return null;
   }
@@ -52,10 +62,6 @@ const MyInfo = () => {
   };
 
   const position = positionMap[userInfo.position] || '';
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return userInfo ? (
     <Container>
@@ -77,7 +83,7 @@ const MyInfo = () => {
           <InfoItem label="학번">{userInfo.studentId}</InfoItem>
           <InfoItem label="기수">
             {userInfo.cardinals.map((cardinal) => (
-              <CardinalTag type="mypage" cardinal={cardinal} />
+              <CardinalTag key={cardinal} type="mypage" cardinal={cardinal} />
             ))}
           </InfoItem>
           <InfoItem label="역할" isLast readOnly>

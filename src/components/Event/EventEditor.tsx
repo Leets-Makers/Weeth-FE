@@ -27,6 +27,7 @@ import {
 } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import useGetAllCardinals from '@/api/useGetCardinals';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -210,8 +211,12 @@ const EventEditor = () => {
     }
   };
 
-  if (loading) return <Loading />;
-
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+  if (smartLoading) return <Loading />;
   if (error) return <S.Error>{error}</S.Error>;
 
   return (

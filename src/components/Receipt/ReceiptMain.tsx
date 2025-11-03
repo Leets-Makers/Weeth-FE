@@ -5,6 +5,7 @@ import useGetDuesInfo, { Receipt } from '@/api/useGetDuesInfo';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import ReceiptImageModal from '@/components/Receipt/ReceiptImageModal';
 import Loading from '@/components/common/Loading';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 interface GroupedByMonth {
   [key: string]: Receipt[];
@@ -53,7 +54,13 @@ const ReceiptMain: React.FC = () => {
   } else {
     months = [9, 10, 11, 12, 1, 2];
   }
-  if (loading) return <Loading />;
+
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+  if (smartLoading) return <Loading />;
 
   return (
     <S.StyledReceipt>

@@ -12,6 +12,7 @@ import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 const EduDetail = () => {
   const { category, part, postId } = useParams<{
@@ -78,11 +79,8 @@ const EduDetail = () => {
   };
 
   const handleCommentSuccess = () => {
-    setTimeout(() => {
-      setParentCommentId(null);
-      setSelectedComment({});
-      setFiles([]);
-    }, 200);
+    setParentCommentId(null);
+    setSelectedComment({});
     handleRefresh();
   };
 
@@ -96,8 +94,14 @@ const EduDetail = () => {
 
   const isMyPost = boardDetailInfo?.name === useGetUserName();
 
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+
   if (error) return <div>오류: {error}</div>;
-  if (loading) return <Loading />;
+  if (smartLoading) return <Loading />;
 
   return (
     <>
