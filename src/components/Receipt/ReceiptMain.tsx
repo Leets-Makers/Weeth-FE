@@ -5,7 +5,6 @@ import ReceiptInfo from '@/components/Receipt/ReceiptInfo';
 import ReceiptImageModal from '@/components/Receipt/ReceiptImageModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/receipt/ReceiptMain.styled';
-import useSmartLoading from '@/hooks/useSmartLoading';
 
 interface GroupedByMonth {
   [month: string]: Receipt[];
