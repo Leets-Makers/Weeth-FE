@@ -23,10 +23,10 @@ const Cell = styled.td`
   vertical-align: middle;
 `;
 
-export const StatusCell = styled.td<{ statusColor: string }>`
+export const StatusCell = styled.td<{ $statusColor: string }>`
   width: 2px;
   min-width: 2px;
-  background-color: ${({ statusColor }) => statusColor};
+  background-color: ${({ $statusColor }) => $statusColor};
 `;
 
 export const SvgWrapper = styled.td`
@@ -67,7 +67,7 @@ const MemberListTableRow: React.FC<TableRowProps> = ({ data, columns }) => {
   return (
     <>
       <Row>
-        <StatusCell statusColor={statusColors[data.status]} />
+        <StatusCell $statusColor={statusColors[data.status]} />
 
         <SvgWrapper onClick={onClickToCheckBox}>
           <img

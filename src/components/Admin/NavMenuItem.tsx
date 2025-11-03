@@ -7,14 +7,14 @@ interface MenuItemsProps {
   active?: boolean;
   onClick?: () => void;
 }
-export const MenuItemWrapper = styled.div<{ active?: boolean }>`
+export const MenuItemWrapper = styled.div<{ $active?: boolean }>`
   display: flex;
   align-items: center;
   padding: 10px 20px;
   height: 36px;
-  background-color: ${({ active }) =>
-    active ? `${theme.color.main}` : 'transparent'};
-  color: ${({ active }) => (active ? '#fff' : '#000')};
+  background-color: ${({ $active }) =>
+    $active ? `${theme.color.main}` : 'transparent'};
+  color: ${({ $active }) => ($active ? '#fff' : '#000')};
   cursor: pointer;
 
   svg {
@@ -36,7 +36,7 @@ const NavMenuItem: React.FC<MenuItemsProps> = ({
   onClick,
 }) => {
   return (
-    <MenuItemWrapper active={active} onClick={onClick}>
+    <MenuItemWrapper $active={active} onClick={onClick}>
       {icon}
       <Label>{label}</Label>
     </MenuItemWrapper>

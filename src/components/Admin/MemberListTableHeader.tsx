@@ -43,7 +43,7 @@ const MemberListTableHeader: React.FC<TableHeaderProps> = ({
   return (
     <thead>
       <HeaderRow>
-        <StatusCell statusColor={statusColors['승인 완료']} />
+        <StatusCell $statusColor={statusColors['승인 완료']} />
 
         <SvgWrapper onClick={onClickToCheckBox}>
           <img

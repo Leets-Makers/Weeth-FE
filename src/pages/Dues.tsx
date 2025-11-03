@@ -1,78 +1,82 @@
-import useGetDuesInfo from '@/api/useGetDuesInfo';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useGetGlobaluserInfo, {
   useGetUserInfo,
 } from '@/api/useGetGlobaluserInfo';
-import Loading from '@/components/common/Loading';
+import useGetDuesInfo from '@/api/useGetDuesInfo';
 import { toastError } from '@/components/common/ToastMessage';
+import Loading from '@/components/common/Loading';
+import Header from '@/components/Header/Header';
 import DueCategory from '@/components/Dues/DueCategory';
 import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
-import Header from '@/components/Header/Header';
 import useCustomBack from '@/hooks/useCustomBack';
-import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import * as S from '@/styles/dues/Dues.styled';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Dues: React.FC = () => {
   useCustomBack('/home');
+  const navigate = useNavigate();
 
-  const { globalInfo, loading: userLoading } = useGetGlobaluserInfo();
+  const { globalInfo, loading: globalLoading } = useGetGlobaluserInfo();
+  const { isAdmin } = useGetUserInfo();
 
-  const [selected, setSelectedDues] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [cardinal, setCardinal] = useState<number | null>(null);
 
-  const { isAdmin } = useGetUserInfo();
-  const navi = useNavigate();
-
   useEffect(() => {
-    setCardinal(globalInfo?.cardinals?.length ? globalInfo.cardinals[0] : null);
+    if (globalInfo?.cardinals?.length) {
+      setCardinal(globalInfo.cardinals[0]);
+    }
   }, [globalInfo]);
 
-  const { duesInfo, loading, duesError } = useGetDuesInfo(cardinal);
+  const {
+    duesInfo,
+    loading: duesLoading,
+    duesError,
+  } = useGetDuesInfo(cardinal);
 
   useEffect(() => {
-    if (duesError) {
-      toastError(duesError);
-    }
+    if (duesError) toastError(duesError);
   }, [duesError]);
 
-  const filteredDues =
-    selected === null
-      ? duesInfo?.receipts
-      : duesInfo?.receipts.filter(
-          (receipt) => receipt.description !== `${cardinal}기 회비 등록`,
-        );
-
-  if (
-    duesInfo?.receipts.some(
+  // 기본 선택값 설정 (렌더링 중 setState 방지)
+  useEffect(() => {
+    if (!duesInfo) return;
+    const hasDues = duesInfo.receipts?.some(
       (receipt) => receipt.description === `${cardinal}기 회비 등록`,
-    )
-  ) {
-    setSelectedDues('회비');
-  }
+    );
+    if (hasDues && !selectedCategory) setSelectedCategory('회비');
+  }, [duesInfo, cardinal, selectedCategory]);
 
-  const handleRightButton = () => {
-    navi(`/admin/dues`);
-  };
+  // 필터링된 데이터 계산
+  const filteredReceipts = useMemo(() => {
+    if (!duesInfo?.receipts) return [];
+    return duesInfo.receipts.filter(
+      (receipt) => receipt.description !== `${cardinal}기 회비 등록`,
+    );
+  }, [duesInfo, selectedCategory, cardinal]);
 
-  const smartLoading = useSmartCombinedLoading(loading, userLoading);
-  if (smartLoading) return <Loading />;
+  if (globalLoading || duesLoading) return <Loading />;
+
+  const handleAdminClick = () => navigate('/admin/dues');
 
   return (
     <S.StyledDues>
       <Header
         isAccessible={isAdmin}
         RightButtonType="ADMIN"
-        onClickRightButton={handleRightButton}
+        onClickRightButton={handleAdminClick}
       >
         회비
       </Header>
+
       <DuesTitle time={duesInfo?.time ?? ''} />
+
       <S.CategoryWrapper>
-        <DueCategory setSelectedDues={setSelectedDues} />
+        <DueCategory setSelectedDues={setSelectedCategory} />
       </S.CategoryWrapper>
-      {duesInfo == null ? (
+
+      {duesInfo === null ? (
         <S.NullText>등록된 회비가 없습니다.</S.NullText>
       ) : (
         <S.DuesListBox>
@@ -80,8 +84,10 @@ const Dues: React.FC = () => {
             <S.MoneyBox>{duesInfo.currentAmount.toLocaleString()}원</S.MoneyBox>
           </S.MoneyBoxContainer>
           <S.Line />
+
           <S.DuesList>
-            {(selected === null || selected === '회비') && (
+            {/* 회비 탭일 때 */}
+            {(selectedCategory === null || selectedCategory === '회비') && (
               <DuesInfo
                 key="dues"
                 dues={duesInfo.totalAmount}
@@ -91,8 +97,10 @@ const Dues: React.FC = () => {
                 source={duesInfo.description}
               />
             )}
-            {selected !== '회비' &&
-              filteredDues?.map((receipt) => (
+
+            {/* 지출 탭일 때만 렌더링 */}
+            {selectedCategory !== '회비' &&
+              filteredReceipts.map((receipt) => (
                 <DuesInfo
                   key={receipt.id}
                   dues={receipt.amount}

@@ -117,6 +117,7 @@ const HomeInfo = ({ position, cardinal, name, isAdmin }: HomeInfoProps) => {
             onMouseLeave={handleMouseLeave}
             onClick={() => navigate(`/mypage`)}
             alt="User character icon"
+            loading="lazy"
           />
         </S.RightButtonContainer>
       </S.UserInfo>

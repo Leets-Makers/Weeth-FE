@@ -10,7 +10,7 @@ import * as S from '@/styles/board/PartBoard.styled';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useGetPartBoard from '@/api/useGetPartBoard';
-import { BoardContent } from '@/pages/Board';
+import { BoardContent } from '@/pages/board/Board';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetUserInfo';

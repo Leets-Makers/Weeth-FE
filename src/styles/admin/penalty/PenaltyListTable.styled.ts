@@ -91,7 +91,7 @@ export const DetailContainer = styled.td`
   grid-template-areas: ' reason penalty warning penaltyDate actions';
   padding-left: 120px;
   border-bottom: 1px solid #dedede;
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   align-items: center;
   box-sizing: border-box;
 `;

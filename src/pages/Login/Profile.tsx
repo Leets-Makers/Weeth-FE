@@ -270,11 +270,10 @@ const Profile: React.FC = () => {
 
           <Title>활동정보</Title>
           <DropdownMenu
-            isProfile
             text="학과"
+            isProfile
             origValue={memberInfo.department || ''}
             editValue={(value) => handleChange('department', value)}
-            type="mypage"
           />
           <InfoInput
             isProfile
@@ -283,12 +282,11 @@ const Profile: React.FC = () => {
             editValue={(value) => handleChange('studentId', value)}
           />
           <DropdownMenu
-            isProfile
             isCardinal
             text="기수"
+            isProfile
             origValue={memberInfo.cardinal || ''}
             editValue={(value) => handleChange('cardinal', value)}
-            type="mypage"
           />
           <PositionSector
             labelName="역할"
