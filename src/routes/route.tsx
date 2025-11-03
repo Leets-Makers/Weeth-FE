@@ -7,24 +7,33 @@ const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
 const AttendCheck = lazy(() => import('@/pages/attend/AttendCheck'));
 const Penalty = lazy(() => import('@/pages/attend/Penalty'));
+
 const Calendar = lazy(() => import('@/pages/Calendar'));
 const Dues = lazy(() => import('@/pages/Dues'));
 const Edit = lazy(() => import('@/pages/Edit'));
+
 const EventPost = lazy(() => import('@/pages/EventPost'));
 const EventDetail = lazy(() => import('@/pages/EventDetail'));
+
 const Home = lazy(() => import('@/pages/Home'));
+
 const Landing = lazy(() => import('@/pages/Landing'));
-const Login = lazy(() => import('@/pages/Login'));
+const Login = lazy(() => import('@/pages/Login/Login'));
+const WaitingApproval = lazy(() => import('@/pages/Login/WaitingApproval'));
+const Profile = lazy(() => import('@/pages/Login/Profile'));
+const AccountCheck = lazy(() => import('@/pages/Login/AccountCheck'));
+const RegistrationSuccess = lazy(
+  () => import('@/pages/Login/RegistrationSuccess'),
+);
+
 const Member = lazy(() => import('@/pages/Member'));
 const MemberDetail = lazy(() => import('@/pages/MemberDetail'));
+
 const MyPage = lazy(() => import('@/pages/MyPage'));
-const Profile = lazy(() => import('@/pages/Profile'));
 const Receipt = lazy(() => import('@/pages/Receipt'));
 const Redirect = lazy(() => import('@/pages/Redirect'));
-const Board = lazy(() => import('@/pages/Board'));
-const AccountCheck = lazy(() => import('@/pages/AccountCheck'));
-const RegistrationSuccess = lazy(() => import('@/pages/RegistrationSuccess'));
-const WaitingApproval = lazy(() => import('@/pages/WaitingApproval'));
+
+const Board = lazy(() => import('@/pages/board/Board'));
 const NoticeDetail = lazy(() => import('@/pages/board/notices/NoticeDetail'));
 const PartBoard = lazy(() => import('@/pages/board/part/PartBoard'));
 const EduPost = lazy(() => import('@/pages/board/education/EduPost'));

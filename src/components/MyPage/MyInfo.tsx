@@ -8,22 +8,22 @@ import Loading from '../common/Loading';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 19px;
 `;
 
-const ContentWrapper = styled.div`
-  padding-top: 20px;
+const Section = styled.section`
+  width: 100%;
+  max-width: 370px;
 `;
 
-const Title = styled.div`
+const Title = styled.h2`
   font-family: ${theme.font.semiBold};
   font-size: 20px;
-  margin: 0 0 10px 10px;
+  margin: 20px 0 10px 10px;
 `;
 
-const Content = styled.div`
+const Box = styled.div`
   width: 345px;
   background-color: ${theme.color.gray[18]};
   border: 1px solid ${theme.color.gray[30]};
@@ -33,61 +33,61 @@ const Content = styled.div`
 const Error = styled.div`
   display: flex;
   justify-content: center;
-  margin: 50px 0px;
+  margin: 50px 0;
   font-family: ${theme.font.semiBold};
 `;
 
 const MyInfo = () => {
   const { userInfo, loading } = useGetUserInfo();
 
-  if (!userInfo) {
-    return null;
-  }
+  if (loading) return <Loading />;
+  if (!userInfo)
+    return <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>;
 
-  const positionMap: Record<string, string> = {
-    FE: '프론트엔드',
-    BE: '백엔드',
-    D: '디자인',
-    PM: 'PM',
+  const getPositionLabel = (pos: string) => {
+    switch (pos) {
+      case 'FE':
+        return '프론트엔드';
+      case 'BE':
+        return '백엔드';
+      case 'D':
+        return '디자인';
+      case 'PM':
+        return 'PM';
+      default:
+        return '';
+    }
   };
 
-  const position = positionMap[userInfo.position] || '';
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  return userInfo ? (
+  return (
     <Container>
-      <ContentWrapper>
+      <Section>
         <Title>개인정보</Title>
-        <Content>
+        <Box>
           <InfoItem label="이름">{userInfo.name}</InfoItem>
           <InfoItem label="핸드폰">{userInfo.tel}</InfoItem>
           <InfoItem label="이메일" isLast>
             {userInfo.email}
           </InfoItem>
-        </Content>
-      </ContentWrapper>
+        </Box>
+      </Section>
 
-      <ContentWrapper>
+      <Section>
         <Title>활동정보</Title>
-        <Content>
+        <Box>
           <InfoItem label="학과">{userInfo.department}</InfoItem>
           <InfoItem label="학번">{userInfo.studentId}</InfoItem>
           <InfoItem label="기수">
             {userInfo.cardinals.map((cardinal) => (
-              <CardinalTag type="mypage" cardinal={cardinal} />
+              <CardinalTag key={cardinal} type="mypage" cardinal={cardinal} />
             ))}
           </InfoItem>
           <InfoItem label="역할" isLast readOnly>
-            {position}
+            {getPositionLabel(userInfo.position)}
           </InfoItem>
-        </Content>
-      </ContentWrapper>
+        </Box>
+      </Section>
     </Container>
-  ) : (
-    <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>
   );
 };
 
