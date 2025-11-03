@@ -26,6 +26,7 @@ export const useGetYearlySchedule = ({
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      setData({});
       try {
         if (year) {
           const response = await getYearlySchedule(year, semester);
