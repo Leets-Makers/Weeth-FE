@@ -10,6 +10,8 @@ import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import Loading from '@/components/common/Loading';
 import styled from 'styled-components';
+import DesktopGNB from '@/components/Navigation/DesktopGNB ';
+import MobileGNB from '@/components/Navigation/MobileGNB ';
 
 const Container = styled.div`
   display: flex;
@@ -47,6 +49,8 @@ const Home: React.FC = () => {
         <Header src={logo} alt="leets로고" />
         <LogoutButton />
       </HeaderContainer>
+      <DesktopGNB />
+      <MobileGNB />
       <HomeNotice
         title={recentNotices[0].title || ' '}
         content={recentNotices[0].content || ' '}
