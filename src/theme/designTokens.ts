@@ -94,21 +94,21 @@ export const colors = {
     },
     text: {
       strong: '#000000',
-      nomal: '#171819',
+      normal: '#171819',
       alternative: '#2a2c2e',
       disabled: '#46494d',
       inverse: '#ffffff',
     },
     backGround: '#dddfe0',
     container: {
-      neautral: '#9fa3a6',
+      neutral: '#9fa3a6',
       'primary-alternative': '#e6fff6',
       primary: '#00fac8',
       secondary: '#508fff',
       'secondary-alternative': '#d5e4ff',
       'primary-interaction': '#00d4b0',
       'secondary-interaction': '#305599',
-      'neautral-interaction': '#6e7173',
+      'neutral-interaction': '#6e7173',
     },
     button: {
       neutral: '#6e7173',
@@ -120,7 +120,7 @@ export const colors = {
     icon: {
       strong: '#000000',
       nomal: '#171819',
-      altenative: '#6e7173',
+      alternative: '#6e7173',
       disabled: '#46494d',
       inverse: '#ffffff',
     },

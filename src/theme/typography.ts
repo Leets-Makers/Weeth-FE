@@ -1,0 +1,81 @@
+const typography = {
+  H1: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 700,
+    fontSize: '40px',
+    lineHeight: '48px',
+    letterSpacing: '-0.5%',
+  },
+  H2: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 700,
+    fontSize: '32px',
+    lineHeight: '40px',
+    letterSpacing: '-0.5%',
+  },
+  H3: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 600,
+    fontSize: '24px',
+    lineHeight: '30px',
+    letterSpacing: '-0.5%',
+  },
+  Sub1: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 600,
+    fontSize: '18px',
+    lineHeight: '22px',
+    letterSpacing: '-0.5%',
+  },
+  Sub2: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 600,
+    fontSize: '16px',
+    lineHeight: '20px',
+    letterSpacing: '-0.5%',
+  },
+  Body1: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 500,
+    fontSize: '16px',
+    lineHeight: '24px',
+    letterSpacing: '-0.5%',
+  },
+  Body2: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 500,
+    fontSize: '14px',
+    lineHeight: '20px',
+    letterSpacing: '-0.5%',
+  },
+  Caption1: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 600,
+    fontSize: '12px',
+    lineHeight: '16px',
+    letterSpacing: '-0.5%',
+  },
+  Caption2: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 500,
+    fontSize: '12px',
+    lineHeight: '16px',
+    letterSpacing: '-0.5%',
+  },
+  Button1: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 600,
+    fontSize: '16px',
+    lineHeight: '24px',
+    letterSpacing: '-0.5%',
+  },
+  Button2: {
+    fontFamily: 'Pretendard Variable',
+    fontWeight: 600,
+    fontSize: '14px',
+    lineHeight: '20px',
+    letterSpacing: '-0.5%',
+  },
+};
+
+export default typography;

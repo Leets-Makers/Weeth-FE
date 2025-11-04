@@ -5,7 +5,7 @@ import theme from '../../styles/theme';
 interface ButtonProps {
   children: React.ReactNode;
   color?: string;
-  $textcolor?: string;
+  textcolor?: string;
   onClick?: () => void;
   height?: string;
   width?: string;
@@ -18,7 +18,7 @@ const BasicButton = styled.button<ButtonProps>`
   background-color: ${({ color }) => color || theme.color.gray[30]};
   font-family: ${({ $isSemibold }) =>
     $isSemibold ? theme.font.semiBold : theme.font.regular};
-  color: ${({ $textcolor }) => $textcolor || theme.color.gray[100]};
+  color: ${({ textcolor }) => textcolor || theme.color.gray[100]};
   border: none;
   border-radius: ${({ $borderRadius }) => $borderRadius || '10px'};
   cursor: pointer;
@@ -38,7 +38,7 @@ const BasicButton = styled.button<ButtonProps>`
 const Button: FC<ButtonProps> = ({
   children,
   color,
-  $textcolor,
+  textcolor,
   onClick,
   height,
   width,
@@ -48,7 +48,7 @@ const Button: FC<ButtonProps> = ({
 }) => (
   <BasicButton
     color={color}
-    $textcolor={$textcolor}
+    textcolor={textcolor}
     onClick={onClick}
     height={height}
     width={width}
