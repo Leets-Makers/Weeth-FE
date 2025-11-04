@@ -1,7 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import MonthCalendar from '@/components/Calendar/MonthCalendar';
 import CalendarToggle from '@/components/Calendar/CalendarToggle';
-import YearCalendar from '@/components/Calendar/YearCalendar';
 import { CURRENT_MONTH, CURRENT_YEAR } from '@/constants/dateConstants';
 import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/calendar/Calendar.styled';
@@ -9,7 +7,11 @@ import Header from '@/components/Header/Header';
 import icLeftArrow from '@/assets/images/ic_leftArrow.svg';
 import icRightArrow from '@/assets/images/ic_rightArrow.svg';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
+import Loading from '@/components/common/Loading';
+
+const MonthCalendar = lazy(() => import('@/components/Calendar/MonthCalendar'));
+const YearCalendar = lazy(() => import('@/components/Calendar/YearCalendar'));
 
 const Calendar = () => {
   useCustomBack('/home');
@@ -102,15 +104,17 @@ const Calendar = () => {
             setIsMonth(!isMonth);
           }}
         />
-        {isMonth ? (
-          <MonthCalendar />
-        ) : (
-          <YearCalendar
-            key={`${year}-${term}`}
-            year={month === 1 || month === 2 ? year - 1 : year}
-            term={term}
-          />
-        )}
+        <Suspense fallback={<Loading />}>
+          {isMonth ? (
+            <MonthCalendar />
+          ) : (
+            <YearCalendar
+              key={`${year}-${term}`}
+              year={month === 1 || month === 2 ? year - 1 : year}
+              term={term}
+            />
+          )}
+        </Suspense>
       </S.Content>
     </S.CalendarWrapper>
   );

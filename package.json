@@ -47,7 +47,8 @@
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "generate:tokens": "node generate-color-tokens.mjs"
   },
   "eslintConfig": {
     "extends": [
