@@ -29,6 +29,7 @@ const HeaderContainer = styled.div`
 const Header = styled.img`
   padding-left: 5%;
 `;
+
 const Home: React.FC = () => {
   const { userInfo, loading: isLoadingUser } = useGetUserInfo();
   const { recentNotices, recentNoticeLoading } = useGetRecentNotice();

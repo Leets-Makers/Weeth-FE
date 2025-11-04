@@ -1,3 +1,5 @@
+// 폰트 설정 후 삭제할 파일
+
 const theme = {
   color: {
     main: '#00DDA8',
