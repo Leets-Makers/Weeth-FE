@@ -109,6 +109,7 @@ const Calendar = () => {
             <MonthCalendar />
           ) : (
             <YearCalendar
+              key={`${year}-${term}`}
               year={month === 1 || month === 2 ? year - 1 : year}
               term={term}
             />

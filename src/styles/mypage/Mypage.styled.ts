@@ -7,14 +7,14 @@ export const Container = styled.div`
   font-size: 16px;
 `;
 
-export const TextButton = styled.div<{ isSignOut?: boolean }>`
+export const TextButton = styled.div<{ $isSignOut?: boolean }>`
   width: calc(100% - 8px);
   box-sizing: border-box;
   padding: 12px 0 12px 16px;
   margin: 0 4px;
-  border-bottom: ${(props) =>
-    props.isSignOut ? 'none' : `1px solid ${theme.color.gray[30]}`};
-  color: ${(props) => (props.isSignOut ? theme.color.negative : 'white')};
+  border-bottom: ${({ $isSignOut }) =>
+    $isSignOut ? 'none' : `1px solid ${theme.color.gray[30]}`};
+  color: ${({ $isSignOut }) => ($isSignOut ? theme.color.negative : 'white')};
   cursor: pointer;
 `;
 

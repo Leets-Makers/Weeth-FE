@@ -38,8 +38,8 @@ const Markdown = ({
   const { textareaRef, insertText } = useMarkdownEditor(content, setContent);
   const [activeTab, setActiveTab] = useState<'write' | 'preview'>('write');
 
-  const handleDeleteFile = (fileName: string) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  const handleDeleteFile = (targetFile: File) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== targetFile));
   };
 
   const handleDeleteOrigin = (fileName: string) => {
@@ -118,10 +118,10 @@ const Markdown = ({
           <>
             {files.map((file) => (
               <PostFile
-                key={file.name}
+                key={`${file.name}-${file.lastModified}`}
                 fileName={file.name}
                 isDownload={false}
-                onClick={() => handleDeleteFile(file.name)}
+                onClick={() => handleDeleteFile(file)}
               />
             ))}
           </>

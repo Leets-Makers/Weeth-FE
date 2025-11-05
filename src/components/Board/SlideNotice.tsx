@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastError } from '@/components/common/ToastMessage';
 import ViewAll from '@/assets/images/ic_view_all.svg?react';
+import Loading from '../common/Loading';
 
 interface Notice {
   id: number;
@@ -16,10 +17,11 @@ interface Notice {
 
 interface SlideNoticeProps {
   error: string | null;
+  isLoading: boolean;
   recentNotices: Notice[];
 }
 
-const SlideNotice = ({ error, recentNotices }: SlideNoticeProps) => {
+const SlideNotice = ({ error, isLoading, recentNotices }: SlideNoticeProps) => {
   const navigate = useNavigate();
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
@@ -38,6 +40,10 @@ const SlideNotice = ({ error, recentNotices }: SlideNoticeProps) => {
       toastError('데이터를 불러오지 못했습니다.');
     }
   }, [error]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <S.ScrollContainer

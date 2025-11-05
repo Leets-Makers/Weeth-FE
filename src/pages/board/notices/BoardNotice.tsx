@@ -3,7 +3,7 @@ import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
@@ -88,7 +88,21 @@ const BoardNotice = () => {
     };
   }, [hasMore, observerLoading, pageNumber]);
 
-  if (loading) {
+  const [showLoading, setShowLoading] = useState(true);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+
+    if (loading) {
+      timer = setTimeout(() => setShowLoading(true), 1000);
+    } else {
+      timer = setTimeout(() => setShowLoading(false), 1000);
+    }
+
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+  if (showLoading && loading) {
     return <Loading />;
   }
 
@@ -138,7 +152,7 @@ const BoardNotice = () => {
               : `게시글 ${posts.length}개`}
           </S.TotalPostNumber>
           {list.map((post) => (
-            <>
+            <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>
                 <StudyLogListItem
                   name={post.name}
@@ -156,7 +170,7 @@ const BoardNotice = () => {
                 />
               </S.PostListItemContainer>
               <S.Line />
-            </>
+            </React.Fragment>
           ))}
           {hasMore && (
             <div

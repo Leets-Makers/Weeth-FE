@@ -30,16 +30,16 @@ const StyledTitle = styled.div`
   text-align: center;
 `;
 
-const ButtonWrapper = styled.div<{ visible: boolean }>`
+const ButtonWrapper = styled.div<{ $visible: boolean }>`
   margin-top: 112px;
-  display: ${({ visible }) => (visible ? 'flex' : 'none')};
+  display: ${({ $visible }) => ($visible ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   width: 100%;
   gap: 15px;
 
-  ${({ visible }) =>
-    visible &&
+  ${({ $visible }) =>
+    $visible &&
     css`
       animation: ${fadeIn} 2s ease-in-out forwards;
     `}
@@ -98,7 +98,7 @@ const Landing: React.FC = () => {
       <StyledTitle>
         <img src={logo} alt="leets로고" />
       </StyledTitle>
-      <ButtonWrapper visible={showButtonWrapper}>
+      <ButtonWrapper $visible={showButtonWrapper}>
         <KakaoLoginButton
           color={theme.color.kakao}
           textcolor="#262200"

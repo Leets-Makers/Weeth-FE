@@ -12,6 +12,7 @@ import usePatchUserInfo from '@/api/usePatchMyInfo';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 const Container = styled.div`
   width: 370px;
@@ -143,7 +144,13 @@ const Edit = () => {
     }
   };
 
-  if (loading) {
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+
+  if (smartLoading) {
     return <Loading />;
   }
 

@@ -26,8 +26,6 @@ const EventTitle = ({
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
 
-  console.log(path);
-
   const handleDelete = async () => {
     try {
       await deleteEvent(data.id, path);
