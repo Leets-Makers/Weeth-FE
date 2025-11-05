@@ -11,7 +11,6 @@ import { BoardContent } from '@/pages/board/Board';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
-import useSmartLoading from '@/hooks/useSmartLoading';
 
 interface Content {
   id: number;
@@ -89,13 +88,21 @@ const BoardNotice = () => {
     };
   }, [hasMore, observerLoading, pageNumber]);
 
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!loading) resolve();
-    }),
-  );
+  const [showLoading, setShowLoading] = useState(true);
 
-  if (smartLoading) {
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+
+    if (loading) {
+      timer = setTimeout(() => setShowLoading(true), 1000);
+    } else {
+      timer = setTimeout(() => setShowLoading(false), 1000);
+    }
+
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+  if (showLoading && loading) {
     return <Loading />;
   }
 

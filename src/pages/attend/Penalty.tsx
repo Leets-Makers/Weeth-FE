@@ -1,14 +1,13 @@
 import useCustomBack from '@/hooks/useCustomBack';
 import styled from 'styled-components';
 import Header from '@/components/Header/Header';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ModalPenalty from '@/components/Penalty/ModalPenalty';
 import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
 import PenaltyItem from '@/components/Penalty/PenaltyItem';
 import useGetPenalty from '@/api/useGetPenalty';
 import Loading from '@/components/common/Loading';
 import { MOBILE } from '@/styles';
-import useSmartLoading from '@/hooks/useSmartLoading';
 
 const Container = styled.div`
   display: flex;
@@ -22,6 +21,7 @@ const Penalty: React.FC = () => {
   useCustomBack('/attendance');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { penaltyInfo, isLoading } = useGetPenalty();
+  const [showLoading, setShowLoading] = useState(true);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -31,12 +31,18 @@ const Penalty: React.FC = () => {
     setModalOpen(false);
   };
 
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!isLoading) resolve();
-    }),
-  );
-  if (smartLoading) return <Loading />;
+  useEffect(() => {
+    if (isLoading) {
+      setShowLoading(true);
+      return undefined;
+    }
+    const timer = setTimeout(() => setShowLoading(false), 100);
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
+  if (showLoading && isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container>

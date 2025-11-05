@@ -6,8 +6,12 @@ export default function useSmartLoading<T>(promise: Promise<T>) {
 
   useEffect(() => {
     let didCancel = false;
+    let didShowLoading = false;
     const showTimer = setTimeout(() => {
-      if (!didCancel) setLoading(true);
+      if (!didCancel) {
+        didShowLoading = true;
+        setLoading(true);
+      }
     }, 100);
 
     let hideTimer: NodeJS.Timeout;
@@ -15,7 +19,7 @@ export default function useSmartLoading<T>(promise: Promise<T>) {
     promise.then((res) => {
       if (didCancel) return;
 
-      if (loading) {
+      if (didShowLoading) {
         hideTimer = setTimeout(() => {
           if (!didCancel) {
             setLoading(false);
