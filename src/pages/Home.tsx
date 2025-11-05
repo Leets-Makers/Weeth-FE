@@ -1,7 +1,5 @@
 import HomeMain from '@/components/home/HomeMain';
 import HomeFooter from '@/components/home/HomeFooter';
-import LogoutButton from '@/components/home/LogoutButton';
-import logo from '@/assets/images/logo/logo_initial_Origin.svg';
 import useCustomBack from '@/hooks/useCustomBack';
 import HomeNotice from '@/components/home/HomeNotice';
 import HomeInfo from '@/components/home/HomeInfo';
@@ -21,17 +19,6 @@ const Container = styled.div`
   margin-bottom: 50px;
 `;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 25px;
-  align-items: center;
-`;
-
-const Header = styled.img`
-  padding-left: 5%;
-`;
-
 const Home: React.FC = () => {
   const { userInfo, loading: isLoadingUser } = useGetUserInfo();
   const { recentNotices, recentNoticeLoading } = useGetRecentNotice();
@@ -45,12 +32,8 @@ const Home: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <DesktopGNB />
+      {/* <DesktopGNB /> */}
       <Container>
-        {/* <HeaderContainer>
-          <Header src={logo} alt="leets로고" />
-          <LogoutButton />
-        </HeaderContainer> */}
         <MobileGNB />
         <HomeNotice
           title={recentNotices[0].title || ' '}
