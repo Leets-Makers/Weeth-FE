@@ -1,13 +1,17 @@
 import styled from 'styled-components';
-import logo from '@/assets/images/ic_logo.svg';
-import profile from '@/assets/images/ic_DE.svg';
+import logo from '@/assets/images/ic_name_logo.svg';
+import useGetUserInfo from '@/api/useGetUserInfo';
+import useSetPosition from '@/hooks/useSetPosition';
+import { colors, units } from '@/theme/designTokens';
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
+  max-width: ${units.device.desktop};
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
-  background-color: #1f1f1f;
+  padding: 12px 18px;
+  background-color: ${colors.dark.neutral[200]};
 `;
 
 const Left = styled.div`
@@ -16,15 +20,16 @@ const Left = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 30px;
-  margin-right: 24px;
+  height: 40px;
+  margin-left: 16px;
 `;
 
 const Menu = styled.ul`
   display: flex;
   gap: 16px;
-  color: white;
+  color: ${colors.light.neutral[0]};
   list-style: none;
+  padding: 0;
 `;
 
 const Right = styled.div``;
@@ -36,6 +41,8 @@ const Profile = styled.img`
 `;
 
 const DesktopGNB = () => {
+  const { userInfo } = useGetUserInfo();
+  const { characterImg } = useSetPosition(userInfo?.position || '', true);
   return (
     <Container>
       <Left>
@@ -49,7 +56,7 @@ const DesktopGNB = () => {
         </Menu>
       </Left>
       <Right>
-        <Profile src={profile} alt="profile" />
+        <Profile src={characterImg} alt="profile" />
       </Right>
     </Container>
   );

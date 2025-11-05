@@ -1,16 +1,18 @@
 import styled from 'styled-components';
-import Menu from '@/assets/images/ic_menu.svg?react';
-import logo from '@/assets/images/ic_logo.svg';
-import profile from '@/assets/images/ic_DE.svg';
+import logo from '@/assets/images/ic_name_logo.svg';
 import { useState } from 'react';
+import useGetUserInfo from '@/api/useGetUserInfo';
+import useSetPosition from '@/hooks/useSetPosition';
+import Menu from '@/assets/images/ic_hamburger_menu.svg?react';
+import { colors } from '@/theme/designTokens';
 import LNB from './LNB';
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
-  background-color: #1f1f1f;
+  padding: 12px 18px 12px 8px;
+  background-color: ${colors.dark.neutral[200]};
 `;
 
 const Left = styled.div`
@@ -20,25 +22,30 @@ const Left = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 28px;
+  height: 40px;
 `;
 
 const Profile = styled.img`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 `;
 
 const MobileGNB = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { userInfo } = useGetUserInfo();
+  const { characterImg } = useSetPosition(userInfo?.position || '', true);
   return (
     <>
       <Container>
         <Left>
-          <Menu width={24} onClick={() => setIsOpen(true)} />
+          <Menu
+            style={{ cursor: 'pointer', padding: 8 }}
+            width={24}
+            onClick={() => setIsOpen(true)}
+          />
           <Logo src={logo} alt="Weeth" />
         </Left>
-        <Profile src={profile} alt="profile" />
+        <Profile src={characterImg} alt="profile" />
       </Container>
       {isOpen && <LNB onClose={() => setIsOpen(false)} />}
     </>

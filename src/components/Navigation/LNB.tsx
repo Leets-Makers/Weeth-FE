@@ -1,10 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 import Close from '@/assets/images/ic_close.svg?react';
 import Logo from '@/assets/images/ic_logo.svg?react';
-import profile from '@/assets/images/ic_DE.svg';
 import ICCalender from '@/assets/images/ic_home_calendar.svg?react';
 import ICAttend from '@/assets/images/ic_home_attend.svg?react';
 import ICBoard from '@/assets/images/ic_home_board.svg?react';
+import useGetUserInfo from '@/api/useGetUserInfo';
+import useSetPosition from '@/hooks/useSetPosition';
 import LogoutButton from '../home/LogoutButton';
 
 const slideIn = keyframes`
@@ -111,6 +112,8 @@ interface LNBProps {
 }
 
 const LNB = ({ onClose }: LNBProps) => {
+  const { userInfo } = useGetUserInfo();
+  const { characterImg } = useSetPosition(userInfo?.position || '', true);
   return (
     <>
       <Overlay onClick={onClose} />
@@ -145,10 +148,12 @@ const LNB = ({ onClose }: LNBProps) => {
             <span>Log out</span>
           </Logout>
           <UserInfo>
-            <img src={profile} alt="profile" />
+            <img src={characterImg} alt="profile" />
             <div>
-              <p>조예진</p>
-              <small>디자이너 | 3기</small>
+              <p>{userInfo?.name}</p>
+              <small>
+                {userInfo?.position} | {userInfo?.cardinals[0]}
+              </small>
             </div>
           </UserInfo>
         </Footer>

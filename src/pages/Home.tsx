@@ -44,28 +44,30 @@ const Home: React.FC = () => {
   }
 
   return (
-    <Container>
-      <HeaderContainer>
-        <Header src={logo} alt="leets로고" />
-        <LogoutButton />
-      </HeaderContainer>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <DesktopGNB />
-      <MobileGNB />
-      <HomeNotice
-        title={recentNotices[0].title || ' '}
-        content={recentNotices[0].content || ' '}
-        id={recentNotices[0].id}
-      />
-      <HomeInfo
-        position={userInfo?.position || ''}
-        cardinal={userInfo?.cardinals?.length ? userInfo.cardinals[0] : '0'}
-        name={userInfo?.name || '...'}
-        isAdmin={isAdmin}
-      />
+      <Container>
+        {/* <HeaderContainer>
+          <Header src={logo} alt="leets로고" />
+          <LogoutButton />
+        </HeaderContainer> */}
+        <MobileGNB />
+        <HomeNotice
+          title={recentNotices[0].title || ' '}
+          content={recentNotices[0].content || ' '}
+          id={recentNotices[0].id}
+        />
+        <HomeInfo
+          position={userInfo?.position || ''}
+          cardinal={userInfo?.cardinals?.length ? userInfo.cardinals[0] : '0'}
+          name={userInfo?.name || '...'}
+          isAdmin={isAdmin}
+        />
 
-      <HomeMain />
-      <HomeFooter />
-    </Container>
+        <HomeMain />
+        <HomeFooter />
+      </Container>
+    </div>
   );
 };
 
