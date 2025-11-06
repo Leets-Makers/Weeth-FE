@@ -71,10 +71,10 @@ const MenuItem = styled.li<{ active?: boolean }>`
   font-size: 16px;
   transition: color 0.2s ease;
   padding: 12px 8px;
-  border-radius: 8px;
+  border-radius: 12px;
 
   &:hover {
-    color: #72f5c9;
+    background-color: ${colors.light.neutral[500]};
   }
 
   span {
@@ -91,26 +91,30 @@ const Footer = styled.div`
 const Logout = styled.div`
   display: flex;
   align-items: center;
-  margin-left: 12px;
   color: ${colors.light.neutral[100]};
   cursor: pointer;
   transition: color 0.2s ease;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 16px;
 
   &:hover {
-    color: #fff;
+    background-color: ${colors.light.neutral[500]};
   }
 
   span {
-    font-size: 14px;
+    margin-left: 8px;
   }
 `;
 
 const UserInfo = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   gap: 12px;
-  border-top: 1px solid ${colors.light.neutral[500]};
-  padding-top: 16px;
+
+  padding: 8px 12px;
+  border-radius: 12px;
 
   img {
     width: 40px;
@@ -136,6 +140,21 @@ const UserInfo = styled.div`
     color: #a6a6a6;
     font-size: 12px;
     margin-top: 4px;
+  }
+
+  &:hover {
+    background-color: ${colors.light.neutral[500]};
+  }
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    top: -8px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #46494d;
   }
 `;
 
@@ -171,7 +190,7 @@ const LNB = ({ onClose }: LNBProps) => {
 
   const handleNavigate = (path: string) => {
     navigate(path);
-    onClose(); // 사이드바 닫기
+    onClose();
   };
 
   return (
