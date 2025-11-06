@@ -28,6 +28,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import isBetween from 'dayjs/plugin/isBetween';
+import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -60,9 +61,8 @@ const AttendMain: React.FC = () => {
     }
   }, [attendInfo?.status]);
 
-  if (attendLoading || penaltyLoading) {
-    return <Loading />;
-  }
+  const smartLoading = useSmartCombinedLoading(attendLoading, penaltyLoading);
+  if (smartLoading) return <Loading />;
 
   let title = 'Loading...';
   let location = 'Loading...';

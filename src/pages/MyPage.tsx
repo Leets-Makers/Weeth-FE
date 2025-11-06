@@ -57,7 +57,7 @@ const MyPage = () => {
             정보 수정
           </S.TextButton>
           <S.TextButton onClick={confirmLogout}>로그아웃</S.TextButton>
-          <S.TextButton isSignOut onClick={openSelectModal}>
+          <S.TextButton $isSignOut onClick={openSelectModal}>
             탈퇴
           </S.TextButton>
         </MenuModal>

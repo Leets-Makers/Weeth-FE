@@ -12,6 +12,7 @@ import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 const NoticePostDetail = () => {
   const { postId } = useParams();
@@ -23,10 +24,6 @@ const NoticePostDetail = () => {
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
 
-  if (!numericPostId) {
-    return <div>잘못된 게시물 ID입니다.</div>;
-  }
-
   const [refreshKey, setRefreshKey] = useState(0);
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -35,7 +32,7 @@ const NoticePostDetail = () => {
 
   const { boardDetailInfo, error, loading } = useGetBoardDetail(
     type,
-    numericPostId,
+    numericPostId!,
     refreshKey,
   );
 
@@ -44,6 +41,16 @@ const NoticePostDetail = () => {
   >({});
 
   const navigate = useNavigate();
+
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+
+  if (!numericPostId) {
+    return <div>잘못된 게시물 ID입니다.</div>;
+  }
 
   const openSelectModal = () => {
     setIsSelectModalOpen(true);
@@ -73,11 +80,8 @@ const NoticePostDetail = () => {
   };
 
   const handleCommentSuccess = () => {
-    setTimeout(() => {
-      setParentCommentId(null);
-      setSelectedComment({});
-      setFiles([]);
-    }, 200);
+    setParentCommentId(null);
+    setSelectedComment({});
     handleRefresh();
   };
 
@@ -92,7 +96,7 @@ const NoticePostDetail = () => {
   const isMyPost = boardDetailInfo?.name === useGetUserName();
 
   if (error) return <div>오류: {error}</div>;
-  if (loading) return <Loading />;
+  if (smartLoading) return <Loading />;
 
   return (
     <>

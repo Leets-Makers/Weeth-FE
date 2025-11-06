@@ -5,6 +5,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import useGetAllUsers from '@/api/useGetAllUsers';
 import { User } from '@/types/user';
+import useSmartLoading from '@/hooks/useSmartLoading';
 import Loading from '../common/Loading';
 
 const List = styled.div`
@@ -81,12 +82,27 @@ const MemberList = ({
 
   let content;
 
-  if (loading) {
-    content = <Loading />;
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
+  const { loading: memberSmartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!observerLoading) resolve();
+    }),
+  );
+
+  if (smartLoading) {
+    return (
+      <List>
+        <Loading />
+      </List>
+    );
   }
 
   // 검색 결과가 없는 경우
-  else if (isSearch && searchResults?.length === 0) {
+  if (isSearch && searchResults?.length === 0) {
     content = <Error>검색된 멤버가 없습니다.</Error>;
   }
 
@@ -102,7 +118,8 @@ const MemberList = ({
         role={user.role}
       />
     ));
-  } else if (members.length === 0 && !hasNoMember) {
+  }
+  if (memberSmartLoading) {
     content = <Loading />;
   } else {
     content = members.map((user: User) => (

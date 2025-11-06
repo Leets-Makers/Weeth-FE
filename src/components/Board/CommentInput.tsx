@@ -124,6 +124,8 @@ const CommentInput = ({
       );
       setInputValue('');
       setFiles([]);
+      setParentCommentId(null);
+
       if (onCommentSuccess) onCommentSuccess();
     } catch (error: any) {
       console.error(
@@ -131,6 +133,8 @@ const CommentInput = ({
         error.response?.data?.message || error.message,
       );
       toastError('댓글 작성에 실패했습니다.');
+    } finally {
+      setSending(false);
     }
   };
 
@@ -141,8 +145,8 @@ const CommentInput = ({
     }
   };
 
-  const handleDeleteFile = (fileName: string) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  const handleDeleteFile = (targetFile: File) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== targetFile));
   };
 
   return (
@@ -151,10 +155,10 @@ const CommentInput = ({
         <FileContainer>
           {files.map((file) => (
             <PostFile
-              key={file.name}
+              key={`${file.name}-${file.lastModified}`}
               fileName={file.name}
               isDownload={false}
-              onClick={() => handleDeleteFile(file.name)}
+              onClick={() => handleDeleteFile(file)}
             />
           ))}
         </FileContainer>

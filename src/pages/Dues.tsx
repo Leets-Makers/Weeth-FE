@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useCustomBack from '@/hooks/useCustomBack';
 import useGetGlobaluserInfo, {
   useGetUserInfo,
 } from '@/api/useGetGlobaluserInfo';
@@ -11,6 +10,7 @@ import Header from '@/components/Header/Header';
 import DueCategory from '@/components/Dues/DueCategory';
 import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
+import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/dues/Dues.styled';
 
 const Dues: React.FC = () => {

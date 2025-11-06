@@ -51,9 +51,9 @@ const CancelButton = styled(ModalButton)`
 
 const ActionButton = styled(ModalButton)<{
   type: 'positive' | 'negative';
-  visible: boolean;
+  $visible: boolean;
 }>`
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
+  display: ${(props) => (props.$visible ? 'flex' : 'none')};
   background: ${(props) =>
     props.type === 'positive' ? theme.color.main : theme.color.negative};
   &:hover {
@@ -91,7 +91,7 @@ const SelectModal = ({
       </Container>
       <ButtonContainer>
         <CancelButton onClick={onClose}>{cancleText}</CancelButton>
-        <ActionButton onClick={onDelete} type={type} visible={visibility}>
+        <ActionButton onClick={onDelete} type={type} $visible={visibility}>
           {buttonContent}
         </ActionButton>
       </ButtonContainer>

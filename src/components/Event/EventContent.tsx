@@ -68,8 +68,8 @@ const EventContent = ({
             )}
           </S.ModalSetting>
           {isFullScreen && <S.Date>{dayjs().format('YYYY년 M월 D일')}</S.Date>}
-          <S.Title isFullScreen={isFullScreen}>출석코드</S.Title>
-          <S.AttendanceCode isFullScreen={isFullScreen}>
+          <S.Title $isFullScreen={isFullScreen}>출석코드</S.Title>
+          <S.AttendanceCode $isFullScreen={isFullScreen}>
             {data.code}
           </S.AttendanceCode>
         </Modal>

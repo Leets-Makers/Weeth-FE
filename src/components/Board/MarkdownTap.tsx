@@ -19,14 +19,14 @@ const TabTextContainer = styled.div`
   position: relative;
 `;
 
-const TabText = styled.div<{ isActive: boolean }>`
+const TabText = styled.div<{ $isActive: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 10px 15px 0px 15px;
   font-size: 16px;
   font-family: ${theme.font.semiBold};
-  color: ${({ isActive }) =>
-    isActive ? theme.color.gray[100] : theme.color.gray[65]};
+  color: ${({ $isActive }) =>
+    $isActive ? theme.color.gray[100] : theme.color.gray[65]};
   cursor: pointer;
 `;
 
@@ -48,11 +48,11 @@ const MarkdownTap = ({ activeTab, setActiveTab }: MarkdownTapProps) => {
   return (
     <TabContainer>
       <TabTextContainer onClick={() => setActiveTab('write')}>
-        <TabText isActive={activeTab === 'write'}>작성</TabText>
+        <TabText $isActive={activeTab === 'write'}>작성</TabText>
         {activeTab === 'write' && <Underline />}
       </TabTextContainer>
       <TabTextContainer onClick={() => setActiveTab('preview')}>
-        <TabText isActive={activeTab === 'preview'}>미리보기</TabText>
+        <TabText $isActive={activeTab === 'preview'}>미리보기</TabText>
         {activeTab === 'preview' && <Underline />}
       </TabTextContainer>
     </TabContainer>
