@@ -13,6 +13,7 @@ const Container = styled.div`
   align-items: center;
   padding: 12px 18px;
   background-color: ${colors.dark.neutral[200]};
+  box-sizing: border-box;
 `;
 
 const Left = styled.div`
@@ -23,6 +24,7 @@ const Left = styled.div`
 const Logo = styled.img`
   height: 40px;
   margin-right: 16px;
+  cursor: pointer;
 `;
 
 const Menu = styled.ul`
@@ -50,6 +52,7 @@ const Right = styled.div``;
 const Profile = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 
 const DesktopGNB = () => {

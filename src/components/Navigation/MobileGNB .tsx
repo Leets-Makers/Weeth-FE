@@ -5,6 +5,7 @@ import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import Menu from '@/assets/images/ic_hamburger_menu.svg?react';
 import { colors } from '@/theme/designTokens';
+import { useNavigate } from 'react-router-dom';
 import LNB from './LNB';
 
 const Container = styled.div`
@@ -23,6 +24,7 @@ const Left = styled.div`
 
 const Logo = styled.img`
   height: 40px;
+  cursor: pointer;
 `;
 
 const Profile = styled.img`
@@ -34,6 +36,8 @@ const MobileGNB = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { userInfo } = useGetUserInfo();
   const { characterImg } = useSetPosition(userInfo?.position || '', true);
+
+  const navi = useNavigate();
   return (
     <>
       <Container>
@@ -43,7 +47,7 @@ const MobileGNB = () => {
             width={24}
             onClick={() => setIsOpen(true)}
           />
-          <Logo src={logo} alt="Weeth" />
+          <Logo src={logo} alt="Weeth" onClick={() => navi('/home')} />
         </Left>
         <Profile src={characterImg} alt="profile" />
       </Container>

@@ -31,8 +31,6 @@ const useSetPosition = (position: string, isNav = false): CharacterData => {
   const [characterImg, setCharacterImg] = useState(DefaultIcon);
   const [userPart, setUserPart] = useState('');
 
-  console.log(isNav);
-
   // 초기 이미지 세팅
   useEffect(() => {
     if (!position) return;

@@ -31,8 +31,8 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {/* <DesktopGNB /> */}
+    <div style={{ display: 'flex', width: 800, flexDirection: 'column' }}>
+      <DesktopGNB />
       <Container>
         <MobileGNB />
         <HomeNotice

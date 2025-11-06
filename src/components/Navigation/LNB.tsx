@@ -24,9 +24,9 @@ const Overlay = styled.div`
 
 const Sidebar = styled.aside`
   position: fixed;
+  width: 60%;
   top: 0;
   left: 0;
-  width: 40%;
   height: 100%;
   background-color: ${colors.dark.neutral[300]};
   color: ${colors.light.neutral[0]};
