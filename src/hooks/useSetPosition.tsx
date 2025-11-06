@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import FEChar from '@/assets/images/ic_char_FE.svg';
-import FECharHover from '@/assets/images/ic_char_FE_hover.svg';
 import BEChar from '@/assets/images/ic_char_BE.svg';
-import BECharHover from '@/assets/images/ic_char_BE_hover.svg';
 import DEChar from '@/assets/images/ic_char_DE.svg';
-import DECharHover from '@/assets/images/ic_char_DE_hover.svg';
 import PMChar from '@/assets/images/ic_char_PM.svg';
-import PMCharHover from '@/assets/images/ic_char_PM_hover.svg';
 import DefaultIcon from '@/assets/images/ic_default_position.svg';
 
 import DefaultD from '@/assets/images/ic_default_board_D.svg';
@@ -19,8 +15,6 @@ interface CharacterData {
   characterImg: string;
   userPart: string;
   isNav?: boolean;
-  handleMouseEnter: () => void;
-  handleMouseLeave: () => void;
 }
 
 /**
@@ -37,12 +31,12 @@ const useSetPosition = (position: string, isNav = false): CharacterData => {
 
     const mapping: Record<
       string,
-      { default: string; nav: string; hover: string; part: string }
+      { default: string; nav: string; part: string }
     > = {
-      FE: { default: FEChar, nav: DefaultFE, hover: FECharHover, part: 'FE' },
-      BE: { default: BEChar, nav: DefaultBE, hover: BECharHover, part: 'BE' },
-      D: { default: DEChar, nav: DefaultD, hover: DECharHover, part: 'D' },
-      PM: { default: PMChar, nav: DefaultPM, hover: PMCharHover, part: 'PM' },
+      FE: { default: FEChar, nav: DefaultFE, part: 'FE' },
+      BE: { default: BEChar, nav: DefaultBE, part: 'BE' },
+      D: { default: DEChar, nav: DefaultD, part: 'D' },
+      PM: { default: PMChar, nav: DefaultPM, part: 'PM' },
     };
 
     const data = mapping[position];
@@ -58,28 +52,7 @@ const useSetPosition = (position: string, isNav = false): CharacterData => {
     }
   }, [position]);
 
-  // hover 핸들러
-  const handleMouseEnter = () => {
-    const hoverMapping: Record<string, string> = {
-      FE: FECharHover,
-      BE: BECharHover,
-      D: DECharHover,
-      PM: PMCharHover,
-    };
-    if (hoverMapping[position]) setCharacterImg(hoverMapping[position]);
-  };
-
-  const handleMouseLeave = () => {
-    const defaultMapping: Record<string, string> = {
-      FE: FEChar,
-      BE: BEChar,
-      D: DEChar,
-      PM: PMChar,
-    };
-    if (defaultMapping[position]) setCharacterImg(defaultMapping[position]);
-  };
-
-  return { characterImg, userPart, handleMouseEnter, handleMouseLeave };
+  return { characterImg, userPart };
 };
 
 export default useSetPosition;
