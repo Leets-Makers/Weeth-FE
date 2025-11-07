@@ -6,7 +6,7 @@ import useSetPosition from '@/hooks/useSetPosition';
 import Menu from '@/assets/images/ic_hamburger_menu.svg?react';
 import { colors } from '@/theme/designTokens';
 import { useNavigate } from 'react-router-dom';
-import LNB from './LNB';
+import LNB from '@/components/Navigation/LNB';
 
 const Container = styled.div`
   display: flex;

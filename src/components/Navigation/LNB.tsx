@@ -1,4 +1,3 @@
-import styled, { keyframes } from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Close from '@/assets/images/ic_close.svg?react';
 import Logo from '@/assets/images/ic_name_logo.svg?react';
@@ -7,157 +6,8 @@ import ICAttend from '@/assets/images/ic_home_attend.svg?react';
 import ICBoard from '@/assets/images/ic_home_board.svg?react';
 import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
-import { colors } from '@/theme/designTokens';
-import LogoutButton from '../home/LogoutButton';
-
-const slideIn = keyframes`
-  from { transform: translateX(-100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-`;
-
-const Overlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 9;
-`;
-
-const Sidebar = styled.aside`
-  position: fixed;
-  width: 60%;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background-color: ${colors.dark.neutral[300]};
-  color: ${colors.light.neutral[0]};
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  animation: ${slideIn} 0.3s ease-out forwards;
-  z-index: 10;
-  padding: 40px 20px 28px 20px;
-  box-sizing: border-box;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-`;
-
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-`;
-
-const Menu = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
-const MenuItem = styled.li<{ active?: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  color: ${({ active }) =>
-    active ? colors.light.primary : colors.light.neutral[0]};
-  font-size: 16px;
-  transition: color 0.2s ease;
-  padding: 12px 8px;
-  border-radius: 12px;
-
-  &:hover {
-    background-color: ${colors.light.neutral[500]};
-  }
-
-  span {
-    flex: 1;
-  }
-`;
-
-const Footer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const Logout = styled.div`
-  display: flex;
-  align-items: center;
-  color: ${colors.light.neutral[100]};
-  cursor: pointer;
-  transition: color 0.2s ease;
-  padding: 8px 12px;
-  border-radius: 12px;
-  font-size: 16px;
-
-  &:hover {
-    background-color: ${colors.light.neutral[500]};
-  }
-
-  span {
-    margin-left: 8px;
-  }
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-  gap: 12px;
-
-  padding: 8px 12px;
-  border-radius: 12px;
-
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  p {
-    color: ${colors.light.neutral[100]};
-    font-weight: 600;
-    font-size: 16px;
-    margin: 0;
-    line-height: 20px;
-  }
-
-  small {
-    color: #a6a6a6;
-    font-size: 12px;
-    margin-top: 4px;
-  }
-
-  &:hover {
-    background-color: ${colors.light.neutral[500]};
-  }
-
-  &:before {
-    content: '';
-
-    position: absolute;
-    top: -8px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: ${colors.light.neutral[500]};
-  }
-`;
+import * as S from '@/styles/navigation/Navigation.styled';
+import LogoutButton from '@/components/home/LogoutButton';
 
 interface LNBProps {
   onClose: () => void;
@@ -196,36 +46,36 @@ const LNB = ({ onClose }: LNBProps) => {
 
   return (
     <>
-      <Overlay onClick={onClose} />
-      <Sidebar>
+      <S.Overlay onClick={onClose} />
+      <S.Sidebar>
         <div>
-          <Header>
+          <S.Header>
             <Logo width={80} height={40} />
-            <CloseButton onClick={onClose}>
+            <S.CloseButton onClick={onClose}>
               <Close height={24} />
-            </CloseButton>
-          </Header>
+            </S.CloseButton>
+          </S.Header>
 
-          <Menu>
+          <S.LNBMenu>
             {menus.map((menu) => (
-              <MenuItem
+              <S.LNBMenuItem
                 key={menu.name}
                 onClick={() => handleNavigate(menu.path)}
                 active={location.pathname.startsWith(menu.path)}
               >
                 {menu.icon && menu.icon}
                 <span>{menu.name}</span>
-              </MenuItem>
+              </S.LNBMenuItem>
             ))}
-          </Menu>
+          </S.LNBMenu>
         </div>
 
-        <Footer>
-          <Logout>
+        <S.Footer>
+          <S.Logout>
             <LogoutButton />
             <span>Log out</span>
-          </Logout>
-          <UserInfo>
+          </S.Logout>
+          <S.UserInfo>
             <img src={characterImg} alt="profile" />
             <div>
               <p>{userInfo?.name}</p>
@@ -233,9 +83,9 @@ const LNB = ({ onClose }: LNBProps) => {
                 {userInfo?.position} | {userInfo?.cardinals?.[0] ?? '0'}기
               </small>
             </div>
-          </UserInfo>
-        </Footer>
-      </Sidebar>
+          </S.UserInfo>
+        </S.Footer>
+      </S.Sidebar>
     </>
   );
 };
