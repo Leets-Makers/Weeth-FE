@@ -101,7 +101,7 @@ const Landing: React.FC = () => {
       <ButtonWrapper $visible={showButtonWrapper}>
         <KakaoLoginButton
           color={theme.color.kakao}
-          $textcolor="#262200"
+          textcolor="#262200"
           onClick={() => {
             window.location.href = kakaoURL;
           }}

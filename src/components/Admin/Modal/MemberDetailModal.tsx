@@ -94,10 +94,10 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
             <Button
               onClick={onClose}
               color="#fff"
-              $textcolor="#000"
+              textcolor="#000"
               width="55px"
               height="45px"
-              $borderRadius="4px"
+              borderRadius="4px"
             >
               완료
             </Button>
