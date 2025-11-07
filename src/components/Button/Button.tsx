@@ -9,16 +9,26 @@ interface ButtonProps {
   onClick?: () => void;
   height?: string;
   width?: string;
-  $borderRadius?: string;
+  borderRadius?: string;
   disabled?: boolean;
-  $isSemibold?: boolean; // 폰트 두께 : true(기본값) - semibold, false - regular
+  isSemibold?: boolean;
 }
 
-const BasicButton = styled.button<ButtonProps>`
+interface StyledButtonProps {
+  color?: string;
+  $textColor?: string;
+  height?: string;
+  width?: string;
+  $borderRadius?: string;
+  disabled?: boolean;
+  $isSemibold?: boolean;
+}
+
+const BasicButton = styled.button<StyledButtonProps>`
   background-color: ${({ color }) => color || theme.color.gray[30]};
   font-family: ${({ $isSemibold }) =>
     $isSemibold ? theme.font.semiBold : theme.font.regular};
-  color: ${({ textcolor }) => textcolor || theme.color.gray[100]};
+  color: ${({ $textColor }) => $textColor || theme.color.gray[100]};
   border: none;
   border-radius: ${({ $borderRadius }) => $borderRadius || '10px'};
   cursor: pointer;
@@ -34,7 +44,6 @@ const BasicButton = styled.button<ButtonProps>`
   }
 `;
 
-// TODO: 스타일 props 변수 이름에 '$' 넣기
 const Button: FC<ButtonProps> = ({
   children,
   color,
@@ -42,22 +51,24 @@ const Button: FC<ButtonProps> = ({
   onClick,
   height,
   width,
-  $borderRadius,
+  borderRadius,
   disabled,
-  $isSemibold = true,
-}) => (
-  <BasicButton
-    color={color}
-    textcolor={textcolor}
-    onClick={onClick}
-    height={height}
-    width={width}
-    $borderRadius={$borderRadius}
-    disabled={disabled}
-    $isSemibold={$isSemibold}
-  >
-    {children}
-  </BasicButton>
-);
+  isSemibold = true,
+}) => {
+  return (
+    <BasicButton
+      color={color}
+      $textColor={textcolor}
+      onClick={onClick}
+      height={height}
+      width={width}
+      $borderRadius={borderRadius}
+      disabled={disabled}
+      $isSemibold={isSemibold}
+    >
+      {children}
+    </BasicButton>
+  );
+};
 
 export default Button;

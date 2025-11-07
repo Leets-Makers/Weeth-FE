@@ -11,10 +11,10 @@ interface CaptionProps {
   children: ReactNode;
 }
 
-const BasicCaption = styled.button<{ color?: string; $textcolor?: string }>`
+const BasicCaption = styled.button<{ $color?: string; $textcolor?: string }>`
   width: 47px;
   height: 19px;
-  background-color: ${({ color }) => color || theme.color.gray[30]};
+  background-color: ${({ $color }) => $color || theme.color.gray[30]};
   font-family: ${theme.font.semiBold};
   color: ${({ $textcolor }) => $textcolor || theme.color.gray[100]};
   border: none;
@@ -27,7 +27,7 @@ const BasicCaption = styled.button<{ color?: string; $textcolor?: string }>`
 `;
 
 const Caption: React.FC<CaptionProps> = ({ children, color, textcolor }) => (
-  <BasicCaption color={color} $textcolor={textcolor}>
+  <BasicCaption $color={color} $textcolor={textcolor}>
     {children}
   </BasicCaption>
 );

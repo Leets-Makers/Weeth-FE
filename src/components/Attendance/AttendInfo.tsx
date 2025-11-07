@@ -55,7 +55,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
           width="315px"
           height="50px"
           color={getColor()}
-          $textcolor={getTextColor()}
+          textcolor={getTextColor()}
           disabled={isDisabled}
           onClick={!isAttend && isWithinTimeRange ? handleOpenModal : undefined}
         >
