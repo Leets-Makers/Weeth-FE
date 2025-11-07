@@ -35,7 +35,7 @@ const Profile = styled.img`
 const MobileGNB = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { userInfo } = useGetUserInfo();
-  const { characterImg } = useSetPosition(userInfo?.position || '', true);
+  const { characterImg } = useSetPosition(userInfo?.position || '');
 
   const navi = useNavigate();
   return (

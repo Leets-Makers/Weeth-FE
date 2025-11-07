@@ -67,7 +67,8 @@ const MenuItem = styled.li<{ active?: boolean }>`
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  color: ${({ active }) => (active ? '#72f5c9' : colors.light.neutral[0])};
+  color: ${({ active }) =>
+    active ? colors.light.primary : colors.light.neutral[0]};
   font-size: 16px;
   transition: color 0.2s ease;
   padding: 12px 8px;
@@ -154,7 +155,7 @@ const UserInfo = styled.div`
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: #46494d;
+    background-color: ${colors.light.neutral[500]};
   }
 `;
 
@@ -164,7 +165,7 @@ interface LNBProps {
 
 const LNB = ({ onClose }: LNBProps) => {
   const { userInfo } = useGetUserInfo();
-  const { characterImg } = useSetPosition(userInfo?.position || '', true);
+  const { characterImg } = useSetPosition(userInfo?.position || '');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -229,7 +230,7 @@ const LNB = ({ onClose }: LNBProps) => {
             <div>
               <p>{userInfo?.name}</p>
               <small>
-                {userInfo?.position} | {userInfo?.cardinals[0]}기
+                {userInfo?.position} | {userInfo?.cardinals?.[0] ?? '0'}기
               </small>
             </div>
           </UserInfo>

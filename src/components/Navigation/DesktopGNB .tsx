@@ -59,7 +59,7 @@ const DesktopGNB = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo } = useGetUserInfo();
-  const { characterImg } = useSetPosition(userInfo?.position || '', true);
+  const { characterImg } = useSetPosition(userInfo?.position || '');
 
   const menus = [
     { name: '동아리일정', path: '/calendar' },
