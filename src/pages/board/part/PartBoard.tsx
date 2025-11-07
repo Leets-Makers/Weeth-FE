@@ -7,7 +7,7 @@ import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useGetPartBoard from '@/api/useGetPartBoard';
 import { BoardContent } from '@/pages/board/Board';
@@ -210,7 +210,7 @@ const PartBoard = () => {
               : `게시글 ${list.length}개`}
           </S.TotalPostNumber>
           {list.map((post) => (
-            <>
+            <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>
                 <StudyLogListItem
                   name={post.name}
@@ -229,7 +229,7 @@ const PartBoard = () => {
                 />
               </S.PostListItemContainer>
               <S.Line />
-            </>
+            </React.Fragment>
           ))}
           {hasNextPage && (
             <div

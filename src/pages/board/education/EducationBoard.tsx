@@ -4,7 +4,7 @@ import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EduPartTap from '@/components/Board/EduPartTap';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
@@ -140,7 +140,7 @@ const EducationBoard = () => {
               : `게시글 ${posts.length}개`}
           </S.TotalPostNumber>
           {list.map((post) => (
-            <>
+            <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>
                 <StudyLogListItem
                   name={post.name}
@@ -159,7 +159,7 @@ const EducationBoard = () => {
                 />
               </S.PostListItemContainer>
               <S.Line />
-            </>
+            </React.Fragment>
           ))}
           {hasNextPage && (
             <div

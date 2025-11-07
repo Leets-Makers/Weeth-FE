@@ -7,18 +7,18 @@ const CardinalContainer = styled.div`
   gap: 0.3125rem;
 `;
 
-const CardinalBox = styled.div<{ selected: boolean }>`
+const CardinalBox = styled.div<{ $selected: boolean }>`
   width: 3.1875rem;
   height: 2rem;
   min-width: 2.5rem;
   border: 1px solid ${theme.color.gray[18]};
   border-radius: 1.25rem;
-  background-color: ${({ selected }) =>
-    selected ? theme.color.main : theme.color.gray[12]};
+  background-color: ${({ $selected }) =>
+    $selected ? theme.color.main : theme.color.gray[12]};
   font-size: 0.875rem;
   line-height: 1;
   font-family: ${theme.font.semiBold};
-  color: ${({ selected }) => (selected ? 'white' : theme.color.gray[100])};
+  color: ${({ $selected }) => ($selected ? 'white' : theme.color.gray[100])};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,7 +44,7 @@ const Cardinal = ({ value, onChange }: Props) => {
       {sortedCardinals.map((cardinal) => (
         <CardinalBox
           key={cardinal.id}
-          selected={value === cardinal.cardinalNumber}
+          $selected={value === cardinal.cardinalNumber}
           onClick={() => handleSelect(cardinal.cardinalNumber)}
         >
           {cardinal.cardinalNumber}기

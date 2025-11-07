@@ -97,7 +97,7 @@ const MonthCalendar = () => {
   const renderEventContent = (eventInfo: any) => {
     return (
       <S.EventContentContainer>
-        <S.Bar isMeeting={eventInfo.event.extendedProps?.isMeeting} />
+        <S.Bar $isMeeting={eventInfo.event.extendedProps?.isMeeting} />
         <S.EventContent>{eventInfo.event.title}</S.EventContent>
       </S.EventContentContainer>
     );

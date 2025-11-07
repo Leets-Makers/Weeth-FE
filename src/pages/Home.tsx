@@ -9,6 +9,8 @@ import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import Loading from '@/components/common/Loading';
 import styled from 'styled-components';
 import MobileGNB from '@/components/Navigation/MobileGNB ';
+import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
+
 
 const Container = styled.div`
   display: flex;
@@ -25,18 +27,28 @@ const Home: React.FC = () => {
 
   useCustomBack('/home');
 
-  if (isLoadingUser || recentNoticeLoading || loading) {
-    return <Loading />;
-  }
+  const smartLoading = useSmartCombinedLoading(
+    isLoadingUser,
+    recentNoticeLoading,
+    loading,
+  );
+  const isDataReady =
+    userInfo &&
+    recentNotices &&
+    recentNotices.length > 0 &&
+    typeof isAdmin === 'boolean';
+
+  if (smartLoading || !isDataReady) return <Loading />;
 
   return (
     <Container>
       <MobileGNB />
       <HomeNotice
-        title={recentNotices[0].title || ' '}
-        content={recentNotices[0].content || ' '}
-        id={recentNotices[0].id}
+        title={recentNotices?.[0]?.title || ''}
+        content={recentNotices?.[0]?.content || ''}
+        id={recentNotices?.[0]?.id ?? 0}
       />
+
       <HomeInfo
         position={userInfo?.position || ''}
         cardinal={userInfo?.cardinals?.length ? userInfo.cardinals[0] : '0'}

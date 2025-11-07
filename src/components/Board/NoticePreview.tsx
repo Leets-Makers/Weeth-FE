@@ -4,6 +4,7 @@ import * as S from '@/styles/board/Board.styled';
 import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 const NoticePreview = () => {
   useCustomBack('/board');
@@ -15,7 +16,13 @@ const NoticePreview = () => {
   };
 
   const { recentNotices, error, recentNoticeLoading } = useGetRecentNotice();
-  if (recentNoticeLoading) {
+
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!recentNoticeLoading) resolve();
+    }),
+  );
+  if (smartLoading) {
     return <Loading />;
   }
 
@@ -27,7 +34,11 @@ const NoticePreview = () => {
           <S.AllText onClick={handleAllNotice}>전체보기 &gt;</S.AllText>
         </S.NoticeTextContainer>
       </S.CardContainer>
-      <SlideNotice error={error} recentNotices={recentNotices} />
+      <SlideNotice
+        error={error}
+        recentNotices={recentNotices}
+        isLoading={recentNoticeLoading || smartLoading}
+      />
     </S.NoticePreviewContainer>
   );
 };
