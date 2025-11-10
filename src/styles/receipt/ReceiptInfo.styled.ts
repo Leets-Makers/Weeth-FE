@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 
 export const Container = styled.div`
   width: 88%;
@@ -33,19 +33,19 @@ export const TextBox = styled.div`
 
 export const MemoText = styled.div<{ $isTruncated: boolean }>`
   font-size: 16px;
-  color: ${theme.color.gray[100]};
+  color: ${colors.semantic.text.normal};
   overflow-wrap: break-word;
   ${({ $isTruncated }) => $isTruncated && `max-width: 80%;`}
 `;
 
 export const Amount = styled.div`
   font-size: 16px;
-  color: ${theme.color.gray[100]};
+  color: ${colors.semantic.text.normal};
   white-space: nowrap;
 `;
 
 export const SubText = styled.div`
   margin-top: 6px;
   font-size: 12px;
-  color: ${theme.color.gray[65]};
+  color: ${colors.dark.neutral[600]};
 `;

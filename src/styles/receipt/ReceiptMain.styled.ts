@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const StyledReceipt = styled.div`
@@ -8,7 +9,7 @@ export const StyledReceipt = styled.div`
 
 export const Line = styled.div`
   border: 1px solid;
-  color: #4d4d4d;
+  color: ${colors.semantic.line};
   width: 88%;
   margin: 15px 6% 0 6%;
   transform: scaleY(0.2);
@@ -38,10 +39,9 @@ export const GridItem = styled.div`
   flex: 0 0 auto;
   margin-right: 10px;
   padding: 0;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.backGround};
   width: 56%;
   height: 124px;
-  color: ${theme.color.gray[100]};
   border-radius: 10px;
   display: flex;
   justify-content: center;
