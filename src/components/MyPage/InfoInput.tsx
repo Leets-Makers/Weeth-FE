@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { colors } from '@/theme/designTokens';
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +14,9 @@ const Label = styled.div<{ isProfile?: boolean }>`
   width: 42px;
   text-align: left;
   color: ${(props) =>
-    props.isProfile ? theme.color.gray[100] : theme.color.gray[65]};
+    props.isProfile
+      ? colors.semantic.text.normal
+      : colors.semantic.text.alternative};
 `;
 
 const Input = styled.input`
@@ -25,17 +27,17 @@ const Input = styled.input`
   outline: none;
   border: none;
   border-radius: 4px;
-  background-color: ${theme.color.gray[18]};
-  color: #fff;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
   font-size: 16px;
 
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.container.neutral};
   }
 `;
 
 const NoEdit = styled(Input).attrs({ readOnly: true })`
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
 `;
 
 const InfoInput = ({
