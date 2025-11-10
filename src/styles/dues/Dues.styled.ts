@@ -1,8 +1,14 @@
 import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
 import styled from 'styled-components';
+import { pcResponsive } from '..';
 
 export const StyledDues = styled.div`
-  width: 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
 `;
 
 export const CategoryWrapper = styled.div`
@@ -14,30 +20,32 @@ export const DuesListBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: center;
   border-radius: 14px;
-  margin: 0 4% 50px 4%;
-  padding-bottom: 15px;
-  background-color: ${theme.color.gray[18]};
+
+  padding: 15px;
+  background-color: ${colors.dark.neutral[300]};
 `;
 
 export const DuesList = styled.div`
-  width: 92%;
-  margin: 0px 10px 0 10px;
-`;
+  width: 100%;
+  margin: 0 10px;
 
-export const Line = styled.div`
-  border: 1px solid;
-  color: #4d4d4d;
-  width: 325px;
-  margin-top: 20px;
-  transform: scaleY(0.2);
+  &::before {
+    content: '';
+    display: block;
+    background-color: ${colors.semantic.line};
+    width: 100%;
+    height: 1px;
+    margin-top: 20px;
+  }
 `;
 
 export const MoneyBoxContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  margin-top: 35px;
+  margin-top: 20px;
 `;
 
 export const MoneyBox = styled.div`

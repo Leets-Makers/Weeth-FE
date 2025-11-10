@@ -1,6 +1,7 @@
 import receipt from '@/assets/images/ic_receipt.svg';
 import formatDateTime from '@/hooks/formatDateTime';
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -22,7 +23,7 @@ const DuesTextBox = styled.div`
 `;
 
 const UpdateText = styled.div`
-  color: ${theme.color.gray[65]};
+  color: ${colors.dark.neutral[600]};
   font-size: 14px;
   margin-top: 14px;
 `;
@@ -30,7 +31,7 @@ const UpdateText = styled.div`
 const BasicCaption = styled.button`
   width: 56px;
   height: 34px;
-  background-color: ${theme.color.gray[30]};
+  background-color: ${colors.semantic.button.neutral};
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -38,6 +39,10 @@ const BasicCaption = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    background-color: ${colors.semantic.button['neutral-interaction']};
+  }
 `;
 
 interface ImgCaptionProps {

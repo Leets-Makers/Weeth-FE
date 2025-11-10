@@ -33,7 +33,7 @@ const DuesInfo: React.FC<DuseInfoProps> = ({
         </S.StyledCaptionBox>
         <S.StyledMemoBox>
           <S.Text>{dues.toLocaleString()}원</S.Text>
-          <S.SmallTextMemo>{source}</S.SmallTextMemo>
+          <S.SmallText>{source}</S.SmallText>
         </S.StyledMemoBox>
       </S.StyledDuesBox>
     </S.DuesWrapper>
