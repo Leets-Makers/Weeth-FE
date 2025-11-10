@@ -24,7 +24,7 @@ export const DuesListBox = styled.div`
   border-radius: 14px;
 
   padding: 15px;
-  background-color: ${colors.dark.neutral[300]};
+  background-color: ${colors.semantic.container.neutral};
 `;
 
 export const DuesList = styled.div`

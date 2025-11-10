@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const StyledHomeMain = styled.div`
@@ -17,12 +18,12 @@ export const GridContainer = styled.div`
   grid-template-areas:
     'calendar penalty'
     'board member'
-    'board fee';
+    'board dues';
   gap: 10px;
 `;
 
 export const GridItem = styled.div`
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   font-family: ${theme.font.semiBold};
   font-size: 18px;
   color: #fff;
@@ -54,18 +55,15 @@ export const MemberItem = styled(GridItem)`
   justify-content: start;
 `;
 
-export const FeeItem = styled(GridItem)`
-  grid-area: fee;
+export const DuesItem = styled(GridItem)`
+  grid-area: dues;
   display: flex;
   flex-direction: column;
   justify-content: start;
 `;
 
-export const PlaceholderImage = styled.div`
+export const PlaceholderImage = styled.img`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${theme.color.gray[18]};
   align-self: flex-end;
   justify-self: flex-start;
 `;

@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 
 export const flowing = keyframes`
   0% {
@@ -14,7 +15,7 @@ export const SCROLL_DURATION = 20;
 
 export const AnimationLayout = styled.div`
   display: flex;
-  background-color: ${theme.color.negativeDark};
+  background-color: ${colors.dark.primary[200]};
   cursor: pointer;
   height: 1.875rem;
   align-items: center;
