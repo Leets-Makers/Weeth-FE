@@ -2,7 +2,6 @@ import CardinalDropdown from '@/components/common/CardinalDropdown';
 import Header from '@/components/Header/Header';
 import MemberList from '@/components/Member/MemberList';
 import useCustomBack from '@/hooks/useCustomBack';
-import theme from '@/styles/theme';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,6 +9,7 @@ import search from '@/assets/images/ic_search.svg';
 import getSearchMember from '@/api/getSearchMember';
 import { User } from '@/types/user';
 import { toastError } from '@/components/common/ToastMessage';
+import { colors } from '@/theme/designTokens';
 
 const Wrapper = styled.div`
   width: 370px;
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 const Search = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid ${theme.color.gray[18]};
+  border: 1px solid ${colors.semantic.line};
   border-radius: 4px;
   padding: 7px 10px;
   margin-bottom: 10px;
@@ -35,14 +35,14 @@ export const SearchInput = styled.input`
   outline: none;
   background-color: transparent;
   font-size: 16px;
-  color: #fff;
+  color: ${colors.semantic.text.normal};
   padding: 0;
   width: 211px;
   margin-left: 10px;
 
   &::placeholder {
     font-size: 16px;
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 `;
 
