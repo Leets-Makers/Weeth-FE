@@ -1,4 +1,4 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.div`
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
   width: 76px;
   min-width: 76px;
 `;
@@ -18,10 +18,11 @@ const Info = styled.div<{ $isLast?: boolean; readOnly?: boolean }>`
   gap: 3px;
   width: 100%;
   padding-top: 3px;
-  color: ${({ readOnly }) => (readOnly ? theme.color.gray[65] : '#fff')};
+  color: ${({ readOnly }) =>
+    readOnly ? colors.semantic.text.disabled : '#fff'};
   padding-bottom: ${({ $isLast }) => ($isLast ? 0 : '15px')};
   border-bottom: ${({ $isLast }) =>
-    $isLast ? 'none' : `1px solid ${theme.color.gray[30]}`};
+    $isLast ? 'none' : `1px solid ${colors.semantic.line}`};
 `;
 
 const InfoItem = ({
