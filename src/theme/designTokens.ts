@@ -124,7 +124,7 @@ export const colors = {
       disabled: '#6E7173',
       inverse: '#000000',
     },
-    line: '#6e7173',
+    line: '#46494D',
     brand: {
       primary: '#00fac8',
       purple: '#7f5ae9',

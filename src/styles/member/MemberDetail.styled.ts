@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ export const Clip = styled.img`
 export const ContentTop = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   gap: 20px;
   width: 350px;
   height: 136px;
@@ -44,7 +45,7 @@ export const ContentBottom = styled.div`
   flex-direction: column;
   gap: 20px;
   width: 350px;
-  border: 1px solid ${theme.color.gray[18]};
+  border: 1px solid ${colors.semantic.container.neutral};
   border-radius: 0 0 19px 19px;
   padding: 17px 14px 34px;
   box-sizing: border-box;
@@ -81,11 +82,11 @@ export const Department = styled.div`
 `;
 
 export const Gray = styled.div`
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
 `;
 
 export const ErrorMessage = styled.div`
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
   margin-top: 50px;
   font-size: 16px;
 `;

@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 const Container = styled.div<{ type: 'member' | 'mypage' }>`
@@ -9,7 +10,9 @@ const Container = styled.div<{ type: 'member' | 'mypage' }>`
   height: 19px;
   border-radius: 13px;
   background-color: ${(props) =>
-    props.type === 'mypage' ? theme.color.gray[30] : theme.color.gray[65]};
+    props.type === 'mypage'
+      ? colors.semantic.icon.alternative
+      : colors.semantic.icon.nomal};
   color: ${(props) => (props.type === 'mypage' ? 'white' : 'black')};
   font-size: 12px;
   font-family: ${theme.font.semiBold};
