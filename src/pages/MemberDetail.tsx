@@ -10,7 +10,6 @@ import clipBE from '@/assets/images/ic_BE_clip.svg';
 import clipDE from '@/assets/images/ic_DE_clip.svg';
 import clipPM from '@/assets/images/ic_PM_clip.svg';
 
-import theme from '@/styles/theme';
 import CardinalTag from '@/components/common/CardinalTag';
 import Loading from '@/components/common/Loading';
 import { useMemo } from 'react';

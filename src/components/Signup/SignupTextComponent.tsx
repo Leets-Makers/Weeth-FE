@@ -1,3 +1,4 @@
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 interface SignupTextComponentProps {
@@ -21,7 +22,7 @@ const Label = styled.label`
   margin-left: 7%;
   margin-bottom: 8px;
   font-family: ${({ theme }) => theme.font.semiBold};
-  color: ${({ theme }) => theme.color.gray[100]};
+  color: ${colors.semantic.text.strong};
   line-height: 1.2;
   white-space: nowrap;
 `;
@@ -41,12 +42,12 @@ const Input = styled.input`
   border-radius: 4px;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.color.gray[100]};
-  background-color: ${({ theme }) => theme.color.gray[18]};
+  color: ${colors.semantic.text.strong};
+  background-color: ${colors.semantic.container.neutral};
   outline: none;
 
   &::placeholder {
-    color: ${({ theme }) => theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 `;
 

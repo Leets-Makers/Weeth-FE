@@ -4,6 +4,7 @@ import weeth from '@/assets/images/ic_register_weeth.svg';
 import wait from '@/assets/images/ic_waiting_approval.svg';
 import styled from 'styled-components';
 import Header from '@/components/Header/Header';
+import { RegisterButton } from './RegistrationSuccess';
 
 const Container = styled.div`
   display: flex;
@@ -49,24 +50,6 @@ const ButtonContainer = styled.div`
   margin-top: 30px;
 `;
 
-const Button = styled.button<{ type: string }>`
-  width: 315px;
-  height: 50px;
-  border-radius: 10px;
-  background-color: ${(props) =>
-    props.type === 'kakao' ? '#4d4d4d' : '#00DDA8'};
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 19px;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const WaitingApproval = () => {
   const navigate = useNavigate();
 
@@ -95,22 +78,22 @@ const WaitingApproval = () => {
           오랜기간 승인이 되지 않을 시 운영진에게 문의해주세요.
         </SubTitle>
         <ButtonContainer>
-          <Button
+          <RegisterButton
             type="kakao"
             onClick={() => {
               window.location.href = 'https://pf.kakao.com/_LtLyG';
             }}
           >
             문의하기
-          </Button>
-          <Button
+          </RegisterButton>
+          <RegisterButton
             type="login"
             onClick={() => {
               window.location.href = '/';
             }}
           >
             로그인으로 돌아가기
-          </Button>
+          </RegisterButton>
         </ButtonContainer>
       </Content>
     </Container>
