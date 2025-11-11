@@ -83,7 +83,6 @@ const Dues: React.FC = () => {
           <S.MoneyBoxContainer>
             <S.MoneyBox>{duesInfo.currentAmount.toLocaleString()}원</S.MoneyBox>
           </S.MoneyBoxContainer>
-          <S.Line />
 
           <S.DuesList>
             {/* 회비 탭일 때 */}

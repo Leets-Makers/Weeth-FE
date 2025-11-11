@@ -12,6 +12,7 @@ import SelectModal from '@/components/Modal/SelectModal';
 import theme from '@/styles/theme';
 import Line from '@/components/common/Line';
 import InfoInput from '@/components/MyPage/InfoInput';
+import { colors } from '@/theme/designTokens';
 
 const ProfileContainer = styled.div`
   width: 370px;
@@ -37,7 +38,7 @@ const ProfileSubTitle = styled.div`
   text-align: center;
   align-items: center;
   margin-left: 7%;
-  color: #a6a6a6;
+  color: ${colors.semantic.text.alternative};
 `;
 
 const ProfileButtonContainer = styled.div`
@@ -56,8 +57,10 @@ const ProfileButton = styled.button<{ disabled: boolean }>`
   height: 50px;
   border-radius: 10px;
   background-color: ${(props: { disabled: boolean }) =>
-    props.disabled ? '#4D4D4D' : '#00dda8'};
-  color: #ffffff;
+    props.disabled
+      ? colors.semantic.button.disabled
+      : colors.semantic.brand.primary};
+  color: ${colors.semantic.text.inverse};
   font-size: 16px;
   font-weight: 600;
   line-height: 19px;
@@ -81,7 +84,7 @@ const Text = styled.div`
   font-size: 20px;
   font-family: ${theme.font.semiBold};
   margin: 24px 0 10px 25px;
-  color: #a6a6a6;
+  color: ${colors.semantic.text.alternative};
 `;
 
 const InputContainer = styled.div`

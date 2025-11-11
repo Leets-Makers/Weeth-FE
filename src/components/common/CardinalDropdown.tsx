@@ -4,6 +4,7 @@ import theme from '@/styles/theme';
 import open from '@/assets/images/ic_opened_dropdown.svg';
 import close from '@/assets/images/ic_default_dropdown.svg';
 import useGetAllCardinals from '@/api/useGetCardinals';
+import { colors } from '@/theme/designTokens';
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -22,8 +23,8 @@ const DropdownButton = styled.div<{ $hasValue: boolean }>`
   width: 100%;
   height: 100%;
   outline: none;
-  background-color: ${theme.color.gray[30]};
-  color: #fff;
+  background-color: ${colors.semantic.button.neutral};
+  color: ${colors.semantic.text.normal};
   font-size: 14px;
   border-radius: 10px;
   padding: 0 10px 0 15px;
@@ -46,10 +47,10 @@ const DropdownItem = styled.div`
   font-size: 14px;
   color: white;
   cursor: pointer;
-  background-color: ${theme.color.gray[30]};
+  background-color: ${colors.semantic.button.neutral};
 
   &:hover {
-    background-color: ${theme.color.gray[9]};
+    background-color: ${colors.semantic.button['neutral-interaction']};
   }
 `;
 

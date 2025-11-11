@@ -1,11 +1,12 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding: 14px;
   width: 345px;
   box-sizing: border-box;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   border-radius: 10px;
 `;
 
@@ -28,5 +29,5 @@ export const Caption = styled.div`
   display: flex;
   gap: 5px;
   font-size: 12px;
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
 `;

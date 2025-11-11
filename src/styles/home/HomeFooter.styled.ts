@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const StyledHomeFooter = styled.div`
@@ -31,11 +32,11 @@ export const GridItem = styled.a`
   flex: 0 0 auto;
   margin-right: 10px;
   padding: 10px 15px 15px 0;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   font-family: ${theme.font.semiBold};
   width: 34%;
   height: 77px;
-  color: #fff;
+  color: ${colors.semantic.text.strong};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -81,7 +82,7 @@ export const GridItemWithImage = styled(GridItem)<{ $image: string }>`
   span {
     position: relative;
     z-index: 2;
-    color: #fff;
+    color: ${colors.semantic.text.strong};
     font-size: 16px;
   }
 `;

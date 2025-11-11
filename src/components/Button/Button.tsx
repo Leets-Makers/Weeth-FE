@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
+import { colors } from '@/theme/designTokens';
+import theme from '@/styles/theme';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -25,10 +26,10 @@ interface StyledButtonProps {
 }
 
 const BasicButton = styled.button<StyledButtonProps>`
-  background-color: ${({ color }) => color || theme.color.gray[30]};
+  background-color: ${({ color }) => color || colors.semantic.button.neutral};
   font-family: ${({ $isSemibold }) =>
     $isSemibold ? theme.font.semiBold : theme.font.regular};
-  color: ${({ $textColor }) => $textColor || theme.color.gray[100]};
+  color: ${({ $textColor }) => $textColor || colors.semantic.text.normal};
   border: none;
   border-radius: ${({ $borderRadius }) => $borderRadius || '10px'};
   cursor: pointer;

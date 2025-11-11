@@ -10,12 +10,12 @@ import clipBE from '@/assets/images/ic_BE_clip.svg';
 import clipDE from '@/assets/images/ic_DE_clip.svg';
 import clipPM from '@/assets/images/ic_PM_clip.svg';
 
-import theme from '@/styles/theme';
 import CardinalTag from '@/components/common/CardinalTag';
 import Loading from '@/components/common/Loading';
 import { useMemo } from 'react';
 
 import * as S from '@/styles/member/MemberDetail.styled';
+import { colors } from '@/theme/designTokens';
 
 const MemberDetail = () => {
   const { memberDetail, error, loading } = useGetMemberDetail();
@@ -26,25 +26,25 @@ const MemberDetail = () => {
         char: FE,
         clip: clipFE,
         name: '프론트엔드 파트',
-        color: theme.color.negative,
+        color: colors.semantic.state.error,
       },
       BE: {
         char: BE,
         clip: clipBE,
         name: '백엔드 파트',
-        color: theme.color.positive,
+        color: colors.semantic.state.success,
       },
       D: {
         char: D,
         clip: clipDE,
         name: '디자인 파트',
-        color: theme.color.pointPink,
+        color: colors.semantic.brand.pink,
       },
       PM: {
         char: PM,
         clip: clipPM,
         name: 'PM 파트',
-        color: theme.color.pointPurple,
+        color: colors.semantic.brand.purple,
       },
     }),
     [],

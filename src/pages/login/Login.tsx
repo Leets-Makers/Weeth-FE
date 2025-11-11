@@ -8,8 +8,8 @@ import toggleVisibleIcon from '@/assets/images/ic_toggleVisible.svg';
 import Header from '@/components/Header/Header';
 import SignupTextComponent from '@/components/Signup/SignupTextComponent';
 import useCustomBack from '@/hooks/useCustomBack';
-import theme from '@/styles/theme';
 import SelectModal from '@/components/Modal/SelectModal';
+import { colors } from '@/theme/designTokens';
 
 const Container = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ const TextMargin = styled.div`
 
 const ErrorMessage = styled.div`
   right: 0;
-  color: ${theme.color.negative};
+  color: ${colors.semantic.state.error};
   margin: 15px 0 0 -5%;
   font-size: 14px;
   text-align: right;
@@ -65,8 +65,8 @@ const LoginButton = styled.button`
   width: 315px;
   height: 50px;
   border-radius: 10px;
-  background-color: #00dda8;
-  color: #ffffff;
+  background-color: ${colors.semantic.brand.primary};
+  color: ${colors.semantic.text.inverse};
   font-size: 16px;
   font-weight: 600;
   line-height: 19px;
@@ -77,6 +77,10 @@ const LoginButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    background-color: ${colors.semantic.button['primary-interaction']};
+  }
 `;
 
 const Login: React.FC = () => {

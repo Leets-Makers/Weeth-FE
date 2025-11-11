@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -23,7 +24,9 @@ const Label = styled.label<{ $isProfile?: boolean }>`
   width: 42px;
   font-size: 16px;
   color: ${({ $isProfile }) =>
-    $isProfile ? theme.color.gray[100] : theme.color.gray[65]};
+    $isProfile
+      ? colors.semantic.text.normal
+      : colors.semantic.text.alternative};
 `;
 
 const Button = styled.button<{ $hasValue: boolean }>`
@@ -33,9 +36,9 @@ const Button = styled.button<{ $hasValue: boolean }>`
   font-size: 16px;
   border: none;
   border-radius: 4px;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   color: ${({ $hasValue }) =>
-    $hasValue ? theme.color.gray[100] : theme.color.gray[18]};
+    $hasValue ? colors.semantic.text.normal : colors.semantic.text.alternative};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,7 +57,7 @@ const List = styled.ul`
   border-radius: 4px;
   max-height: 200px;
   overflow-y: auto;
-  background-color: #2c2c2c;
+  background-color: ${colors.semantic.container.neutral};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   z-index: 1000;
   padding: 0;
@@ -65,11 +68,11 @@ const Item = styled.li`
   list-style: none;
   padding: 10px 14px;
   font-size: 15px;
-  color: ${theme.color.gray[100]};
+  color: ${colors.semantic.text.normal};
   cursor: pointer;
 
   &:hover {
-    background-color: ${theme.color.mainMiddle};
+    background-color: ${colors.dark.primary[200]};
   }
 `;
 
