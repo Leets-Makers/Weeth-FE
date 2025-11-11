@@ -20,7 +20,13 @@ const Attendance: React.FC = () => {
   useCustomBack('/home');
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'column',
+      }}
+    >
       <MobileGNB />
       <AttendContainer>
         <AttendMain />

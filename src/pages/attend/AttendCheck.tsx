@@ -7,7 +7,7 @@ import { AttendContainer } from './Attendance';
 const AttendCheck: React.FC = () => {
   useCustomBack('/attendance');
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
       <AttendContainer>
         <MobileGNB />
         <AttendCheckMain />

@@ -22,7 +22,7 @@ export const MeetingHeader = styled.div`
 export const MeetingTitle = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 2%;
+  margin-left: 9px;
   ${typography.Sub2};
 `;
 

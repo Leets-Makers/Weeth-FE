@@ -10,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-left: 8%;
+  margin-left: 15px;
 `;
 
 export const Sub2Text = styled.div`
