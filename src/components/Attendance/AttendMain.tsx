@@ -104,6 +104,10 @@ const AttendMain: React.FC = () => {
     <S.StyledAttend>
       <AttendRate attendRate={attendInfo?.attendanceRate} />
       <S.StyledBox>
+        <S.BoxHeader>
+          <S.CaptionText>오늘의 출석</S.CaptionText>
+        </S.BoxHeader>
+
         {hasSchedule && attendInfo ? (
           <AttendInfo
             title={title}
@@ -119,10 +123,11 @@ const AttendMain: React.FC = () => {
         )}
       </S.StyledBox>
       <S.StyledBox>
+        <S.CaptionText>패널티</S.CaptionText>
         {penaltyInfo?.penaltyCount === null ? (
-          <S.SemiBold>
+          <S.TitleText>
             <AttendProject>등록된 데이터가 없습니다.</AttendProject>
-          </S.SemiBold>
+          </S.TitleText>
         ) : (
           <>
             {hasPenalty ? (
@@ -133,7 +138,7 @@ const AttendMain: React.FC = () => {
             ) : (
               <PenaltyContainer>
                 <NoPenaltyInfo>
-                  <S.SemiBold>페널티를 받은 이력이 없네요!</S.SemiBold>
+                  <S.TitleText>페널티를 받은 이력이 없네요!</S.TitleText>
                 </NoPenaltyInfo>
               </PenaltyContainer>
             )}

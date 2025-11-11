@@ -1,16 +1,17 @@
-import theme from '@/styles/theme';
-import { colors } from '@/theme/designTokens';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const StyledBox = styled.div`
   width: 100%;
   background-color: ${colors.semantic.container.neutral};
   border-radius: 10px;
-  padding: 15px;
+  padding: ${units.padding[400]}px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: start;
+  box-sizing: border-box;
 `;
 
 export const StyledAttend = styled.div`
@@ -20,24 +21,25 @@ export const StyledAttend = styled.div`
   width: 100%;
 `;
 
-export const SemiBold = styled.div`
-  font-family: ${theme.font.semiBold};
-  include-font-padding: false;
-  display: flex;
-  flex-direction: row;
-`;
-
-export const ButtonContainer = styled.div`
+export const BoxHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-  width: 97%;
-  margin-right: 3%;
+  align-items: center;
 `;
 
-export const NameContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 16px;
-  margin-top: 6.6%;
+export const CaptionText = styled.p`
+  ${typography.Caption1};
+  color: ${colors.semantic.text.alternative};
+  margin: 0;
+`;
+
+export const TitleText = styled.p`
+  ${typography.Sub1};
+  margin: 4px 0 0 0;
+`;
+
+export const InfoText = styled.p`
+  ${typography.Body2};
+  color: ${colors.semantic.text.alternative};
+  margin: 4px 0 0 0;
 `;

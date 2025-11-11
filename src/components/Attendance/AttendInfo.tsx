@@ -1,6 +1,5 @@
 import * as S from '@/styles/attend/AttendMain.styled';
 import * as A from '@/styles/attend/AttendInfo.styled';
-import theme from '@/styles/theme';
 import Button from '@/components/Button/Button';
 import checkTitle from '@/hooks/checkTitle';
 import { colors } from '@/theme/designTokens';
@@ -40,21 +39,23 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
 
   return (
     <div>
-      <S.SemiBold>
+      <S.TitleText>
         <A.AttendProject>
           오늘은
-          <span style={{ color: theme.color.main }}>&quot;{title}&quot;</span>
+          <span style={{ color: colors.semantic.brand.primary }}>
+            &quot;{title}&quot;
+          </span>
           {checkTitle(title)} 있는 날이에요
         </A.AttendProject>
-      </S.SemiBold>
+      </S.TitleText>
       <A.AttendDate>
         날짜: {startDateTime} {endDateTime}
       </A.AttendDate>
       <A.AttendPlace>장소: {location}</A.AttendPlace>
       <A.AttendButton>
         <Button
-          width="315px"
-          height="50px"
+          width="100%"
+          height="48px"
           color={getColor()}
           textcolor={getTextColor()}
           disabled={isDisabled}
@@ -70,10 +71,8 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
 export const NoAttnedInfo = () => {
   return (
     <div>
-      <S.SemiBold>
-        <A.AttendProject>오늘은 일정이 없어요</A.AttendProject>
-      </S.SemiBold>
-      <A.AttendPlace>동아리원과 스터디를 하는건 어때요?</A.AttendPlace>
+      <S.TitleText>오늘은 일정이 없어요</S.TitleText>
+      <S.InfoText>동아리원과 스터디를 하는건 어때요?</S.InfoText>
     </div>
   );
 };
