@@ -3,12 +3,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import warningIcon from '@/assets/images/ic_toast_warning.svg';
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 
 const CustomToastContainer = styled(ToastContainer).attrs({})`
   .Toastify__toast {
     border-radius: 50px;
-    color: white;
+    color: ${colors.semantic.text.normal};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,13 +21,13 @@ const CustomToastContainer = styled(ToastContainer).attrs({})`
   }
 
   .Toastify__toast--success {
-    background: ${theme.color.positive};
+    background: ${colors.semantic.state.success};
   }
   .Toastify__toast--info {
-    background: ${theme.color.negative};
+    background: ${colors.semantic.container.neutral};
   }
   .Toastify__toast--error {
-    background: ${theme.color.gray[30]};
+    background: ${colors.semantic.state.error};
   }
   .Toastify__close-button {
     display: none;

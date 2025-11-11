@@ -1,4 +1,4 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 const Switch = styled.label<{ $isMeeting: boolean; $isEditMode: boolean }>`
@@ -11,7 +11,9 @@ const Switch = styled.label<{ $isMeeting: boolean; $isEditMode: boolean }>`
   border-radius: 10px;
 
   background-color: ${(props) =>
-    props.$isMeeting ? theme.color.mainMiddle : theme.color.gray[65]};
+    props.$isMeeting
+      ? colors.dark.primary[200]
+      : colors.semantic.button.disabled};
   cursor: ${(props) => (props.$isEditMode ? 'default' : 'pointer')};
 `;
 
@@ -26,7 +28,6 @@ const Slider = styled.span<{ $isMeeting: boolean; $isEditMode: boolean }>`
   align-items: center;
   position: absolute;
   cursor: ${(props) => (props.$isEditMode ? 'default' : 'pointer')};
-  background-color: ${theme.color.gray[18]};
   transition: 0.4s;
 
   &:before {

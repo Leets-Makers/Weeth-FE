@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import close from '@/assets/images/ic_close.svg';
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 
 const Container = styled.div`
   position: fixed;
@@ -30,8 +30,7 @@ const Content = styled.div<{
   width: 325px;
   box-sizing: border-box;
 
-  background-color: ${({ $isDelete }) =>
-    $isDelete ? theme.color.gray[12] : theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   border-radius: 20px;
   font-size: 14px;
 

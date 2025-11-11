@@ -1,6 +1,7 @@
 import Modal from '@/components/common/Modal';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const Title = styled.div`
 
 const Description = styled.div`
   font-size: 14px;
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
   font-weight: 500;
   margin-top: 15px;
 `;
@@ -43,10 +44,11 @@ const ModalButton = styled.button`
 `;
 
 const CancelButton = styled(ModalButton)`
-  background: ${theme.color.gray[30]};
+  background: ${colors.semantic.button.neutral};
   &:hover {
     opacity: 0.7;
   }
+  cursor: pointer;
 `;
 
 const ActionButton = styled(ModalButton)<{
@@ -55,14 +57,15 @@ const ActionButton = styled(ModalButton)<{
 }>`
   display: ${(props) => (props.$visible ? 'flex' : 'none')};
   background: ${(props) =>
-    props.type === 'positive' ? theme.color.main : theme.color.negative};
+    props.type === 'positive'
+      ? colors.semantic.brand.primary
+      : colors.semantic.state.error};
   &:hover {
     background: ${(props) =>
-      props.type === 'positive'
-        ? theme.color.mainDark
-        : theme.color.negativeDark};
-    color: ${theme.color.gray[30]};
+      props.type === 'positive' ? colors.dark.primary[200] : '#BF4242'};
+    color: ${colors.semantic.text.alternative};
   }
+  cursor: pointer;
 `;
 const SelectModal = ({
   title,

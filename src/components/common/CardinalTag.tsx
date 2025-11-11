@@ -13,7 +13,10 @@ const Container = styled.div<{ type: 'member' | 'mypage' }>`
     props.type === 'mypage'
       ? colors.semantic.icon.alternative
       : colors.semantic.icon.nomal};
-  color: ${(props) => (props.type === 'mypage' ? 'white' : 'black')};
+  color: ${(props) =>
+    props.type === 'mypage'
+      ? colors.semantic.text.strong
+      : colors.semantic.text.inverse};
   font-size: 12px;
   font-family: ${theme.font.semiBold};
 `;

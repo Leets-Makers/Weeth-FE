@@ -1,10 +1,10 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 const LineStyle = styled.div<{ width: string }>`
   width: ${(props) => props.width};
   height: 1px;
-  background-color: ${theme.color.gray[30]};
+  background-color: ${colors.semantic.line}
   margin: 0 auto;
 `;
 
