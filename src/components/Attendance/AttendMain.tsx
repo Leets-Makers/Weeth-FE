@@ -109,6 +109,12 @@ const AttendMain: React.FC = () => {
     );
   }, [penaltyInfo]);
 
+  useEffect(() => {
+    if (attendInfo?.status === 'ATTEND') {
+      setIsAttend(true);
+    }
+  }, [attendInfo?.status]);
+
   const smartLoading = useSmartCombinedLoading(attendLoading, penaltyLoading);
   if (smartLoading) return <Loading />;
 

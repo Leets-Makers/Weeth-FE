@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   StyledModal,
   ModalContent,
@@ -5,47 +6,42 @@ import {
 } from '@/styles/attend/CommonModal.styled';
 import * as S from '@/styles/attend/ModalAttend.styled';
 
-import { ChangeEvent, useEffect, useState } from 'react';
-
 import check from '@/assets/images/ic_check.svg';
 import icClose from '@/assets/images/ic_close.svg';
 import Correct from '@/assets/images/ic_correct.svg?react';
 import Wrong from '@/assets/images/ic_wrong.svg?react';
+
 import Button from '@/components/Button/Button';
 import patchAttend from '@/api/patchAttend';
 import Tag from '@/components/Event/Tag';
 import { toastInfo } from '@/components/common/ToastMessage';
 import { colors } from '@/theme/designTokens';
 
-const RightContainer: React.FC = () => {
-  return (
-    <>
-      <S.ImgContainer>
-        <Correct color={colors.semantic.brand.primary} />
-      </S.ImgContainer>
-      <S.TextContainer>저장 되었습니다.</S.TextContainer>
-    </>
-  );
-};
-
-const WrongContainer: React.FC<{ message: string }> = ({ message }) => {
-  return (
-    <>
-      <S.ImgContainer>
-        <Wrong color={colors.semantic.state.error} />
-      </S.ImgContainer>
-      <S.TextContainer>{message}</S.TextContainer>
-    </>
-  );
-};
-
+// 하위 UI 컴포넌트들
 const CloseButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
   <S.ImgButton onClick={onClick}>
     <img src={icClose} alt="닫기" />
   </S.ImgButton>
 );
 
-const ModalAttend: React.FC<{
+const FeedbackContainer: React.FC<{
+  type: 'success' | 'error';
+  message: string;
+}> = ({ type, message }) => (
+  <>
+    <S.ImgContainer>
+      {type === 'success' ? (
+        <Correct stroke={colors.semantic.brand.primary} />
+      ) : (
+        <Wrong color={colors.semantic.state.error} />
+      )}
+    </S.ImgContainer>
+    <S.TextContainer>{message}</S.TextContainer>
+  </>
+);
+
+// 출석 모달
+interface ModalAttendProps {
   title: string;
   location: string;
   startDateTime: string;
@@ -53,7 +49,9 @@ const ModalAttend: React.FC<{
   open: boolean;
   close: () => void;
   handleAttend: (attended: boolean) => void;
-}> = ({
+}
+
+const ModalAttend: React.FC<ModalAttendProps> = ({
   title,
   location,
   startDateTime,
@@ -62,59 +60,62 @@ const ModalAttend: React.FC<{
   close,
   handleAttend,
 }) => {
-  const [codeCheck, setCodeCheck] = useState(0);
   const [inputValue, setInputValue] = useState('');
-  const [message, setMessage] = useState('');
+  const [feedback, setFeedback] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
+  // 모달 닫힐 때 상태 초기화
   useEffect(() => {
     if (!open) {
-      setCodeCheck(0);
       setInputValue('');
+      setFeedback({ type: null, message: '' });
     }
   }, [open]);
 
-  const handleCompleteBtn = async () => {
-    if (!inputValue) {
-      toastInfo('코드를 입력해 주세요');
-      return;
-    }
-    if (inputValue.length < 4) {
-      toastInfo('4자리 숫자를 입력해 주세요.');
-      return;
-    }
+  // 입력 변경 핸들러
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    if (/^\d{0,4}$/.test(value)) setInputValue(value);
+  };
+
+  // 입력 완료 처리
+  // eslint-disable-next-line consistent-return
+  const handleSubmit = async () => {
+    if (!inputValue) return toastInfo('코드를 입력해 주세요');
+    if (inputValue.length < 4) return toastInfo('4자리 숫자를 입력해 주세요.');
+
     try {
       const response = await patchAttend({ code: inputValue });
-      if (response.data.code === 200) {
-        setCodeCheck(1); // Correct
-        setMessage('출석 처리가 성공적으로 완료되었습니다.');
-        // 출석 처리 성공 후 2초 뒤 모달 닫기
+      const isSuccess = response.data.code === 200;
+
+      if (isSuccess) {
+        setFeedback({
+          type: 'success',
+          message: '출석 처리가 성공적으로 완료되었습니다.',
+        });
         setTimeout(() => {
           handleAttend(true);
           close();
         }, 2000);
       } else {
-        setCodeCheck(2); // Wrong
-        setMessage(response.data.message || '출석 처리에 실패했습니다.');
+        setFeedback({
+          type: 'error',
+          message: response.data.message || '출석 처리에 실패했습니다.',
+        });
       }
     } catch (error: any) {
-      setCodeCheck(2); // Wrong
-      const errorMessage =
-        error.response?.data?.message || '출석 처리 중 문제가 발생했습니다.';
-      setMessage(errorMessage);
-      console.error(error);
+      setFeedback({
+        type: 'error',
+        message:
+          error.response?.data?.message || '출석 처리 중 문제가 발생했습니다.',
+      });
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    if (/^\d{0,4}$/.test(value)) {
-      setInputValue(value);
-    }
-  };
   const handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-      handleCompleteBtn();
-    }
+    if (event.key === 'Enter') handleSubmit();
   };
 
   return (
@@ -124,35 +125,39 @@ const ModalAttend: React.FC<{
           <img src={check} alt="체크" />
           <CloseButton onClick={close} />
         </ModalHeader>
-        <div>
-          <S.SemiBoldContainer>
-            출석하기
-            <S.Highlight>{title}</S.Highlight>
-          </S.SemiBoldContainer>
-          <Tag />
-          <S.RegularConatiner>
-            <div>
-              날짜: {startDateTime} {endDateTime}
-            </div>
-            <div>장소: {location}</div>
-          </S.RegularConatiner>
-          <S.Line />
-          <S.CenterContainer>
-            <S.ModalInput
-              type="text"
-              placeholder="코드를 입력하세요"
-              value={inputValue}
-              onChange={handleChange}
-              onKeyPress={handleKeyPress}
-            />
-            <Button onClick={handleCompleteBtn} width="285px" height="45px">
-              입력완료
-            </Button>
-          </S.CenterContainer>
-        </div>
-        {codeCheck === 0 && <div> </div>}
-        {codeCheck === 1 && <RightContainer />}
-        {codeCheck === 2 && <WrongContainer message={message} />}
+
+        {/* 상단 정보 */}
+        <S.SemiBoldContainer>
+          출석하기 <S.Highlight>{title}</S.Highlight>
+        </S.SemiBoldContainer>
+        <Tag />
+        <S.RegularConatiner>
+          <div>
+            날짜: {startDateTime} {endDateTime}
+          </div>
+          <div>장소: {location}</div>
+        </S.RegularConatiner>
+
+        <S.Line />
+
+        {/* 입력 영역 */}
+        <S.CenterContainer>
+          <S.ModalInput
+            type="text"
+            placeholder="코드를 입력하세요"
+            value={inputValue}
+            onChange={handleChange}
+            onKeyPress={handleKeyPress}
+          />
+          <Button onClick={handleSubmit} width="285px" height="45px">
+            입력완료
+          </Button>
+        </S.CenterContainer>
+
+        {/* 결과 영역 */}
+        {feedback.type && (
+          <FeedbackContainer type={feedback.type} message={feedback.message} />
+        )}
       </ModalContent>
     </StyledModal>
   );
