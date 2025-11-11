@@ -1,5 +1,5 @@
-import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -13,24 +13,24 @@ export const Header = styled.div`
   margin-left: 8%;
 `;
 
-export const SemiTitle = styled.div`
+export const Sub2Text = styled.div`
+  ${typography.Sub2};
+  margin-top: 2.2px;
+`;
+
+export const Body1Text = styled.div`
+  ${typography.Body1};
+`;
+
+export const SemiTitle = styled(Body1Text)`
   display: flex;
   flex-direction: row;
   margin-top: 25px;
-  font-size: 16px;
 `;
 
 export const AttendCount = styled.div`
-  font-family: ${theme.font.semiBold};
   margin-top: 19px;
-  font-size: 32px;
-`;
-
-export const SemiBold = styled.div`
-  font-family: ${theme.font.semiBold};
-  include-font-padding: false;
-  display: flex;
-  flex-direction: row;
+  ${typography.H2};
 `;
 
 export const StyledBox = styled.div`
@@ -47,17 +47,18 @@ export const StyledBox = styled.div`
 
 export const SmallStyledBoxContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   position: relative;
+  margin-bottom: 40px;
 
   &::before {
     content: '';
     position: absolute;
-    height: 10px;
+    height: 1px;
     width: 100%;
-    backround-color: ${colors.semantic.line};
-    top: 15px;
+    background-color: ${colors.semantic.line};
+    bottom: -20px;
   }
 `;
 
