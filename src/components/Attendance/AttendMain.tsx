@@ -10,6 +10,8 @@ import {
 import useGetAttend from '@/api/useGetAttend';
 import useGetPenalty from '@/api/useGetPenalty';
 
+import RightArrow from '@/assets/images/ic_right.svg?react';
+
 import { AttendInfo, NoAttnedInfo } from '@/components/Attendance/AttendInfo';
 import AttendRate from '@/components/Attendance/AttendRate';
 import {
@@ -26,6 +28,8 @@ import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
+import { useNavigate } from 'react-router-dom';
+import { colors } from '@/theme/designTokens';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -44,6 +48,8 @@ const AttendMain: React.FC = () => {
     hasSchedule,
     isLoading: attendLoading,
   } = useGetAttend(isAttend);
+
+  const navi = useNavigate();
 
   useEffect(() => {
     const has =
@@ -106,6 +112,13 @@ const AttendMain: React.FC = () => {
       <S.StyledBox>
         <S.BoxHeader>
           <S.CaptionText>오늘의 출석</S.CaptionText>
+          <RightArrow
+            width={6.58}
+            height={11.17}
+            color={colors.semantic.icon.alternative}
+            onClick={() => navi('/attendCheck')}
+            style={{ padding: '6px 9px', cursor: 'pointer' }}
+          />
         </S.BoxHeader>
 
         {hasSchedule && attendInfo ? (
@@ -123,7 +136,16 @@ const AttendMain: React.FC = () => {
         )}
       </S.StyledBox>
       <S.StyledBox>
-        <S.CaptionText>패널티</S.CaptionText>
+        <S.BoxHeader>
+          <S.CaptionText>패널티</S.CaptionText>
+          <RightArrow
+            width={6.58}
+            height={11.17}
+            color={colors.semantic.icon.alternative}
+            onClick={() => navi('/penalty')}
+            style={{ padding: '6px 9px', cursor: 'pointer' }}
+          />
+        </S.BoxHeader>
         {penaltyInfo?.penaltyCount === null ? (
           <S.TitleText>
             <AttendProject>등록된 데이터가 없습니다.</AttendProject>

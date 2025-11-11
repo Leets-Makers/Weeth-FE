@@ -23,6 +23,7 @@ export const StyledAttend = styled.div`
 
 export const BoxHeader = styled.div`
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 `;
