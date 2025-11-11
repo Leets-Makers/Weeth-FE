@@ -9,18 +9,19 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 import check from '@/assets/images/ic_check.svg';
 import icClose from '@/assets/images/ic_close.svg';
-import correct from '@/assets/images/ic_correct.svg';
-import wrong from '@/assets/images/ic_wrong.svg';
+import Correct from '@/assets/images/ic_correct.svg?react';
+import Wrong from '@/assets/images/ic_wrong.svg?react';
 import Button from '@/components/Button/Button';
 import patchAttend from '@/api/patchAttend';
 import Tag from '@/components/Event/Tag';
 import { toastInfo } from '@/components/common/ToastMessage';
+import { colors } from '@/theme/designTokens';
 
 const RightContainer: React.FC = () => {
   return (
     <>
       <S.ImgContainer>
-        <img src={correct} alt="정확한 입력 이미지" />
+        <Correct color={colors.semantic.brand.primary} />
       </S.ImgContainer>
       <S.TextContainer>저장 되었습니다.</S.TextContainer>
     </>
@@ -31,7 +32,7 @@ const WrongContainer: React.FC<{ message: string }> = ({ message }) => {
   return (
     <>
       <S.ImgContainer>
-        <img src={wrong} alt="잘못된 입력 이미지" />
+        <Wrong color={colors.semantic.state.error} />
       </S.ImgContainer>
       <S.TextContainer>{message}</S.TextContainer>
     </>
@@ -125,7 +126,7 @@ const ModalAttend: React.FC<{
         </ModalHeader>
         <div>
           <S.SemiBoldContainer>
-            <div>출석하기</div>
+            출석하기
             <S.Highlight>{title}</S.Highlight>
           </S.SemiBoldContainer>
           <Tag />

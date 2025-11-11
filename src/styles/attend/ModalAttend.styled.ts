@@ -36,12 +36,12 @@ export const ModalInput = styled.input`
   border-radius: 4px;
   border: none;
   outline: none;
-  background-color: ${theme.color.gray[12]};
-  color: ${theme.color.gray[100]};
+  background-color: ${colors.dark.neutral[200]};
+  color: ${colors.semantic.text.strong};
   font-size: 16px;
   box-sizing: border-box;
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
     font-size: 16px;
   }
 `;
@@ -73,6 +73,6 @@ export const CenterContainer = styled.div`
 export const Highlight = styled.div`
   font-family: ${theme.font.semiBold};
   font-size: 20px;
-  color: ${theme.color.main};
+  color: ${colors.semantic.brand.primary};
   margin-bottom: 5px;
 `;
