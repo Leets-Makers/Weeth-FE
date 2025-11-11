@@ -51,7 +51,6 @@ const AttendCheckMain: React.FC = () => {
             num={`${attendCheckInfo.absenceCount}회`}
           />
         </S.SmallStyledBoxContainer>
-        <S.Line />
         {attendCheckInfo.attendances.length > 0 ? (
           attendCheckInfo.attendances.map((meeting: MeetingProps) => {
             return (

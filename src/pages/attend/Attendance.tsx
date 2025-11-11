@@ -5,7 +5,7 @@ import { pcResponsive } from '@/styles';
 import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const AttendContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,7 @@ const Container = styled.div`
   min-width: ${units.device.mobile}px;
   ${pcResponsive}
   box-sizing: border-box;
+  margin-bottom: 50px;
 `;
 
 const Attendance: React.FC = () => {
@@ -21,9 +22,9 @@ const Attendance: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <MobileGNB />
-      <Container>
+      <AttendContainer>
         <AttendMain />
-      </Container>
+      </AttendContainer>
     </div>
   );
 };

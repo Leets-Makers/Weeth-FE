@@ -1,4 +1,5 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 interface SmallBoxProps {
@@ -7,25 +8,24 @@ interface SmallBoxProps {
 }
 
 const SmallStyledBox = styled.div`
-  background-color: ${theme.color.gray[30]};
+  background-color: ${colors.semantic.button.neutral};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 95px;
+  width: 30%;
   height: 93px;
   text-align: center;
 `;
 
 const SmallBoxTitle = styled.div`
   margin-top: 15px;
-  font-size: 14px;
+  ${typography.Body2};
 `;
 
 const SmallBoxNum = styled.div`
   margin-top: 20px;
-  font-size: 18px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub1};
 `;
 
 const AttendCheckInfoBox: React.FC<SmallBoxProps> = ({ title, num }) => {
