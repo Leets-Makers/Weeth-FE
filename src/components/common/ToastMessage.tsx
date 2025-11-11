@@ -24,10 +24,10 @@ const CustomToastContainer = styled(ToastContainer).attrs({})`
     background: ${colors.semantic.state.success};
   }
   .Toastify__toast--info {
-    background: ${colors.semantic.container.neutral};
+    background: ${colors.semantic.state.error};
   }
   .Toastify__toast--error {
-    background: ${colors.semantic.state.error};
+    background: ${colors.semantic.container['neutral-interaction']};
   }
   .Toastify__close-button {
     display: none;

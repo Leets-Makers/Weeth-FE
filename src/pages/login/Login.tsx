@@ -47,7 +47,7 @@ const TextMargin = styled.div`
 
 const ErrorMessage = styled.div`
   right: 0;
-  color: ${colors.semantic.state.error}
+  color: ${colors.semantic.state.error};
   margin: 15px 0 0 -5%;
   font-size: 14px;
   text-align: right;

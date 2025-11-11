@@ -24,7 +24,7 @@ const DropdownButton = styled.div<{ $hasValue: boolean }>`
   height: 100%;
   outline: none;
   background-color: ${colors.semantic.button.neutral};
-  color: ${colors.semantic.text.normal}
+  color: ${colors.semantic.text.normal};
   font-size: 14px;
   border-radius: 10px;
   padding: 0 10px 0 15px;

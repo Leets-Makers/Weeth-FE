@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const LineStyle = styled.div<{ width: string }>`
   width: ${(props) => props.width};
   height: 1px;
-  background-color: ${colors.semantic.line}
+  background-color: ${colors.semantic.line};
   margin: 0 auto;
 `;
 
