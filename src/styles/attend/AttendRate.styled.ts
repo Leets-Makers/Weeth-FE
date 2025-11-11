@@ -1,4 +1,4 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const TitleWrapper = styled.div`
@@ -23,10 +23,12 @@ export const RightButtonWrapper = styled.div`
 `;
 
 export const Progress = styled.div<{ $attendPercent: number }>`
-  width: 325px;
+  width: 100%;
   height: 19px;
   background-color: ${({ $attendPercent }) =>
-    $attendPercent === 0 ? theme.color.gray[20] : theme.color.negative};
+    $attendPercent === 0
+      ? colors.semantic.container.neutral
+      : colors.semantic.state.error};
   border-radius: 10px;
   overflow: hidden;
   margin: 5% 10px 0px 10px;
@@ -36,7 +38,7 @@ export const Dealt = styled.div<{ $dealt: number }>`
   width: ${(props) => `${props.$dealt}%`};
   height: 100%;
   border-radius: 10px;
-  background-color: ${theme.color.main};
+  background-color: ${colors.semantic.brand.primary};
 `;
 
 export const AttendPercent = styled.div`

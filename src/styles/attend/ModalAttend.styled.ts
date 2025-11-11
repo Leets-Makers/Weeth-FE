@@ -1,8 +1,9 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const Line = styled.div`
-  border: 1px solid #4d4d4d;
+  border: 1px solid ${colors.semantic.line};
   width: 285px;
   margin: 0 auto;
 `;

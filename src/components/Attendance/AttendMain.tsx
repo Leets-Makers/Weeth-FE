@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import check from '@/assets/images/ic_check.svg';
-import warning from '@/assets/images/ic_warning.svg';
-
 import * as S from '@/styles/attend/AttendMain.styled';
 import { AttendProject } from '@/styles/attend/AttendInfo.styled';
 import {
@@ -107,7 +104,6 @@ const AttendMain: React.FC = () => {
     <S.StyledAttend>
       <AttendRate attendRate={attendInfo?.attendanceRate} />
       <S.StyledBox>
-        <img src={check} alt="v" />
         {hasSchedule && attendInfo ? (
           <AttendInfo
             title={title}
@@ -123,7 +119,6 @@ const AttendMain: React.FC = () => {
         )}
       </S.StyledBox>
       <S.StyledBox>
-        <img src={warning} alt="!" />
         {penaltyInfo?.penaltyCount === null ? (
           <S.SemiBold>
             <AttendProject>등록된 데이터가 없습니다.</AttendProject>

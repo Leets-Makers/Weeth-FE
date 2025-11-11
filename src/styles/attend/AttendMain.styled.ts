@@ -1,9 +1,10 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const StyledBox = styled.div`
-  width: 315px;
-  background-color: ${theme.color.gray[18]};
+  width: 100%;
+  background-color: ${colors.semantic.container.neutral};
   border-radius: 10px;
   padding: 15px;
   margin-top: 20px;

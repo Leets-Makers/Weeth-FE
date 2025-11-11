@@ -3,6 +3,7 @@ import * as A from '@/styles/attend/AttendInfo.styled';
 import theme from '@/styles/theme';
 import Button from '@/components/Button/Button';
 import checkTitle from '@/hooks/checkTitle';
+import { colors } from '@/theme/designTokens';
 
 interface AttendInfoProps {
   title: string;
@@ -24,15 +25,15 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   isAttend,
 }) => {
   const getColor = () => {
-    if (isAttend) return theme.color.mainDark;
-    if (!isWithinTimeRange) return theme.color.gray[30];
-    return theme.color.main;
+    if (isAttend) return colors.dark.primary[200];
+    if (!isWithinTimeRange) return colors.semantic.button.neutral;
+    return colors.semantic.brand.primary;
   };
 
   const getTextColor = () => {
     return isAttend || !isWithinTimeRange
-      ? theme.color.gray[20]
-      : theme.color.gray[100];
+      ? colors.semantic.text.alternative
+      : colors.semantic.text.strong;
   };
 
   const isDisabled = isAttend || !isWithinTimeRange;
