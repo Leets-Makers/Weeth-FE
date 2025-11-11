@@ -6,7 +6,6 @@ export const TitleWrapper = styled.div`
   ${typography.H3};
   display: block;
   width: 100%;
-  margin-top: ${units.margin[500]}px;
 `;
 
 export const Progress = styled.div<{ $attendPercent: number }>`

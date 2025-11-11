@@ -1,24 +1,30 @@
 import AttendMain from '@/components/Attendance/AttendMain';
+import MobileGNB from '@/components/Navigation/MobileGNB ';
 import useCustomBack from '@/hooks/useCustomBack';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
+import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: ${MOBILE};
-  min-width: ${MOBILE};
-  margin-bottom: 50px;
-  ${pcResponsive};
+  padding: 8px 18px 18px 18px;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
+  box-sizing: border-box;
 `;
 
 const Attendance: React.FC = () => {
   useCustomBack('/home');
 
   return (
-    <Container>
-      <AttendMain />
-    </Container>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <MobileGNB />
+      <Container>
+        <AttendMain />
+      </Container>
+    </div>
   );
 };
 
