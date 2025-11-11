@@ -1,5 +1,4 @@
 import * as S from '@/styles/attend/AttendMain.styled';
-import * as A from '@/styles/attend/AttendInfo.styled';
 import Button from '@/components/Button/Button';
 import checkTitle from '@/hooks/checkTitle';
 import { colors } from '@/theme/designTokens';
@@ -32,7 +31,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   const getTextColor = () => {
     return isAttend || !isWithinTimeRange
       ? colors.semantic.text.alternative
-      : colors.semantic.text.strong;
+      : colors.semantic.text.inverse;
   };
 
   const isDisabled = isAttend || !isWithinTimeRange;
@@ -40,30 +39,28 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   return (
     <div>
       <S.TitleText>
-        <A.AttendProject>
-          오늘은
-          <span style={{ color: colors.semantic.brand.primary }}>
-            &quot;{title}&quot;
-          </span>
-          {checkTitle(title)} 있는 날이에요
-        </A.AttendProject>
+        오늘은
+        <span style={{ color: colors.semantic.brand.primary }}>
+          &quot;{title}&quot;
+        </span>
+        {checkTitle(title)} 있는 날이에요
       </S.TitleText>
-      <A.AttendDate>
+
+      <S.InfoText style={{ margin: '10px 0 32px 0', color: 'white' }}>
         날짜: {startDateTime} {endDateTime}
-      </A.AttendDate>
-      <A.AttendPlace>장소: {location}</A.AttendPlace>
-      <A.AttendButton>
-        <Button
-          width="100%"
-          height="48px"
-          color={getColor()}
-          textcolor={getTextColor()}
-          disabled={isDisabled}
-          onClick={!isAttend && isWithinTimeRange ? handleOpenModal : undefined}
-        >
-          {isAttend ? '출석완료' : '출석하기'}
-        </Button>
-      </A.AttendButton>
+        <br />
+        장소: {location}
+      </S.InfoText>
+
+      <Button
+        height="48px"
+        color={getColor()}
+        textcolor={getTextColor()}
+        disabled={isDisabled}
+        onClick={!isAttend && isWithinTimeRange ? handleOpenModal : undefined}
+      >
+        {isAttend ? '출석완료' : '출석하기'}
+      </Button>
     </div>
   );
 };

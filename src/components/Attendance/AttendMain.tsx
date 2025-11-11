@@ -9,7 +9,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import isBetween from 'dayjs/plugin/isBetween';
 
 import * as S from '@/styles/attend/AttendMain.styled';
-import { AttendProject } from '@/styles/attend/AttendInfo.styled';
 import {
   PenaltyContainer,
   NoPenaltyInfo,
@@ -151,9 +150,7 @@ const AttendMain: React.FC = () => {
       {/* 패널티 */}
       <AttendSection title="패널티" link="/penalty">
         {penaltyInfo?.penaltyCount == null ? (
-          <S.TitleText>
-            <AttendProject>등록된 데이터가 없습니다.</AttendProject>
-          </S.TitleText>
+          <S.TitleText>등록된 데이터가 없습니다.</S.TitleText>
         ) : hasPenalty ? (
           <>
             <MyPenaltyInfo
