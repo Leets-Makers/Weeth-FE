@@ -18,7 +18,6 @@ export const StyledAttend = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  include-font-padding: false;
 `;
 
 export const SemiBold = styled.div`
