@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import {
   StyledModal,
   ModalContent,
@@ -66,13 +66,29 @@ const ModalAttend: React.FC<ModalAttendProps> = ({
     message: string;
   }>({ type: null, message: '' });
 
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   // 모달 닫힐 때 상태 초기화
   useEffect(() => {
     if (!open) {
       setInputValue('');
       setFeedback({ type: null, message: '' });
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     }
   }, [open]);
+
+  useEffect(
+    () => () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    },
+    [],
+  );
 
   // 입력 변경 핸들러
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -95,9 +111,14 @@ const ModalAttend: React.FC<ModalAttendProps> = ({
           type: 'success',
           message: '출석 처리가 성공적으로 완료되었습니다.',
         });
-        setTimeout(() => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+        timeoutRef.current = setTimeout(() => {
           handleAttend(true);
           close();
+
+          timeoutRef.current = null;
         }, 2000);
       } else {
         setFeedback({
