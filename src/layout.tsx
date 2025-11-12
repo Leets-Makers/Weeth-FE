@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<DelayedFallback delay={300} minDuration={1000} />}>
+      <Suspense fallback={<DelayedFallback delay={300} />}>
         <Outlet />
       </Suspense>
     </>

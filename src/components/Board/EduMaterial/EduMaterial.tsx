@@ -2,33 +2,24 @@ import * as S from '@/styles/board/Board.styled';
 import { useNavigate } from 'react-router-dom';
 import Cardinal from '@/components/Board/EduMaterial/Cardinal';
 import SlideEdu from '@/components/Board/EduMaterial/SlideEdu';
-import useGetEducationBoard from '@/api/useGetEducationBoard';
-import { useState } from 'react';
-import Loading from '@/components/common/Loading';
-import useSmartLoading from '@/hooks/useSmartLoading';
+import { PartEduContent } from '@/types/education';
 
-const EduMaterial = () => {
+interface EduMaterialProps {
+  data: PartEduContent[];
+  selectedCardinal: number | null;
+  onCardinalChange: (value: number | null) => void;
+}
+
+const EduMaterial = ({
+  data,
+  selectedCardinal,
+  onCardinalChange,
+}: EduMaterialProps) => {
   const navigate = useNavigate();
-  const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
+
   const handleAllEdu = () => {
     navigate('/board/education/ALL');
   };
-
-  const { data, isLoading } = useGetEducationBoard({
-    part: 'ALL',
-    cardinalNumber: selectedCardinal || undefined,
-    pageSize: 10,
-    pageNumber: 0,
-  });
-  const recentEdu = data?.pages.flatMap((page) => page.content) ?? [];
-
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!isLoading) resolve();
-    }),
-  );
-
-  if (smartLoading) return <Loading />;
 
   return (
     <S.NoticePreviewContainer>
@@ -42,9 +33,9 @@ const EduMaterial = () => {
             참여하신 기수의 자료만 볼 수 있습니다.
           </S.EduAddContent>
         </S.EduTitle>
-        <Cardinal value={selectedCardinal} onChange={setSelectedCardinal} />
+        <Cardinal value={selectedCardinal} onChange={onCardinalChange} />
       </S.CardContainer>
-      <SlideEdu recentEdu={recentEdu} />
+      <SlideEdu recentEdu={data} />
     </S.NoticePreviewContainer>
   );
 };

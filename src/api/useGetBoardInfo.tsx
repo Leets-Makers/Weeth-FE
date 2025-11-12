@@ -1,20 +1,21 @@
 import api from '@/api/api';
+import { BoardContent } from '@/types/board';
 import { useState, useEffect } from 'react';
 
-interface Content {
-  id: number;
-  name: string;
-  position: string;
-  role: string;
-  title: string;
-  content: string;
-  studyName: string;
-  week: number;
-  time: string;
-  commentCount: number;
-  hasFile: boolean;
-  isNew: boolean;
-}
+// interface Content {
+//   id: number;
+//   name: string;
+//   position: string;
+//   role: string;
+//   title: string;
+//   content: string;
+//   studyName: string;
+//   week: number;
+//   time: string;
+//   commentCount: number;
+//   hasFile: boolean;
+//   isNew: boolean;
+// }
 
 interface Sort {
   empty: boolean;
@@ -36,7 +37,7 @@ interface ApiResponse {
   message: string;
   data: {
     size: number;
-    content: Content[];
+    content: BoardContent[];
     number: number;
     sort: Sort;
     pageable: Pageable;
@@ -50,7 +51,7 @@ interface ApiResponse {
 export const useGetBoardInfo = async (
   path: string,
   pageNumber: number,
-  setPosts: React.Dispatch<React.SetStateAction<Content[]>>,
+  setPosts: React.Dispatch<React.SetStateAction<BoardContent[]>>,
   setHasMore: React.Dispatch<React.SetStateAction<boolean>>,
   setObserverLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
@@ -73,7 +74,7 @@ export const useGetBoardInfo = async (
 
 // 최신 공지사항 10개를 가져오는 훅
 export const useGetRecentNotice = () => {
-  const [recentNotices, setRecentNotices] = useState<Content[]>([]);
+  const [recentNotices, setRecentNotices] = useState<BoardContent[]>([]);
   const [recentNoticeLoading, setRecentNoticeLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

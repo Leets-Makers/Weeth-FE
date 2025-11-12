@@ -7,28 +7,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
-import { BoardContent } from '@/pages/board/Board';
+
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import useSmartLoading, {
   useSmartCombinedLoading,
 } from '@/hooks/useSmartLoading';
-
-interface Content {
-  id: number;
-  name: string;
-  title: string;
-  content: string;
-  time: string;
-  commentCount: number;
-  hasFile: boolean;
-  position: string;
-  role: string;
-  isNew: boolean;
-  studyName: string;
-  week: number;
-}
+import { BoardContent } from '@/types/board';
 
 const BoardNotice = () => {
   useCustomBack('/board');
@@ -38,7 +24,7 @@ const BoardNotice = () => {
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const [posts, setPosts] = useState<Content[]>([]);
+  const [posts, setPosts] = useState<BoardContent[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
   const [observerLoading, setObserverLoading] = useState(false);

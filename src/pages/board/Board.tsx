@@ -9,31 +9,22 @@ import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
 import useGetAllCardinals from '@/api/useGetCardinals';
-
-export interface BoardContent {
-  id: number;
-  name: string;
-  title: string;
-  content: string;
-  time: string;
-  commentCount: number;
-  hasFile: boolean;
-  position: string;
-  role: string;
-  isNew: boolean;
-  studyName: string;
-  week: number;
-  parts: string[];
-}
+import { useState } from 'react';
 
 const Board = () => {
   useCustomBack('/home');
 
   const { currentCardinal } = useGetAllCardinals();
-  const { recentNoticeLoading } = useGetRecentNotice();
-  const { isLoading: eduLoading } = useGetEducationBoard({
+
+  const [selectedCardinal, setSelectedCardinal] = useState<number | null>(
+    currentCardinal ?? null,
+  );
+
+  const { recentNotices, recentNoticeLoading } = useGetRecentNotice();
+
+  const { data: eduBoardData, isLoading: eduLoading } = useGetEducationBoard({
     part: 'ALL',
-    cardinalNumber: currentCardinal ?? 0,
+    cardinalNumber: selectedCardinal ?? currentCardinal ?? 0,
     pageSize: 10,
     pageNumber: 0,
   });
@@ -43,13 +34,14 @@ const Board = () => {
     eduLoading,
   );
 
-  if (combinedLoading) {
+  if (combinedLoading)
     return (
       <S.Container>
         <Loading />
       </S.Container>
     );
-  }
+
+  const recentEdu = eduBoardData?.pages.flatMap((page) => page.content) ?? [];
 
   return (
     <S.Container>
@@ -58,8 +50,12 @@ const Board = () => {
       </Header>
       <S.BoardContainer>
         <PartBoard />
-        <NoticePreview />
-        <EduMaterial />
+        <NoticePreview data={recentNotices} />
+        <EduMaterial
+          data={recentEdu}
+          selectedCardinal={selectedCardinal}
+          onCardinalChange={setSelectedCardinal}
+        />
       </S.BoardContainer>
     </S.Container>
   );
