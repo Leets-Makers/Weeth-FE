@@ -4,6 +4,8 @@ import Cardinal from '@/components/Board/EduMaterial/Cardinal';
 import SlideEdu from '@/components/Board/EduMaterial/SlideEdu';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import { useState } from 'react';
+import Loading from '@/components/common/Loading';
+import useSmartLoading from '@/hooks/useSmartLoading';
 
 const EduMaterial = () => {
   const navigate = useNavigate();
@@ -12,13 +14,21 @@ const EduMaterial = () => {
     navigate('/board/education/ALL');
   };
 
-  const { data } = useGetEducationBoard({
+  const { data, isLoading } = useGetEducationBoard({
     part: 'ALL',
     cardinalNumber: selectedCardinal || undefined,
     pageSize: 10,
     pageNumber: 0,
   });
   const recentEdu = data?.pages.flatMap((page) => page.content) ?? [];
+
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!isLoading) resolve();
+    }),
+  );
+
+  if (smartLoading) return <Loading />;
 
   return (
     <S.NoticePreviewContainer>

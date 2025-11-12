@@ -5,7 +5,7 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import useGetAllUsers from '@/api/useGetAllUsers';
 import { User } from '@/types/user';
-import useSmartLoading from '@/hooks/useSmartLoading';
+import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import Loading from '../common/Loading';
 
 const List = styled.div`
@@ -82,18 +82,9 @@ const MemberList = ({
 
   let content;
 
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!loading) resolve();
-    }),
-  );
-  const { loading: memberSmartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!observerLoading) resolve();
-    }),
-  );
+  const combinedLoading = useSmartCombinedLoading(loading, observerLoading);
 
-  if (smartLoading) {
+  if (combinedLoading && pageNumber === 0) {
     return (
       <List>
         <Loading />
@@ -118,9 +109,6 @@ const MemberList = ({
         role={user.role}
       />
     ));
-  }
-  if (memberSmartLoading) {
-    content = <Loading />;
   } else {
     content = members.map((user: User) => (
       <MemberItem

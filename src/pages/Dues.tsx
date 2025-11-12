@@ -12,6 +12,7 @@ import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
 import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/dues/Dues.styled';
+import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 
 const Dues: React.FC = () => {
   useCustomBack('/home');
@@ -56,7 +57,15 @@ const Dues: React.FC = () => {
     );
   }, [duesInfo, selectedCategory, cardinal]);
 
-  if (globalLoading || duesLoading) return <Loading />;
+  const combinedLoading = useSmartCombinedLoading(globalLoading, duesLoading);
+
+  if (combinedLoading && !duesInfo) {
+    return (
+      <S.StyledDues>
+        <Loading />
+      </S.StyledDues>
+    );
+  }
 
   const handleAdminClick = () => navigate('/admin/dues');
 
