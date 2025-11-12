@@ -9,10 +9,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import isBetween from 'dayjs/plugin/isBetween';
 
 import * as S from '@/styles/attend/AttendMain.styled';
-import {
-  PenaltyContainer,
-  NoPenaltyInfo,
-} from '@/styles/attend/PenaltyInfo.styled';
 
 import useGetAttend from '@/api/useGetAttend';
 import useGetPenalty from '@/api/useGetPenalty';
@@ -134,15 +130,17 @@ const AttendMain: React.FC = () => {
       {/* 오늘의 출석 */}
       <AttendSection title="오늘의 출석" link="/attendCheck">
         {hasSchedule && attendInfo ? (
-          <AttendInfo
-            title={title}
-            location={location}
-            startDateTime={startDateTime}
-            endDateTime={endDateTime}
-            isWithinTimeRange={isWithinTimeRange}
-            handleOpenModal={handleOpenModal}
-            isAttend={isAttend}
-          />
+          <div style={{ width: '100%' }}>
+            <AttendInfo
+              title={title}
+              location={location}
+              startDateTime={startDateTime}
+              endDateTime={endDateTime}
+              isWithinTimeRange={isWithinTimeRange}
+              handleOpenModal={handleOpenModal}
+              isAttend={isAttend}
+            />
+          </div>
         ) : (
           <NoAttnedInfo />
         )}
@@ -158,20 +156,14 @@ const AttendMain: React.FC = () => {
         {penaltyInfo?.penaltyCount == null ? (
           <S.TitleText>등록된 데이터가 없습니다.</S.TitleText>
         ) : hasPenalty ? (
-          <>
-            <MyPenaltyInfo
-              penaltyCount={penaltyInfo?.penaltyCount || 0}
-              warningCount={penaltyInfo?.warningCount || 0}
-            />
-            <PenaltyInfo />
-          </>
+          <MyPenaltyInfo
+            penaltyCount={penaltyInfo?.penaltyCount || 0}
+            warningCount={penaltyInfo?.warningCount || 0}
+          />
         ) : (
-          <PenaltyContainer>
-            <NoPenaltyInfo>
-              <S.TitleText>페널티를 받은 이력이 없네요!</S.TitleText>
-            </NoPenaltyInfo>
-          </PenaltyContainer>
+          <S.TitleText>페널티를 받은 이력이 없네요!</S.TitleText>
         )}
+        <PenaltyInfo />
       </AttendSection>
 
       {/* 출석 모달 */}

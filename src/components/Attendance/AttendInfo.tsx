@@ -53,6 +53,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
       </S.InfoText>
 
       <Button
+        width="100%"
         height="48px"
         color={getColor()}
         textcolor={getTextColor()}
