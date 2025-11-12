@@ -7,25 +7,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
-import { BoardContent } from '@/pages/board/Board';
+
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
-
-interface Content {
-  id: number;
-  name: string;
-  title: string;
-  content: string;
-  time: string;
-  commentCount: number;
-  hasFile: boolean;
-  position: string;
-  role: string;
-  isNew: boolean;
-  studyName: string;
-  week: number;
-}
+import useSmartLoading, {
+  useSmartCombinedLoading,
+} from '@/hooks/useSmartLoading';
+import { BoardContent } from '@/types/board';
 
 const BoardNotice = () => {
   useCustomBack('/board');
@@ -35,7 +24,7 @@ const BoardNotice = () => {
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const [posts, setPosts] = useState<Content[]>([]);
+  const [posts, setPosts] = useState<BoardContent[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(0);
   const [observerLoading, setObserverLoading] = useState(false);
@@ -88,21 +77,18 @@ const BoardNotice = () => {
     };
   }, [hasMore, observerLoading, pageNumber]);
 
-  const [showLoading, setShowLoading] = useState(true);
+  const { loading: smartInitialLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout | undefined;
+  const combinedSmartLoading = useSmartCombinedLoading(
+    searchLoading,
+    observerLoading,
+  );
 
-    if (loading) {
-      timer = setTimeout(() => setShowLoading(true), 1000);
-    } else {
-      timer = setTimeout(() => setShowLoading(false), 1000);
-    }
-
-    return () => clearTimeout(timer);
-  }, [loading]);
-
-  if (showLoading && loading) {
+  if (smartInitialLoading && loading) {
     return <Loading />;
   }
 
@@ -142,15 +128,10 @@ const BoardNotice = () => {
           onLoading={setSearchLoading}
         />
       </S.SearchContainer>
-      {searchLoading ? (
+      {combinedSmartLoading ? (
         <Loading />
       ) : (
         <S.PostContainer>
-          <S.TotalPostNumber>
-            {searchMode
-              ? `검색 결과 ${list.length}개`
-              : `게시글 ${posts.length}개`}
-          </S.TotalPostNumber>
           {list.map((post) => (
             <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>

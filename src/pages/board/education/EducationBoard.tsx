@@ -134,11 +134,6 @@ const EducationBoard = () => {
         <Loading />
       ) : (
         <S.PostContainer>
-          <S.TotalPostNumber>
-            {searchMode
-              ? `검색 결과 ${list.length}개`
-              : `게시글 ${posts.length}개`}
-          </S.TotalPostNumber>
           {list.map((post) => (
             <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>

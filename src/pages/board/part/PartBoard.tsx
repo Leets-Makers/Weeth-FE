@@ -10,11 +10,12 @@ import * as S from '@/styles/board/PartBoard.styled';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useGetPartBoard from '@/api/useGetPartBoard';
-import { BoardContent } from '@/pages/board/Board';
+
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetUserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
+import { BoardContent } from '@/types/board';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -204,11 +205,6 @@ const PartBoard = () => {
         <Loading />
       ) : (
         <S.PostContainer>
-          <S.TotalPostNumber>
-            {searchMode
-              ? `검색 결과 ${list.length}개`
-              : `게시글 ${list.length}개`}
-          </S.TotalPostNumber>
           {list.map((post) => (
             <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>

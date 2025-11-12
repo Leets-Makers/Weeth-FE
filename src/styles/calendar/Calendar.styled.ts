@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 
 export const CalendarWrapper = styled.div`
-  width: 370px;
+  width: 375px;
   padding-bottom: 40px;
 `;
 

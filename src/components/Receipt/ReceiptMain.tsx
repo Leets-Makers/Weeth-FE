@@ -5,6 +5,7 @@ import ReceiptInfo from '@/components/Receipt/ReceiptInfo';
 import ReceiptImageModal from '@/components/Receipt/ReceiptImageModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/receipt/ReceiptMain.styled';
+import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 
 interface GroupedByMonth {
   [month: string]: Receipt[];
@@ -29,9 +30,11 @@ const getSemesterMonths = (): number[] => {
 };
 
 const ReceiptMain: React.FC = () => {
-  const { globalInfo } = useGetGlobaluserInfo();
+  const { globalInfo, loading: userLoading } = useGetGlobaluserInfo();
   const cardinal = globalInfo?.cardinals?.[0] ?? null;
-  const { duesInfo, loading } = useGetDuesInfo(cardinal);
+  const { duesInfo, loading: duesLoading } = useGetDuesInfo(cardinal);
+
+  const combinedLoading = useSmartCombinedLoading(userLoading, duesLoading);
 
   // 모달 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,7 +58,13 @@ const ReceiptMain: React.FC = () => {
 
   const months = useMemo(() => getSemesterMonths(), []);
 
-  if (loading) return <Loading />;
+  if (combinedLoading && !duesInfo) {
+    return (
+      <S.StyledReceipt>
+        <Loading />
+      </S.StyledReceipt>
+    );
+  }
 
   return (
     <S.StyledReceipt>
