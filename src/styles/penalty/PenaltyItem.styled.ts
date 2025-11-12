@@ -28,13 +28,13 @@ export const PenaltyBedge = styled.div<{ $type?: boolean }>`
   color: ${({ $type }) =>
     $type ? colors.semantic.state.caution : colors.semantic.state.error};
 `;
-export const ContentText = styled.text`
+export const ContentText = styled.div`
   color: ${colors.semantic.text.strong};
   ${typography.Sub2};
   margin-top: 10px;
 `;
 
-export const DateText = styled.text`
+export const DateText = styled.div`
   color: ${colors.semantic.text.alternative};
   ${typography.Caption2};
   margin-top: 15px;
