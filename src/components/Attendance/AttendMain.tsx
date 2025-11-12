@@ -88,6 +88,7 @@ const AttendSection: React.FC<AttendSectionProps> = ({
 
 const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [codeModalOpen, setCodeModalOpen] = useState(false);
   const [isAttend, setIsAttend] = useState(false);
   const [hasPenalty, setHasPenalty] = useState(false);
 
@@ -138,6 +139,7 @@ const AttendMain: React.FC = () => {
               endDateTime={endDateTime}
               isWithinTimeRange={isWithinTimeRange}
               handleOpenModal={handleOpenModal}
+              handleOpenCodeModal={() => setCodeModalOpen(true)}
               isAttend={isAttend}
             />
           </div>

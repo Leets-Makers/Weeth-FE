@@ -2,6 +2,7 @@ import * as S from '@/styles/attend/AttendMain.styled';
 import Button from '@/components/Button/Button';
 import checkTitle from '@/hooks/checkTitle';
 import { colors } from '@/theme/designTokens';
+import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 
 interface AttendInfoProps {
   title: string;
@@ -10,6 +11,7 @@ interface AttendInfoProps {
   location: string;
   isWithinTimeRange: boolean;
   handleOpenModal: () => void;
+  handleOpenCodeModal: () => void;
   isAttend: boolean;
 }
 
@@ -20,6 +22,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   location,
   isWithinTimeRange,
   handleOpenModal,
+  handleOpenCodeModal,
   isAttend,
 }) => {
   const getColor = () => {
@@ -35,6 +38,8 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   };
 
   const isDisabled = isAttend || !isWithinTimeRange;
+
+  const { isAdmin } = useGetGlobaluserInfo();
 
   return (
     <div>
@@ -62,6 +67,19 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
       >
         {isAttend ? '출석완료' : '출석하기'}
       </Button>
+      {isAdmin ? (
+        <Button
+          width="100%"
+          height="48px"
+          color={colors.semantic.button.neutral}
+          textcolor={colors.semantic.text.normal}
+          onClick={handleOpenCodeModal}
+        >
+          {isAttend ? '출석완료' : '출석하기'}
+        </Button>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };
