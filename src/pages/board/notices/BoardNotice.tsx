@@ -11,6 +11,9 @@ import { BoardContent } from '@/pages/board/Board';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
+import useSmartLoading, {
+  useSmartCombinedLoading,
+} from '@/hooks/useSmartLoading';
 
 interface Content {
   id: number;
@@ -88,21 +91,18 @@ const BoardNotice = () => {
     };
   }, [hasMore, observerLoading, pageNumber]);
 
-  const [showLoading, setShowLoading] = useState(true);
+  const { loading: smartInitialLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout | undefined;
+  const combinedSmartLoading = useSmartCombinedLoading(
+    searchLoading,
+    observerLoading,
+  );
 
-    if (loading) {
-      timer = setTimeout(() => setShowLoading(true), 1000);
-    } else {
-      timer = setTimeout(() => setShowLoading(false), 1000);
-    }
-
-    return () => clearTimeout(timer);
-  }, [loading]);
-
-  if (showLoading && loading) {
+  if (smartInitialLoading && loading) {
     return <Loading />;
   }
 
@@ -142,15 +142,10 @@ const BoardNotice = () => {
           onLoading={setSearchLoading}
         />
       </S.SearchContainer>
-      {searchLoading ? (
+      {combinedSmartLoading ? (
         <Loading />
       ) : (
         <S.PostContainer>
-          <S.TotalPostNumber>
-            {searchMode
-              ? `검색 결과 ${list.length}개`
-              : `게시글 ${posts.length}개`}
-          </S.TotalPostNumber>
           {list.map((post) => (
             <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>
