@@ -12,7 +12,7 @@ export default function useSmartLoading<T>(promise: Promise<T>) {
         didShowLoading = true;
         setLoading(true);
       }
-    }, 100);
+    }, 200);
 
     let hideTimer: NodeJS.Timeout;
 
@@ -50,7 +50,7 @@ export function useSmartCombinedLoading(...loadings: boolean[]) {
 
   useEffect(() => {
     setHasMounted(true);
-    const timer = setTimeout(() => setMinDelay(false), 800);
+    const timer = setTimeout(() => setMinDelay(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 

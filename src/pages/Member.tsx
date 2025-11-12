@@ -12,7 +12,7 @@ import { toastError } from '@/components/common/ToastMessage';
 import { colors } from '@/theme/designTokens';
 
 const Wrapper = styled.div`
-  width: 370px;
+  width: 375px;
   margin-bottom: 50px;
   display: flex;
   flex-direction: column;

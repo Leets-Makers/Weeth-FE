@@ -1,12 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import SlideNotice from '@/components/Board/SlideNotice';
 import * as S from '@/styles/board/Board.styled';
-import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
-import useSmartLoading from '@/hooks/useSmartLoading';
+import { BoardContent } from '@/types/board';
 
-const NoticePreview = () => {
+interface NoticePreviewProps {
+  data: BoardContent[] | undefined;
+  error?: string | null;
+}
+
+const NoticePreview = ({ data, error }: NoticePreviewProps) => {
   useCustomBack('/board');
 
   const navigate = useNavigate();
@@ -15,16 +19,7 @@ const NoticePreview = () => {
     navigate('/board/notices');
   };
 
-  const { recentNotices, error, recentNoticeLoading } = useGetRecentNotice();
-
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!recentNoticeLoading) resolve();
-    }),
-  );
-  if (smartLoading) {
-    return <Loading />;
-  }
+  if (!data) return <Loading />;
 
   return (
     <S.NoticePreviewContainer>
@@ -35,9 +30,9 @@ const NoticePreview = () => {
         </S.NoticeTextContainer>
       </S.CardContainer>
       <SlideNotice
-        error={error}
-        recentNotices={recentNotices}
-        isLoading={recentNoticeLoading || smartLoading}
+        error={error ?? null}
+        recentNotices={data}
+        isLoading={false}
       />
     </S.NoticePreviewContainer>
   );
