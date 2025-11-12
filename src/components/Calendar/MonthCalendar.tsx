@@ -130,7 +130,7 @@ const MonthCalendar = () => {
           events={adjustedEvents}
           eventContent={renderEventContent}
           eventClick={onDateClick}
-          dayMaxEvents={3}
+          dayMaxEvents={2}
           moreLinkClick="none"
           locale="ko"
           headerToolbar={false}
