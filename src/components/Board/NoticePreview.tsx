@@ -7,7 +7,7 @@ import { BoardContent } from '@/types/board';
 
 interface NoticePreviewProps {
   data: BoardContent[] | undefined;
-  error?: Error | null;
+  error?: string | null;
 }
 
 const NoticePreview = ({ data, error }: NoticePreviewProps) => {
@@ -30,7 +30,7 @@ const NoticePreview = ({ data, error }: NoticePreviewProps) => {
         </S.NoticeTextContainer>
       </S.CardContainer>
       <SlideNotice
-        error={error ? error.message : null}
+        error={error ?? null}
         recentNotices={data}
         isLoading={false}
       />

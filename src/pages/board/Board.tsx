@@ -9,7 +9,7 @@ import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
 import useGetAllCardinals from '@/api/useGetCardinals';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Board = () => {
   useCustomBack('/home');
@@ -20,11 +20,17 @@ const Board = () => {
     currentCardinal ?? null,
   );
 
-  const { recentNotices, recentNoticeLoading } = useGetRecentNotice();
+  useEffect(() => {
+    if (currentCardinal) {
+      setSelectedCardinal(currentCardinal);
+    }
+  }, [currentCardinal]);
+
+  const { recentNotices, recentNoticeLoading, error } = useGetRecentNotice();
 
   const { data: eduBoardData, isLoading: eduLoading } = useGetEducationBoard({
     part: 'ALL',
-    cardinalNumber: selectedCardinal ?? currentCardinal ?? 0,
+    cardinalNumber: selectedCardinal ?? currentCardinal ?? undefined,
     pageSize: 10,
     pageNumber: 0,
   });
@@ -50,7 +56,7 @@ const Board = () => {
       </Header>
       <S.BoardContainer>
         <PartBoard />
-        <NoticePreview data={recentNotices} />
+        <NoticePreview data={recentNotices} error={error} />
         <EduMaterial
           data={recentEdu}
           selectedCardinal={selectedCardinal}

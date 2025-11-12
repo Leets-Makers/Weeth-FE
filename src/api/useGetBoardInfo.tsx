@@ -2,21 +2,6 @@ import api from '@/api/api';
 import { BoardContent } from '@/types/board';
 import { useState, useEffect } from 'react';
 
-// interface Content {
-//   id: number;
-//   name: string;
-//   position: string;
-//   role: string;
-//   title: string;
-//   content: string;
-//   studyName: string;
-//   week: number;
-//   time: string;
-//   commentCount: number;
-//   hasFile: boolean;
-//   isNew: boolean;
-// }
-
 interface Sort {
   empty: boolean;
   unsorted: boolean;
