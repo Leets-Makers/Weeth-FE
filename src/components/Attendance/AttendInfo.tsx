@@ -56,17 +56,19 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
         <br />
         장소: {location}
       </S.InfoText>
+      <div style={{ width: '100%', marginBottom: 8 }}>
+        <Button
+          width="100%"
+          height="48px"
+          color={getColor()}
+          textcolor={getTextColor()}
+          disabled={isDisabled}
+          onClick={!isAttend && isWithinTimeRange ? handleOpenModal : undefined}
+        >
+          {isAttend ? '출석완료' : '출석하기'}
+        </Button>
+      </div>
 
-      <Button
-        width="100%"
-        height="48px"
-        color={getColor()}
-        textcolor={getTextColor()}
-        disabled={isDisabled}
-        onClick={!isAttend && isWithinTimeRange ? handleOpenModal : undefined}
-      >
-        {isAttend ? '출석완료' : '출석하기'}
-      </Button>
       {isAdmin ? (
         <Button
           width="100%"
@@ -75,10 +77,10 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
           textcolor={colors.semantic.text.normal}
           onClick={handleOpenCodeModal}
         >
-          {isAttend ? '출석완료' : '출석하기'}
+          출석코드
         </Button>
       ) : (
-        <div></div>
+        <div />
       )}
     </div>
   );

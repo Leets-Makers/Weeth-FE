@@ -23,6 +23,7 @@ import {
 import ModalAttend from '@/components/Attendance/ModalAttend';
 import Loading from '@/components/common/Loading';
 import RightArrowButton from '@/components/common/RightArrowButton';
+import AttendanceCodeModal from '../Modal/AttendanceCodeModal';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -126,6 +127,11 @@ const AttendMain: React.FC = () => {
 
   return (
     <S.StyledAttend>
+      <AttendanceCodeModal
+        code="0000"
+        open={codeModalOpen}
+        onClose={() => setCodeModalOpen(false)}
+      />
       <AttendRate attendRate={attendInfo?.attendanceRate} />
 
       {/* 오늘의 출석 */}
