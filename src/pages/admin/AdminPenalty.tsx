@@ -62,7 +62,7 @@ const AdminPenalty: React.FC = () => {
             />
           </TopContainer>
           <PenaltyContainer>
-            {/* 왼쪽 섹션 - 패널티/경고 조회 */}
+            {/* 왼쪽 섹션 - 페널티/경고 조회 */}
             <PenaltyListTable
               selectedCardinal={selectedCardinal}
               searchName={searchName}
@@ -70,7 +70,7 @@ const AdminPenalty: React.FC = () => {
               dispatch={dispatch}
             />
 
-            {/* 오른쪽 섹션 - 패널티/경고 부여 */}
+            {/* 오른쪽 섹션 - 페널티/경고 부여 */}
             <PenaltyAdd dispatch={dispatch} />
           </PenaltyContainer>
         </ContentWrapper>

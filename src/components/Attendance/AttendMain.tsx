@@ -153,8 +153,8 @@ const AttendMain: React.FC = () => {
         <S.TitleText>출석 기록</S.TitleText>
       </AttendSection>
 
-      {/* 패널티 */}
-      <AttendSection title="패널티" link="/penalty">
+      {/* 페널티 */}
+      <AttendSection title="페널티" link="/penalty">
         {penaltyInfo?.penaltyCount == null ? (
           <S.TitleText>등록된 데이터가 없습니다.</S.TitleText>
         ) : hasPenalty ? (

@@ -1,4 +1,4 @@
-// 라디오 그룹 공통 컴포넌트(패널티/경고 추가에 사용 )
+// 라디오 그룹 공통 컴포넌트(페널티/경고 추가에 사용 )
 
 import theme from '@/styles/theme';
 import { KeyboardEvent } from 'react';
