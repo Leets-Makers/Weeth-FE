@@ -8,6 +8,7 @@ interface AttendInfo {
   end: string;
   attendanceRate: number;
   status: string;
+  code?: number;
 }
 
 // 출석 정보 받아오는 API

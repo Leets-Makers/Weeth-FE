@@ -68,12 +68,14 @@ const getAttendTimeInfo = (attendInfo?: any) => {
 };
 
 interface AttendSectionProps {
+  isAttend?: boolean;
   title: string;
   link: string;
   children: React.ReactNode;
 }
 
 const AttendSection: React.FC<AttendSectionProps> = ({
+  isAttend = true,
   title,
   link,
   children,
@@ -81,7 +83,7 @@ const AttendSection: React.FC<AttendSectionProps> = ({
   <S.StyledBox>
     <S.BoxHeader>
       <S.CaptionText>{title}</S.CaptionText>
-      <RightArrowButton to={link} />
+      {isAttend && <RightArrowButton to={link} />}
     </S.BoxHeader>
     {children}
   </S.StyledBox>
@@ -128,14 +130,14 @@ const AttendMain: React.FC = () => {
   return (
     <S.StyledAttend>
       <AttendanceCodeModal
-        code="0000"
+        code={attendInfo?.code?.toString() || '0000'}
         open={codeModalOpen}
         onClose={() => setCodeModalOpen(false)}
       />
       <AttendRate attendRate={attendInfo?.attendanceRate} />
 
       {/* 오늘의 출석 */}
-      <AttendSection title="오늘의 출석" link="/attendCheck">
+      <AttendSection isAttend={false} title="오늘의 출석" link="/attendCheck">
         {hasSchedule && attendInfo ? (
           <div style={{ width: '100%' }}>
             <AttendInfo
@@ -147,6 +149,7 @@ const AttendMain: React.FC = () => {
               handleOpenModal={handleOpenModal}
               handleOpenCodeModal={() => setCodeModalOpen(true)}
               isAttend={isAttend}
+              isAdmin={attendInfo.code !== null}
             />
           </div>
         ) : (

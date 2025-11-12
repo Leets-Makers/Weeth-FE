@@ -2,7 +2,6 @@ import * as S from '@/styles/attend/AttendMain.styled';
 import Button from '@/components/Button/Button';
 import checkTitle from '@/hooks/checkTitle';
 import { colors } from '@/theme/designTokens';
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 
 interface AttendInfoProps {
   title: string;
@@ -13,6 +12,7 @@ interface AttendInfoProps {
   handleOpenModal: () => void;
   handleOpenCodeModal: () => void;
   isAttend: boolean;
+  isAdmin: boolean;
 }
 
 export const AttendInfo: React.FC<AttendInfoProps> = ({
@@ -24,22 +24,14 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   handleOpenModal,
   handleOpenCodeModal,
   isAttend,
+  isAdmin,
 }) => {
   const getColor = () => {
     if (isAttend) return colors.dark.primary[200];
     if (!isWithinTimeRange) return colors.semantic.button.neutral;
     return colors.semantic.brand.primary;
   };
-
-  const getTextColor = () => {
-    return isAttend || !isWithinTimeRange
-      ? colors.semantic.text.alternative
-      : colors.semantic.text.inverse;
-  };
-
   const isDisabled = isAttend || !isWithinTimeRange;
-
-  const { isAdmin } = useGetGlobaluserInfo();
 
   return (
     <div>
@@ -51,7 +43,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
         {checkTitle(title)} 있는 날이에요
       </S.TitleText>
 
-      <S.InfoText style={{ margin: '10px 0 32px 0', color: 'white' }}>
+      <S.InfoText style={{ margin: '10px 0 32px 0' }}>
         날짜: {startDateTime} {endDateTime}
         <br />
         장소: {location}
@@ -61,7 +53,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
           width="100%"
           height="48px"
           color={getColor()}
-          textcolor={getTextColor()}
+          textcolor={colors.semantic.text.inverse}
           disabled={isDisabled}
           onClick={!isAttend && isWithinTimeRange ? handleOpenModal : undefined}
         >
@@ -69,7 +61,7 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
         </Button>
       </div>
 
-      {isAdmin ? (
+      {isAdmin && (
         <Button
           width="100%"
           height="48px"
@@ -79,8 +71,6 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
         >
           출석코드
         </Button>
-      ) : (
-        <div />
       )}
     </div>
   );
