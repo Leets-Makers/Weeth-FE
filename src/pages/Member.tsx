@@ -1,5 +1,4 @@
 import CardinalDropdown from '@/components/common/CardinalDropdown';
-import Header from '@/components/Header/Header';
 import MemberList from '@/components/Member/MemberList';
 import useCustomBack from '@/hooks/useCustomBack';
 import { useEffect, useState } from 'react';
@@ -89,9 +88,6 @@ const Member = () => {
 
   return (
     <Wrapper>
-      <Header RightButtonType="none" isAccessible>
-        멤버
-      </Header>
       <Search>
         <CardinalDropdown
           origValue={selectedCardinal}
