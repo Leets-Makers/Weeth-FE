@@ -1,35 +1,34 @@
 import styled from 'styled-components';
-import theme from '../theme';
+import typography from '@/theme/typography';
 
 export const MeetingInfoBox = styled.div`
-  background-color: ${theme.color.gray[18]};
   border-radius: 10px;
-  margin: 20px 0;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: start;
   width: 100%;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const MeetingHeader = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 5%;
-  width: 95%;
+  width: 100%;
 `;
 
 export const MeetingTitle = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 2%;
-  font-size: 16px;
-  font-family: ${theme.font.semiBold};
+  margin-left: 9px;
+  ${typography.Sub2};
 `;
 
 export const MeetingInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 13px 5% 0 5%;
-  font-size: 14px;
-  line-height: 1.7;
+  margin-top: 15px;
+  ${typography.Body1};
 `;

@@ -6,13 +6,10 @@ import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/event/EventContent.styled';
 import Button from '@/components/Button/Button';
 import theme from '@/styles/theme';
-import Modal from '@/components/common/Modal';
 import { useState } from 'react';
-import fullscreen from '@/assets/images/ic_fullscreen.svg';
-import smallscreen from '@/assets/images/ic_smallscreen.svg';
-import close from '@/assets/images/ic_close.svg';
 import { useParams } from 'react-router-dom';
 import convertLinksInText from '@/hooks/convertLinksInText';
+import AttendanceCodeModal from '../Modal/AttendanceCodeModal';
 
 const EventContent = ({
   data,
@@ -22,7 +19,6 @@ const EventContent = ({
   isAdmin: boolean;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const { type } = useParams();
 
   const start = dayjs(data.start);
@@ -32,55 +28,16 @@ const EventContent = ({
 
   return (
     <S.Container>
-      {isModalOpen && (
-        <Modal
-          isFullScreen={isFullScreen}
-          hasCloseButton={false}
-          onClose={() => setIsModalOpen(false)}
-        >
-          <S.ModalSetting>
-            {!isFullScreen ? (
-              <>
-                <S.ImgButton
-                  src={fullscreen}
-                  alt="fullscreen"
-                  onClick={() => {
-                    setIsFullScreen(true);
-                  }}
-                />
-
-                <S.ImgButton
-                  src={close}
-                  alt="close"
-                  onClick={() => {
-                    setIsModalOpen(false);
-                  }}
-                />
-              </>
-            ) : (
-              <S.ImgButton
-                src={smallscreen}
-                alt="smallscreen"
-                onClick={() => {
-                  setIsFullScreen(false);
-                }}
-              />
-            )}
-          </S.ModalSetting>
-          {isFullScreen && <S.Date>{dayjs().format('YYYY년 M월 D일')}</S.Date>}
-          <S.Title $isFullScreen={isFullScreen}>출석코드</S.Title>
-          <S.AttendanceCode $isFullScreen={isFullScreen}>
-            {data.code}
-          </S.AttendanceCode>
-        </Modal>
-      )}
+      <AttendanceCodeModal
+        code={data.code?.toString() || '0000'}
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
       {isAdmin && type === 'meetings' && (
         <Button
           color={theme.color.mainMiddle}
-          onClick={() => {
-            setIsModalOpen(true);
-          }}
+          onClick={() => setIsModalOpen(true)}
         >
           출석코드 확인
         </Button>

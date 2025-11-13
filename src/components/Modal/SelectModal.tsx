@@ -56,6 +56,11 @@ const ActionButton = styled(ModalButton)<{
   $visible: boolean;
 }>`
   display: ${(props) => (props.$visible ? 'flex' : 'none')};
+
+  color: ${(props) =>
+    props.type === 'positive'
+      ? colors.semantic.text.inverse
+      : colors.semantic.text.normal};
   background: ${(props) =>
     props.type === 'positive'
       ? colors.semantic.brand.primary
@@ -63,7 +68,10 @@ const ActionButton = styled(ModalButton)<{
   &:hover {
     background: ${(props) =>
       props.type === 'positive' ? colors.dark.primary[200] : '#BF4242'};
-    color: ${colors.semantic.text.alternative};
+    color: ${(props) =>
+      props.type === 'positive'
+        ? colors.semantic.text.inverse
+        : colors.semantic.text.alternative};
   }
   cursor: pointer;
 `;

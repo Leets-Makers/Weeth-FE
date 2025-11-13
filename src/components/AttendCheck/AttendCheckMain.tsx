@@ -20,7 +20,7 @@ const AttendCheckMain: React.FC = () => {
   const userName = useGetUserName();
 
   if (error) {
-    return <S.SemiBold>error</S.SemiBold>;
+    return <S.Sub2Text>error</S.Sub2Text>;
   }
 
   if (!attendCheckInfo) {
@@ -31,7 +31,7 @@ const AttendCheckMain: React.FC = () => {
     <S.Container>
       <S.Header>
         <S.SemiTitle>
-          <S.SemiBold>{userName}</S.SemiBold>
+          <S.Sub2Text>{userName}</S.Sub2Text>
           &nbsp;님의 출석횟수
         </S.SemiTitle>
         <S.AttendCount>{attendCheckInfo.attendanceCount}회</S.AttendCount>
@@ -51,7 +51,6 @@ const AttendCheckMain: React.FC = () => {
             num={`${attendCheckInfo.absenceCount}회`}
           />
         </S.SmallStyledBoxContainer>
-        <S.Line />
         {attendCheckInfo.attendances.length > 0 ? (
           attendCheckInfo.attendances.map((meeting: MeetingProps) => {
             return (

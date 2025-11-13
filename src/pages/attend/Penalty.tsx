@@ -1,5 +1,4 @@
 import useCustomBack from '@/hooks/useCustomBack';
-import styled from 'styled-components';
 import Header from '@/components/Header/Header';
 import React, { useEffect, useState } from 'react';
 import ModalPenalty from '@/components/Penalty/ModalPenalty';
@@ -7,15 +6,7 @@ import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
 import PenaltyItem from '@/components/Penalty/PenaltyItem';
 import useGetPenalty from '@/api/useGetPenalty';
 import Loading from '@/components/common/Loading';
-import { MOBILE } from '@/styles';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: ${MOBILE};
-  max-width: ${MOBILE};
-  margin-bottom: 50px;
-`;
+import { AttendContainer } from './Attendance';
 
 const Penalty: React.FC = () => {
   useCustomBack('/attendance');
@@ -45,7 +36,7 @@ const Penalty: React.FC = () => {
   }
 
   return (
-    <Container>
+    <AttendContainer>
       <Header
         RightButtonType="INFO"
         isAccessible
@@ -68,7 +59,7 @@ const Penalty: React.FC = () => {
       ))}
 
       <ModalPenalty open={modalOpen} close={handleCloseModal} />
-    </Container>
+    </AttendContainer>
   );
 };
 

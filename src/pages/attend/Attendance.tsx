@@ -1,39 +1,37 @@
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import AttendMain from '@/components/Attendance/AttendMain';
-import Header from '@/components/Header/Header';
+import MobileGNB from '@/components/Navigation/MobileGNB ';
 import useCustomBack from '@/hooks/useCustomBack';
-import { MOBILE } from '@/styles';
-import { useNavigate } from 'react-router-dom';
+import { pcResponsive } from '@/styles';
+import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const AttendContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: ${MOBILE};
-  max-width: ${MOBILE};
+  padding: 8px 18px 18px 18px;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
+  box-sizing: border-box;
   margin-bottom: 50px;
 `;
 
 const Attendance: React.FC = () => {
   useCustomBack('/home');
-  const { isAdmin } = useGetUserInfo();
-  const nav = useNavigate();
-
-  const handleRightButton = () => {
-    nav(`/admin/attendance`);
-  };
 
   return (
-    <Container>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="ADMIN"
-        onClickRightButton={handleRightButton}
-      >
-        출석
-      </Header>
-      <AttendMain />
-    </Container>
+    <div
+      style={{
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'column',
+      }}
+    >
+      <MobileGNB />
+      <AttendContainer>
+        <AttendMain />
+      </AttendContainer>
+    </div>
   );
 };
 

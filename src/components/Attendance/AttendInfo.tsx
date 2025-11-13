@@ -1,8 +1,7 @@
 import * as S from '@/styles/attend/AttendMain.styled';
-import * as A from '@/styles/attend/AttendInfo.styled';
-import theme from '@/styles/theme';
 import Button from '@/components/Button/Button';
 import checkTitle from '@/hooks/checkTitle';
+import { colors } from '@/theme/designTokens';
 
 interface AttendInfoProps {
   title: string;
@@ -11,7 +10,9 @@ interface AttendInfoProps {
   location: string;
   isWithinTimeRange: boolean;
   handleOpenModal: () => void;
+  handleOpenCodeModal: () => void;
   isAttend: boolean;
+  isAdmin: boolean;
 }
 
 export const AttendInfo: React.FC<AttendInfoProps> = ({
@@ -21,47 +22,56 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
   location,
   isWithinTimeRange,
   handleOpenModal,
+  handleOpenCodeModal,
   isAttend,
+  isAdmin,
 }) => {
   const getColor = () => {
-    if (isAttend) return theme.color.mainDark;
-    if (!isWithinTimeRange) return theme.color.gray[30];
-    return theme.color.main;
+    if (isAttend) return colors.dark.primary[200];
+    if (!isWithinTimeRange) return colors.semantic.button.neutral;
+    return colors.semantic.brand.primary;
   };
-
-  const getTextColor = () => {
-    return isAttend || !isWithinTimeRange
-      ? theme.color.gray[20]
-      : theme.color.gray[100];
-  };
-
   const isDisabled = isAttend || !isWithinTimeRange;
 
   return (
     <div>
-      <S.SemiBold>
-        <A.AttendProject>
-          오늘은
-          <span style={{ color: theme.color.main }}>&quot;{title}&quot;</span>
-          {checkTitle(title)} 있는 날이에요
-        </A.AttendProject>
-      </S.SemiBold>
-      <A.AttendDate>
+      <S.TitleText>
+        오늘은
+        <span style={{ color: colors.semantic.brand.primary }}>
+          &quot;{title}&quot;
+        </span>
+        {checkTitle(title)} 있는 날이에요
+      </S.TitleText>
+
+      <S.InfoText style={{ margin: '10px 0 32px 0' }}>
         날짜: {startDateTime} {endDateTime}
-      </A.AttendDate>
-      <A.AttendPlace>장소: {location}</A.AttendPlace>
-      <A.AttendButton>
+        <br />
+        장소: {location}
+      </S.InfoText>
+      <div style={{ width: '100%', marginBottom: 8 }}>
         <Button
-          width="315px"
-          height="50px"
+          width="100%"
+          height="48px"
           color={getColor()}
-          textcolor={getTextColor()}
+          textcolor={colors.semantic.text.inverse}
           disabled={isDisabled}
           onClick={!isAttend && isWithinTimeRange ? handleOpenModal : undefined}
         >
           {isAttend ? '출석완료' : '출석하기'}
         </Button>
-      </A.AttendButton>
+      </div>
+
+      {isAdmin && (
+        <Button
+          width="100%"
+          height="48px"
+          color={colors.semantic.button.neutral}
+          textcolor={colors.semantic.text.normal}
+          onClick={handleOpenCodeModal}
+        >
+          출석코드
+        </Button>
+      )}
     </div>
   );
 };
@@ -69,10 +79,8 @@ export const AttendInfo: React.FC<AttendInfoProps> = ({
 export const NoAttnedInfo = () => {
   return (
     <div>
-      <S.SemiBold>
-        <A.AttendProject>오늘은 일정이 없어요</A.AttendProject>
-      </S.SemiBold>
-      <A.AttendPlace>동아리원과 스터디를 하는건 어때요?</A.AttendPlace>
+      <S.TitleText>오늘은 일정이 없어요</S.TitleText>
+      <S.InfoText>동아리원과 스터디를 하는건 어때요?</S.InfoText>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 const Label = styled.div`
@@ -11,7 +12,7 @@ const Label = styled.div`
   font-size: 12px;
   font-family: ${theme.font.semiBold};
   background-color: rgba(0, 221, 168, 0.1);
-  color: ${theme.color.main};
+  color: ${colors.semantic.brand.primary};
 `;
 
 const Tag = () => {

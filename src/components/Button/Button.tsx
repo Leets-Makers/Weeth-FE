@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { colors } from '@/theme/designTokens';
-import theme from '@/styles/theme';
+import typography from '@/theme/typography';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -28,7 +28,7 @@ interface StyledButtonProps {
 const BasicButton = styled.button<StyledButtonProps>`
   background-color: ${({ color }) => color || colors.semantic.button.neutral};
   font-family: ${({ $isSemibold }) =>
-    $isSemibold ? theme.font.semiBold : theme.font.regular};
+    $isSemibold ? typography.Button1 : typography.Button2};
   color: ${({ $textColor }) => $textColor || colors.semantic.text.normal};
   border: none;
   border-radius: ${({ $borderRadius }) => $borderRadius || '10px'};
@@ -36,8 +36,7 @@ const BasicButton = styled.button<StyledButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  width: ${({ width }) => width || 'calc(370px * 0.84)'};
+  width: ${({ width }) => width || '100%'};
   height: ${({ height }) => height || '50px'};
 
   &:disabled {

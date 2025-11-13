@@ -1,18 +1,18 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
-import { MOBILE } from '@/styles';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
 
-  max-width: ${MOBILE};
+  width: 100%;
   padding: 17px 0px;
-  margin: 20px 15px 10px 15px;
+  margin: 20px 0 10px 0;
 
-  background-color: ${theme.color.gray[18]};
-  border: 1px solid #ffffff1a;
+  background-color: ${colors.dark.neutral[300]};
+  border: 1px solid ${colors.semantic.line};
   border-radius: 10px;
 `;
 
@@ -43,17 +43,12 @@ export const Separator = styled.div`
 `;
 
 export const CountText = styled.span`
-  font-size: 18px;
-  font-family: ${theme.font.semiBold};
-  color: ${theme.color.gray[100]};
-  line-height: 1;
-  white-space: nowrap;
+  ${typography.Sub1};
+  color: ${colors.semantic.text.strong};
 `;
 
 export const InfoText = styled.span`
-  color: #ffffff66;
-  font-family: ${theme.font.regular};
-  font-size: 14px;
-  line-height: 1;
-  margin-left: 15px;
+  color: ${colors.semantic.text.alternative};
+  ${typography.Caption1};
+  margin: 2.2px 0 0 15px;
 `;

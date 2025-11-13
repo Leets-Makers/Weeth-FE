@@ -1,6 +1,6 @@
-import theme from '@/styles/theme';
 import * as S from '@/styles/attendCheck/AttendCheckItem.styled';
 import Caption from '@/components/Button/Caption';
+import { colors } from '@/theme/designTokens';
 
 interface AttendCheckItemProps {
   attend: 'ATTEND' | 'ABSENT' | 'PENDING';
@@ -16,14 +16,14 @@ const AttendCheckItem: React.FC<AttendCheckItemProps> = ({
   place,
 }) => {
   let captionText = '미결';
-  let captionColor = theme.color.gray[65];
+  let captionColor = colors.semantic.icon.alternative;
 
   if (attend === 'ATTEND') {
     captionText = '출석';
-    captionColor = theme.color.main;
+    captionColor = colors.semantic.brand.primary;
   } else if (attend === 'ABSENT') {
     captionText = '결석';
-    captionColor = theme.color.negative;
+    captionColor = colors.semantic.state.error;
   }
 
   return (

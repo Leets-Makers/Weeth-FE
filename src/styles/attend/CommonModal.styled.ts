@@ -1,3 +1,4 @@
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const OpenModal = styled.div`
@@ -27,7 +28,7 @@ export const ModalContent = styled.div`
   min-width: 19.688rem;
   height: 30.563rem;
   max-height: 30.563rem;
-  background-color: #2f2f2f;
+  background-color: ${colors.semantic.container.neutral};
   border-radius: 14px;
   padding: 15px;
   box-sizing: border-box;
@@ -53,7 +54,7 @@ export const ModalTitle = styled.div`
 
 export const ModalText = styled.div`
   font-size: 14px;
-  color: #a6a6a6;
+  color: ${colors.semantic.text.alternative};
   margin-top: 20px;
 `;
 

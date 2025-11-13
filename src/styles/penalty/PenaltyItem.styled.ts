@@ -1,10 +1,21 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 15px;
+  padding: 15px 0;
   display: flex;
   flex-direction: column;
+  position: relative;
+  width: 100%;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: inherit;
+    background-color: ${colors.semantic.line};
+  }
 `;
 
 export const PenaltyBedge = styled.div<{ $type?: boolean }>`
@@ -14,28 +25,17 @@ export const PenaltyBedge = styled.div<{ $type?: boolean }>`
   text-align: center;
   font-size: 12px;
   background-color: ${({ $type }) => ($type ? '#FFB20040' : '#FF585840')};
-  color: ${({ $type }) => ($type ? theme.color.caution : theme.color.negative)};
+  color: ${({ $type }) =>
+    $type ? colors.semantic.state.caution : colors.semantic.state.error};
 `;
-export const ContentText = styled.text`
-  font-size: 16px;
-  font-family: ${theme.font.semiBold};
-  color: ${theme.color.gray[100]};
-  line-height: 1;
+export const ContentText = styled.div`
+  color: ${colors.semantic.text.strong};
+  ${typography.Sub2};
   margin-top: 10px;
 `;
 
-export const DateText = styled.text`
-  color: #ffffff66;
-  font-family: ${theme.font.regular};
+export const DateText = styled.div`
+  color: ${colors.semantic.text.alternative};
+  ${typography.Caption2};
   margin-top: 15px;
-  font-size: 12px;
-  line-height: 1;
-`;
-export const PaddingDiv = styled.div`
-  padding: 0 5px;
-`;
-
-export const Line = styled.div`
-  border: 1px solid;
-  color: ${theme.color.gray[18]};
 `;
