@@ -75,7 +75,12 @@ const LNB = ({ onClose }: LNBProps) => {
             <LogoutButton />
             <span>Log out</span>
           </S.Logout>
-          <S.UserInfo>
+          <S.UserInfo
+            onClick={() => {
+              navigate('/mypage');
+              onClose();
+            }}
+          >
             <img src={characterImg} alt="profile" />
             <div>
               <p>{userInfo?.name}</p>

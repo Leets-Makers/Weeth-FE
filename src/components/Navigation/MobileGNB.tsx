@@ -32,6 +32,7 @@ const Logo = styled.img`
 const Profile = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 
 const MobileGNB = () => {
@@ -51,7 +52,11 @@ const MobileGNB = () => {
           />
           <Logo src={logo} alt="Weeth" onClick={() => navi('/home')} />
         </Left>
-        <Profile src={characterImg} alt="profile" />
+        <Profile
+          src={characterImg}
+          alt="profile"
+          onClick={() => navi('/mypage')}
+        />
       </Container>
       {isOpen && <LNB onClose={() => setIsOpen(false)} />}
     </>
