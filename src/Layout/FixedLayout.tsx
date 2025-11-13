@@ -1,25 +1,30 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import MobileGNB from '@/components/Navigation/MobileGNB';
+import { Suspense } from 'react';
+import DelayedFallback from '@/hooks/DelayedFallback';
+import { units } from '@/theme/designTokens';
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 375px;
+  min-width: ${units.device.mobile};
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const Content = styled.main`
-  width: 375px;
-`;
+const Content = styled.main``;
 
 const FixedLayout = () => {
   return (
-    <Wrapper>
-      <MobileGNB />
-      <Content>
-        <Outlet />
-      </Content>
-    </Wrapper>
+    <Suspense fallback={<DelayedFallback delay={300} />}>
+      <Wrapper>
+        <MobileGNB />
+        <Content>
+          <Outlet />
+        </Content>
+      </Wrapper>
+    </Suspense>
   );
 };
 

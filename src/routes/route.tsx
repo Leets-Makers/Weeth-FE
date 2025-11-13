@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
 import PrivateRoute from '@/components/common/PrivateRoute';
-import Layout from '@/layout';
+import FixedLayout from '@/Layout/FixedLayout';
+import ResponsiveLayout from '@/Layout/ResponsiveLayout';
 
 const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
@@ -55,28 +56,34 @@ const AdminDues = lazy(() => import('@/pages/admin/AdminDues'));
 const AdminPenalty = lazy(() => import('@/pages/admin/AdminPenalty'));
 
 const router = createBrowserRouter([
+  // 1. 고정 레이아웃 (375px) 그룹
   {
-    path: '/',
-    element: <Layout />,
+    element: <FixedLayout />,
     children: [
       { path: '/', element: <Landing /> },
       { path: '/login', element: <Login /> },
       { path: '/profile', element: <Profile /> },
-      { path: '/kakao/oauth', element: <Redirect /> },
       { path: '/accountcheck', element: <AccountCheck /> },
+      { path: '/kakao/oauth', element: <Redirect /> },
       { path: '/register-success', element: <RegistrationSuccess /> },
       { path: '/waiting-approval', element: <WaitingApproval /> },
-
-      { path: '/attendance', element: <Attendance /> },
-      { path: '/penalty', element: <Penalty /> },
-
+      { path: '/home', element: <Home /> },
       { path: '/calendar', element: <Calendar /> },
+      { path: '/member', element: <Member /> },
       { path: '/:type/:id', element: <EventDetail /> },
       { path: '/events/create', element: <EventPost /> },
       { path: '/:type/:id/edit', element: <EventPost /> },
-      { path: '/home', element: <Home /> },
+    ],
+  },
+
+  // 2. 반응형 레이아웃 그룹
+  {
+    element: <ResponsiveLayout />,
+    children: [
+      { path: '/attendance', element: <Attendance /> },
       { path: '/attendCheck', element: <AttendCheck /> },
-      { path: '/member', element: <Member /> },
+      { path: '/penalty', element: <Penalty /> },
+
       { path: '/member/:userId', element: <MemberDetail /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/edit', element: <Edit /> },
@@ -104,7 +111,11 @@ const router = createBrowserRouter([
       { path: '/education/:part/:postId', element: <EduDetail /> },
       { path: '/education/:part/:postId/edit', element: <EduEdit /> },
 
-      { path: '/admin', element: <PrivateRoute element={<AdminMember />} /> },
+      // Admin
+      {
+        path: '/admin',
+        element: <PrivateRoute element={<AdminMember />} />,
+      },
       {
         path: '/admin/attendance',
         element: <PrivateRoute element={<AdminAttendance />} />,
