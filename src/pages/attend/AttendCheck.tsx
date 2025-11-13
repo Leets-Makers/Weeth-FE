@@ -1,7 +1,7 @@
 import AttendCheckMain from '@/components/AttendCheck/AttendCheckMain';
 import useCustomBack from '@/hooks/useCustomBack';
 import React from 'react';
-import MobileGNB from '@/components/Navigation/MobileGNB ';
+import MobileGNB from '@/components/Navigation/MobileGNB';
 import { AttendContainer } from './Attendance';
 
 const AttendCheck: React.FC = () => {

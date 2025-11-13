@@ -1,5 +1,5 @@
 import AttendMain from '@/components/Attendance/AttendMain';
-import MobileGNB from '@/components/Navigation/MobileGNB ';
+import MobileGNB from '@/components/Navigation/MobileGNB';
 import useCustomBack from '@/hooks/useCustomBack';
 import { pcResponsive } from '@/styles';
 import { units } from '@/theme/designTokens';
