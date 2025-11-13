@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useGetGlobaluserInfo, {
-  useGetUserInfo,
-} from '@/api/useGetGlobaluserInfo';
+
+import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import useGetDuesInfo from '@/api/useGetDuesInfo';
 import { toastError } from '@/components/common/ToastMessage';
 import Loading from '@/components/common/Loading';
-import Header from '@/components/Header/Header';
+
 import DueCategory from '@/components/Dues/DueCategory';
 import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
@@ -16,10 +14,8 @@ import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 
 const Dues: React.FC = () => {
   useCustomBack('/home');
-  const navigate = useNavigate();
 
   const { globalInfo, loading: globalLoading } = useGetGlobaluserInfo();
-  const { isAdmin } = useGetUserInfo();
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [cardinal, setCardinal] = useState<number | null>(null);
@@ -67,18 +63,8 @@ const Dues: React.FC = () => {
     );
   }
 
-  const handleAdminClick = () => navigate('/admin/dues');
-
   return (
     <S.StyledDues>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="ADMIN"
-        onClickRightButton={handleAdminClick}
-      >
-        회비
-      </Header>
-
       <DuesTitle time={duesInfo?.time ?? ''} />
 
       <S.CategoryWrapper>

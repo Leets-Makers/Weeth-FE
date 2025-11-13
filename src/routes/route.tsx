@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import PrivateRoute from '@/components/common/PrivateRoute';
 import FixedLayout from '@/Layout/FixedLayout';
 import ResponsiveLayout from '@/Layout/ResponsiveLayout';
+import NoHeaderLayout from '@/Layout/NoHeaderLayout';
 
 const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
@@ -56,9 +57,9 @@ const AdminDues = lazy(() => import('@/pages/admin/AdminDues'));
 const AdminPenalty = lazy(() => import('@/pages/admin/AdminPenalty'));
 
 const router = createBrowserRouter([
-  // 1. 고정 레이아웃 (375px) 그룹
+  // 0. 헤더 없는 고정 레이아웃 그룹
   {
-    element: <FixedLayout />,
+    element: <NoHeaderLayout />,
     children: [
       { path: '/', element: <Landing /> },
       { path: '/login', element: <Login /> },
@@ -67,12 +68,21 @@ const router = createBrowserRouter([
       { path: '/kakao/oauth', element: <Redirect /> },
       { path: '/register-success', element: <RegistrationSuccess /> },
       { path: '/waiting-approval', element: <WaitingApproval /> },
+    ],
+  },
+  // 1. 고정 레이아웃 (375px) 그룹
+  {
+    element: <FixedLayout />,
+    children: [
       { path: '/home', element: <Home /> },
       { path: '/calendar', element: <Calendar /> },
       { path: '/member', element: <Member /> },
       { path: '/:type/:id', element: <EventDetail /> },
       { path: '/events/create', element: <EventPost /> },
       { path: '/:type/:id/edit', element: <EventPost /> },
+      { path: '/member/:userId', element: <MemberDetail /> },
+      { path: '/mypage', element: <MyPage /> },
+      { path: '/edit', element: <Edit /> },
     ],
   },
 
@@ -83,10 +93,6 @@ const router = createBrowserRouter([
       { path: '/attendance', element: <Attendance /> },
       { path: '/attendCheck', element: <AttendCheck /> },
       { path: '/penalty', element: <Penalty /> },
-
-      { path: '/member/:userId', element: <MemberDetail /> },
-      { path: '/mypage', element: <MyPage /> },
-      { path: '/edit', element: <Edit /> },
       { path: '/dues', element: <Dues /> },
       { path: '/receipt', element: <Receipt /> },
 

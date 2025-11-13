@@ -8,7 +8,6 @@ import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import Loading from '@/components/common/Loading';
 import styled from 'styled-components';
-import MobileGNB from '@/components/Navigation/MobileGNB';
 import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 
 const Container = styled.div`
@@ -41,7 +40,6 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <MobileGNB />
       <HomeNotice
         title={recentNotices?.[0]?.title || ''}
         content={recentNotices?.[0]?.content || ''}
