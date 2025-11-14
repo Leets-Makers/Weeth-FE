@@ -1,11 +1,12 @@
-import Button from '@/components/Button/Button';
 import useCustomBack from '@/hooks/useCustomBack';
-import theme from '@/styles/theme';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import Logo from '@/assets/images/logo/logo_full_Origin.svg?react';
 import kakao from '@/assets/images/ic_KAKAO_symbol.svg';
+import apple from '@/assets/images/ic_apple_symbol.svg';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const fadeIn = keyframes`
   0% {
@@ -17,22 +18,31 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: left;
+  align-items: start;
   width: 375px;
-  height: 100vh;
+  min-height: 100vh;
   padding: 0 15px;
   box-sizing: border-box;
 `;
 
-const StyledTitle = styled.div`
-  margin-top: 45%;
+const TitleWrapper = styled.div`
+  margin-top: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+`;
+
+const Title = styled.div`
+  ${typography.Sub1};
 `;
 
 const ButtonWrapper = styled.div<{ $visible: boolean }>`
-  margin-top: 112px;
+  position: absolute;
+  bottom: 64px;
+  left: 0;
   display: ${({ $visible }) => ($visible ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
@@ -44,17 +54,35 @@ const ButtonWrapper = styled.div<{ $visible: boolean }>`
     css`
       animation: ${fadeIn} 2s ease-in-out forwards;
     `}
+
+  & > :last-child {
+    margin-top: 33px;
+  }
 `;
 
-const KakaoLoginButton = styled(Button)`
+const LoginButton = styled.button<{ $isKakao: boolean }>`
   width: 100%;
+  height: 48px;
+  border-radius: ${units.radius.md}px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  background-color: ${({ $isKakao }) =>
+    $isKakao ? '#FEE500' : colors.dark.neutral[900]};
+
+  color: ${colors.semantic.text.inverse};
+
+  > div {
+    ${typography.Button1};
+  }
 `;
 
 const SignUpbutton = styled.button`
-  margin-bottom: 198px;
+  ${typography.Button1};
+  margin-top: 48px;
   all: unset;
-  text-color: ${theme.color.gray[100]};
-  border-bottom: 1px solid ${theme.color.gray[100]};
+  color: ${colors.dark.neutral[900]};
+  border-bottom: 1px solid ${colors.dark.neutral[900]};
 
   &:hover {
     cursor: pointer;
@@ -96,42 +124,35 @@ const Landing: React.FC = () => {
 
   return (
     <Container>
-      <StyledTitle>
+      <TitleWrapper>
         <Logo />
-      </StyledTitle>
+        <Title>
+          Leets를 더 알차게 즐기는
+          <br />
+          동아리 관리 플랫폼
+        </Title>
+      </TitleWrapper>
       <ButtonWrapper $visible={showButtonWrapper}>
-        <KakaoLoginButton
-          color={theme.color.kakao}
-          textcolor="#262200"
+        <LoginButton
+          $isKakao
           onClick={() => {
             window.location.href = kakaoURL;
           }}
         >
-          <img
-            src={kakao}
-            alt="카카오"
-            style={{
-              marginRight: 10,
-            }}
-          />
-          카카오로 로그인
-        </KakaoLoginButton>
-        <KakaoLoginButton
-          color={theme.color.kakao}
-          textcolor="#262200"
+          <img src={kakao} alt="카카오" />
+          <div>카카오로 로그인</div>
+          <span> </span>
+        </LoginButton>
+        <LoginButton
+          $isKakao={false}
           onClick={() => {
             window.location.href = kakaoURL;
           }}
         >
-          <img
-            src={kakao}
-            alt="카카오"
-            style={{
-              marginRight: '10px',
-            }}
-          />
-          카카오로 로그인
-        </KakaoLoginButton>
+          <img src={apple} alt="apple" />
+          <div>Apple로 로그인</div>
+          <span> </span>
+        </LoginButton>
         <SignUpbutton
           onClick={() => {
             window.location.href = kakaoURL;
