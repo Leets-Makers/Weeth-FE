@@ -58,7 +58,7 @@ const AdminDues = lazy(() => import('@/pages/admin/AdminDues'));
 const AdminPenalty = lazy(() => import('@/pages/admin/AdminPenalty'));
 
 const router = createBrowserRouter([
-  // 0. 헤더 없는 고정 레이아웃 그룹
+  // 0. 헤더 없는 고정 레이아웃 (비로그인 페이지)
   {
     element: <NoHeaderLayout />,
     children: [
@@ -71,59 +71,115 @@ const router = createBrowserRouter([
       { path: '/waiting-approval', element: <WaitingApproval /> },
     ],
   },
-  // 1. 고정 레이아웃 (375px) 그룹
+
+  // 1. 고정 레이아웃 (로그인 필요)
   {
     element: <FixedLayout />,
     children: [
-      { path: '/home', element: <Home /> },
-      { path: '/calendar', element: <Calendar /> },
-      { path: '/member', element: <Member /> },
-      { path: '/:type/:id', element: <EventDetail /> },
-      { path: '/events/create', element: <EventPost /> },
-      { path: '/:type/:id/edit', element: <EventPost /> },
-      { path: '/member/:userId', element: <MemberDetail /> },
-      { path: '/mypage', element: <MyPage /> },
-      { path: '/edit', element: <Edit /> },
-      { path: '/receipt', element: <Receipt /> },
+      { path: '/home', element: <PrivateRoute element={<Home />} /> },
+      { path: '/calendar', element: <PrivateRoute element={<Calendar />} /> },
+      { path: '/member', element: <PrivateRoute element={<Member />} /> },
+      {
+        path: '/member/:userId',
+        element: <PrivateRoute element={<MemberDetail />} />,
+      },
+      { path: '/mypage', element: <PrivateRoute element={<MyPage />} /> },
+      { path: '/edit', element: <PrivateRoute element={<Edit />} /> },
+      { path: '/receipt', element: <PrivateRoute element={<Receipt />} /> },
+
+      {
+        path: '/events/create',
+        element: <PrivateRoute element={<EventPost />} />,
+      },
+      {
+        path: '/:type/:id',
+        element: <PrivateRoute element={<EventDetail />} />,
+      },
+      {
+        path: '/:type/:id/edit',
+        element: <PrivateRoute element={<EventPost />} />,
+      },
     ],
   },
 
-  // 2. 반응형 레이아웃 그룹
+  // 2. 반응형 레이아웃 (로그인 필요)
   {
     element: <ResponsiveLayout />,
     children: [
-      { path: '/attendance', element: <Attendance /> },
-      { path: '/attendCheck', element: <AttendCheck /> },
-      { path: '/penalty', element: <Penalty /> },
-      { path: '/dues', element: <Dues /> },
+      {
+        path: '/attendance',
+        element: <PrivateRoute element={<Attendance />} />,
+      },
+      {
+        path: '/attendCheck',
+        element: <PrivateRoute element={<AttendCheck />} />,
+      },
+      { path: '/penalty', element: <PrivateRoute element={<Penalty />} /> },
+      { path: '/dues', element: <PrivateRoute element={<Dues />} /> },
 
       {
         path: '/board',
-        element: <BoardLayout />,
+        element: <PrivateRoute element={<BoardLayout />} />,
         children: [
-          { index: true, element: <Board /> },
-          { path: 'notices', element: <BoardNotice /> },
-          { path: 'notices/post', element: <NoticePost /> },
-          { path: 'notices/:postId', element: <NoticeDetail /> },
-          { path: 'notices/:postId/edit', element: <NoticeEdit /> },
-          { path: 'education/:part', element: <EducationBoard /> },
-          { path: 'education/:part/post', element: <EduPost /> },
-          { path: ':category/:part', element: <PartBoard /> },
-          { path: ':category/:part/:postId', element: <PartDetail /> },
-          { path: ':category/:part/:postId/edit', element: <PartEdit /> },
-          { path: ':category/:part/post', element: <PartPost /> },
+          { index: true, element: <PrivateRoute element={<Board />} /> },
+          {
+            path: 'notices',
+            element: <PrivateRoute element={<BoardNotice />} />,
+          },
+          {
+            path: 'notices/post',
+            element: <PrivateRoute element={<NoticePost />} />,
+          },
+          {
+            path: 'notices/:postId',
+            element: <PrivateRoute element={<NoticeDetail />} />,
+          },
+          {
+            path: 'notices/:postId/edit',
+            element: <PrivateRoute element={<NoticeEdit />} />,
+          },
+          {
+            path: 'education/:part',
+            element: <PrivateRoute element={<EducationBoard />} />,
+          },
+          {
+            path: 'education/:part/post',
+            element: <PrivateRoute element={<EduPost />} />,
+          },
+          {
+            path: ':category/:part',
+            element: <PrivateRoute element={<PartBoard />} />,
+          },
+          {
+            path: ':category/:part/:postId',
+            element: <PrivateRoute element={<PartDetail />} />,
+          },
+          {
+            path: ':category/:part/:postId/edit',
+            element: <PrivateRoute element={<PartEdit />} />,
+          },
+          {
+            path: ':category/:part/post',
+            element: <PrivateRoute element={<PartPost />} />,
+          },
         ],
       },
 
-      { path: '/education/:part/:postId', element: <EduDetail /> },
-      { path: '/education/:part/:postId/edit', element: <EduEdit /> },
+      {
+        path: '/education/:part/:postId',
+        element: <PrivateRoute element={<EduDetail />} />,
+      },
+      {
+        path: '/education/:part/:postId/edit',
+        element: <PrivateRoute element={<EduEdit />} />,
+      },
     ],
   },
-  // 3. 어드민용 레이아웃
+
+  // 3. 어드민 레이아웃
   {
     element: <Layout />,
     children: [
-      // Admin
       {
         path: '/admin',
         element: <PrivateRoute element={<AdminMember />} />,
