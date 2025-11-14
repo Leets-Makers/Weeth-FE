@@ -29,7 +29,7 @@ const Container = styled.div`
 `;
 
 const TitleWrapper = styled.div`
-  margin-top: 40%;
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -40,6 +40,7 @@ const HeaderTitle = styled.div`
 `;
 
 const Title = styled.div`
+  margin-top: 12px;
   ${typography.Sub1};
   color: ${colors.semantic.text.alternative};
 `;
@@ -129,7 +130,10 @@ const Register: React.FC = () => {
 
   return (
     <Container>
-      <Header RightButtonType="none" isAccessible />
+      <div style={{ marginLeft: -15 }}>
+        <Header RightButtonType="none" isAccessible />
+      </div>
+
       <TitleWrapper>
         <HeaderTitle>회원가입</HeaderTitle>
         <Title>
@@ -159,11 +163,7 @@ const Register: React.FC = () => {
           <div>Apple로 회원가입</div>
           <span> </span>
         </LoginButton>
-        <SignUpbutton
-          onClick={() => {
-            window.location.href = kakaoURL;
-          }}
-        >
+        <SignUpbutton onClick={() => navigate('/')}>
           로그인으로 돌아가기
         </SignUpbutton>
       </ButtonWrapper>

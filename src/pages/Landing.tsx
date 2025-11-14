@@ -153,11 +153,7 @@ const Landing: React.FC = () => {
           <div>Apple로 로그인</div>
           <span> </span>
         </LoginButton>
-        <SignUpbutton
-          onClick={() => {
-            window.location.href = kakaoURL;
-          }}
-        >
+        <SignUpbutton onClick={() => navigate('/register')}>
           신규 회원가입
         </SignUpbutton>
       </ButtonWrapper>
