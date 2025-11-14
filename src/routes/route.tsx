@@ -5,6 +5,7 @@ import FixedLayout from '@/Layout/FixedLayout';
 import ResponsiveLayout from '@/Layout/ResponsiveLayout';
 import NoHeaderLayout from '@/Layout/NoHeaderLayout';
 import Layout from '@/Layout/layout';
+import Register from '@/pages/login/Register';
 
 const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
       { path: '/kakao/oauth', element: <Redirect /> },
       { path: '/register-success', element: <RegistrationSuccess /> },
       { path: '/waiting-approval', element: <WaitingApproval /> },
+      { path: '/register', element: <Register /> },
     ],
   },
 
