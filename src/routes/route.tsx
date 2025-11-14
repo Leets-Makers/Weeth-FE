@@ -4,6 +4,7 @@ import PrivateRoute from '@/components/common/PrivateRoute';
 import FixedLayout from '@/Layout/FixedLayout';
 import ResponsiveLayout from '@/Layout/ResponsiveLayout';
 import NoHeaderLayout from '@/Layout/NoHeaderLayout';
+import Layout from '@/layout';
 
 const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
@@ -116,7 +117,12 @@ const router = createBrowserRouter([
 
       { path: '/education/:part/:postId', element: <EduDetail /> },
       { path: '/education/:part/:postId/edit', element: <EduEdit /> },
-
+    ],
+  },
+  // 3. 어드민용 레이아웃
+  {
+    element: <Layout />,
+    children: [
       // Admin
       {
         path: '/admin',

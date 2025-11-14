@@ -7,7 +7,7 @@ import { units } from '@/theme/designTokens';
 
 const Wrapper = styled.div`
   width: 375px;
-  min-width: ${units.device.mobile};
+  min-width: ${units.device.mobile}px;
   display: flex;
   flex-direction: column;
   align-items: center;

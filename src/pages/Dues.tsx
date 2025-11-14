@@ -22,7 +22,7 @@ const Dues: React.FC = () => {
 
   useEffect(() => {
     if (globalInfo?.cardinals?.length) {
-      setCardinal(5);
+      setCardinal(globalInfo.cardinals[0]);
     }
   }, [globalInfo]);
 
