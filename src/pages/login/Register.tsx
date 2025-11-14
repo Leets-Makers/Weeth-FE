@@ -1,21 +1,12 @@
 import useCustomBack from '@/hooks/useCustomBack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import kakao from '@/assets/images/ic_KAKAO_symbol.svg';
 import apple from '@/assets/images/ic_apple_symbol.svg';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import Header from '@/components/Header/Header';
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
 
 const Container = styled.div`
   position: relative;
@@ -45,21 +36,15 @@ const Title = styled.div`
   color: ${colors.semantic.text.alternative};
 `;
 
-const ButtonWrapper = styled.div<{ $visible: boolean }>`
+const ButtonWrapper = styled.div`
   position: absolute;
   bottom: 64px;
   left: 0;
-  display: ${({ $visible }) => ($visible ? 'flex' : 'none')};
+  display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   gap: 15px;
-
-  ${({ $visible }) =>
-    $visible &&
-    css`
-      animation: ${fadeIn} 2s ease-in-out forwards;
-    `}
 
   & > :last-child {
     margin-top: 33px;
@@ -100,7 +85,6 @@ const Register: React.FC = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const [showButtonWrapper, setShowButtonWrapper] = useState(false);
 
   const params = new URLSearchParams(location.search);
   const redirectPath = params.get('redirect') || '/home';
@@ -121,13 +105,6 @@ const Register: React.FC = () => {
     }
   }, [navigate, redirectPath]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowButtonWrapper(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <Container>
       <div style={{ marginLeft: -15 }}>
@@ -142,7 +119,7 @@ const Register: React.FC = () => {
           회원가입하고, 정보를 실시간으로 받아보세요!
         </Title>
       </TitleWrapper>
-      <ButtonWrapper $visible={showButtonWrapper}>
+      <ButtonWrapper>
         <LoginButton
           $isKakao
           onClick={() => {
