@@ -9,7 +9,7 @@ interface CaptionProps {
   children: ReactNode;
 }
 
-const BasicCaption = styled.button<{ $color?: string; $textcolor?: string }>`
+const BasicCaption = styled.div<{ $color?: string; $textcolor?: string }>`
   width: 47px;
   height: 19px;
   background-color: ${({ $color }) =>

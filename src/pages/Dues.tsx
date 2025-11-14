@@ -22,7 +22,7 @@ const Dues: React.FC = () => {
 
   useEffect(() => {
     if (globalInfo?.cardinals?.length) {
-      setCardinal(globalInfo.cardinals[0]);
+      setCardinal(5);
     }
   }, [globalInfo]);
 
@@ -67,9 +67,7 @@ const Dues: React.FC = () => {
     <S.StyledDues>
       <DuesTitle time={duesInfo?.time ?? ''} />
 
-      <S.CategoryWrapper>
-        <DueCategory setSelectedDues={setSelectedCategory} />
-      </S.CategoryWrapper>
+      <DueCategory setSelectedDues={setSelectedCategory} />
 
       {duesInfo === null ? (
         <S.NullText>등록된 회비가 없습니다.</S.NullText>

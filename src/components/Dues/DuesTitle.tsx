@@ -10,8 +10,7 @@ const DuesBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 92%;
-  margin: 21px 4% 0 4%;
+  width: 100%;
   font-family: ${theme.font.semiBold};
 `;
 
