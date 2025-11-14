@@ -4,7 +4,7 @@ import theme from '@/styles/theme';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
-import logo from '@/assets/images/logo/logo_full_Spring.svg';
+import Logo from '@/assets/images/logo/logo_full_Origin.svg?react';
 import kakao from '@/assets/images/ic_KAKAO_symbol.svg';
 
 const fadeIn = keyframes`
@@ -20,14 +20,15 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 370px;
-  height: 810px;
+  justify-content: left;
+  width: 375px;
+  height: 100vh;
+  padding: 0 15px;
+  box-sizing: border-box;
 `;
 
 const StyledTitle = styled.div`
-  margin-top: 288px;
-  line-height: 76.38px;
-  text-align: center;
+  margin-top: 45%;
 `;
 
 const ButtonWrapper = styled.div<{ $visible: boolean }>`
@@ -96,9 +97,25 @@ const Landing: React.FC = () => {
   return (
     <Container>
       <StyledTitle>
-        <img src={logo} alt="leets로고" />
+        <Logo />
       </StyledTitle>
       <ButtonWrapper $visible={showButtonWrapper}>
+        <KakaoLoginButton
+          color={theme.color.kakao}
+          textcolor="#262200"
+          onClick={() => {
+            window.location.href = kakaoURL;
+          }}
+        >
+          <img
+            src={kakao}
+            alt="카카오"
+            style={{
+              marginRight: 10,
+            }}
+          />
+          카카오로 로그인
+        </KakaoLoginButton>
         <KakaoLoginButton
           color={theme.color.kakao}
           textcolor="#262200"
