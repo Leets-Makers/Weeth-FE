@@ -7,16 +7,23 @@ const Redirect: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const code = queryParams.get('code');
-    const redirectPath = queryParams.get('state') || '/home';
+    const params = new URLSearchParams(window.location.search);
 
-    if (code) {
+    const provider = params.get('provider');
+    const code = params.get('code');
+    const idToken = params.get('id_token');
+    const redirectPath = params.get('state') || '/home';
+
+    if (!code || !provider) return;
+
+    //  카카오 로그인 처리
+    if (provider === 'kakao') {
       api
         .post(`/api/v1/users/kakao/login`, { authCode: code })
         .then((res) => {
           const { kakaoId, status, accessToken, refreshToken } = res.data.data;
           localStorage.setItem('kakaoId', kakaoId);
+
           if (res.data.code === 200) {
             if (status === 'LOGIN') {
               localStorage.setItem('accessToken', accessToken);
@@ -36,6 +43,32 @@ const Redirect: React.FC = () => {
             toastError('로그인에 실패했습니다.');
             navigate('/');
           }
+        });
+    }
+
+    //  애플 로그인 처리
+    if (provider === 'apple') {
+      api
+        .post(`/api/v1/users/apple/login`, {
+          authCode: code,
+          idToken,
+        })
+        .then((res) => {
+          const { status, accessToken, refreshToken, appleId } = res.data.data;
+
+          localStorage.setItem('appleId', appleId);
+
+          if (status === 'LOGIN') {
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+            navigate(redirectPath, { replace: true });
+          } else {
+            navigate('/accountcheck');
+          }
+        })
+        .catch(() => {
+          toastError('Apple 로그인에 실패했습니다.');
+          navigate('/');
         });
     }
   }, [navigate]);

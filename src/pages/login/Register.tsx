@@ -57,6 +57,7 @@ const LoginButton = styled.button<{ $isKakao: boolean }>`
   border-radius: ${units.radius.md}px;
   align-items: center;
   display: flex;
+  padding-left: 14px;
   justify-content: space-between;
   background-color: ${({ $isKakao }) =>
     $isKakao ? '#FEE500' : colors.dark.neutral[900]};

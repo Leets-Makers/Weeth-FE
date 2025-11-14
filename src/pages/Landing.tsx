@@ -66,6 +66,7 @@ const LoginButton = styled.button<{ $isKakao: boolean }>`
   border-radius: ${units.radius.md}px;
   align-items: center;
   display: flex;
+  padding-left: 14px;
   justify-content: space-between;
   background-color: ${({ $isKakao }) =>
     $isKakao ? '#FEE500' : colors.dark.neutral[900]};
@@ -106,6 +107,16 @@ const Landing: React.FC = () => {
   const stateParam = encodeURIComponent(redirectPath);
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&state=${stateParam}`;
 
+  const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID;
+  const APPLE_REDIRECT_URI = `${BASE_URL}/auth/apple/callback`;
+
+  const appleURL =
+    `https://appleid.apple.com/auth/authorize?` +
+    `client_id=${APPLE_CLIENT_ID}` +
+    `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI)}` +
+    `&response_type=code%20id_token` +
+    `&scope=name%20email`;
+
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
@@ -136,7 +147,7 @@ const Landing: React.FC = () => {
         <LoginButton
           $isKakao
           onClick={() => {
-            window.location.href = kakaoURL;
+            window.location.href = `${kakaoURL}&provider=kakao`;
           }}
         >
           <img src={kakao} alt="카카오" />
@@ -146,7 +157,7 @@ const Landing: React.FC = () => {
         <LoginButton
           $isKakao={false}
           onClick={() => {
-            window.location.href = kakaoURL;
+            window.location.href = `${appleURL}&provider=apple`;
           }}
         >
           <img src={apple} alt="apple" />
