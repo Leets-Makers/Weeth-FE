@@ -1,4 +1,3 @@
-import Header from '@/components/Header/Header';
 import useGetMemberDetail from '@/api/useGetMemberDetail';
 import FE from '@/assets/images/ic_char_FE.svg';
 import BE from '@/assets/images/ic_char_BE.svg';
@@ -61,10 +60,6 @@ const MemberDetail = () => {
 
   return (
     <S.Wrapper>
-      <Header RightButtonType="none" isAccessible>
-        멤버
-      </Header>
-
       {positionData && (
         <>
           <S.PositionCharacter

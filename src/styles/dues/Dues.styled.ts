@@ -9,14 +9,11 @@ export const StyledDues = styled.div`
   flex-direction: column;
   min-width: ${units.device.mobile}px;
   ${pcResponsive}
-`;
-
-export const CategoryWrapper = styled.div`
-  margin: 0 30px;
+  box-sizing: border-box;
 `;
 
 export const DuesListBox = styled.div`
-  width: 92%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,6 +22,7 @@ export const DuesListBox = styled.div`
 
   padding: 15px;
   background-color: ${colors.semantic.container.neutral};
+  box-sizing: border-box;
 `;
 
 export const DuesList = styled.div`

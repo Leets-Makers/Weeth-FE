@@ -1,7 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
 import PrivateRoute from '@/components/common/PrivateRoute';
-import Layout from '@/layout';
+import FixedLayout from '@/Layout/FixedLayout';
+import ResponsiveLayout from '@/Layout/ResponsiveLayout';
+import NoHeaderLayout from '@/Layout/NoHeaderLayout';
+import Layout from '@/Layout/layout';
 
 const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
@@ -55,34 +58,48 @@ const AdminDues = lazy(() => import('@/pages/admin/AdminDues'));
 const AdminPenalty = lazy(() => import('@/pages/admin/AdminPenalty'));
 
 const router = createBrowserRouter([
+  // 0. 비로그인 페이지 (NoHeaderLayout)
   {
-    path: '/',
-    element: <Layout />,
+    element: <NoHeaderLayout />,
     children: [
       { path: '/', element: <Landing /> },
       { path: '/login', element: <Login /> },
       { path: '/profile', element: <Profile /> },
-      { path: '/kakao/oauth', element: <Redirect /> },
       { path: '/accountcheck', element: <AccountCheck /> },
+      { path: '/kakao/oauth', element: <Redirect /> },
       { path: '/register-success', element: <RegistrationSuccess /> },
       { path: '/waiting-approval', element: <WaitingApproval /> },
+    ],
+  },
 
-      { path: '/attendance', element: <Attendance /> },
-      { path: '/penalty', element: <Penalty /> },
-
-      { path: '/calendar', element: <Calendar /> },
-      { path: '/:type/:id', element: <EventDetail /> },
-      { path: '/events/create', element: <EventPost /> },
-      { path: '/:type/:id/edit', element: <EventPost /> },
+  // 1. FixedLayout (로그인 필요)
+  {
+    element: <PrivateRoute element={<FixedLayout />} />,
+    children: [
       { path: '/home', element: <Home /> },
-      { path: '/attendCheck', element: <AttendCheck /> },
+      { path: '/calendar', element: <Calendar /> },
       { path: '/member', element: <Member /> },
       { path: '/member/:userId', element: <MemberDetail /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/edit', element: <Edit /> },
-      { path: '/dues', element: <Dues /> },
       { path: '/receipt', element: <Receipt /> },
 
+      { path: '/events/create', element: <EventPost /> },
+      { path: '/:type/:id', element: <EventDetail /> },
+      { path: '/:type/:id/edit', element: <EventPost /> },
+    ],
+  },
+
+  // 2. ResponsiveLayout (로그인 필요)
+  {
+    element: <PrivateRoute element={<ResponsiveLayout />} />,
+    children: [
+      { path: '/attendance', element: <Attendance /> },
+      { path: '/attendCheck', element: <AttendCheck /> },
+      { path: '/penalty', element: <Penalty /> },
+      { path: '/dues', element: <Dues /> },
+
+      // board layout
       {
         path: '/board',
         element: <BoardLayout />,
@@ -103,24 +120,18 @@ const router = createBrowserRouter([
 
       { path: '/education/:part/:postId', element: <EduDetail /> },
       { path: '/education/:part/:postId/edit', element: <EduEdit /> },
+    ],
+  },
 
-      { path: '/admin', element: <PrivateRoute element={<AdminMember />} /> },
-      {
-        path: '/admin/attendance',
-        element: <PrivateRoute element={<AdminAttendance />} />,
-      },
-      {
-        path: '/admin/member',
-        element: <PrivateRoute element={<AdminMember />} />,
-      },
-      {
-        path: '/admin/dues',
-        element: <PrivateRoute element={<AdminDues />} />,
-      },
-      {
-        path: '/admin/penalty',
-        element: <PrivateRoute element={<AdminPenalty />} />,
-      },
+  // 3. Admin Layout
+  {
+    element: <PrivateRoute element={<Layout />} />,
+    children: [
+      { path: '/admin', element: <AdminMember /> },
+      { path: '/admin/attendance', element: <AdminAttendance /> },
+      { path: '/admin/member', element: <AdminMember /> },
+      { path: '/admin/dues', element: <AdminDues /> },
+      { path: '/admin/penalty', element: <AdminPenalty /> },
     ],
   },
 ]);

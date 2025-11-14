@@ -1,4 +1,3 @@
-import Header from '@/components/Header/Header';
 import ReceiptMain from '@/components/Receipt/ReceiptMain';
 import useCustomBack from '@/hooks/useCustomBack';
 import styled from 'styled-components';
@@ -16,9 +15,6 @@ const Receipt: React.FC = () => {
 
   return (
     <Container>
-      <Header RightButtonType="none" isAccessible>
-        영수증
-      </Header>
       <ReceiptMain />
     </Container>
   );

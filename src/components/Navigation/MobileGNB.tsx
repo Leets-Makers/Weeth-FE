@@ -10,10 +10,12 @@ import LNB from '@/components/Navigation/LNB';
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 12px 18px 12px 8px;
   background-color: ${colors.dark.neutral[200]};
+  box-sizing: border-box;
 `;
 
 const Left = styled.div`
@@ -30,6 +32,7 @@ const Logo = styled.img`
 const Profile = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 
 const MobileGNB = () => {
@@ -49,7 +52,11 @@ const MobileGNB = () => {
           />
           <Logo src={logo} alt="Weeth" onClick={() => navi('/home')} />
         </Left>
-        <Profile src={characterImg} alt="profile" />
+        <Profile
+          src={characterImg}
+          alt="profile"
+          onClick={() => navi('/mypage')}
+        />
       </Container>
       {isOpen && <LNB onClose={() => setIsOpen(false)} />}
     </>

@@ -1,5 +1,4 @@
 import useCustomBack from '@/hooks/useCustomBack';
-import Header from '@/components/Header/Header';
 import React, { useEffect, useState } from 'react';
 import ModalPenalty from '@/components/Penalty/ModalPenalty';
 import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
@@ -14,9 +13,9 @@ const Penalty: React.FC = () => {
   const { penaltyInfo, isLoading } = useGetPenalty();
   const [showLoading, setShowLoading] = useState(true);
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
+  // const handleOpenModal = () => {
+  //   setModalOpen(true);
+  // };
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -37,13 +36,6 @@ const Penalty: React.FC = () => {
 
   return (
     <AttendContainer>
-      <Header
-        RightButtonType="INFO"
-        isAccessible
-        onClickRightButton={handleOpenModal}
-      >
-        페널티
-      </Header>
       <PenaltyInfoBox
         penaltyCount={penaltyInfo?.penaltyCount || 0}
         warningCount={penaltyInfo?.warningCount || 0}

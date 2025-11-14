@@ -1,5 +1,4 @@
 import * as S from '@/styles/board/Board.styled';
-import Header from '@/components/Header/Header';
 import useCustomBack from '@/hooks/useCustomBack';
 import NoticePreview from '@/components/Board/NoticePreview';
 import PartBoard from '@/components/Board/PartBoard';
@@ -51,9 +50,6 @@ const Board = () => {
 
   return (
     <S.Container>
-      <Header isAccessible RightButtonType="none">
-        게시판
-      </Header>
       <S.BoardContainer>
         <PartBoard />
         <NoticePreview data={recentNotices} error={error} />

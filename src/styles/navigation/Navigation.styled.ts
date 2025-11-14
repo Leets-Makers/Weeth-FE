@@ -107,6 +107,7 @@ export const UserInfo = styled.div`
   align-items: center;
   gap: 12px;
 
+  cursor: pointer;
   padding: 8px 12px;
   border-radius: 12px;
 

@@ -9,14 +9,14 @@ interface DueCategoryProps {
 const StyledCategory = styled.div`
   padding-top: 30px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 `;
 
 const Button = styled.button<{ checked: boolean }>`
   background-color: transparent;
   border: none;
   height: 39px;
-  width: 30%;
+  width: 33%;
   border: 2px solid;
   border-width: 0 0 2px;
   border-color: ${(props) => (props.checked ? 'white' : 'transparent')};
