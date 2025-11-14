@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import ScrollToTop from '@/hooks/ScrollToTop';
 import { Suspense } from 'react';
-import DelayedFallback from './hooks/DelayedFallback';
+import DelayedFallback from '@/hooks/DelayedFallback';
 
 const Layout = () => {
   return (

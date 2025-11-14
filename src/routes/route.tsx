@@ -4,7 +4,7 @@ import PrivateRoute from '@/components/common/PrivateRoute';
 import FixedLayout from '@/Layout/FixedLayout';
 import ResponsiveLayout from '@/Layout/ResponsiveLayout';
 import NoHeaderLayout from '@/Layout/NoHeaderLayout';
-import Layout from '@/layout';
+import Layout from '@/Layout/layout';
 
 const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
@@ -58,7 +58,7 @@ const AdminDues = lazy(() => import('@/pages/admin/AdminDues'));
 const AdminPenalty = lazy(() => import('@/pages/admin/AdminPenalty'));
 
 const router = createBrowserRouter([
-  // 0. 헤더 없는 고정 레이아웃 (비로그인 페이지)
+  // 0. 비로그인 페이지 (NoHeaderLayout)
   {
     element: <NoHeaderLayout />,
     children: [
@@ -72,134 +72,66 @@ const router = createBrowserRouter([
     ],
   },
 
-  // 1. 고정 레이아웃 (로그인 필요)
+  // 1. FixedLayout (로그인 필요)
   {
-    element: <FixedLayout />,
+    element: <PrivateRoute element={<FixedLayout />} />,
     children: [
-      { path: '/home', element: <PrivateRoute element={<Home />} /> },
-      { path: '/calendar', element: <PrivateRoute element={<Calendar />} /> },
-      { path: '/member', element: <PrivateRoute element={<Member />} /> },
-      {
-        path: '/member/:userId',
-        element: <PrivateRoute element={<MemberDetail />} />,
-      },
-      { path: '/mypage', element: <PrivateRoute element={<MyPage />} /> },
-      { path: '/edit', element: <PrivateRoute element={<Edit />} /> },
-      { path: '/receipt', element: <PrivateRoute element={<Receipt />} /> },
+      { path: '/home', element: <Home /> },
+      { path: '/calendar', element: <Calendar /> },
+      { path: '/member', element: <Member /> },
+      { path: '/member/:userId', element: <MemberDetail /> },
+      { path: '/mypage', element: <MyPage /> },
+      { path: '/edit', element: <Edit /> },
+      { path: '/receipt', element: <Receipt /> },
 
-      {
-        path: '/events/create',
-        element: <PrivateRoute element={<EventPost />} />,
-      },
-      {
-        path: '/:type/:id',
-        element: <PrivateRoute element={<EventDetail />} />,
-      },
-      {
-        path: '/:type/:id/edit',
-        element: <PrivateRoute element={<EventPost />} />,
-      },
+      { path: '/events/create', element: <EventPost /> },
+      { path: '/:type/:id', element: <EventDetail /> },
+      { path: '/:type/:id/edit', element: <EventPost /> },
     ],
   },
 
-  // 2. 반응형 레이아웃 (로그인 필요)
+  // 2. ResponsiveLayout (로그인 필요)
   {
-    element: <ResponsiveLayout />,
+    element: <PrivateRoute element={<ResponsiveLayout />} />,
     children: [
-      {
-        path: '/attendance',
-        element: <PrivateRoute element={<Attendance />} />,
-      },
-      {
-        path: '/attendCheck',
-        element: <PrivateRoute element={<AttendCheck />} />,
-      },
-      { path: '/penalty', element: <PrivateRoute element={<Penalty />} /> },
-      { path: '/dues', element: <PrivateRoute element={<Dues />} /> },
+      { path: '/attendance', element: <Attendance /> },
+      { path: '/attendCheck', element: <AttendCheck /> },
+      { path: '/penalty', element: <Penalty /> },
+      { path: '/dues', element: <Dues /> },
 
+      // board layout
       {
         path: '/board',
-        element: <PrivateRoute element={<BoardLayout />} />,
+        element: <BoardLayout />,
         children: [
-          { index: true, element: <PrivateRoute element={<Board />} /> },
-          {
-            path: 'notices',
-            element: <PrivateRoute element={<BoardNotice />} />,
-          },
-          {
-            path: 'notices/post',
-            element: <PrivateRoute element={<NoticePost />} />,
-          },
-          {
-            path: 'notices/:postId',
-            element: <PrivateRoute element={<NoticeDetail />} />,
-          },
-          {
-            path: 'notices/:postId/edit',
-            element: <PrivateRoute element={<NoticeEdit />} />,
-          },
-          {
-            path: 'education/:part',
-            element: <PrivateRoute element={<EducationBoard />} />,
-          },
-          {
-            path: 'education/:part/post',
-            element: <PrivateRoute element={<EduPost />} />,
-          },
-          {
-            path: ':category/:part',
-            element: <PrivateRoute element={<PartBoard />} />,
-          },
-          {
-            path: ':category/:part/:postId',
-            element: <PrivateRoute element={<PartDetail />} />,
-          },
-          {
-            path: ':category/:part/:postId/edit',
-            element: <PrivateRoute element={<PartEdit />} />,
-          },
-          {
-            path: ':category/:part/post',
-            element: <PrivateRoute element={<PartPost />} />,
-          },
+          { index: true, element: <Board /> },
+          { path: 'notices', element: <BoardNotice /> },
+          { path: 'notices/post', element: <NoticePost /> },
+          { path: 'notices/:postId', element: <NoticeDetail /> },
+          { path: 'notices/:postId/edit', element: <NoticeEdit /> },
+          { path: 'education/:part', element: <EducationBoard /> },
+          { path: 'education/:part/post', element: <EduPost /> },
+          { path: ':category/:part', element: <PartBoard /> },
+          { path: ':category/:part/:postId', element: <PartDetail /> },
+          { path: ':category/:part/:postId/edit', element: <PartEdit /> },
+          { path: ':category/:part/post', element: <PartPost /> },
         ],
       },
 
-      {
-        path: '/education/:part/:postId',
-        element: <PrivateRoute element={<EduDetail />} />,
-      },
-      {
-        path: '/education/:part/:postId/edit',
-        element: <PrivateRoute element={<EduEdit />} />,
-      },
+      { path: '/education/:part/:postId', element: <EduDetail /> },
+      { path: '/education/:part/:postId/edit', element: <EduEdit /> },
     ],
   },
 
-  // 3. 어드민 레이아웃
+  // 3. Admin Layout
   {
-    element: <Layout />,
+    element: <PrivateRoute element={<Layout />} />,
     children: [
-      {
-        path: '/admin',
-        element: <PrivateRoute element={<AdminMember />} />,
-      },
-      {
-        path: '/admin/attendance',
-        element: <PrivateRoute element={<AdminAttendance />} />,
-      },
-      {
-        path: '/admin/member',
-        element: <PrivateRoute element={<AdminMember />} />,
-      },
-      {
-        path: '/admin/dues',
-        element: <PrivateRoute element={<AdminDues />} />,
-      },
-      {
-        path: '/admin/penalty',
-        element: <PrivateRoute element={<AdminPenalty />} />,
-      },
+      { path: '/admin', element: <AdminMember /> },
+      { path: '/admin/attendance', element: <AdminAttendance /> },
+      { path: '/admin/member', element: <AdminMember /> },
+      { path: '/admin/dues', element: <AdminDues /> },
+      { path: '/admin/penalty', element: <AdminPenalty /> },
     ],
   },
 ]);
