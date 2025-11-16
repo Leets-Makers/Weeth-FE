@@ -9,55 +9,19 @@ const Redirect: React.FC = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    const provider = params.get('provider');
     const code = params.get('code');
-    const idToken = params.get('id_token');
     const redirectPath = params.get('state') || '/home';
 
-    if (!code || !provider) return;
+    if (!code) return;
 
-    //  카카오 로그인 처리
-    if (provider === 'kakao') {
-      api
-        .post(`/api/v1/users/kakao/login`, { authCode: code })
-        .then((res) => {
-          const { kakaoId, status, accessToken, refreshToken } = res.data.data;
-          localStorage.setItem('kakaoId', kakaoId);
+    api
+      .post(`/api/v1/users/kakao/login`, { authCode: code })
+      .then((res) => {
+        const { kakaoId, status, accessToken, refreshToken } = res.data.data;
 
-          if (res.data.code === 200) {
-            if (status === 'LOGIN') {
-              localStorage.setItem('accessToken', accessToken);
-              localStorage.setItem('refreshToken', refreshToken);
-              navigate(redirectPath, { replace: true });
-            } else {
-              navigate('/accountcheck');
-            }
-          } else if (res.data.code === 403) {
-            navigate('/waiting-approval');
-          }
-        })
-        .catch((err: any) => {
-          if ((err.response.data as { code: number }).code === 403) {
-            navigate('/waiting-approval');
-          } else {
-            toastError('로그인에 실패했습니다.');
-            navigate('/');
-          }
-        });
-    }
+        localStorage.setItem('kakaoId', kakaoId);
 
-    //  애플 로그인 처리
-    if (provider === 'apple') {
-      api
-        .post(`/api/v1/users/apple/login`, {
-          authCode: code,
-          idToken,
-        })
-        .then((res) => {
-          const { status, accessToken, refreshToken, appleId } = res.data.data;
-
-          localStorage.setItem('appleId', appleId);
-
+        if (res.data.code === 200) {
           if (status === 'LOGIN') {
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
@@ -65,12 +29,18 @@ const Redirect: React.FC = () => {
           } else {
             navigate('/accountcheck');
           }
-        })
-        .catch(() => {
-          toastError('Apple 로그인에 실패했습니다.');
+        } else if (res.data.code === 403) {
+          navigate('/waiting-approval');
+        }
+      })
+      .catch((err: any) => {
+        if ((err.response.data as { code: number }).code === 403) {
+          navigate('/waiting-approval');
+        } else {
+          toastError('로그인에 실패했습니다.');
           navigate('/');
-        });
-    }
+        }
+      });
   }, [navigate]);
 
   return <div />;

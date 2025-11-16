@@ -6,6 +6,7 @@ import ResponsiveLayout from '@/Layout/ResponsiveLayout';
 import NoHeaderLayout from '@/Layout/NoHeaderLayout';
 import Layout from '@/Layout/layout';
 import Register from '@/pages/login/Register';
+import AppleRedirect from '@/pages/login/AppleRedirect';
 
 const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
       { path: '/profile', element: <Profile /> },
       { path: '/accountcheck', element: <AccountCheck /> },
       { path: '/kakao/oauth', element: <Redirect /> },
+      { path: '/apple/oauth', element: <AppleRedirect /> },
       { path: '/register-success', element: <RegistrationSuccess /> },
       { path: '/waiting-approval', element: <WaitingApproval /> },
       { path: '/register', element: <Register /> },

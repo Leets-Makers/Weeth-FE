@@ -147,7 +147,7 @@ const Landing: React.FC = () => {
         <LoginButton
           $isKakao
           onClick={() => {
-            window.location.href = `${kakaoURL}&provider=kakao`;
+            window.location.href = `${kakaoURL}`;
           }}
         >
           <img src={kakao} alt="카카오" />
@@ -157,7 +157,7 @@ const Landing: React.FC = () => {
         <LoginButton
           $isKakao={false}
           onClick={() => {
-            window.location.href = `${appleURL}&provider=apple`;
+            window.location.href = `${appleURL}`;
           }}
         >
           <img src={apple} alt="apple" />
