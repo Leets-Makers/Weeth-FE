@@ -107,13 +107,14 @@ const Landing: React.FC = () => {
   const stateParam = encodeURIComponent(redirectPath);
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&state=${stateParam}`;
 
+  const APPLE_REDIRECT_URI = import.meta.env.VITE_APPLE_REDIRECT_URI;
   const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID;
-  const APPLE_REDIRECT_URI = `${BASE_URL}/auth/apple/callback`;
+  const APPLE_REDIRECT_URI_FULL = BASE_URL + APPLE_REDIRECT_URI;
 
   const appleURL =
     `https://appleid.apple.com/auth/authorize?` +
     `client_id=${APPLE_CLIENT_ID}` +
-    `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI)}` +
+    `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI_FULL)}` +
     `&response_type=code%20id_token` +
     `&scope=name%20email`;
 

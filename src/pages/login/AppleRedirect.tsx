@@ -10,20 +10,18 @@ const AppleRedirect: React.FC = () => {
     const params = new URLSearchParams(window.location.search);
 
     const code = params.get('code');
-    const idToken = params.get('id_token');
     const redirectPath = params.get('state') || '/home';
 
     if (!code) return;
-
+    localStorage.setItem('appleAuthCode', code);
     api
       .post(`/api/v1/users/apple/login`, {
         authCode: code,
-        idToken,
       })
       .then((res) => {
-        const { status, accessToken, refreshToken, appleId } = res.data.data;
-
-        localStorage.setItem('appleId', appleId);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { status, accessToken, refreshToken, appleIdToken } =
+          res.data.data;
 
         if (status === 'LOGIN') {
           localStorage.setItem('accessToken', accessToken);
