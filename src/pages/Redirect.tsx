@@ -20,6 +20,7 @@ const Redirect: React.FC = () => {
         const { kakaoId, status, accessToken, refreshToken } = res.data.data;
 
         localStorage.setItem('kakaoId', kakaoId);
+        localStorage.setItem('register', 'kakao');
 
         if (res.data.code === 200) {
           if (status === 'LOGIN') {

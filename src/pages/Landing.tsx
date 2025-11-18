@@ -116,7 +116,9 @@ const Landing: React.FC = () => {
     `client_id=${APPLE_CLIENT_ID}` +
     `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI_FULL)}` +
     `&response_type=code%20id_token` +
-    `&scope=name%20email`;
+    `&response_mode=form_post` +
+    `&scope=name%20email` +
+    `&state=${stateParam}`;
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');

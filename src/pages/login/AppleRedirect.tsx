@@ -22,6 +22,7 @@ const AppleRedirect: React.FC = () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { status, accessToken, refreshToken, appleIdToken } =
           res.data.data;
+        localStorage.setItem('register', 'apple');
 
         if (status === 'LOGIN') {
           localStorage.setItem('accessToken', accessToken);

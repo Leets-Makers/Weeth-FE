@@ -194,14 +194,17 @@ const Profile: React.FC = () => {
 
     const mappedMemberInfo = {
       kakaoId: Number(localStorage.getItem('kakaoId')),
+      appleAuthCode: localStorage.getItem('appleAuthCode'),
       ...memberInfo,
       cardinal: Number(memberInfo.cardinal),
       position: roleMapping[memberInfo.position || ''] || memberInfo.position,
     };
+    const registerMethod = localStorage.getItem('register');
+    const registerApi = registerMethod === 'apple' ? 'apple' : 'kakao';
 
     try {
       const response = await api.post(
-        `/api/v1/users/kakao/register`,
+        `/api/v1/users/${registerApi}/register`,
         mappedMemberInfo,
       );
       if (response.data.code === 200) {

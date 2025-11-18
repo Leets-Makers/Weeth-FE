@@ -69,7 +69,7 @@ const router = createBrowserRouter([
       { path: '/profile', element: <Profile /> },
       { path: '/accountcheck', element: <AccountCheck /> },
       { path: '/kakao/oauth', element: <Redirect /> },
-      { path: '/apple/oauth', element: <AppleRedirect /> },
+      { path: '/redirect/apple', element: <AppleRedirect /> },
       { path: '/register-success', element: <RegistrationSuccess /> },
       { path: '/waiting-approval', element: <WaitingApproval /> },
       { path: '/register', element: <Register /> },
