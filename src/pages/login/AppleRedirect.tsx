@@ -19,9 +19,7 @@ const AppleRedirect: React.FC = () => {
         authCode: code,
       })
       .then((res) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { status, accessToken, refreshToken, appleIdToken } =
-          res.data.data;
+        const { status, accessToken, refreshToken } = res.data.data;
         localStorage.setItem('register', 'apple');
 
         if (status === 'LOGIN') {
@@ -34,7 +32,9 @@ const AppleRedirect: React.FC = () => {
       })
       .catch(() => {
         toastError('Apple 로그인에 실패했습니다.');
-        navigate('/');
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
       });
   }, [navigate]);
 
