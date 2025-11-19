@@ -111,14 +111,15 @@ const Landing: React.FC = () => {
   const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID;
   const APPLE_REDIRECT_URI_FULL = BASE_URL + APPLE_REDIRECT_URI;
 
+  const mode = 'login';
+  const appleState = `${mode}::${redirectPath}`;
+
   const appleURL =
     `https://appleid.apple.com/auth/authorize?` +
     `client_id=${APPLE_CLIENT_ID}` +
     `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI_FULL)}` +
-    `&response_type=code%20id_token` +
-    `&response_mode=form_post` +
-    `&scope=name%20email` +
-    `&state=${stateParam}`;
+    `&response_type=code` +
+    `&state=${appleState}`;
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');

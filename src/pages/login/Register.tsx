@@ -97,6 +97,19 @@ const Register: React.FC = () => {
   const stateParam = encodeURIComponent(redirectPath);
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&state=${stateParam}`;
 
+  const APPLE_REDIRECT_URI = import.meta.env.VITE_APPLE_REDIRECT_URI;
+  const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID;
+  const APPLE_REDIRECT_URI_FULL = BASE_URL + APPLE_REDIRECT_URI;
+  const mode = 'register';
+  const appleState = `${mode}::${redirectPath}`;
+
+  const appleURL =
+    `https://appleid.apple.com/auth/authorize?` +
+    `client_id=${APPLE_CLIENT_ID}` +
+    `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI_FULL)}` +
+    `&response_type=code` +
+    `&state=${appleState}`;
+
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
@@ -134,7 +147,7 @@ const Register: React.FC = () => {
         <LoginButton
           $isKakao={false}
           onClick={() => {
-            window.location.href = kakaoURL;
+            window.location.href = appleURL;
           }}
         >
           <img src={apple} alt="apple" />

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-alert */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +8,12 @@ import DropdownMenu from '@/components/Button/DropdownMenu';
 import Header from '@/components/Header/Header';
 import PositionSector from '@/components/Signup/PositionSector';
 import useCustomBack from '@/hooks/useCustomBack';
-import api from '@/api/api';
 import SelectModal from '@/components/Modal/SelectModal';
 import theme from '@/styles/theme';
 import Line from '@/components/common/Line';
 import InfoInput from '@/components/MyPage/InfoInput';
 import { colors } from '@/theme/designTokens';
+import axios from 'axios';
 
 const ProfileContainer = styled.div`
   width: 370px;
@@ -125,6 +126,7 @@ const Profile: React.FC = () => {
   useCustomBack('/accountcheck');
 
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const [memberInfo, setMemberInfo] = useState<MemberInfo>({
     name: '',
@@ -203,19 +205,30 @@ const Profile: React.FC = () => {
     const registerApi = registerMethod === 'apple' ? 'apple' : 'kakao';
 
     try {
-      const response = await api.post(
-        `/api/v1/users/${registerApi}/register`,
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/users/${registerApi}/register`,
         mappedMemberInfo,
       );
+
       if (response.data.code === 200) {
         showModal(`가입 신청이 완료되었습니다.
-        운영진의 승인 후 서비스 이용이 가능합니다.`);
+      운영진의 승인 후 서비스 이용이 가능합니다.`);
         navigate('/register-success', { replace: true });
       } else {
         showModal(response.data.message);
       }
     } catch (error: any) {
-      showModal(error.response?.data.message || error.message);
+      console.error('===== REGISTER ERROR =====');
+
+      if (error.response) {
+        console.error('status:', error.response.status);
+        console.error('data:', error.response.data);
+        console.error('headers:', error.response.headers);
+      } else {
+        console.error('message:', error.message);
+      }
+
+      alert('회원가입 중 에러가 발생했습니다.');
     }
   };
 
