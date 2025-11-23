@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-const useLogout = () => {
+const handleLogout = () => {
   const navigate = useNavigate();
 
   const confirmLogout = () => {
-    // eslint-disable-next-line no-alert
     if (window.confirm('로그아웃 하시겠습니까?')) {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
@@ -15,4 +14,4 @@ const useLogout = () => {
   return confirmLogout;
 };
 
-export default useLogout;
+export default handleLogout;
