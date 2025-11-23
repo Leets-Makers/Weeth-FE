@@ -48,7 +48,12 @@ const LNB = ({ onClose }: { onClose: () => void }) => {
       <S.Sidebar>
         <div>
           <S.Header>
-            <Logo width={80} height={40} />
+            <Logo
+              width={80}
+              height={40}
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate('/home')}
+            />
             <S.CloseButton onClick={onClose}>
               <Close height={24} />
             </S.CloseButton>
