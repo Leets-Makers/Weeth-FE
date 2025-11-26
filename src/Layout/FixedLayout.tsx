@@ -4,6 +4,7 @@ import MobileGNB from '@/components/Navigation/MobileGNB';
 import { Suspense } from 'react';
 import DelayedFallback from '@/hooks/DelayedFallback';
 import { units } from '@/theme/designTokens';
+import Footer from '@/components/Navigation/Footer';
 
 const Wrapper = styled.div`
   width: 375px;
@@ -18,12 +19,15 @@ const Content = styled.main``;
 const FixedLayout = () => {
   return (
     <Suspense fallback={<DelayedFallback delay={300} />}>
-      <Wrapper>
-        <MobileGNB />
-        <Content>
-          <Outlet />
-        </Content>
-      </Wrapper>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Wrapper>
+          <MobileGNB />
+          <Content>
+            <Outlet />
+          </Content>
+        </Wrapper>
+        <Footer />
+      </div>
     </Suspense>
   );
 };

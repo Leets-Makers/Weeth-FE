@@ -8,6 +8,7 @@ import MobileGNB from '@/components/Navigation/MobileGNB';
 import { pcResponsive } from '@/styles';
 import { Suspense } from 'react';
 import DelayedFallback from '@/hooks/DelayedFallback';
+import { Footer } from '@/styles/navigation/Navigation.styled';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,12 +31,15 @@ const ResponsiveLayout = () => {
 
   return (
     <Suspense fallback={<DelayedFallback delay={300} />}>
-      <Wrapper>
-        {isMobile ? <MobileGNB /> : <DesktopGNB />}
-        <Content>
-          <Outlet />
-        </Content>
-      </Wrapper>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Wrapper>
+          {isMobile ? <MobileGNB /> : <DesktopGNB />}
+          <Content>
+            <Outlet />
+          </Content>
+        </Wrapper>
+        <Footer />
+      </div>
     </Suspense>
   );
 };
