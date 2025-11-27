@@ -73,11 +73,24 @@ const Footer = ({ isMobile }: { isMobile: boolean }) => {
             >
               Leets Makers Site
             </LeetsLink>
-            <LeetsLink>문의 메일</LeetsLink>
+            <LeetsLink
+              href="mailto:leets.makers@gmail.com?subject=[weeth]문의사항."
+              target="_blank"
+            >
+              문의 메일
+            </LeetsLink>
           </InfoList>
           <InfoList>
             <InfoTitle>Leets</InfoTitle>
-            <LeetsLink href="https://www.leets.land/">Leets Site</LeetsLink>
+            <LeetsLink href="https://www.leets.land/" target="_blank">
+              Leets Site
+            </LeetsLink>
+            <LeetsLink
+              href="mailto:leetsland@gmail.com?subject=[Leets]문의사항."
+              target="_blank"
+            >
+              문의 메일
+            </LeetsLink>
           </InfoList>
         </LeetsInfo>
         <LogoGrey
