@@ -1,17 +1,30 @@
-import { colors } from '@/theme/designTokens';
+import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
 import Logo from '@/assets/images/logo/logo_full_Origin.svg?react';
 
-const Container = styled.footer`
+const Container = styled.footer<{ $isMobile: boolean }>`
   width: 100%;
   height: 285px;
+  background-color: ${colors.dark.neutral[100]};
+  display: flex;
+  justify-content: center;
+`;
+
+const Wrapper = styled.div<{ $isMobile: boolean }>`
+  width: 100%;
+  max-width: ${({ $isMobile }) =>
+    $isMobile ? '100%' : `${units.device.desktop}px`};
+
+  padding: ${({ $isMobile }) =>
+    $isMobile ? '0 18px 26px 18px' : '0 15px 26px 15px'};
+
   display: flex;
   flex-direction: column;
-  background-color: ${colors.dark.neutral[100]};
 `;
 
 const LeetsInfo = styled.div`
+  margin-top: 26px;
   gap: 16px;
   display: flex;
   flex-direction: row;
@@ -36,7 +49,6 @@ const LeetsLink = styled.a`
 const CopyRight = styled.div`
   ${typography.Caption1};
   color: ${colors.semantic.text.alternative};
-  margin-bottom: 26px;
 `;
 
 const LogoGrey = styled(Logo)`
@@ -47,32 +59,34 @@ const LogoGrey = styled(Logo)`
   margin-top: 67px;
 `;
 
-const Footer = () => {
+const Footer = ({ isMobile }: { isMobile: boolean }) => {
   return (
-    <Container>
-      <LeetsInfo>
-        <InfoList>
-          <InfoTitle>Leets Makers</InfoTitle>
-          <LeetsLink href="/admin">Weeth Admin</LeetsLink>
-          <LeetsLink
-            href="https://leets-makers.framer.website/"
-            target="_blank"
-          >
-            Leets Makers Site
-          </LeetsLink>
-          <LeetsLink>문의 메일</LeetsLink>
-        </InfoList>
-        <InfoList>
-          <InfoTitle>Leets</InfoTitle>
-          <LeetsLink href="https://www.leets.land/">Leets Site</LeetsLink>
-        </InfoList>
-      </LeetsInfo>
-      <LogoGrey
-        color={colors.semantic.text.alternative}
-        width={90}
-        height={40}
-      />
-      <CopyRight>© Weeth ALL RIGHTS RESERVED.</CopyRight>
+    <Container $isMobile={isMobile}>
+      <Wrapper $isMobile={isMobile}>
+        <LeetsInfo>
+          <InfoList>
+            <InfoTitle>Leets Makers</InfoTitle>
+            <LeetsLink href="/admin">Weeth Admin</LeetsLink>
+            <LeetsLink
+              href="https://leets-makers.framer.website/"
+              target="_blank"
+            >
+              Leets Makers Site
+            </LeetsLink>
+            <LeetsLink>문의 메일</LeetsLink>
+          </InfoList>
+          <InfoList>
+            <InfoTitle>Leets</InfoTitle>
+            <LeetsLink href="https://www.leets.land/">Leets Site</LeetsLink>
+          </InfoList>
+        </LeetsInfo>
+        <LogoGrey
+          color={colors.semantic.text.alternative}
+          width={90}
+          height={40}
+        />
+        <CopyRight>© Weeth ALL RIGHTS RESERVED.</CopyRight>
+      </Wrapper>
     </Container>
   );
 };
