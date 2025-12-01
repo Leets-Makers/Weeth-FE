@@ -136,7 +136,7 @@ export const colors = {
 
 export const units = {
   device: {
-    desktop: 1032,
+    desktop: 1024,
     tablet: 696,
     mobile: 360,
   },
