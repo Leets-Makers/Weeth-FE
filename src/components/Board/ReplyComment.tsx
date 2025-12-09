@@ -1,6 +1,6 @@
 import parse from 'html-react-parser';
-import ReplyArrowImage from '@/assets/images/ic_reply.svg';
-import MenuImage from '@/assets/images/ic_comment_delete.svg';
+import ReplyArrowImage from '@/assets/images/ic_reply.svg?react';
+import MenuImage from '@/assets/images/ic_comment_delete.svg?react';
 import * as S from '@/styles/board/Comment.styled';
 import deleteComment from '@/api/deleteComment';
 import formatDateTime from '@/hooks/formatDateTime';
@@ -84,7 +84,7 @@ const ReplyComment = ({
 
   return (
     <S.ReplyCommentContainer>
-      <S.ReplyArrow src={ReplyArrowImage} alt="답댓글 화살표" />
+      <ReplyArrowImage />
       <S.ReplyContentContainer>
         <S.ReplyHeaderContainer>
           <S.NameText>
@@ -96,7 +96,7 @@ const ReplyComment = ({
           </S.NameText>
           {isMyComment && (
             <S.ReplyImageButton onClick={onClickMenu}>
-              <img src={MenuImage} alt="메뉴 버튼" />
+              <MenuImage />
             </S.ReplyImageButton>
           )}
         </S.ReplyHeaderContainer>
