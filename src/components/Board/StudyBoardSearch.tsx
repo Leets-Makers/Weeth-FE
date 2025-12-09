@@ -1,4 +1,3 @@
-import theme from '@/styles/theme';
 import styled from 'styled-components';
 import DividerLine from '@/assets/images/ic_search_divider.svg';
 import Delete from '@/assets/images/ic_circle_close.svg';
@@ -23,10 +22,12 @@ import {
   mapPartToBoard,
 } from '@/utils/searchMappers';
 import { pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   display: flex;
-  padding: 0px 15px;
+  padding: 0 ${units.padding['450']}px;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
@@ -37,17 +38,13 @@ const Container = styled.div`
 const Search = styled.div`
   display: flex;
   align-items: center;
-  height: 44px;
+  height: 40px;
   justify-content: space-between;
-  border: 1px solid ${theme.color.gray[18]};
-  border-radius: 0.25rem;
+  border-radius: ${units.radius.sm}px;
+  padding: ${units.padding['200']}px ${units.padding['200']}px
+    ${units.padding['200']}px ${units.padding['400']}px;
   box-sizing: border-box;
-  transition: border 0.2s;
-  padding: 13px 12px;
-
-  &:focus-within {
-    border: 1px solid ${theme.color.gray[65]};
-  }
+  background-color: ${colors.semantic.container.neutral};
 `;
 
 const SearchRightButton = styled.div`
@@ -59,15 +56,14 @@ export const SearchInput = styled.input`
   border: none;
   outline: none;
   background-color: transparent;
-  font-size: 1rem;
-  color: #fff;
-  padding: 0;
+  ${typography.Body1};
+  color: ${colors.semantic.text.normal};
   justify-content: center;
   width: 100%;
 
   &::placeholder {
-    font-size: 1rem;
-    color: ${theme.color.gray[65]};
+    ${typography.Body1};
+    color: ${colors.semantic.text.alternative};
   }
 `;
 
