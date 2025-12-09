@@ -1,5 +1,5 @@
-import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -12,9 +12,7 @@ const Container = styled.div`
   background-color: ${colors.semantic.container.neutral};
   justify-content: center;
   align-items: center;
-  font-size: 12px;
-  font-family: ${theme.font.semiBold};
-  font-size: 12px;
+  ${typography.Caption1};
   color: ${colors.semantic.text.alternative};
 `;
 
