@@ -1,6 +1,6 @@
-import FolderImage from '@/assets/images/ic_folder.svg';
-import DownloadImage from '@/assets/images/ic_download.svg';
-import CloseImage from '@/assets/images/ic_red_close.svg';
+import FolderImage from '@/assets/images/ic_folder.svg?react';
+import DownloadImage from '@/assets/images/ic_download.svg?react';
+import CloseImage from '@/assets/images/ic_red_close.svg?react';
 import * as S from '@/styles/board/PostFile.styled';
 
 const sliceUnicode = (text: string, limit: number) =>
@@ -29,17 +29,13 @@ const PostFile = ({
   return (
     <S.Container>
       <S.FileContainer>
-        <S.FolderIcon src={FolderImage} alt="파일 폴더 아이콘" />
+        <FolderImage />
         <S.FileName>{cuttedFileName}</S.FileName>
       </S.FileContainer>
       {isDownload ? (
-        <S.RightIcon
-          src={DownloadImage}
-          alt="다운로드 아이콘"
-          onClick={onClick}
-        />
+        <DownloadImage onClick={onClick} />
       ) : (
-        <S.RightIcon src={CloseImage} alt="닫기 아이콘" onClick={onClick} />
+        <CloseImage onClick={onClick} />
       )}
     </S.Container>
   );
