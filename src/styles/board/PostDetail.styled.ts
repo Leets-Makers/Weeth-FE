@@ -1,12 +1,16 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { MOBILE, pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const PostMainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 15px 10px 15px;
-  gap: 61px;
+  margin-top: ${units.margin['200']}px;
+  padding: 0 ${units.padding['450']}px ${units.padding['400']}px
+    ${units.padding['450']}px;
+  gap: 40px;
   word-break: break-all;
   border-bottom: 1px solid ${theme.color.gray[30]};
   width: 100%;
@@ -17,13 +21,21 @@ export const PostMainContainer = styled.div`
 `;
 
 export const PostMainTitleText = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 1.5rem;
+  wdith: 100%;
+  ${typography.H3};
+  colors: ${colors.semantic.text.normal};
+`;
+
+export const TitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const SmallText = styled.div`
-  color: ${theme.color.gray[65]};
-  font-size: 0.75rem;
+  color: ${colors.semantic.text.alternative};
+  ${typography.Caption2}
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,32 +44,37 @@ export const SmallText = styled.div`
 export const PostMainTitle = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
 `;
 
 export const DateText = styled.div`
-  margin-left: 0.625rem;
+  margin-left: 11px;
 `;
 
 export const PostFileList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: ${units.margin['200']}px;
 `;
 
 export const CommentText = styled.div`
-  font-size: 12px;
   display: flex;
   flex-direction: row;
   gap: 2px;
-  font-family: ${theme.font.semiBold};
-  color: ${theme.color.gray[100]};
+  ${typography.Caption1};
+  color: ${colors.semantic.text.normal};
 `;
 
 export const PositionIcon = styled.img`
   height: 1rem;
   width: 1rem;
-  margin-right: 0.3125rem;
+  margin-right: 5px;
+`;
+
+export const PostContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${units.margin['300']}px;
 `;
 
 export const PostingContianer = styled.div`
@@ -199,14 +216,8 @@ export const PostingContianer = styled.div`
   }
 `;
 
-export const PostContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-`;
-
 export const PostBottomContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: ${units.margin['300']}px;
 `;
