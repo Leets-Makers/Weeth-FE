@@ -9,6 +9,7 @@ import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import Loading from '@/components/common/Loading';
 import styled from 'styled-components';
 import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
+import EditGNB from '@/components/Navigation/EditGNB';
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ const Home: React.FC = () => {
 
   return (
     <Container>
+      <EditGNB />
       <HomeNotice
         title={recentNotices?.[0]?.title || ''}
         content={recentNotices?.[0]?.content || ''}
