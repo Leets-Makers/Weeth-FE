@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import CommentImage from '@/assets/images/ic_comment_count.svg';
+import CommentImage from '@/assets/images/ic_comment_count.svg?react';
 import * as S from '@/styles/board/PostDetail.styled';
 import PostFile from '@/components/Board/PostFile';
 import formatDateTime from '@/hooks/formatDateTime';
@@ -10,6 +10,7 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
+import KebabButton from '@/assets/images/ic_board_detail_kebabButton.svg?react';
 
 interface Comment {
   id: number;
@@ -74,7 +75,10 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     <S.PostMainContainer>
       <S.PostContentContainer>
         <S.PostMainTitle>
-          <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
+          <S.TitleContainer>
+            <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
+            <KebabButton />
+          </S.TitleContainer>
           <S.SmallText>
             <S.PositionIcon
               src={setPositionIcon(info.role, info.position)}
@@ -85,7 +89,6 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
           </S.SmallText>
         </S.PostMainTitle>
         <S.PostingContianer>
-          {/* {parse(convertLinksInText(info.content))} */}
           <ReactMarkdown
             rehypePlugins={[rehypeRaw]}
             remarkPlugins={[remarkBreaks, remarkGfm]}
@@ -110,7 +113,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
           ))}
         </S.PostFileList>
         <S.CommentText>
-          <img src={CommentImage} alt="댓글 이미지" />
+          <CommentImage />
           <div>{info.commentCount}</div>
         </S.CommentText>
       </S.PostBottomContent>
