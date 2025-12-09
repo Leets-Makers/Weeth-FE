@@ -22,7 +22,6 @@ const Content = styled.main`
   width: 100%;
   min-width: ${units.device.mobile}px;
   ${pcResponsive};
-  padding: 0 15px;
   box-sizing: border-box;
 `;
 
