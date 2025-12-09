@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { MOBILE, pcResponsive } from '@/styles';
+import typography from '@/theme/typography';
+import { colors, units } from '@/theme/designTokens';
 
 export const Container = styled.div`
   width: 100%;
@@ -11,6 +13,18 @@ export const Container = styled.div`
   padding-bottom: 60px;
 
   ${pcResponsive}
+`;
+
+export const BreadCrumContainer = styled.div`
+  display: flex;
+  ${typography.Caption1};
+  color: ${colors.semantic.text.alternative};
+  padding: ${units.padding['450']}px ${units.padding['450']}px 0
+    ${units.padding['450']}px;
+`;
+
+export const CrumbButton = styled.div`
+  cursor: pointer;
 `;
 
 export const CommentInputContainer = styled.div`
