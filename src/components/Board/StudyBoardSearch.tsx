@@ -35,12 +35,16 @@ const Container = styled.div`
   ${pcResponsive}
 `;
 
-const Search = styled.div`
+const Search = styled.div<{ isFocused: boolean }>`
   display: flex;
   align-items: center;
   height: 40px;
   justify-content: space-between;
   border-radius: ${units.radius.sm}px;
+  border: ${(props) =>
+    props.isFocused
+      ? `1px solid ${colors.semantic.brand.secondary}`
+      : '1px solid transparent'};
   padding: ${units.padding['200']}px ${units.padding['200']}px
     ${units.padding['200']}px ${units.padding['400']}px;
   box-sizing: border-box;
@@ -56,6 +60,7 @@ export const SearchInput = styled.input`
   border: none;
   outline: none;
   background-color: transparent;
+  caret-color: ${colors.semantic.brand.secondary};
   ${typography.Body1};
   color: ${colors.semantic.text.normal};
   justify-content: center;
@@ -93,6 +98,7 @@ const StudyBoardSearch = ({
   onLoading,
 }: SearchProps) => {
   const [keyword, setKeyword] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
 
   const fetchData = async () => {
     const q = keyword.trim();
@@ -138,11 +144,13 @@ const StudyBoardSearch = ({
 
   return (
     <Container>
-      <Search>
+      <Search isFocused={isFocused}>
         <SearchInput
           placeholder="제목, 내용 검색"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') handleSearch();
           }}
