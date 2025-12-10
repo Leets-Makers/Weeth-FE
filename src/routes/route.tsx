@@ -5,10 +5,10 @@ import FixedLayout from '@/Layout/FixedLayout';
 import ResponsiveLayout from '@/Layout/ResponsiveLayout';
 import NoHeaderLayout from '@/Layout/NoHeaderLayout';
 import Layout from '@/Layout/layout';
+import PostLayout from '@/Layout/PostLayout';
 import Register from '@/pages/login/Register';
 import AppleRedirect from '@/pages/login/AppleRedirect';
 
-const BoardLayout = lazy(() => import('@/pages/Layout'));
 const Attendance = lazy(() => import('@/pages/attend/Attendance'));
 const AttendCheck = lazy(() => import('@/pages/attend/AttendCheck'));
 const Penalty = lazy(() => import('@/pages/attend/Penalty'));
@@ -106,24 +106,34 @@ const router = createBrowserRouter([
       // board layout
       {
         path: '/board',
-        element: <BoardLayout />,
         children: [
           { index: true, element: <Board /> },
           { path: 'notices', element: <BoardNotice /> },
-          { path: 'notices/post', element: <NoticePost /> },
           { path: 'notices/:postId', element: <NoticeDetail /> },
-          { path: 'notices/:postId/edit', element: <NoticeEdit /> },
           { path: 'education/:part', element: <EducationBoard /> },
-          { path: 'education/:part/post', element: <EduPost /> },
           { path: ':category/:part', element: <PartBoard /> },
           { path: ':category/:part/:postId', element: <PartDetail /> },
-          { path: ':category/:part/:postId/edit', element: <PartEdit /> },
-          { path: ':category/:part/post', element: <PartPost /> },
         ],
       },
 
       { path: '/education/:part/:postId', element: <EduDetail /> },
-      { path: '/education/:part/:postId/edit', element: <EduEdit /> },
+    ],
+  },
+
+  {
+    element: <PrivateRoute element={<PostLayout />} />,
+    children: [
+      {
+        path: '/board',
+        children: [
+          { path: 'education/:part/post', element: <EduPost /> },
+          { path: ':category/:part/post', element: <PartPost /> },
+          { path: 'notices/post', element: <NoticePost /> },
+          { path: 'notices/:postId/edit', element: <NoticeEdit /> },
+          { path: ':category/:part/:postId/edit', element: <PartEdit /> },
+        ],
+      },
+      { path: 'education/:part/:postId/edit', element: <EduEdit /> },
     ],
   },
 
