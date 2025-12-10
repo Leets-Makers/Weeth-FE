@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 import DelayedFallback from '@/hooks/DelayedFallback';
 import Footer from '@/components/Navigation/Footer';
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Content = styled.main`
+export const Content = styled.main`
   width: 100%;
   min-width: ${units.device.mobile}px;
   ${pcResponsive};
