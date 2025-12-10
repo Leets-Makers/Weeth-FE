@@ -1,4 +1,6 @@
-import Header from '@/components/Header/Header';
+import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
+import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
@@ -7,7 +9,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
-
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
@@ -15,6 +16,7 @@ import useSmartLoading, {
   useSmartCombinedLoading,
 } from '@/hooks/useSmartLoading';
 import { BoardContent } from '@/types/board';
+import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
 
 const BoardNotice = () => {
   useCustomBack('/board');
@@ -92,7 +94,7 @@ const BoardNotice = () => {
     return <Loading />;
   }
 
-  const handleRightButton = () => {
+  const handleWriting = () => {
     navigate(`/board/notices/post`);
   };
 
@@ -110,24 +112,28 @@ const BoardNotice = () => {
   };
 
   const list = searchMode ? searchResults : posts;
+  const handleClickHome = () => {
+    navigate('/home');
+  };
+  const handleClickBoard = () => {
+    navigate('/board');
+  };
 
   return (
     <S.Container>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="WRITING"
-        onClickRightButton={handleRightButton}
-      >
+      <BreadCrumContainer>
+        <BreadcrumHomeIcon onClick={handleClickHome} />
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
+        <BreadcrumArrowRightIcon />
         공지사항
-      </Header>
-      <S.SearchContainer>
-        <StudyBoardSearch
-          requestType="notices"
-          onSearchDone={handleSearchDone}
-          onClear={handleSearchClear}
-          onLoading={setSearchLoading}
-        />
-      </S.SearchContainer>
+      </BreadCrumContainer>
+      <StudyBoardSearch
+        requestType="notices"
+        onSearchDone={handleSearchDone}
+        onClear={handleSearchClear}
+        onLoading={setSearchLoading}
+      />
       {combinedSmartLoading ? (
         <Loading />
       ) : (
@@ -163,6 +169,11 @@ const BoardNotice = () => {
             <S.Text>마지막 게시물입니다.</S.Text>
           )}
         </S.PostContainer>
+      )}
+      {isAdmin && (
+        <S.FloatingButton>
+          <FloatingWritingIcon onClick={handleWriting} />
+        </S.FloatingButton>
       )}
     </S.Container>
   );
