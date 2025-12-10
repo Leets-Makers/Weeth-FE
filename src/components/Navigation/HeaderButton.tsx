@@ -5,7 +5,7 @@ import typography from '@/theme/typography';
 
 const ButtonContainer = styled.button`
   display: flex;
-  algin-items: center;
+  align-items: center;
   background-color: ${colors.semantic.button.primary};
 
   padding: ${units.margin[200]}px ${units.padding[400]}px;
@@ -26,7 +26,7 @@ const HeaderButton = ({
 }) => {
   return (
     <ButtonContainer onClick={onClickButton}>
-      <CheckImg style={{ paddingTop: 3 }} />
+      <CheckImg />
       {isBoard ? '게시' : '저장'}
     </ButtonContainer>
   );
