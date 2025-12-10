@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { MOBILE, pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
+import KebabButton from '@/assets/images/ic_board_detail_kebabButton.svg?react';
 
 export const PostMainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: ${units.margin['200']}px;
   padding: 0 ${units.padding['450']}px ${units.padding['400']}px
     ${units.padding['450']}px;
   gap: 40px;
@@ -45,6 +45,10 @@ export const PostMainTitle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 11px;
+`;
+
+export const KebabIcon = styled(KebabButton)`
+  cursor: pointer;
 `;
 
 export const DateText = styled.div`
@@ -220,4 +224,14 @@ export const PostBottomContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${units.margin['300']}px;
+`;
+
+export const TextButton = styled.div<{ $isLast?: boolean }>`
+  width: calc(100% - 8px);
+  box-sizing: border-box;
+  padding: 12px 0 12px 16px;
+  margin: 0 4px;
+  border-bottom: ${(props) =>
+    props.$isLast ? 'none' : `1px solid ${theme.color.gray[30]}`};
+  color: ${(props) => (props.$isLast ? theme.color.negative : 'white')};
 `;
