@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import { units } from '@/theme/designTokens';
@@ -35,6 +36,7 @@ const ResponsiveLayout = () => {
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
         <Wrapper>
           {isMobile ? <MobileGNB /> : <DesktopGNB />}
+
           <Content>
             <Outlet />
           </Content>

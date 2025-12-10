@@ -17,12 +17,17 @@ const ButtonContainer = styled.button`
   }
   ${typography.Button1};
 `;
-
-const HeaderButton = ({ isMypage = false }: { isMypage?: boolean }) => {
+const HeaderButton = ({
+  isBoard = false,
+  onClickButton,
+}: {
+  isBoard?: boolean;
+  onClickButton: () => void;
+}) => {
   return (
-    <ButtonContainer>
+    <ButtonContainer onClick={onClickButton}>
       <CheckImg style={{ paddingTop: 3 }} />
-      {isMypage ? '저장' : '게시'}
+      {isBoard ? '게시' : '저장'}
     </ButtonContainer>
   );
 };

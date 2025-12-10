@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import logo from '@/assets/images/ic_name_logo.svg';
 
 import { colors, units } from '@/theme/designTokens';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import HeaderButton from './HeaderButton';
 
@@ -21,12 +21,14 @@ const Logo = styled.img`
   cursor: pointer;
 `;
 
-const EditGNB = () => {
+const EditGNB = ({ onClickButton }: { onClickButton: () => void }) => {
   const navi = useNavigate();
+  const location = useLocation();
+  const isBoard = location.pathname.includes('board');
   return (
     <Container>
       <Logo src={logo} alt="Weeth" onClick={() => navi('/home')} />
-      <HeaderButton />
+      <HeaderButton onClickButton={onClickButton} isBoard={isBoard} />
     </Container>
   );
 };
