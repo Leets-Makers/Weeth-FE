@@ -6,13 +6,13 @@ import InfoInput from '@/components/MyPage/InfoInput';
 import useCustomBack from '@/hooks/useCustomBack';
 import theme from '@/styles/theme';
 import useGetUserInfo from '@/api/useGetUserInfo';
-import Header from '@/components/Header/Header';
 import Line from '@/components/common/Line';
 import usePatchUserInfo from '@/api/usePatchMyInfo';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
 import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import useSmartLoading from '@/hooks/useSmartLoading';
+import EditGNB from '@/components/Navigation/EditGNB';
 
 const Container = styled.div`
   width: 370px;
@@ -156,17 +156,14 @@ const Edit = () => {
 
   return (
     <Container>
-      <Header
-        onClickRightButton={() => {
+      <EditGNB
+        onClickButton={() => {
           if (validateUserData(userData)) {
             setIsSelectModalOpen(true);
           }
         }}
-        RightButtonType="TEXT"
-        isAccessible
-      >
-        MY 수정
-      </Header>
+      />
+
       {userInfo ? (
         <InfoWrapper>
           <Title>개인정보</Title>
