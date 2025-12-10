@@ -18,8 +18,8 @@ import deletePost from '@/api/deletePost';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetUserName from '@/hooks/useGetUserName';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
-import MenuModal from '../common/MenuModal';
-import SelectModal from '../Modal/SelectModal';
+import MenuModal from '@/components/common/MenuModal';
+import SelectModal from '@/components/Modal/SelectModal';
 
 interface Comment {
   id: number;
@@ -53,24 +53,17 @@ interface PostDetailMainProps {
   info: BoardDetail | null;
 }
 
-const PostDetailMain = ({ info }: PostDetailMainProps) => {
+const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   const navigate = useNavigate();
   const formattedDate = formatDateTime(info?.time ?? '');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
-  const { category, part, postId } = useParams<{
-    category: string;
-    part: string;
-    postId: string;
-  }>();
+  const { postId } = useParams();
+
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
-  const path = pathArray[1];
+  const path = pathArray[2];
   const type = path === 'notices' ? 'notices' : 'board';
-  const editPath =
-    category === 'study'
-      ? `/board/${category}/${part}/${postId}/edit`
-      : `/education/${part}/${postId}/edit`;
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
 
@@ -93,7 +86,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
   const confirmDelete = async () => {
     try {
       await deletePost(numericPostId, type);
-      navigate(`/board/${category}/${part}`, { replace: true });
+      navigate('/board/notices', { replace: true });
       setTimeout(() => {
         toastInfo('게시물이 삭제되었습니다');
       }, 500);
@@ -110,14 +103,14 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     fetch(fileUrl, { method: 'GET' })
       .then((res) => res.blob())
       .then((blob) => {
-        const downloadUrl = window.URL.createObjectURL(blob);
+        const url2 = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = downloadUrl;
+        a.href = url2;
         a.download = fileName;
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
-          window.URL.revokeObjectURL(downloadUrl);
+          window.URL.revokeObjectURL(url2);
           a.remove();
         }, 1000);
         toastSuccess('저장되었습니다');
@@ -136,7 +129,11 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
             setIsModalOpen(false);
           }}
         >
-          <S.TextButton onClick={() => navigate(editPath)}>수정</S.TextButton>
+          <S.TextButton
+            onClick={() => navigate(`/board/notices/${postId}/edit`)}
+          >
+            수정
+          </S.TextButton>
           <S.TextButton $isLast onClick={openSelectModal}>
             삭제
           </S.TextButton>
@@ -201,4 +198,4 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
   );
 };
 
-export default PostDetailMain;
+export default NoticesDetailMain;

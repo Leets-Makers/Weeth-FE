@@ -1,13 +1,15 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { MOBILE, pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const CommentContainer = styled.div<{ $isSelect: boolean }>`
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  padding: 9px 15px;
+  padding: ${units.padding['400']}px ${units.padding['450']}px;
   background-color: ${(props) =>
     props.$isSelect ? '#508FFF1A' : 'transparent'};
   transition: background-color 0.3s ease;
@@ -23,7 +25,12 @@ export const CommentContentContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 10px;
+  gap: ${units.margin['200']}px;
+`;
+
+export const CommentTop = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const ContentContainer = styled.div`
@@ -40,8 +47,8 @@ export const ButtonContainer = styled.div`
 `;
 
 export const NameText = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 0.875rem;
+  ${typography.Sub2};
+  color: ${colors.semantic.text.strong};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -50,14 +57,15 @@ export const NameText = styled.div`
 export const PositionIcon = styled.img`
   height: 1.25rem;
   width: 1.25rem;
-  margin-right: 0.3125rem;
+  margin-right: 5px;
 `;
 
 export const ContentText = styled.div`
-  font-size: 1rem;
-  line-height: 1.1931rem;
+  ${typography.Body1};
+  color: ${colors.semantic.text.normal};
+
   a {
-    color: ${theme.color.main};
+    color: ${colors.semantic.brand.primary};
     text-decoration: none;
   }
 
@@ -73,8 +81,8 @@ export const FileListContainer = styled.div`
 `;
 
 export const DateText = styled.div`
-  color: ${theme.color.gray[65]};
-  font-size: 0.75rem;
+  ${typography.Caption2};
+  color: ${colors.semantic.text.alternative};
 `;
 
 export const ImageButton = styled.button`
@@ -92,7 +100,6 @@ export const ReplyCommentContainer = styled.div`
   padding: 0 15px;
   align-items: flex-start;
   word-break: break-all;
-  gap: 10px;
 
   width: 100%;
   max-width: ${MOBILE};
@@ -107,13 +114,13 @@ export const ReplyArrow = styled.img`
 
 export const ReplyContentContainer = styled.div`
   flex: 1;
-  background-color: ${theme.color.gray[18]};
-  border-radius: 0.5rem;
-  padding: 10px 10px 10px 10px;
+  background-color: ${colors.semantic.container.neutral};
+  border-radius: ${units.radius.lg}px;
+  padding: ${units.padding['400']}px;
   display: flex;
   flex-direction: column;
   position: relative;
-  gap: 5px;
+  gap: ${units.margin['200']}px;
 `;
 
 export const ReplyHeaderContainer = styled.div`

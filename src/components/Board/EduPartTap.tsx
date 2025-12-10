@@ -11,16 +11,14 @@ const PARTS: Part[] = ['ALL', 'FE', 'BE', 'D', 'PM'];
 
 const EduPartTap = ({ activePart, onPartChange }: EduPartTapProps) => {
   return (
-    <S.TabContainerWrapper>
-      <S.TabContainer>
-        {PARTS.map((p) => (
-          <S.TabTextContainer key={p} onClick={() => onPartChange(p)}>
-            <S.TabText>{p}</S.TabText>
-            {activePart === p && <S.Underline />}
-          </S.TabTextContainer>
-        ))}
-      </S.TabContainer>
-    </S.TabContainerWrapper>
+    <S.TabContainer>
+      {PARTS.map((p) => (
+        <S.TabTextContainer key={p} onClick={() => onPartChange(p)}>
+          <S.TabText isActive={activePart === p}>{p}</S.TabText>
+          {activePart === p && <S.Underline />}
+        </S.TabTextContainer>
+      ))}
+    </S.TabContainer>
   );
 };
 

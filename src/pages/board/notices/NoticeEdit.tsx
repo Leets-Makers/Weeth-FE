@@ -6,9 +6,13 @@ import {
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
+import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
+import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import NoticeWrite from '@/components/Board/NoticeWrite';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import { originFile } from '@/pages/board/part/PartEdit';
+import EditGNB from '@/components/Navigation/EditGNB';
 
 const NoticeEdit = () => {
   const navigate = useNavigate();
@@ -35,7 +39,7 @@ const NoticeEdit = () => {
     setOriginFiles(boardDetailInfo?.fileUrls ?? []);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -80,19 +84,39 @@ const NoticeEdit = () => {
       );
     }
   };
+  const handleClickHome = () => {
+    navigate('/home');
+  };
+  const handleClickBoard = () => {
+    navigate('/board');
+  };
+  const handleClickPart = () => {
+    navigate(`/board/notices`);
+  };
 
   return (
-    <NoticeWrite
-      title={title}
-      setTitle={setTitle}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <>
+      <EditGNB onClickButton={handleClickButton} save />
+      <BreadCrumContainer>
+        <BreadcrumHomeIcon onClick={handleClickHome} />
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickPart}>공지사항</CrumbButton>
+        <BreadcrumArrowRightIcon />
+        글쓰기 수정
+      </BreadCrumContainer>
+      <NoticeWrite
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+        originFiles={originFiles}
+        setOriginFiles={setOriginFiles}
+      />
+    </>
   );
 };
 

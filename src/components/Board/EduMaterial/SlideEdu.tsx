@@ -54,7 +54,7 @@ const SlideEdu = ({ recentEdu }: SlideEduProps) => {
             <S.NoticeBottomRow>
               <S.EduDateContainer>
                 {formatMMDD(edu.time)}
-                {edu.hasFile && ' | '}
+                {edu.hasFile && <S.Divider />}
                 {edu.hasFile && <FileIcon />}
               </S.EduDateContainer>
 

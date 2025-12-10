@@ -1,15 +1,19 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import postBoardNotice from '@/api/postBoardNotice';
+import useGetBoardDetail from '@/api/useGetBoardDetail';
+import EduWrite from '@/components/Board/EduWrite';
+import { RealPart } from '@/types/part';
+import { originFile } from '@/pages/board/part/PartEdit';
+import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
+import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import EditGNB from '@/components/Navigation/EditGNB';
 import {
   toastError,
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import useGetBoardDetail from '@/api/useGetBoardDetail';
-import EduWrite from '@/components/Board/EduWrite';
-import { RealPart } from '@/types/part';
-import { originFile } from '@/pages/board/part/PartEdit';
+import postBoardNotice from '@/api/postBoardNotice';
 
 const EduEdit = () => {
   const navigate = useNavigate();
@@ -40,7 +44,7 @@ const EduEdit = () => {
     setSelectedPart((boardDetailInfo?.parts ?? []) as RealPart[]);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -86,23 +90,45 @@ const EduEdit = () => {
     }
   };
 
+  const handleClickHome = () => {
+    navigate('/home');
+  };
+  const handleClickBoard = () => {
+    navigate('/board');
+  };
+  const handleClickPartBoard = () => {
+    navigate(`/board/education/${part}`);
+  };
+
   return (
-    <EduWrite
-      headerTitle="교육자료"
-      title={title}
-      setTitle={setTitle}
-      selectedCardinal={selectedCardinal}
-      setSelectedCardinal={setSelectedCardinal}
-      selectedPart={selectedPart}
-      setSelectedPart={setSelectedPart}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <>
+      <EditGNB onClickButton={handleClickButton} save />
+      <BreadCrumContainer>
+        <BreadcrumHomeIcon onClick={handleClickHome} />
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickPartBoard}>
+          {part} 교육자료
+        </CrumbButton>
+        <BreadcrumArrowRightIcon />
+        교육자료 수정
+      </BreadCrumContainer>
+      <EduWrite
+        title={title}
+        setTitle={setTitle}
+        selectedCardinal={selectedCardinal}
+        setSelectedCardinal={setSelectedCardinal}
+        selectedPart={selectedPart}
+        setSelectedPart={setSelectedPart}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+        originFiles={originFiles}
+        setOriginFiles={setOriginFiles}
+      />
+    </>
   );
 };
 

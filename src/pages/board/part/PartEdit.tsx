@@ -8,7 +8,10 @@ import {
 } from '@/components/common/ToastMessage';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
-import getHeaderTitle from '@/utils/getHeaderTitle';
+import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
+import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import EditGNB from '@/components/Navigation/EditGNB';
 
 export interface originFile {
   fileId: number;
@@ -47,7 +50,7 @@ const PartEdit = () => {
     setSelectedWeek(boardDetailInfo?.week ?? null);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -100,26 +103,49 @@ const PartEdit = () => {
     return <div>잘못된 경로입니다.</div>;
   }
 
+  const handleClickHome = () => {
+    navigate('/home');
+  };
+  const handleClickBoard = () => {
+    navigate('/board');
+  };
+  const handleClickPartBoard = () => {
+    navigate(`/board/study/${part}`);
+  };
+
   return (
-    <StudyWriteTemplate
-      category={category}
-      headerTitle={getHeaderTitle(category, part)}
-      selectedCardinal={selectedCardinal}
-      setSelectedCardinal={setSelectedCardinal}
-      selectedWeek={selectedWeek}
-      setSelectedWeek={setSelectedWeek}
-      selectedStudy={selectedStudy}
-      setSelectedStudy={setSelectedStudy}
-      title={title}
-      setTitle={setTitle}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <>
+      <EditGNB onClickButton={handleClickButton} save />
+      <BreadCrumContainer>
+        <BreadcrumHomeIcon onClick={handleClickHome} />
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickPartBoard}>
+          {part} 파트게시판
+        </CrumbButton>
+        <BreadcrumArrowRightIcon />
+        글쓰기 수정
+      </BreadCrumContainer>
+      <StudyWriteTemplate
+        category={category}
+        selectedCardinal={selectedCardinal}
+        setSelectedCardinal={setSelectedCardinal}
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
+        selectedStudy={selectedStudy}
+        setSelectedStudy={setSelectedStudy}
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+        originFiles={originFiles}
+        setOriginFiles={setOriginFiles}
+        // onSave={onSave}
+      />
+    </>
   );
 };
 

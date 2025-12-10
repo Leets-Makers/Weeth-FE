@@ -8,9 +8,8 @@ import DefaultD from '@/assets/images/ic_default_board_D.svg?react';
 import DefaultBE from '@/assets/images/ic_default_board_BE.svg?react';
 import DefaultFE from '@/assets/images/ic_default_board_FE.svg?react';
 import DefaultPM from '@/assets/images/ic_default_board_PM.svg?react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import type { ComponentType, SVGProps } from 'react';
-import { useDraggable } from '@/hooks/useDraggable';
 
 type SvgCmp = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -50,30 +49,12 @@ const parts: PartItem[] = [
 
 const PartBoard = () => {
   const navigate = useNavigate();
-  const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
-    useDraggable(scrollerRef);
-
   const [pressedKey, setPressedKey] = useState<PartItem['key'] | null>(null);
 
   return (
-    <S.NoticePreviewContainer>
-      <S.CardContainer>
-        <S.PartTitleText>파트 게시판</S.PartTitleText>
-      </S.CardContainer>
-      <S.ScrollContainer
-        ref={scrollerRef}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={(e) => {
-          setPressedKey(null);
-          onMouseUp(e);
-        }}
-        onMouseLeave={(e) => {
-          setPressedKey(null);
-          onMouseLeave(e);
-        }}
-      >
+    <S.PartPreviewContainer>
+      <S.PartTitleText>파트 게시판</S.PartTitleText>
+      <S.PartBoardContainer>
         <S.PartList>
           {parts.map((part) => {
             const isPressed = pressedKey === part.key;
@@ -84,7 +65,9 @@ const PartBoard = () => {
                 key={part.url}
                 onMouseDown={() => setPressedKey(part.key)}
                 onMouseUp={() => setPressedKey(null)}
-                onMouseLeave={() => setPressedKey(null)}
+                onMouseLeave={() => {
+                  setPressedKey(null);
+                }}
                 onClick={() => navigate(`/board/study/${part.url}`)}
                 role="button"
                 tabIndex={0}
@@ -94,18 +77,16 @@ const PartBoard = () => {
                   }
                 }}
               >
-                <Icon
-                  width={76}
-                  height={76}
-                  style={{ pointerEvents: 'none' }}
-                />
+                <S.PartIcon>
+                  <Icon style={{ pointerEvents: 'none' }} />
+                </S.PartIcon>
                 <S.PartLabel>{part.key}</S.PartLabel>
               </S.PartItem>
             );
           })}
         </S.PartList>
-      </S.ScrollContainer>
-    </S.NoticePreviewContainer>
+      </S.PartBoardContainer>
+    </S.PartPreviewContainer>
   );
 };
 

@@ -7,7 +7,8 @@ const ButtonContainer = styled.button`
   display: flex;
   align-items: center;
   background-color: ${colors.semantic.button.primary};
-
+  ${typography.Button1};
+  border: none;
   padding: ${units.margin[200]}px ${units.padding[400]}px;
   gap: ${units.margin[100]}px;
   border-radius: ${units.radius.md}px;
@@ -15,19 +16,19 @@ const ButtonContainer = styled.button`
   &:hover {
     background-color: ${colors.semantic.button['primary-interaction']};
   }
-  ${typography.Button1};
 `;
+
 const HeaderButton = ({
-  isBoard = false,
+  save = false,
   onClickButton,
 }: {
-  isBoard?: boolean;
+  save?: boolean;
   onClickButton: () => void;
 }) => {
   return (
     <ButtonContainer onClick={onClickButton}>
       <CheckImg />
-      {isBoard ? '게시' : '저장'}
+      {save ? '저장' : '게시'}
     </ButtonContainer>
   );
 };

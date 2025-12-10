@@ -36,14 +36,14 @@ const typography = {
   },
   Body1: {
     fontFamily: 'Pretendard Variable',
-    fontWeight: 500,
+    fontWeight: 470,
     fontSize: '16px',
     lineHeight: '24px',
     letterSpacing: '-0.02em',
   },
   Body2: {
     fontFamily: 'Pretendard Variable',
-    fontWeight: 500,
+    fontWeight: 450,
     fontSize: '14px',
     lineHeight: '20px',
     letterSpacing: '-0.02em',
@@ -57,14 +57,14 @@ const typography = {
   },
   Caption2: {
     fontFamily: 'Pretendard Variable',
-    fontWeight: 500,
+    fontWeight: 470,
     fontSize: '12px',
     lineHeight: '16px',
     letterSpacing: '-0.02em',
   },
   Button1: {
     fontFamily: 'Pretendard Variable',
-    fontWeight: 600,
+    fontWeight: 650,
     fontSize: '16px',
     lineHeight: '24px',
     letterSpacing: '-0.02em',

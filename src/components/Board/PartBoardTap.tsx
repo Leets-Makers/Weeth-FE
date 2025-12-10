@@ -7,18 +7,16 @@ interface PartBoardTapProps {
 
 const PartBoardTap = ({ activeTab, onTabChange }: PartBoardTapProps) => {
   return (
-    <S.TabContainerWrapper>
-      <S.TabContainer>
-        <S.TabTextContainer onClick={() => onTabChange('StudyLog')}>
-          <S.TabText>스터디로그</S.TabText>
-          {activeTab === 'StudyLog' && <S.Underline />}
-        </S.TabTextContainer>
-        <S.TabTextContainer onClick={() => onTabChange('Article')}>
-          <S.TabText>아티클</S.TabText>
-          {activeTab === 'Article' && <S.Underline />}
-        </S.TabTextContainer>
-      </S.TabContainer>
-    </S.TabContainerWrapper>
+    <S.TabContainer>
+      <S.TabTextContainer onClick={() => onTabChange('StudyLog')}>
+        <S.TabText isActive={activeTab === 'StudyLog'}>스터디로그</S.TabText>
+        {activeTab === 'StudyLog' && <S.Underline />}
+      </S.TabTextContainer>
+      <S.TabTextContainer onClick={() => onTabChange('Article')}>
+        <S.TabText isActive={activeTab === 'Article'}>아티클</S.TabText>
+        {activeTab === 'Article' && <S.Underline />}
+      </S.TabTextContainer>
+    </S.TabContainer>
   );
 };
 

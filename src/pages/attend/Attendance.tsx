@@ -12,6 +12,7 @@ export const AttendContainer = styled.div`
   ${pcResponsive}
   box-sizing: border-box;
   margin-bottom: 50px;
+  padding: 0 ${units.padding['450']}px;
 `;
 
 const Attendance: React.FC = () => {

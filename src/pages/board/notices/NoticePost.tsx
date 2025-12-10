@@ -1,8 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
+import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
+import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import postBoardNotice from '@/api/postBoardNotice';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
+import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import EditGNB from '@/components/Navigation/EditGNB';
 
 const NoticePost = () => {
   const navigate = useNavigate();
@@ -20,11 +24,7 @@ const NoticePost = () => {
   const isContentEmpty = content.trim() === '';
   const numericPostId = postId ? parseInt(postId, 10) : 0;
 
-  //   const handleDeleteFile = (fileName: string) => {
-  //     setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
-  //   };
-
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -71,17 +71,37 @@ const NoticePost = () => {
       );
     }
   };
+  const handleClickHome = () => {
+    navigate('/home');
+  };
+  const handleClickBoard = () => {
+    navigate('/board');
+  };
+  const handleClickNotice = () => {
+    navigate(`/board/notices`);
+  };
 
   return (
-    <NoticeWrite
-      title={title}
-      setTitle={setTitle}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      onSave={onSave}
-    />
+    <>
+      <EditGNB onClickButton={handleClickButton} />
+      <BreadCrumContainer>
+        <BreadcrumHomeIcon onClick={handleClickHome} />
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
+        <BreadcrumArrowRightIcon />
+        <CrumbButton onClick={handleClickNotice}>공지사항</CrumbButton>
+        <BreadcrumArrowRightIcon />
+        글쓰기
+      </BreadCrumContainer>
+      <NoticeWrite
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+      />
+    </>
   );
 };
 

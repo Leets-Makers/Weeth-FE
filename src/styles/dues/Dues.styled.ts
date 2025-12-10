@@ -10,6 +10,7 @@ export const StyledDues = styled.div`
   min-width: ${units.device.mobile}px;
   ${pcResponsive}
   box-sizing: border-box;
+  padding: 0 ${units.padding['450']}px;
 `;
 
 export const DuesListBox = styled.div`

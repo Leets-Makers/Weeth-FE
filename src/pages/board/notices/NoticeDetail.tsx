@@ -2,17 +2,14 @@ import { useState } from 'react';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
-import PostDetailMain from '@/components/Board/PostDetailMain';
-import Header from '@/components/Header/Header';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetUserName from '@/hooks/useGetUserName';
-import MenuModal from '@/components/common/MenuModal';
-import deletePost from '@/api/deletePost';
-import { toastError, toastInfo } from '@/components/common/ToastMessage';
-import SelectModal from '@/components/Modal/SelectModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
 import useSmartLoading from '@/hooks/useSmartLoading';
+import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
+import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import NoticesDetailMain from '@/components/Board/Notices/NoticesDetailMain';
 
 const NoticePostDetail = () => {
   const { postId } = useParams();
@@ -26,8 +23,6 @@ const NoticePostDetail = () => {
 
   const [refreshKey, setRefreshKey] = useState(0);
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
 
   const { boardDetailInfo, error, loading } = useGetBoardDetail(
@@ -52,28 +47,6 @@ const NoticePostDetail = () => {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
 
-  const openSelectModal = () => {
-    setIsSelectModalOpen(true);
-  };
-
-  const closeSelectModal = () => {
-    setIsSelectModalOpen(false);
-  };
-
-  const confirmDelete = async () => {
-    try {
-      await deletePost(numericPostId, type);
-      navigate('/board/notices', { replace: true });
-      setTimeout(() => {
-        toastInfo('게시물이 삭제되었습니다');
-      }, 500);
-    } catch (err) {
-      toastError();
-      console.error(err);
-    }
-    closeSelectModal();
-  };
-
   const handleRefresh = () => {
     setRefreshKey((prev) => prev + 1);
     setParentCommentId(null);
@@ -93,52 +66,34 @@ const NoticePostDetail = () => {
     }));
   };
 
-  const isMyPost = boardDetailInfo?.name === useGetUserName();
-
   if (error) return <div>오류: {error}</div>;
   if (smartLoading) return <Loading />;
 
+  const handleClickHome = () => {
+    navigate('/home');
+  };
+  const handleClickBoard = () => {
+    navigate('/board');
+  };
+  const handleClickPart = () => {
+    navigate(`/board/notices`);
+  };
+
   return (
     <>
-      {isModalOpen && (
-        <MenuModal
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        >
-          <S.TextButton
-            onClick={() => navigate(`/board/notices/${postId}/edit`)}
-          >
-            수정
-          </S.TextButton>
-          <S.TextButton $isLast onClick={openSelectModal}>
-            삭제
-          </S.TextButton>
-        </MenuModal>
-      )}
-      {isSelectModalOpen && (
-        <SelectModal
-          title="게시물 삭제"
-          content="이 게시물을 정말 삭제하시겠습니까?"
-          onClose={closeSelectModal}
-          onDelete={confirmDelete}
-        />
-      )}
-
       <S.Container>
-        <Header
-          RightButtonType="MENU"
-          isAccessible={isMyPost}
-          onClickRightButton={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          공지사항
-        </Header>
-
+        <BreadCrumContainer>
+          <BreadcrumHomeIcon onClick={handleClickHome} />
+          <BreadcrumArrowRightIcon />
+          <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
+          <BreadcrumArrowRightIcon />
+          <CrumbButton onClick={handleClickPart}>공지사항</CrumbButton>
+          <BreadcrumArrowRightIcon />
+          공지상세
+        </BreadCrumContainer>
         {boardDetailInfo && (
           <>
-            <PostDetailMain info={boardDetailInfo} />
+            <NoticesDetailMain info={boardDetailInfo} />
             <PostCommentList
               comments={boardDetailInfo.comments}
               postId={boardDetailInfo.id}

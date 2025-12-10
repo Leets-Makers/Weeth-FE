@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const ModalContainer = styled.div<{ $mobileOnly?: boolean }>`
   position: fixed;
-  top: 55px;
+  top: 130px;
   z-index: 1000;
   right: calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px);
   max-width: ${MOBILE};
@@ -39,7 +39,7 @@ const Content = styled.div`
   width: 144px;
   box-sizing: border-box;
   margin-left: auto;
-  margin-right: 18px;
+  margin-right: 10px;
 
   background-color: ${theme.color.gray[18]};
   border-radius: 10px;
