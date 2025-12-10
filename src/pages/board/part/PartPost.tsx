@@ -4,9 +4,10 @@ import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
 import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
 import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
-// import postBoardNotice from '@/api/postBoardNotice';
-// import { PostRequestType } from '@/types/PostRequestType';
-// import { toastError } from '@/components/common/ToastMessage';
+import EditGNB from '@/components/Navigation/EditGNB';
+import postBoardNotice from '@/api/postBoardNotice';
+import { PostRequestType } from '@/types/PostRequestType';
+import { toastError } from '@/components/common/ToastMessage';
 
 type CategorySlug = 'study' | 'article';
 type CategoryEnum = 'StudyLog' | 'Article';
@@ -21,9 +22,9 @@ const PartPost = () => {
   }>();
   const category = slugToEnum(slug);
 
-  // const url = new URL(window.location.href);
-  // const pathArray = url.pathname.split('/');
-  // const part = pathArray[3];
+  const url = new URL(window.location.href);
+  const pathArray = url.pathname.split('/');
+  const part = pathArray[3];
 
   const [title, setTitle] = useState('');
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
@@ -32,61 +33,58 @@ const PartPost = () => {
   const [content, setContent] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
 
-  // const onSave = async () => {
-  //   if (!title) {
-  //     toastError('제목을 입력해주세요.');
-  //     return;
-  //   }
-  //   if (!content) {
-  //     toastError('내용을 입력해주세요.');
-  //     return;
-  //   }
+  const handleClickButton = async () => {
+    if (!title) {
+      toastError('제목을 입력해주세요.');
+      return;
+    }
+    if (!content) {
+      toastError('내용을 입력해주세요.');
+      return;
+    }
 
-  //   if (category === 'StudyLog') {
-  //     if (!selectedCardinal) {
-  //       toastError('기수를 선택해주세요.');
-  //       return;
-  //     }
-  //     if (!selectedWeek) {
-  //       toastError('주차를 선택해주세요.');
-  //       return;
-  //     }
-  //     if (!selectedStudy) {
-  //       toastError('스터디를 선택해주세요.');
-  //       return;
-  //     }
-  //   } else if (!selectedCardinal) {
-  //     toastError('기수를 선택해주세요.');
-  //     return;
-  //   }
+    if (category === 'StudyLog') {
+      if (!selectedCardinal) {
+        toastError('기수를 선택해주세요.');
+        return;
+      }
+      if (!selectedWeek) {
+        toastError('주차를 선택해주세요.');
+        return;
+      }
+      if (!selectedStudy) {
+        toastError('스터디를 선택해주세요.');
+        return;
+      }
+    } else if (!selectedCardinal) {
+      toastError('기수를 선택해주세요.');
+      return;
+    }
 
-  //   try {
-  //     const postData: PostRequestType = {
-  //       title,
-  //       content,
-  //       category,
-  //       studyName: selectedStudy || undefined,
-  //       week: selectedWeek || undefined,
-  //       part,
-  //       cardinalNumber: selectedCardinal || undefined,
-  //       files: [],
-  //     };
+    try {
+      const postData: PostRequestType = {
+        title,
+        content,
+        category,
+        studyName: selectedStudy || undefined,
+        week: selectedWeek || undefined,
+        part,
+        cardinalNumber: selectedCardinal || undefined,
+        files: [],
+      };
 
-  //     await postBoardNotice({
-  //       postData,
-  //       files,
-  //       postType: 'postBoard',
-  //     });
+      await postBoardNotice({
+        postData,
+        files,
+        postType: 'postBoard',
+      });
 
-  //     navigate(`/board/${slug}/${part}`);
-  //   } catch (err) {
-  //     console.error('게시 실패:', err);
-  //     alert('게시 중 오류가 발생했습니다.');
-  //   }
-  // };
-  const { part } = useParams<{
-    part: string;
-  }>();
+      navigate(`/board/${slug}/${part}`);
+    } catch (err) {
+      console.error('게시 실패:', err);
+      alert('게시 중 오류가 발생했습니다.');
+    }
+  };
   const handleClickHome = () => {
     navigate('/home');
   };
@@ -99,6 +97,7 @@ const PartPost = () => {
 
   return (
     <>
+      <EditGNB onClickButton={handleClickButton} />
       <BreadCrumContainer>
         <BreadcrumHomeIcon onClick={handleClickHome} />
         <BreadcrumArrowRightIcon />
@@ -124,7 +123,6 @@ const PartPost = () => {
         setContent={setContent}
         files={files}
         setFiles={setFiles}
-        // onSave={onSave}
       />
     </>
   );

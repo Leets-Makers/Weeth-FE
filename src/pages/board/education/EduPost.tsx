@@ -1,13 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-// import postBoardNotice from '@/api/postBoardNotice';
-// import { PostRequestType } from '@/types/PostRequestType';
+import postBoardNotice from '@/api/postBoardNotice';
+import { PostRequestType } from '@/types/PostRequestType';
 import EduWrite from '@/components/Board/EduWrite';
 import { PartTypes } from '@/types/part';
-// import { toastError } from '@/components/common/ToastMessage';
+import { toastError } from '@/components/common/ToastMessage';
 import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
 import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import EditGNB from '@/components/Navigation/EditGNB';
 
 type RealPart = Exclude<PartTypes, '' | 'ALL'>;
 const REAL_PARTS: RealPart[] = ['FE', 'BE', 'D', 'PM'];
@@ -29,47 +30,47 @@ const EduPost = () => {
   const [content, setContent] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
 
-  // const onSave = async () => {
-  //   if (!title) {
-  //     toastError('제목을 입력해주세요.');
-  //     return;
-  //   }
-  //   if (!content) {
-  //     toastError('내용을 입력해주세요.');
-  //     return;
-  //   }
-  //   if (!selectedCardinal) {
-  //     toastError('기수를 선택해주세요.');
-  //     return;
-  //   }
+  const handleClickButton = async () => {
+    if (!title) {
+      toastError('제목을 입력해주세요.');
+      return;
+    }
+    if (!content) {
+      toastError('내용을 입력해주세요.');
+      return;
+    }
+    if (!selectedCardinal) {
+      toastError('기수를 선택해주세요.');
+      return;
+    }
 
-  //   const partsToSend: PartTypes[] =
-  //     selectedPart.length === REAL_PARTS.length || selectedPart.length === 0
-  //       ? ['ALL']
-  //       : selectedPart;
+    const partsToSend: PartTypes[] =
+      selectedPart.length === REAL_PARTS.length || selectedPart.length === 0
+        ? ['ALL']
+        : selectedPart;
 
-  //   try {
-  //     const postData: PostRequestType = {
-  //       title,
-  //       content,
-  //       parts: partsToSend,
-  //       cardinalNumber: selectedCardinal || undefined,
-  //       files: [],
-  //     };
+    try {
+      const postData: PostRequestType = {
+        title,
+        content,
+        parts: partsToSend,
+        cardinalNumber: selectedCardinal || undefined,
+        files: [],
+      };
 
-  //     await postBoardNotice({
-  //       postData,
-  //       files,
-  //       postType: 'postEdu',
-  //     });
+      await postBoardNotice({
+        postData,
+        files,
+        postType: 'postEdu',
+      });
 
-  //     const backPart = partParam ?? 'ALL';
-  //     navigate(`/board/education/${backPart}`);
-  //   } catch (err) {
-  //     console.error('게시 실패:', err);
-  //     alert('게시 중 오류가 발생했습니다.');
-  //   }
-  // };
+      const backPart = partParam ?? 'ALL';
+      navigate(`/board/education/${backPart}`);
+    } catch (err) {
+      console.error('게시 실패:', err);
+      alert('게시 중 오류가 발생했습니다.');
+    }
+  };
   const { part } = useParams<{
     part: string;
   }>();
@@ -85,6 +86,7 @@ const EduPost = () => {
 
   return (
     <>
+      <EditGNB onClickButton={handleClickButton} />
       <BreadCrumContainer>
         <BreadcrumHomeIcon onClick={handleClickHome} />
         <BreadcrumArrowRightIcon />
@@ -107,7 +109,6 @@ const EduPost = () => {
         setContent={setContent}
         files={files}
         setFiles={setFiles}
-        // onSave={onSave}
       />
     </>
   );
