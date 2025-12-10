@@ -2,46 +2,48 @@ import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { Dispatch, SetStateAction } from 'react';
 import { originFile } from '@/pages/board/part/PartEdit';
-import Header from '@/components/Header/Header';
 import WeekDropdown from '@/components/Board/WeekDropdown';
 import Markdown from '@/components/Board/Markdown';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyDropdown from '@/components/Board/StudyDropdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { MOBILE, pcResponsive } from '@/styles';
+import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: ${MOBILE};
+  gap: ${units.margin['300']}px;
 
   ${pcResponsive}
 `;
 
-const InformationContainer = styled.div`
+export const InformationContainer = styled.div`
   display: flex;
-  padding: 10px 15px;
+  padding: 0 ${units.padding['450']}px;
   gap: 5px;
 `;
 
-const DivisionContainer = styled.div`
+export const DivisionContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 12px;
+  ${typography.Caption1};
   color: ${theme.color.gray[65]};
-  font-family: ${theme.font.semiBold};
 `;
 
-const DropdownContainer = styled.div`
+export const DropdownContainer = styled.div`
   display: flex;
   gap: 5px;
 `;
 
-const MarkdownContainer = styled.div`
+export const MarkdownContainer = styled.div`
   display: flex;
-  padding: 10px 15px;
+  padding: 0 ${units.padding['450']}px ${units.padding['450']}px
+    ${units.padding['450']}px;
   width: 100%;
   max-width: ${MOBILE};
   box-sizing: border-box;
@@ -51,7 +53,6 @@ const MarkdownContainer = styled.div`
 
 interface StudyWriteTemplateProps {
   category: string;
-  headerTitle: string;
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
   selectedCardinal: number | null;
@@ -60,7 +61,7 @@ interface StudyWriteTemplateProps {
   setSelectedWeek: Dispatch<SetStateAction<number | null>>;
   selectedStudy: string | null;
   setSelectedStudy: Dispatch<SetStateAction<string | null>>;
-  onSave: () => void;
+  // onSave: () => void;
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
@@ -71,7 +72,6 @@ interface StudyWriteTemplateProps {
 
 const StudyWriteTemplate = ({
   category,
-  headerTitle,
   title,
   setTitle,
   selectedCardinal,
@@ -86,15 +86,15 @@ const StudyWriteTemplate = ({
   setOriginFiles,
   files,
   setFiles,
-  onSave,
+  // onSave,
 }: StudyWriteTemplateProps) => {
   const isStudyLog = category === 'StudyLog' || category === 'study';
 
   return (
     <Container>
-      <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
+      {/* <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
         {headerTitle}
-      </Header>
+      </Header> */}
       <StudyPostTitle title={title} setTitle={setTitle} />
       <InformationContainer>
         <DivisionContainer>
