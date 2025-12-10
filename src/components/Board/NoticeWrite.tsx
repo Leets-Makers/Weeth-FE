@@ -20,7 +20,6 @@ const MarkdownContainer = styled.div`
 interface StudyWriteTemplateProps {
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
-  // onSave: () => void;
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
@@ -38,7 +37,6 @@ const NoticeWrite = ({
   setFiles,
   originFiles,
   setOriginFiles,
-  // onSave,
 }: StudyWriteTemplateProps) => {
   return (
     <Container>

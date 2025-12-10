@@ -61,7 +61,6 @@ interface StudyWriteTemplateProps {
   setSelectedWeek: Dispatch<SetStateAction<number | null>>;
   selectedStudy: string | null;
   setSelectedStudy: Dispatch<SetStateAction<string | null>>;
-  // onSave: () => void;
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
@@ -86,15 +85,11 @@ const StudyWriteTemplate = ({
   setOriginFiles,
   files,
   setFiles,
-  // onSave,
 }: StudyWriteTemplateProps) => {
   const isStudyLog = category === 'StudyLog' || category === 'study';
 
   return (
     <Container>
-      {/* <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
-        {headerTitle}
-      </Header> */}
       <StudyPostTitle title={title} setTitle={setTitle} />
       <InformationContainer>
         <DivisionContainer>

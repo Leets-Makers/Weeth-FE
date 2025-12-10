@@ -22,7 +22,6 @@ interface StudyWriteTemplateProps {
   setSelectedCardinal: Dispatch<SetStateAction<number | null>>;
   selectedPart: RealPart[];
   setSelectedPart: Dispatch<SetStateAction<RealPart[]>>;
-  // onSave: () => void;
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
@@ -44,13 +43,9 @@ const EduWrite = ({
   setFiles,
   originFiles,
   setOriginFiles,
-  // onSave,
 }: StudyWriteTemplateProps) => {
   return (
     <Container>
-      {/* <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
-        {headerTitle}
-      </Header> */}
       <StudyPostTitle title={title} setTitle={setTitle} />
       <InformationContainer>
         <DivisionContainer>
