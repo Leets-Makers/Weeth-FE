@@ -65,7 +65,9 @@ const PartBoard = () => {
                 key={part.url}
                 onMouseDown={() => setPressedKey(part.key)}
                 onMouseUp={() => setPressedKey(null)}
-                onMouseLeave={() => setPressedKey(null)}
+                onMouseLeave={() => {
+                  setPressedKey(null);
+                }}
                 onClick={() => navigate(`/board/study/${part.url}`)}
                 role="button"
                 tabIndex={0}
@@ -75,11 +77,9 @@ const PartBoard = () => {
                   }
                 }}
               >
-                <Icon
-                  width={73}
-                  height={73}
-                  style={{ pointerEvents: 'none' }}
-                />
+                <S.PartIcon>
+                  <Icon style={{ pointerEvents: 'none' }} />
+                </S.PartIcon>
                 <S.PartLabel>{part.key}</S.PartLabel>
               </S.PartItem>
             );

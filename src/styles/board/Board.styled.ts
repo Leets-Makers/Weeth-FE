@@ -298,6 +298,7 @@ export const PartItem = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
   width: 100%;
 
   ${pcResponsive}
@@ -306,6 +307,16 @@ export const PartItem = styled.div`
 export const PartImage = styled.img`
   width: 4.75rem;
   height: 4.75rem;
+`;
+
+export const PartIcon = styled.div`
+  width: 73px;
+  height: 73px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const PartLabel = styled.p`
