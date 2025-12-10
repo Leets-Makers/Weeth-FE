@@ -113,6 +113,12 @@ export const ScrollContainer = styled.div`
   }
 `;
 
+export const PartBoardContainer = styled.div`
+  display: flex;
+  overflow-x: auto;
+  gap: ${units.margin['300']}px;
+`;
+
 export const EduScrollContainer = styled.div`
   display: flex;
   overflow-x: auto;
@@ -304,8 +310,7 @@ export const PartImage = styled.img`
 
 export const PartLabel = styled.p`
   margin: 0;
-  font-family: ${theme.font.semiBold};
-  font-size: 1.125rem;
+  ${typography.Sub1};
   line-height: 1;
   color: ${colors.light.neutral['200']};
 `;
