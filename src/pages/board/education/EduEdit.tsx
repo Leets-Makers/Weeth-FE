@@ -127,7 +127,6 @@ const EduEdit = () => {
         setFiles={setFiles}
         originFiles={originFiles}
         setOriginFiles={setOriginFiles}
-        // onSave={onSave}
       />
     </>
   );
