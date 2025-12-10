@@ -22,7 +22,9 @@ import {
 } from '@/components/Attendance/PenaltyInfo';
 import ModalAttend from '@/components/Attendance/ModalAttend';
 import Loading from '@/components/common/Loading';
-import RightArrowButton from '@/components/common/RightArrowButton';
+import RightArrow from '@/assets/images/ic_right.svg?react';
+import { useNavigate } from 'react-router-dom';
+import { colors } from '@/theme/designTokens';
 import AttendanceCodeModal from '../Modal/AttendanceCodeModal';
 
 dayjs.extend(utc);
@@ -79,15 +81,36 @@ const AttendSection: React.FC<AttendSectionProps> = ({
   title,
   link,
   children,
-}) => (
-  <S.StyledBox>
-    <S.BoxHeader>
-      <S.CaptionText>{title}</S.CaptionText>
-      {isAttend && <RightArrowButton to={link} />}
-    </S.BoxHeader>
-    {children}
-  </S.StyledBox>
-);
+}) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(link);
+  };
+
+  return (
+    <S.StyledBox
+      $isAttend={isAttend}
+      onClick={isAttend ? handleClick : undefined}
+    >
+      <S.BoxHeader>
+        <S.CaptionText>{title}</S.CaptionText>
+
+        {/* isAttend = true일 때는 화살표 버튼만 따로 동작 */}
+        {isAttend && (
+          <RightArrow
+            width={6.58}
+            height={11.17}
+            color={colors.semantic.icon.alternative}
+            style={{ padding: '6px 9px', cursor: 'pointer' }}
+          />
+        )}
+      </S.BoxHeader>
+
+      {children}
+    </S.StyledBox>
+  );
+};
 
 const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
