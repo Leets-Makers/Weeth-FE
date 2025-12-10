@@ -1,16 +1,25 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import CommentImage from '@/assets/images/ic_comment_count.svg?react';
 import * as S from '@/styles/board/PostDetail.styled';
 import PostFile from '@/components/Board/PostFile';
 import formatDateTime from '@/hooks/formatDateTime';
 import setPositionIcon from '@/hooks/setPositionIcon';
-import { toastSuccess, toastError } from '@/components/common/ToastMessage';
+import {
+  toastSuccess,
+  toastError,
+  toastInfo,
+} from '@/components/common/ToastMessage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
-import KebabButton from '@/assets/images/ic_board_detail_kebabButton.svg?react';
+import deletePost from '@/api/deletePost';
+import { useNavigate, useParams } from 'react-router-dom';
+import useGetUserName from '@/hooks/useGetUserName';
+import useGetBoardDetail from '@/api/useGetBoardDetail';
+import MenuModal from '../common/MenuModal';
+import SelectModal from '../Modal/SelectModal';
 
 interface Comment {
   id: number;
@@ -45,7 +54,55 @@ interface PostDetailMainProps {
 }
 
 const PostDetailMain = ({ info }: PostDetailMainProps) => {
+  const navigate = useNavigate();
   const formattedDate = formatDateTime(info?.time ?? '');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+  const { category, part, postId } = useParams<{
+    category: string;
+    part: string;
+    postId: string;
+  }>();
+  const url = new URL(window.location.href);
+  const pathArray = url.pathname.split('/');
+  const path = pathArray[1];
+  const type = path === 'notices' ? 'notices' : 'board';
+  const editPath =
+    category === 'study'
+      ? `/board/${category}/${part}/${postId}/edit`
+      : `/education/${part}/${postId}/edit`;
+
+  const numericPostId = postId ? parseInt(postId, 10) : null;
+
+  if (!numericPostId) {
+    return <div>잘못된 게시물 ID입니다.</div>;
+  }
+
+  const { boardDetailInfo } = useGetBoardDetail(type, numericPostId);
+
+  const isMyPost = boardDetailInfo?.name === useGetUserName();
+
+  const openSelectModal = () => {
+    setIsSelectModalOpen(true);
+  };
+
+  const closeSelectModal = () => {
+    setIsSelectModalOpen(false);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await deletePost(numericPostId, type);
+      navigate(`/board/${category}/${part}`, { replace: true });
+      setTimeout(() => {
+        toastInfo('게시물이 삭제되었습니다');
+      }, 500);
+    } catch (err) {
+      toastError();
+      console.error(err);
+    }
+    closeSelectModal();
+  };
 
   if (!info) return <div>Loading...</div>;
 
@@ -53,14 +110,14 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     fetch(fileUrl, { method: 'GET' })
       .then((res) => res.blob())
       .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
+        const downloadUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
+        a.href = downloadUrl;
         a.download = fileName;
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
-          window.URL.revokeObjectURL(url);
+          window.URL.revokeObjectURL(downloadUrl);
           a.remove();
         }, 1000);
         toastSuccess('저장되었습니다');
@@ -72,52 +129,75 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
   }, []);
 
   return (
-    <S.PostMainContainer>
-      <S.PostContentContainer>
-        <S.PostMainTitle>
-          <S.TitleContainer>
-            <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
-            <KebabButton />
-          </S.TitleContainer>
-          <S.SmallText>
-            <S.PositionIcon
-              src={setPositionIcon(info.role, info.position)}
-              alt="포지션 아이콘"
-            />
-            <div>{info.name}</div>
-            <S.DateText>{formattedDate}</S.DateText>
-          </S.SmallText>
-        </S.PostMainTitle>
-        <S.PostingContianer>
-          <ReactMarkdown
-            rehypePlugins={[rehypeRaw]}
-            remarkPlugins={[remarkBreaks, remarkGfm]}
-            components={{
-              a: MarkdownLink,
-              input: CustomCheckbox,
-            }}
-          >
-            {info.content || ''}
-          </ReactMarkdown>
-        </S.PostingContianer>
-      </S.PostContentContainer>
-      <S.PostBottomContent>
-        <S.PostFileList>
-          {info.fileUrls.map((file) => (
-            <PostFile
-              key={file.fileId}
-              fileName={file.fileName}
-              isDownload
-              onClick={() => onClickDownload(file.fileUrl, file.fileName)}
-            />
-          ))}
-        </S.PostFileList>
-        <S.CommentText>
-          <CommentImage />
-          <div>{info.commentCount}</div>
-        </S.CommentText>
-      </S.PostBottomContent>
-    </S.PostMainContainer>
+    <>
+      {isModalOpen && (
+        <MenuModal
+          onClose={() => {
+            setIsModalOpen(false);
+          }}
+        >
+          <S.TextButton onClick={() => navigate(editPath)}>수정</S.TextButton>
+          <S.TextButton $isLast onClick={openSelectModal}>
+            삭제
+          </S.TextButton>
+        </MenuModal>
+      )}
+      {isSelectModalOpen && (
+        <SelectModal
+          title="게시물 삭제"
+          content="이 게시물을 정말 삭제하시겠습니까?"
+          onClose={closeSelectModal}
+          onDelete={confirmDelete}
+        />
+      )}
+
+      <S.PostMainContainer>
+        <S.PostContentContainer>
+          <S.PostMainTitle>
+            <S.TitleContainer>
+              <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
+              {isMyPost && <S.KebabIcon onClick={() => setIsModalOpen(true)} />}
+            </S.TitleContainer>
+            <S.SmallText>
+              <S.PositionIcon
+                src={setPositionIcon(info.role, info.position)}
+                alt="포지션 아이콘"
+              />
+              <div>{info.name}</div>
+              <S.DateText>{formattedDate}</S.DateText>
+            </S.SmallText>
+          </S.PostMainTitle>
+          <S.PostingContianer>
+            <ReactMarkdown
+              rehypePlugins={[rehypeRaw]}
+              remarkPlugins={[remarkBreaks, remarkGfm]}
+              components={{
+                a: MarkdownLink,
+                input: CustomCheckbox,
+              }}
+            >
+              {info.content || ''}
+            </ReactMarkdown>
+          </S.PostingContianer>
+        </S.PostContentContainer>
+        <S.PostBottomContent>
+          <S.PostFileList>
+            {info.fileUrls.map((file) => (
+              <PostFile
+                key={file.fileId}
+                fileName={file.fileName}
+                isDownload
+                onClick={() => onClickDownload(file.fileUrl, file.fileName)}
+              />
+            ))}
+          </S.PostFileList>
+          <S.CommentText>
+            <CommentImage />
+            <div>{info.commentCount}</div>
+          </S.CommentText>
+        </S.PostBottomContent>
+      </S.PostMainContainer>
+    </>
   );
 };
 
