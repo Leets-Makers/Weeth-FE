@@ -1,15 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '@/api/api';
-
-interface AttendInfo {
-  title: string;
-  location: string;
-  start: string;
-  end: string;
-  attendanceRate: number;
-  status: string;
-  code?: number;
-}
+import { AttendInfo } from '@/types/attend';
 
 // 출석 정보 받아오는 API
 const getAttend = async () => {

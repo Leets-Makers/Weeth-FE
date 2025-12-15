@@ -16,6 +16,7 @@ import patchAttend from '@/api/patchAttend';
 import Tag from '@/components/Event/Tag';
 import { toastInfo } from '@/components/common/ToastMessage';
 import { colors } from '@/theme/designTokens';
+import { ModalAttendProps } from '@/types/attend';
 
 // 하위 UI 컴포넌트들
 const CloseButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
@@ -41,16 +42,6 @@ const FeedbackContainer: React.FC<{
 );
 
 // 출석 모달
-interface ModalAttendProps {
-  title: string;
-  location: string;
-  startDateTime: string;
-  endDateTime: string;
-  open: boolean;
-  close: () => void;
-  handleAttend: (attended: boolean) => void;
-}
-
 const ModalAttend: React.FC<ModalAttendProps> = ({
   title,
   location,

@@ -26,7 +26,7 @@ const FixedLayout = () => {
             <Outlet />
           </Content>
         </Wrapper>
-        <Footer />
+        <Footer isMobile />
       </div>
     </Suspense>
   );
