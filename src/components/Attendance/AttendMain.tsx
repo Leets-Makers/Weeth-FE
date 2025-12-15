@@ -22,10 +22,9 @@ import {
 } from '@/components/Attendance/PenaltyInfo';
 import ModalAttend from '@/components/Attendance/ModalAttend';
 import Loading from '@/components/common/Loading';
-import RightArrow from '@/assets/images/ic_right.svg?react';
-import { useNavigate } from 'react-router-dom';
-import { colors } from '@/theme/designTokens';
-import AttendanceCodeModal from '../Modal/AttendanceCodeModal';
+
+import AttendanceCodeModal from '@/components/Modal/AttendanceCodeModal';
+import AttendSection from '@/components/Attendance/AttnedSection';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -67,49 +66,6 @@ const getAttendTimeInfo = (attendInfo?: any) => {
     endDateTime,
     isWithinTimeRange,
   };
-};
-
-interface AttendSectionProps {
-  isAttend?: boolean;
-  title: string;
-  link: string;
-  children: React.ReactNode;
-}
-
-const AttendSection: React.FC<AttendSectionProps> = ({
-  isAttend = true,
-  title,
-  link,
-  children,
-}) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(link);
-  };
-
-  return (
-    <S.StyledBox
-      $isAttend={isAttend}
-      onClick={isAttend ? handleClick : undefined}
-    >
-      <S.BoxHeader>
-        <S.CaptionText>{title}</S.CaptionText>
-
-        {/* isAttend = true일 때는 화살표 버튼만 따로 동작 */}
-        {isAttend && (
-          <RightArrow
-            width={6.58}
-            height={11.17}
-            color={colors.semantic.icon.alternative}
-            style={{ padding: '6px 9px', cursor: 'pointer' }}
-          />
-        )}
-      </S.BoxHeader>
-
-      {children}
-    </S.StyledBox>
-  );
 };
 
 const AttendMain: React.FC = () => {
