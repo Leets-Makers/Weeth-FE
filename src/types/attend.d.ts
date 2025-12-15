@@ -8,7 +8,20 @@ export interface AttendBase {
 
 type AttendStatus = 'ATTEND' | 'PENDING' | 'ABSENT';
 
-// domain
+// 출석 조회
+export interface AttendCheckItemProps {
+  attend: AttendStatus;
+  title: string;
+  date: string;
+  place: string;
+}
+
+export interface MeetingProps extends AttendBase {
+  id: number;
+  status: AttendStatus;
+}
+
+// attend main
 export interface Attendance extends AttendBase {
   id: number;
   weekNumber: number;

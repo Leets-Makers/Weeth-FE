@@ -1,13 +1,7 @@
 import * as S from '@/styles/attendCheck/AttendCheckItem.styled';
 import Caption from '@/components/Button/Caption';
 import { colors } from '@/theme/designTokens';
-
-interface AttendCheckItemProps {
-  attend: 'ATTEND' | 'ABSENT' | 'PENDING';
-  title: string;
-  date: string;
-  place: string;
-}
+import { AttendCheckItemProps } from '@/types/attend';
 
 const AttendCheckItem: React.FC<AttendCheckItemProps> = ({
   attend,
