@@ -24,7 +24,7 @@ import ModalAttend from '@/components/Attendance/ModalAttend';
 import Loading from '@/components/common/Loading';
 
 import AttendanceCodeModal from '@/components/Modal/AttendanceCodeModal';
-import AttendSection from '@/components/Attendance/AttnedSection';
+import AttendSection from '@/components/Attendance/AttendSection';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
