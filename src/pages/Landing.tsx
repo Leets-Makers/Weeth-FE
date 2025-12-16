@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import logo from '@/assets/images/logo/logo_full_Spring.svg';
+import XmasLogo from '@/assets/images/logo/logo_full_Xmas.svg?react';
 import kakao from '@/assets/images/ic_KAKAO_symbol.svg';
 
 const fadeIn = keyframes`
@@ -96,7 +97,8 @@ const Landing: React.FC = () => {
   return (
     <Container>
       <StyledTitle>
-        <img src={logo} alt="leets로고" />
+        {/* <img src={logo} alt="leets로고" /> */}
+        <XmasLogo />
       </StyledTitle>
       <ButtonWrapper visible={showButtonWrapper}>
         <KakaoLoginButton
