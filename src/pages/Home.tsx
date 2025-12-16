@@ -2,6 +2,7 @@ import HomeMain from '@/components/home/HomeMain';
 import HomeFooter from '@/components/home/HomeFooter';
 import LogoutButton from '@/components/home/LogoutButton';
 import logo from '@/assets/images/logo/logo_initial_Origin.svg';
+import XmasLogo from '@/assets/images/logo/logo_initial_Xmas.svg';
 import useCustomBack from '@/hooks/useCustomBack';
 import HomeNotice from '@/components/home/HomeNotice';
 import HomeInfo from '@/components/home/HomeInfo';
@@ -29,6 +30,7 @@ const HeaderContainer = styled.div`
 const Header = styled.img`
   padding-left: 5%;
 `;
+
 const Home: React.FC = () => {
   const { userInfo, loading: isLoadingUser } = useGetUserInfo();
   const { recentNotices, recentNoticeLoading } = useGetRecentNotice();
@@ -43,7 +45,7 @@ const Home: React.FC = () => {
   return (
     <Container>
       <HeaderContainer>
-        <Header src={logo} alt="leets로고" />
+        <Header src={XmasLogo} alt="leets로고" />
         <LogoutButton />
       </HeaderContainer>
       <HomeNotice
