@@ -71,22 +71,20 @@ const getAttendTimeInfo = (attendInfo?: any) => {
 const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
-  const [isAttend, setIsAttend] = useState(false);
 
   const { penaltyInfo, isLoading: penaltyLoading } = useGetPenalty();
   const {
     attendInfo,
     hasSchedule,
     isLoading: attendLoading,
-  } = useGetAttend(isAttend);
+    refetch: refetchAttend,
+  } = useGetAttend();
+
+  const isAttend = attendInfo?.status === 'ATTEND' || false;
 
   const hasPenalty =
     (penaltyInfo?.penaltyCount ?? 0) > 0 ||
     (penaltyInfo?.warningCount ?? 0) > 0;
-
-  if (attendInfo?.status === 'ATTEND') {
-    setIsAttend(true);
-  }
 
   const smartLoading = useSmartCombinedLoading(attendLoading, penaltyLoading);
   if (smartLoading) return <Loading />;
@@ -158,7 +156,7 @@ const AttendMain: React.FC = () => {
         endDateTime={endDateTime}
         open={modalOpen}
         close={handleCloseModal}
-        handleAttend={setIsAttend}
+        onSuccessAttend={refetchAttend}
       />
     </S.StyledAttend>
   );

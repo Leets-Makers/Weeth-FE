@@ -49,7 +49,7 @@ const ModalAttend: React.FC<ModalAttendProps> = ({
   endDateTime,
   open,
   close,
-  handleAttend,
+  onSuccessAttend,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [feedback, setFeedback] = useState<{
@@ -106,8 +106,9 @@ const ModalAttend: React.FC<ModalAttendProps> = ({
           clearTimeout(timeoutRef.current);
         }
         timeoutRef.current = setTimeout(() => {
-          handleAttend(true);
           close();
+
+          onSuccessAttend();
 
           timeoutRef.current = null;
         }, 2000);
