@@ -1,50 +1,41 @@
 import { useEffect, useState } from 'react';
 import api from '@/api/api';
-
-interface AttendInfo {
-  title: string;
-  location: string;
-  start: string;
-  end: string;
-  attendanceRate: number;
-  status: string;
-  code?: number;
-}
+import { AttendInfo } from '@/types/attend';
 
 // 출석 정보 받아오는 API
 const getAttend = async () => {
   return api.get(`/api/v1/attendances`);
 };
 
-export const useGetAttend = (isAttend: boolean) => {
+export const useGetAttend = () => {
   const [attendInfo, setAttendInfo] = useState<AttendInfo | null>(null);
   const [hasSchedule, setHasSchedule] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchAttend = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getAttend();
-        const { data } = response.data;
-        setAttendInfo(data);
-        setError(null);
+  const fetchAttend = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getAttend();
+      const { data } = response.data;
+      setAttendInfo(data);
+      setError(null);
 
-        if (data.title && data.start) {
-          setHasSchedule(true);
-        }
-      } catch (err: any) {
-        setError(err.response?.data?.message);
-      } finally {
-        setIsLoading(false);
+      if (data.title && data.start) {
+        setHasSchedule(true);
       }
-    };
+    } catch (err: any) {
+      setError(err.response?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchAttend();
-  }, [isAttend]);
+  }, []);
 
-  return { attendInfo, hasSchedule, isLoading, error };
+  return { attendInfo, hasSchedule, isLoading, error, refetch: fetchAttend };
 };
 
 export default useGetAttend;

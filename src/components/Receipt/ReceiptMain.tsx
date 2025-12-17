@@ -58,6 +58,9 @@ const ReceiptMain: React.FC = () => {
 
   const months = useMemo(() => getSemesterMonths(), []);
 
+  // 이미지인지 pdf인지 판단
+  const isImage = (url: string) => /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+
   if (combinedLoading && !duesInfo) {
     return (
       <S.StyledReceipt>
@@ -85,14 +88,29 @@ const ReceiptMain: React.FC = () => {
                     memo={receipt.description}
                   />
                   <S.ScrollContainer>
-                    {receipt.fileUrls.map((file) => (
-                      <S.GridItem
-                        key={file.fileId}
-                        onClick={() => openModal(file.fileUrl)}
-                      >
-                        <S.GridItemImage src={file.fileUrl} />
-                      </S.GridItem>
-                    ))}
+                    {receipt.fileUrls.map((file) => {
+                      const url = file.fileUrl;
+
+                      if (!isImage(url)) {
+                        return (
+                          <S.PdfBox
+                            key={file.fileId}
+                            onClick={() => openModal(url)}
+                          >
+                            PDF 보기
+                          </S.PdfBox>
+                        );
+                      }
+
+                      return (
+                        <S.GridItem
+                          key={file.fileId}
+                          onClick={() => openModal(url)}
+                        >
+                          <S.GridItemImage src={url} />
+                        </S.GridItem>
+                      );
+                    })}
                   </S.ScrollContainer>
                 </div>
               ))
