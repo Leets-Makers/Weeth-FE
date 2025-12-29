@@ -123,7 +123,8 @@ interface MemberInfo {
 type MemberInfoKeys = keyof MemberInfo;
 
 const Profile: React.FC = () => {
-  useCustomBack('/accountcheck');
+  const registerMethod = localStorage.getItem('register');
+  useCustomBack(registerMethod === 'kakao' ? '/accountcheck' : '/');
 
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_URL;
@@ -201,7 +202,7 @@ const Profile: React.FC = () => {
       cardinal: Number(memberInfo.cardinal),
       position: roleMapping[memberInfo.position || ''] || memberInfo.position,
     };
-    const registerMethod = localStorage.getItem('register');
+
     const registerApi = registerMethod === 'apple' ? 'apple' : 'kakao';
 
     try {

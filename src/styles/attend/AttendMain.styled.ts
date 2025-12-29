@@ -2,7 +2,7 @@ import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
 
-export const StyledBox = styled.div`
+export const StyledBox = styled.div<{ $isAttend: boolean }>`
   width: 100%;
   background-color: ${colors.semantic.container.neutral};
   border-radius: 10px;
@@ -12,6 +12,17 @@ export const StyledBox = styled.div`
   flex-direction: column;
   align-items: start;
   box-sizing: border-box;
+
+  ${({ $isAttend }) =>
+    $isAttend &&
+    `
+      cursor: pointer;
+
+      &:hover {
+        background-color: ${colors.semantic.container['neutral-interaction']};
+        transition: background-color 0.2s ease;
+      }
+    `}
 `;
 
 export const StyledAttend = styled.div`

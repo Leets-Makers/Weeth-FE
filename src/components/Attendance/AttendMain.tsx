@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -22,8 +22,9 @@ import {
 } from '@/components/Attendance/PenaltyInfo';
 import ModalAttend from '@/components/Attendance/ModalAttend';
 import Loading from '@/components/common/Loading';
-import RightArrowButton from '@/components/common/RightArrowButton';
-import AttendanceCodeModal from '../Modal/AttendanceCodeModal';
+
+import AttendanceCodeModal from '@/components/Modal/AttendanceCodeModal';
+import AttendSection from '@/components/Attendance/AttendSection';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -67,53 +68,23 @@ const getAttendTimeInfo = (attendInfo?: any) => {
   };
 };
 
-interface AttendSectionProps {
-  isAttend?: boolean;
-  title: string;
-  link: string;
-  children: React.ReactNode;
-}
-
-const AttendSection: React.FC<AttendSectionProps> = ({
-  isAttend = true,
-  title,
-  link,
-  children,
-}) => (
-  <S.StyledBox>
-    <S.BoxHeader>
-      <S.CaptionText>{title}</S.CaptionText>
-      {isAttend && <RightArrowButton to={link} />}
-    </S.BoxHeader>
-    {children}
-  </S.StyledBox>
-);
-
 const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
-  const [isAttend, setIsAttend] = useState(false);
-  const [hasPenalty, setHasPenalty] = useState(false);
 
   const { penaltyInfo, isLoading: penaltyLoading } = useGetPenalty();
   const {
     attendInfo,
     hasSchedule,
     isLoading: attendLoading,
-  } = useGetAttend(isAttend);
+    refetch: refetchAttend,
+  } = useGetAttend();
 
-  useEffect(() => {
-    setHasPenalty(
-      (penaltyInfo?.penaltyCount ?? 0) > 0 ||
-        (penaltyInfo?.warningCount ?? 0) > 0,
-    );
-  }, [penaltyInfo]);
+  const isAttend = attendInfo?.status === 'ATTEND' || false;
 
-  useEffect(() => {
-    if (attendInfo?.status === 'ATTEND') {
-      setIsAttend(true);
-    }
-  }, [attendInfo?.status]);
+  const hasPenalty =
+    (penaltyInfo?.penaltyCount ?? 0) > 0 ||
+    (penaltyInfo?.warningCount ?? 0) > 0;
 
   const smartLoading = useSmartCombinedLoading(attendLoading, penaltyLoading);
   if (smartLoading) return <Loading />;
@@ -134,11 +105,11 @@ const AttendMain: React.FC = () => {
         open={codeModalOpen}
         onClose={() => setCodeModalOpen(false)}
       />
-      <AttendRate attendRate={attendInfo?.attendanceRate} />
+      <AttendRate attendRate={attendInfo?.attendanceRate ?? 0} />
 
       {/* 오늘의 출석 */}
       <AttendSection isAttend={false} title="오늘의 출석" link="/attendCheck">
-        {hasSchedule && attendInfo ? (
+        {hasSchedule ? (
           <div style={{ width: '100%' }}>
             <AttendInfo
               title={title}
@@ -149,7 +120,7 @@ const AttendMain: React.FC = () => {
               handleOpenModal={handleOpenModal}
               handleOpenCodeModal={() => setCodeModalOpen(true)}
               isAttend={isAttend}
-              isAdmin={attendInfo.code !== null}
+              isAdmin={attendInfo?.code !== null}
             />
           </div>
         ) : (
@@ -185,7 +156,7 @@ const AttendMain: React.FC = () => {
         endDateTime={endDateTime}
         open={modalOpen}
         close={handleCloseModal}
-        handleAttend={setIsAttend}
+        onSuccessAttend={refetchAttend}
       />
     </S.StyledAttend>
   );

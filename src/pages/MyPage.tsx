@@ -5,7 +5,7 @@ import Header from '@/components/Header/Header';
 import SelectModal from '@/components/Modal/SelectModal';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
-import useLogout from '@/hooks/useLogout';
+import handleLogout from '@/hooks/handleLogout';
 import * as S from '@/styles/mypage/Mypage.styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ const MyPage = () => {
     setIsSelectModalOpen(false);
   };
 
-  const confirmLogout = useLogout();
+  const confirmLogout = handleLogout();
 
   const onClickLeave = async () => {
     try {
