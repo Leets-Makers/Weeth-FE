@@ -30,7 +30,6 @@ export const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  margin-top: -3px;
 `;
 
 export const MemoText = styled.div<{ $isTruncated: boolean }>`

@@ -40,17 +40,10 @@ export const DuesList = styled.div`
   }
 `;
 
-export const MoneyBoxContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 20px;
-`;
-
-export const MoneyBox = styled.div`
-  ${typography.Sub2};
-  margin-left: 15px;
-  align-items: start;
+export const TotalMoney = styled.div`
+  ${typography.H2};
+  margin-top: 9px;
+  align-self: start;
 `;
 
 export const NullText = styled.div`

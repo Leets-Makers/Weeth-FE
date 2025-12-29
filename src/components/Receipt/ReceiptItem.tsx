@@ -14,7 +14,9 @@ const ReceiptItem: React.FC<ReceiptItemProps> = ({ money, date, memo }) => {
     <S.Container>
       <S.Box>
         <S.LeftSection>
-          <Caption color={theme.color.negative}>지출</Caption>
+          <Caption isMargin color={theme.color.negative}>
+            지출
+          </Caption>
           <S.TextBox>
             <S.MemoText $isTruncated={memo.length >= 10}>{memo}</S.MemoText>
             <S.SubText>{date}</S.SubText>
