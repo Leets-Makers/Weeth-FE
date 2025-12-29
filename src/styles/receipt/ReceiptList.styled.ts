@@ -6,6 +6,7 @@ export const StyledReceipt = styled.div`
   width: 100%;
   position: relative;
   padding: 16px 0 20px 0;
+  margin-top: 2px;
 
   &::before {
     content: '';

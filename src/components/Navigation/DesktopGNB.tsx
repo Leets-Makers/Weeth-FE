@@ -26,7 +26,7 @@ const DesktopGNB = () => {
           {menus.map((menu) => (
             <S.GNBMenuItem
               key={menu.name}
-              active={location.pathname.startsWith(menu.path)}
+              $active={location.pathname.startsWith(menu.path)}
               onClick={() => navigate(menu.path)}
             >
               {menu.name}
