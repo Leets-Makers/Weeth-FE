@@ -1,7 +1,7 @@
-import theme from '@/styles/theme';
 import { colors, units } from '@/theme/designTokens';
 import styled from 'styled-components';
-import { pcResponsive } from '..';
+import { pcResponsive } from '@/styles';
+import typography from '@/theme/typography';
 
 export const StyledDues = styled.div`
   width: 100%;
@@ -48,15 +48,13 @@ export const MoneyBoxContainer = styled.div`
 `;
 
 export const MoneyBox = styled.div`
-  font-size: 25px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub2};
   margin-left: 15px;
   align-items: start;
 `;
 
 export const NullText = styled.div`
-  font-size: 25px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub2};
   margin-top: 20px;
   justify-content: center;
   text-align: center;

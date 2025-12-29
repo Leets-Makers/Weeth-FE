@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const StyledReceipt = styled.div`
   width: 100%;
   position: relative;
-  padding-bottom: 20px;
+  padding: 16px 0 20px 0;
 
   &::before {
     content: '';
