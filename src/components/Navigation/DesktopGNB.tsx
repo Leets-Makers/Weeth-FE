@@ -3,8 +3,9 @@ import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '@/styles/navigation/Navigation.styled';
+import React from 'react';
 
-const DesktopGNB = () => {
+const DesktopGNB = React.memo(() => {
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo } = useGetUserInfo();
@@ -43,6 +44,6 @@ const DesktopGNB = () => {
       </S.Right>
     </S.Container>
   );
-};
+});
 
 export default DesktopGNB;

@@ -2,6 +2,7 @@ import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
 import Logo from '@/assets/images/logo/logo_full_Origin.svg?react';
+import React from 'react';
 
 const Container = styled.footer<{ $isMobile: boolean }>`
   width: 100%;
@@ -59,7 +60,7 @@ const LogoGrey = styled(Logo)`
   margin-top: 67px;
 `;
 
-const Footer = ({ isMobile }: { isMobile: boolean }) => {
+const Footer = React.memo(({ isMobile }: { isMobile: boolean }) => {
   return (
     <Container $isMobile={isMobile}>
       <Wrapper $isMobile={isMobile}>
@@ -102,5 +103,5 @@ const Footer = ({ isMobile }: { isMobile: boolean }) => {
       </Wrapper>
     </Container>
   );
-};
+});
 export default Footer;
