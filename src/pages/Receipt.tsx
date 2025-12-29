@@ -1,22 +1,15 @@
-import ReceiptMain from '@/components/Receipt/ReceiptMain';
+import ReceiptList from '@/components/Receipt/ReceiptList';
 import useCustomBack from '@/hooks/useCustomBack';
-import styled from 'styled-components';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 370px;
-  max-width: 370px;
-  margin-bottom: 50px;
-`;
+import { StyledDues } from '@/styles/dues/Dues.styled';
 
 const Receipt: React.FC = () => {
   useCustomBack('/dues');
 
   return (
-    <Container>
-      <ReceiptMain />
-    </Container>
+    <StyledDues>
+      <ReceiptList />
+    </StyledDues>
   );
 };
 

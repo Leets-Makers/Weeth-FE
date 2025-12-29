@@ -1,30 +1,30 @@
-import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const StyledReceipt = styled.div`
-  width: 370px;
-  height: calc(var(--vh, 1vh) * 100);
-`;
+  width: 100%;
+  position: relative;
+  padding-bottom: 20px;
 
-export const Line = styled.div`
-  border: 1px solid;
-  color: ${colors.semantic.line};
-  width: 88%;
-  margin: 15px 6% 0 6%;
-  transform: scaleY(0.2);
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background-color: ${colors.semantic.line};
+  }
 `;
 
 export const StyledMonth = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
-  margin: 15px 0 0 6%;
+  ${typography.Sub1};
+  width: 100%;
 `;
 
 export const ScrollContainer = styled.div`
   display: flex;
-  width: 88%;
-  margin: 15px 6% 0 6%;
+  margin-top: 15px;
   overflow-x: auto;
   &::-webkit-scrollbar {
     height: 8px;
@@ -40,13 +40,12 @@ export const GridItem = styled.div`
   margin-right: 10px;
   padding: 0;
   background-color: ${colors.semantic.backGround};
-  width: 56%;
+  width: 30%;
   height: 124px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
   white-space: nowrap;
   cursor: pointer;
   position: relative;
@@ -93,4 +92,29 @@ export const PdfWrapper = styled.div`
   align-items: center;
   overflow: hidden;
   border-radius: 10px;
+`;
+
+export const PdfBox = styled.div`
+  flex: 0 0 auto;
+  margin-right: 10px;
+  padding: 0;
+  background-color: ${colors.semantic.backGround};
+  width: 56%;
+  height: 124px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid ${colors.semantic.line};
+  position: relative;
+  white-space: nowrap;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    background-color: ${colors.semantic.container['neutral-interaction']};
+  }
 `;

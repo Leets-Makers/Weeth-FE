@@ -86,7 +86,6 @@ const router = createBrowserRouter([
       { path: '/member/:userId', element: <MemberDetail /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/edit', element: <Edit /> },
-      { path: '/receipt', element: <Receipt /> },
 
       { path: '/events/create', element: <EventPost /> },
       { path: '/:type/:id', element: <EventDetail /> },
@@ -102,6 +101,7 @@ const router = createBrowserRouter([
       { path: '/attendCheck', element: <AttendCheck /> },
       { path: '/penalty', element: <Penalty /> },
       { path: '/dues', element: <Dues /> },
+      { path: '/receipt', element: <Receipt /> },
 
       // board layout
       {

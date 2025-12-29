@@ -1,15 +1,15 @@
 import React from 'react';
 import Caption from '@/components/Button/Caption';
-import * as S from '@/styles/receipt/ReceiptInfo.styled';
+import * as S from '@/styles/receipt/ReceiptItemstyled';
 import theme from '@/styles/theme';
 
-interface ReceiptInfoProps {
+interface ReceiptItemProps {
   money: number;
   date: string;
   memo: string;
 }
 
-const ReceiptInfo: React.FC<ReceiptInfoProps> = ({ money, date, memo }) => {
+const ReceiptItem: React.FC<ReceiptItemProps> = ({ money, date, memo }) => {
   return (
     <S.Container>
       <S.Box>
@@ -30,4 +30,4 @@ const ReceiptInfo: React.FC<ReceiptInfoProps> = ({ money, date, memo }) => {
   );
 };
 
-export default ReceiptInfo;
+export default ReceiptItem;

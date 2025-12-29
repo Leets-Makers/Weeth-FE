@@ -6,6 +6,7 @@ import { pcResponsive } from '..';
 export const StyledDues = styled.div`
   width: 100%;
   display: flex;
+  margin-bottom: 50px;
   flex-direction: column;
   min-width: ${units.device.mobile}px;
   ${pcResponsive}
