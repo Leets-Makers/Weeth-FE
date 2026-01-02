@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '@/styles/navigation/Navigation.styled';
 import React from 'react';
 
-const DesktopGNB = React.memo(() => {
+const DesktopGNB = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo } = useGetUserInfo();
@@ -44,6 +44,6 @@ const DesktopGNB = React.memo(() => {
       </S.Right>
     </S.Container>
   );
-});
+};
 
 export default DesktopGNB;
