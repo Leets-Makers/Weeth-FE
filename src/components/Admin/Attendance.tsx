@@ -40,7 +40,7 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
       const res = await fetchAttendancesByCardinal(selectedCardinal);
 
       if (res.code === 200) {
-        setData(res.data);
+        setData(res.data.meetings);
       }
     };
     fetchData();
