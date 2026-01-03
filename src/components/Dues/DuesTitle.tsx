@@ -1,93 +1,63 @@
-import receipt from '@/assets/images/ic_receipt.svg';
 import formatDateTime from '@/hooks/formatDateTime';
-import theme from '@/styles/theme';
-import { colors } from '@/theme/designTokens';
+import { PageHeader } from '@/pages/attend/Penalty';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const DuesBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  font-family: ${theme.font.semiBold};
-`;
-
-const DuesTextBox = styled.div`
+const DuesHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 21px;
   font-size: 18px;
+  width: 100%;
 `;
 
-const UpdateText = styled.div`
-  color: ${colors.dark.neutral[600]};
-  font-size: 14px;
-  margin-top: 14px;
-`;
-
-const BasicCaption = styled.button`
-  width: 56px;
-  height: 34px;
-  background-color: ${colors.semantic.button.neutral};
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 12px;
+const DateText = styled.span`
+  ${typography.Caption2};
+  color: ${colors.semantic.text.alternative};
+  margin-top: 10px;
+  gap: 11px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+`;
+
+const CaptionButton = styled.button`
+  ${typography.Button1};
+  background-color: ${colors.semantic.button.neutral};
+  color: ${colors.semantic.text.strong};
+
+  border: none;
+  border-radius: ${units.radius.md}px;
+  cursor: pointer;
+
+  padding: ${units.margin[200]}px ${units.padding[400]}px;
 
   &:hover {
     background-color: ${colors.semantic.button['neutral-interaction']};
   }
 `;
 
-interface ImgCaptionProps {
-  navi: (path: string) => void;
-}
 interface DuesTitleProps {
   time: string;
 }
 
-const ImgCaption: React.FC<ImgCaptionProps> = ({ navi }) => (
-  <BasicCaption onClick={() => navi('/receipt')}>
-    <img src={receipt} alt="영수증" />
-  </BasicCaption>
-);
-
 const DuesTitle: React.FC<DuesTitleProps> = ({ time }) => {
   const navi = useNavigate();
-
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1;
-
-  let semester: string;
-  let displayYear = currentYear;
-
-  if (currentMonth >= 3 && currentMonth <= 8) {
-    semester = '1학기';
-  } else {
-    semester = '2학기';
-    if (currentMonth >= 1 && currentMonth <= 2) {
-      displayYear = currentYear - 1;
-    }
-  }
 
   const formattedTime = time ? formatDateTime(time) : 'N/A';
 
   return (
-    <DuesBox>
-      <DuesTextBox>
-        <div>
-          {displayYear}학년 {semester}
-        </div>
-        <UpdateText>최근 업데이트: {formattedTime}</UpdateText>
-      </DuesTextBox>
-      <ImgCaption navi={navi} />
-    </DuesBox>
+    <DuesHeaderContainer>
+      <PageHeader>
+        회비
+        <CaptionButton onClick={() => navi('/receipt')}>영수증</CaptionButton>
+      </PageHeader>
+      <DateText>
+        <div>최근 업데이트</div>
+        <div>{formattedTime}</div>
+      </DateText>
+    </DuesHeaderContainer>
   );
 };
 

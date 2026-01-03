@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 370px;
+  height: 100vh;
 `;
 
 export const PositionCharacter = styled.img`

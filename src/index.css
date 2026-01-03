@@ -39,33 +39,6 @@ button {
   cursor: pointer;
 }
 
-input,
-textarea,
-select {
-  font-family:
-    'Pretendard',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
-  font-size: 16px;
-}
-
-input::placeholder,
-textarea::placeholder {
-  font-family:
-    'Pretendard Regular',
-    -apple-system,
-    sans-serif;
-}
-
 code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -73,7 +46,6 @@ code {
 
 #root {
   width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
 }

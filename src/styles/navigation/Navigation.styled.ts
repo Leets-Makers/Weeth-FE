@@ -185,11 +185,11 @@ export const GNBMenu = styled.ul`
   padding: 5px 0 0 0;
 `;
 
-export const GNBMenuItem = styled.li<{ active?: boolean }>`
+export const GNBMenuItem = styled.li<{ $active?: boolean }>`
   cursor: pointer;
-  font-weight: ${({ active }) => (active ? 600 : 400)};
-  color: ${({ active }) =>
-    active ? colors.light.primary[500] : colors.light.neutral[0]};
+  font-weight: ${({ $active }) => ($active ? 600 : 400)};
+  color: ${({ $active }) =>
+    $active ? colors.light.primary[500] : colors.light.neutral[0]};
   transition: color 0.2s;
 
   &:hover {

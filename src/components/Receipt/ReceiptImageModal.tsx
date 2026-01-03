@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import * as S from '@/styles/receipt/ReceiptMain.styled';
+import * as S from '@/styles/receipt/ReceiptList.styled';
 import styled from 'styled-components';
 
 interface ReceiptModalProps {

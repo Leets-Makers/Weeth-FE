@@ -1,11 +1,12 @@
-import theme from '@/styles/theme';
 import { colors, units } from '@/theme/designTokens';
 import styled from 'styled-components';
-import { pcResponsive } from '..';
+import { pcResponsive } from '@/styles';
+import typography from '@/theme/typography';
 
 export const StyledDues = styled.div`
   width: 100%;
   display: flex;
+  margin-bottom: 50px;
   flex-direction: column;
   min-width: ${units.device.mobile}px;
   ${pcResponsive}
@@ -39,23 +40,14 @@ export const DuesList = styled.div`
   }
 `;
 
-export const MoneyBoxContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 20px;
-`;
-
-export const MoneyBox = styled.div`
-  font-size: 25px;
-  font-family: ${theme.font.semiBold};
-  margin-left: 15px;
-  align-items: start;
+export const TotalMoney = styled.div`
+  ${typography.H2};
+  margin-top: 9px;
+  align-self: start;
 `;
 
 export const NullText = styled.div`
-  font-size: 25px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub2};
   margin-top: 20px;
   justify-content: center;
   text-align: center;

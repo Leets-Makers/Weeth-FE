@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const DuesWrapper = styled.div`
   width: 100%;
@@ -44,14 +45,13 @@ export const StyledMemoBox = styled.div`
 `;
 
 export const Text = styled.p`
-  font-size: 16px;
+  ${typography.Sub2};
   color: ${colors.semantic.text.strong};
   margin: 0;
-  line-height: 1.4;
 `;
 
 export const SmallText = styled.span`
-  font-size: 13px;
-  color: ${colors.dark.neutral[600]};
+  ${typography.Caption2};
+  color: ${colors.semantic.text.alternative};
   margin-top: 2px;
 `;

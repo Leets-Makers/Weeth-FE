@@ -3,6 +3,7 @@ import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '@/styles/navigation/Navigation.styled';
+import React from 'react';
 
 const DesktopGNB = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const DesktopGNB = () => {
           {menus.map((menu) => (
             <S.GNBMenuItem
               key={menu.name}
-              active={location.pathname.startsWith(menu.path)}
+              $active={location.pathname.startsWith(menu.path)}
               onClick={() => navigate(menu.path)}
             >
               {menu.name}
