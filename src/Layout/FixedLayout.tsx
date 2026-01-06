@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import MobileGNB from '@/components/Navigation/MobileGNB';
 import { Suspense } from 'react';
 import DelayedFallback from '@/hooks/DelayedFallback';
 import { units } from '@/theme/designTokens';
 import Footer from '@/components/Navigation/Footer';
+import MobileGNB from '@/components/Navigation/MobileGNB';
 
 const Wrapper = styled.div`
   width: 375px;

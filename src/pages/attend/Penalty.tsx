@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import typography from '@/theme/typography';
 import { AttendContainer } from './Attendance';
 
-const PenaltyHeader = styled.div`
+export const PageHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -37,10 +37,10 @@ const Penalty: React.FC = () => {
 
   return (
     <AttendContainer>
-      <PenaltyHeader>
+      <PageHeader>
         페널티
         <InfoButton onClick={handleOpenModal} />
-      </PenaltyHeader>
+      </PageHeader>
       <PenaltyInfoBox
         penaltyCount={penaltyInfo?.penaltyCount || 0}
         warningCount={penaltyInfo?.warningCount || 0}

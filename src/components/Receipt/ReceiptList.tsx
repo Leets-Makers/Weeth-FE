@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import useGetDuesInfo, { Receipt } from '@/api/useGetDuesInfo';
-import ReceiptInfo from '@/components/Receipt/ReceiptInfo';
-import ReceiptImageModal from '@/components/Receipt/ReceiptImageModal';
+import ReceiptItem from '@/components/Receipt/ReceiptItem';
 import Loading from '@/components/common/Loading';
-import * as S from '@/styles/receipt/ReceiptMain.styled';
+import * as S from '@/styles/receipt/ReceiptList.styled';
 import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
+import ReceiptViewerModal from '@/components/Receipt/ReceiptViewerModal';
 
 interface GroupedByMonth {
   [month: string]: Receipt[];
@@ -29,7 +29,7 @@ const getSemesterMonths = (): number[] => {
   return month >= 3 && month <= 8 ? [3, 4, 5, 6, 7, 8] : [9, 10, 11, 12, 1, 2];
 };
 
-const ReceiptMain: React.FC = () => {
+const ReceiptList: React.FC = () => {
   const { globalInfo, loading: userLoading } = useGetGlobaluserInfo();
   const cardinal = globalInfo?.cardinals?.[0] ?? null;
   const { duesInfo, loading: duesLoading } = useGetDuesInfo(cardinal);
@@ -70,19 +70,19 @@ const ReceiptMain: React.FC = () => {
   }
 
   return (
-    <S.StyledReceipt>
+    <div>
       {months.map((month) => {
         const monthKey = String(month);
         const receipts = groupedReceipts[monthKey] || [];
 
         return (
-          <div key={monthKey}>
+          <S.StyledReceipt key={monthKey}>
             <S.StyledMonth>{month}월</S.StyledMonth>
 
             {receipts.length > 0 ? (
               receipts.map((receipt) => (
                 <div key={receipt.id}>
-                  <ReceiptInfo
+                  <ReceiptItem
                     money={receipt.amount}
                     date={new Date(receipt.date).toLocaleDateString('ko-KR')}
                     memo={receipt.description}
@@ -117,19 +117,17 @@ const ReceiptMain: React.FC = () => {
             ) : (
               <div> </div>
             )}
-
-            <S.Line />
-          </div>
+          </S.StyledReceipt>
         );
       })}
 
-      <ReceiptImageModal
+      <ReceiptViewerModal
         isOpen={isModalOpen}
         selectedImage={selectedImage}
         onRequestClose={closeModal}
       />
-    </S.StyledReceipt>
+    </div>
   );
 };
 
-export default ReceiptMain;
+export default ReceiptList;
