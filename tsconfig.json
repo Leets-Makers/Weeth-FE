@@ -4,6 +4,7 @@
     "allowJs": true,
     "module": "es2020",
     "target": "es2020",
+    "lib": ["es2024", "dom"],
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "baseUrl": "./",

@@ -100,6 +100,7 @@ export const PdfBox = styled.div`
   margin-right: 10px;
   padding: 0;
   background-color: ${colors.semantic.backGround};
+  ${typography.Button2};
   width: 56%;
   height: 124px;
   border-radius: 10px;

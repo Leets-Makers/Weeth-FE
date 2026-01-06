@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import useGetDuesInfo, { Receipt } from '@/api/useGetDuesInfo';
 import ReceiptItem from '@/components/Receipt/ReceiptItem';
-import ReceiptImageModal from '@/components/Receipt/ReceiptImageModal';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/receipt/ReceiptList.styled';
 import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
+import ReceiptViewerModal from '@/components/Receipt/ReceiptViewerModal';
 
 interface GroupedByMonth {
   [month: string]: Receipt[];
@@ -121,7 +121,7 @@ const ReceiptList: React.FC = () => {
         );
       })}
 
-      <ReceiptImageModal
+      <ReceiptViewerModal
         isOpen={isModalOpen}
         selectedImage={selectedImage}
         onRequestClose={closeModal}
