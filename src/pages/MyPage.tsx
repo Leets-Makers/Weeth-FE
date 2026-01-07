@@ -2,27 +2,24 @@ import deleteUser from '@/api/deleteUser';
 import MenuModal from '@/components/common/MenuModal';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import Header from '@/components/Header/Header';
-import SelectModal from '@/components/Modal/SelectModal';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import handleLogout from '@/hooks/handleLogout';
 import * as S from '@/styles/mypage/Mypage.styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
 
 const MyPage = () => {
   useCustomBack('/home');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
   const navigate = useNavigate();
-
-  const openSelectModal = () => {
-    setIsSelectModalOpen(true);
-  };
-
-  const closeSelectModal = () => {
-    setIsSelectModalOpen(false);
-  };
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
   const confirmLogout = handleLogout();
 
@@ -57,20 +54,22 @@ const MyPage = () => {
             정보 수정
           </S.TextButton>
           <S.TextButton onClick={confirmLogout}>로그아웃</S.TextButton>
-          <S.TextButton $isSignOut onClick={openSelectModal}>
+          <S.TextButton
+            $isSignOut
+            onClick={() =>
+              openSelectModal({
+                title: '회원 탈퇴',
+                content: '정말 탈퇴하시겠습니까?',
+                buttonContent: '탈퇴',
+                onDelete: onClickLeave,
+              })
+            }
+          >
             탈퇴
           </S.TextButton>
         </MenuModal>
       )}
-      {isSelectModalOpen && (
-        <SelectModal
-          title="회원 탈퇴"
-          content="정말 탈퇴하시겠습니까?"
-          buttonContent="탈퇴"
-          onClose={closeSelectModal}
-          onDelete={onClickLeave}
-        />
-      )}
+
       <Header
         RightButtonType="MENU"
         onClickRightButton={() => {

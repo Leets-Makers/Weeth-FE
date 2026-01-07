@@ -19,7 +19,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useGetUserName from '@/hooks/useGetUserName';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import MenuModal from '@/components/common/MenuModal';
-import SelectModal from '@/components/Modal/SelectModal';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
 
 interface Comment {
   id: number;
@@ -56,7 +59,7 @@ interface PostDetailMainProps {
 const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
   const { postId } = useParams();
 
   const url = new URL(window.location.href);
@@ -69,6 +72,9 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   const userName = useGetUserName();
   const isMyPost = boardDetailInfo?.name === userName;
   const formattedDate = formatDateTime(info?.time ?? '');
+
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
     fetch(fileUrl, { method: 'GET' })
@@ -96,14 +102,6 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
 
-  const openSelectModal = () => {
-    setIsSelectModalOpen(true);
-  };
-
-  const closeSelectModal = () => {
-    setIsSelectModalOpen(false);
-  };
-
   const confirmDelete = async () => {
     try {
       await deletePost(numericPostId, type);
@@ -116,6 +114,15 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
       console.error(err);
     }
     closeSelectModal();
+  };
+
+  const handleSelectModal = () => {
+    setIsModalOpen(false);
+    openSelectModal({
+      title: '게시물 삭제',
+      content: '이 게시물을 정말 삭제하시겠습니까?',
+      onDelete: confirmDelete,
+    });
   };
 
   if (!info) return <div>Loading...</div>;
@@ -133,18 +140,10 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
           >
             수정
           </S.TextButton>
-          <S.TextButton $isLast onClick={openSelectModal}>
+          <S.TextButton $isLast onClick={handleSelectModal}>
             삭제
           </S.TextButton>
         </MenuModal>
-      )}
-      {isSelectModalOpen && (
-        <SelectModal
-          title="게시물 삭제"
-          content="이 게시물을 정말 삭제하시겠습니까?"
-          onClose={closeSelectModal}
-          onDelete={confirmDelete}
-        />
       )}
 
       <S.PostMainContainer>
