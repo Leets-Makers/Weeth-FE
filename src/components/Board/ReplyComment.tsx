@@ -6,12 +6,15 @@ import deleteComment from '@/api/deleteComment';
 import formatDateTime from '@/hooks/formatDateTime';
 import useGetUserName from '@/hooks/useGetUserName';
 import setPositionIcon from '@/hooks/setPositionIcon';
-import { useCallback, useState } from 'react';
-import SelectModal from '@/components/Modal/SelectModal';
+import { useCallback } from 'react';
 import convertLinksInText from '@/hooks/convertLinksInText';
 import { originFile } from '@/pages/board/part/PartEdit';
 import PostFile from '@/components/Board/PostFile';
 import { toastError, toastSuccess } from '@/components/common/ToastMessage';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
 
 interface ReplyCommentProps {
   name: string;
@@ -40,24 +43,26 @@ const ReplyComment = ({
 }: ReplyCommentProps) => {
   const formattedTime = formatDateTime(time);
   const isMyComment = name === useGetUserName();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const onClickMenu = () => {
-    setIsModalOpen(true);
-  };
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
   const handleDeleteComment = async () => {
     try {
       await deleteComment(path, postId, commentId);
       onDelete();
-      handleCloseModal();
+      closeSelectModal();
     } catch (error) {
       console.error('Failed to delete comment:', error);
     }
+  };
+
+  const onClickMenu = () => {
+    openSelectModal({
+      title: '댓글 삭제',
+      content: '댓글을 정말 삭제하시겠습니까?',
+      onDelete: handleDeleteComment,
+    });
   };
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
@@ -119,14 +124,6 @@ const ReplyComment = ({
         </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
       </S.ReplyContentContainer>
-      {isModalOpen && (
-        <SelectModal
-          title="댓글 삭제"
-          content="댓글을 정말 삭제하시겠습니까?"
-          onClose={handleCloseModal}
-          onDelete={handleDeleteComment}
-        />
-      )}
     </S.ReplyCommentContainer>
   );
 };
