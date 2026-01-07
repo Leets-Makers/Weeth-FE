@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import theme from '@/styles/theme';
 import { MOBILE, PC } from '@/styles';
+import { useMenuModal } from '@/stores/menuModalStore';
 
 const Container = styled.div`
   position: fixed;
@@ -49,17 +50,13 @@ const Content = styled.div`
   z-index: 100;
 `;
 
-const MenuModal = ({
-  children,
-  onClose,
-  mobileOnly,
-}: {
-  children: React.ReactNode;
-  onClose?: () => void;
-  mobileOnly?: boolean;
-}) => {
+const MenuModal = () => {
+  const { isOpen, children, mobileOnly, close } = useMenuModal();
+
+  if (!isOpen || !children) return null;
+
   return (
-    <Container onClick={onClose}>
+    <Container onClick={close}>
       <ModalContainer $mobileOnly={mobileOnly}>
         <Content onClick={(e) => e.stopPropagation()}>{children}</Content>
       </ModalContainer>

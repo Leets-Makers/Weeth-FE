@@ -18,7 +18,7 @@ import deletePost from '@/api/deletePost';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetUserName from '@/hooks/useGetUserName';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
-import MenuModal from '@/components/common/MenuModal';
+import MenuModal from '@/components/Modal/MenuModal';
 import {
   useCloseSelectModal,
   useOpenSelectModal,

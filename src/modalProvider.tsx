@@ -1,10 +1,17 @@
 import SelectModal from '@/components/Modal/SelectModal';
 import { createPortal } from 'react-dom';
+import MenuModal from './components/Modal/MenuModal';
 
 const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      {createPortal(<SelectModal />, document.getElementById('modal-root')!)}
+      {createPortal(
+        <>
+          <SelectModal />
+          <MenuModal />
+        </>,
+        document.getElementById('modal-root')!,
+      )}
       {children}
     </>
   );

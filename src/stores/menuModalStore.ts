@@ -46,3 +46,8 @@ export const useCloseMenuModal = () => {
   const close = useMenuModalStore((state) => state.close);
   return close;
 };
+
+export const useMenuModal = () => {
+  const store = useMenuModalStore();
+  return store;
+};

@@ -22,7 +22,7 @@ import {
   useCloseSelectModal,
   useOpenSelectModal,
 } from '@/stores/selectModalStore';
-import MenuModal from '../common/MenuModal';
+import MenuModal from '../Modal/MenuModal';
 import Loading from '../common/Loading';
 
 interface Comment {

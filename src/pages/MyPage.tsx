@@ -1,5 +1,5 @@
 import deleteUser from '@/api/deleteUser';
-import MenuModal from '@/components/common/MenuModal';
+import MenuModal from '@/components/Modal/MenuModal';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import Header from '@/components/Header/Header';
 import MyInfo from '@/components/MyPage/MyInfo';

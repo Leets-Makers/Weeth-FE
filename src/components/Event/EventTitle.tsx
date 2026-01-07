@@ -6,7 +6,7 @@ import * as S from '@/styles/calendar/EventDetailTitle.styled';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
-import MenuModal from '@/components/common/MenuModal';
+import MenuModal from '@/components/Modal/MenuModal';
 import {
   useCloseSelectModal,
   useOpenSelectModal,
