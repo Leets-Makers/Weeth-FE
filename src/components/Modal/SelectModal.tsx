@@ -1,4 +1,4 @@
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/Modal/Modal';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';

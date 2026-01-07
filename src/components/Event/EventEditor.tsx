@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useGetEventInfo from '@/api/getEventInfo';
 import replaceNewLines from '@/hooks/newLine';
 import CardinalDropdown from '@/components/common/CardinalDropdown';
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/Modal/Modal';
 import Button from '@/components/Button/Button';
 import ToggleButton from '@/components/common/ToggleButton';
 import EventInput, { EventInputBlock } from '@/components/Event/EventInput';
