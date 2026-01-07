@@ -47,7 +47,7 @@ import WritingButton from '@/components/Header/WritingButton';
 import PostButton from '@/components/Header/PostButton';
 import { pcResponsive } from '@/styles';
 import AdminButton from '@/components/Header/AdminButton';
-import InfoButton from '@/components/Header/InfoButton';
+import InfoButton from '@/components/Penalty/InfoButton';
 // import EditButton from '@/components/Header/EditButton';
 
 interface HeaderProps {

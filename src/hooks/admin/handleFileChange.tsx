@@ -10,7 +10,7 @@ const useDuesFileUpload = (existingFiles: FileObject[] = []) => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      const allowedExtensions = ['jpg', 'jpeg', 'png', 'heic'];
+      const allowedExtensions = ['jpg', 'jpeg', 'png', 'heic', 'pdf'];
 
       const invalidFiles = newFiles.filter((file) => {
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
@@ -18,7 +18,7 @@ const useDuesFileUpload = (existingFiles: FileObject[] = []) => {
       });
 
       if (invalidFiles.length > 0) {
-        alert('JPG, JPEG, PNG, HEIC 파일만 업로드 가능합니다.');
+        alert('JPG, JPEG, PNG, HEIC, PDF 파일만 업로드 가능합니다.');
         return;
       }
 

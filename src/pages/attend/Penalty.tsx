@@ -1,41 +1,46 @@
 import useCustomBack from '@/hooks/useCustomBack';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ModalPenalty from '@/components/Penalty/ModalPenalty';
 import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
 import PenaltyItem from '@/components/Penalty/PenaltyItem';
 import useGetPenalty from '@/api/useGetPenalty';
 import Loading from '@/components/common/Loading';
+import InfoButton from '@/components/Penalty/InfoButton';
+import styled from 'styled-components';
+import typography from '@/theme/typography';
 import { AttendContainer } from './Attendance';
+
+export const PageHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  ${typography.H1};
+  margin-top: 18px;
+`;
 
 const Penalty: React.FC = () => {
   useCustomBack('/attendance');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { penaltyInfo, isLoading } = useGetPenalty();
-  const [showLoading, setShowLoading] = useState(true);
 
-  // const handleOpenModal = () => {
-  //   setModalOpen(true);
-  // };
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
 
   const handleCloseModal = () => {
     setModalOpen(false);
   };
 
-  useEffect(() => {
-    if (isLoading) {
-      setShowLoading(true);
-      return undefined;
-    }
-    const timer = setTimeout(() => setShowLoading(false), 100);
-    return () => clearTimeout(timer);
-  }, [isLoading]);
-
-  if (showLoading && isLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
   return (
     <AttendContainer>
+      <PageHeader>
+        페널티
+        <InfoButton onClick={handleOpenModal} />
+      </PageHeader>
       <PenaltyInfoBox
         penaltyCount={penaltyInfo?.penaltyCount || 0}
         warningCount={penaltyInfo?.warningCount || 0}

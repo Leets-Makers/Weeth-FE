@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import logo from '@/assets/images/ic_name_logo.svg';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import Menu from '@/assets/images/ic_hamburger_menu.svg?react';

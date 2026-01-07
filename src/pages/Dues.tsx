@@ -73,9 +73,9 @@ const Dues: React.FC = () => {
         <S.NullText>등록된 회비가 없습니다.</S.NullText>
       ) : (
         <S.DuesListBox>
-          <S.MoneyBoxContainer>
-            <S.MoneyBox>{duesInfo.currentAmount.toLocaleString()}원</S.MoneyBox>
-          </S.MoneyBoxContainer>
+          <S.TotalMoney>
+            {duesInfo.currentAmount.toLocaleString()}원
+          </S.TotalMoney>
 
           <S.DuesList>
             {/* 회비 탭일 때 */}

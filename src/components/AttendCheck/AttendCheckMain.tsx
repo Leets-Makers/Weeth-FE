@@ -4,16 +4,8 @@ import useGetUserName from '@/hooks/useGetUserName';
 import { formatMeetingDates } from '@/hooks/formatDate';
 import Loading from '@/components/common/Loading';
 import AttendCheckItem from '@/components/AttendCheck/AttendCheckItem';
-import AttendCheckInfoBox from './AttendCheckInfoBox';
-
-interface MeetingProps {
-  id: number;
-  title: string;
-  start: string;
-  end: string;
-  status: 'ATTEND' | 'PENDING' | 'ABSENT';
-  location: string;
-}
+import { MeetingProps } from '@/types/attend';
+import AttendCheckInfoBox from '@/components/AttendCheck/AttendCheckInfoBox';
 
 const AttendCheckMain: React.FC = () => {
   const { attendCheckInfo, error } = useGetAttendCheck();
