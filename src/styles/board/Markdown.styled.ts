@@ -1,12 +1,14 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { MOBILE, PC, pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   box-sizing: border-box;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -22,12 +24,12 @@ export const MarkdownTapContainer = styled.div`
   overflow-x: auto;
   flex-shrink: 0;
   cursor: grab;
-  border-bottom: 1px solid ${theme.color.gray[30]};
+  border-bottom: 1px solid ${colors.semantic.line};
   border-radius: 10px 10px 0 0;
-  padding: 2px 8px;
+  padding: 2px ${units.padding['200']}px;
   display: flex;
   align-items: center;
-  background-color: #3567c0;
+  background-color: ${colors.semantic.container['secondary-alternative']};
   width: 100%;
 
   &::-webkit-scrollbar {
@@ -63,21 +65,21 @@ export const PreviewContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: ${units.margin['200']}px;
 `;
 
 export const PreviewWrapper = styled.div`
-  padding: 15px 5px 0px 10px;
+  padding: ${units.padding['300']}px ${units.padding['200']}px
+    ${units.padding['300']}px ${units.padding['400']}px;
   width: 100%;
   white-space: normal;
   box-sizing: border-box;
   height: 340.12px;
-  color: ${theme.color.gray[100]};
-  background-color: ${theme.color.gray[18]};
+  color: ${colors.semantic.text.strong};
+  background-color: ${colors.semantic.container.neutral};
   border: none;
   resize: none;
-  font-size: 16px;
-  font-family: ${theme.font.regular};
+  ${typography.Body1};
   overflow-y: auto;
   scrollbar-gutter: stable;
 

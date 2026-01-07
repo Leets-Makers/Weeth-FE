@@ -8,9 +8,14 @@ import DefaultD from '@/assets/images/ic_default_board_D.svg?react';
 import DefaultBE from '@/assets/images/ic_default_board_BE.svg?react';
 import DefaultFE from '@/assets/images/ic_default_board_FE.svg?react';
 import DefaultPM from '@/assets/images/ic_default_board_PM.svg?react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import type { ComponentType, SVGProps } from 'react';
-import { useDraggable } from '@/hooks/useDraggable';
+import useWindowSize from '@/hooks/useWindowSize';
+import { units } from '@/theme/designTokens';
+import PCDefaultD from '@/assets/images/ic_pc_avatar_d.svg?react';
+import PCDefaultBE from '@/assets/images/ic_pc_avatar_be.svg?react';
+import PCDefaultFE from '@/assets/images/ic_pc_avatar_fe.svg?react';
+import PCDefaultPM from '@/assets/images/ic_pc_avatar_pm.svg?react';
 
 type SvgCmp = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -19,6 +24,7 @@ type PartItem = {
   url: 'ALL' | 'FE' | 'BE' | 'D' | 'PM';
   defaultIcon: SvgCmp;
   pressedIcon: SvgCmp;
+  pcIcon: SvgCmp;
 };
 
 const parts: PartItem[] = [
@@ -27,64 +33,61 @@ const parts: PartItem[] = [
     url: 'FE',
     defaultIcon: DefaultFE,
     pressedIcon: PressedFE,
+    pcIcon: PCDefaultFE,
   },
   {
     key: 'BE',
     url: 'BE',
     defaultIcon: DefaultBE,
     pressedIcon: PressedBE,
+    pcIcon: PCDefaultBE,
   },
   {
     key: 'D',
     url: 'D',
     defaultIcon: DefaultD,
     pressedIcon: PressedD,
+    pcIcon: PCDefaultD,
   },
   {
     key: 'PM',
     url: 'PM',
     defaultIcon: DefaultPM,
     pressedIcon: PressedPM,
+    pcIcon: PCDefaultPM,
   },
 ];
 
 const PartBoard = () => {
   const navigate = useNavigate();
-  const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
-    useDraggable(scrollerRef);
-
   const [pressedKey, setPressedKey] = useState<PartItem['key'] | null>(null);
+  const { width } = useWindowSize();
+  const isDesktop = width >= units.device.desktop;
 
   return (
-    <S.NoticePreviewContainer>
-      <S.CardContainer>
-        <S.PartTitleText>파트 게시판</S.PartTitleText>
-      </S.CardContainer>
-      <S.ScrollContainer
-        ref={scrollerRef}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={(e) => {
-          setPressedKey(null);
-          onMouseUp(e);
-        }}
-        onMouseLeave={(e) => {
-          setPressedKey(null);
-          onMouseLeave(e);
-        }}
-      >
+    <S.PartPreviewContainer>
+      <S.PartTitleText>파트 게시판</S.PartTitleText>
+      <S.PartBoardContainer>
         <S.PartList>
           {parts.map((part) => {
             const isPressed = pressedKey === part.key;
-            const Icon = isPressed ? part.pressedIcon : part.defaultIcon;
+            let Icon: SvgCmp;
+            if (isDesktop) {
+              Icon = part.pcIcon;
+            } else if (isPressed) {
+              Icon = part.pressedIcon;
+            } else {
+              Icon = part.defaultIcon;
+            }
 
             return (
               <S.PartItem
                 key={part.url}
                 onMouseDown={() => setPressedKey(part.key)}
                 onMouseUp={() => setPressedKey(null)}
-                onMouseLeave={() => setPressedKey(null)}
+                onMouseLeave={() => {
+                  setPressedKey(null);
+                }}
                 onClick={() => navigate(`/board/study/${part.url}`)}
                 role="button"
                 tabIndex={0}
@@ -94,18 +97,16 @@ const PartBoard = () => {
                   }
                 }}
               >
-                <Icon
-                  width={76}
-                  height={76}
-                  style={{ pointerEvents: 'none' }}
-                />
+                <S.PartIcon>
+                  <Icon style={{ pointerEvents: 'none' }} />
+                </S.PartIcon>
                 <S.PartLabel>{part.key}</S.PartLabel>
               </S.PartItem>
             );
           })}
         </S.PartList>
-      </S.ScrollContainer>
-    </S.NoticePreviewContainer>
+      </S.PartBoardContainer>
+    </S.PartPreviewContainer>
   );
 };
 

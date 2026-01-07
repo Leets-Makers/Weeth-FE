@@ -1,6 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import EditGNB from '@/components/Navigation/EditGNB';
 import postBoardNotice from '@/api/postBoardNotice';
 import { PostRequestType } from '@/types/PostRequestType';
 import { toastError } from '@/components/common/ToastMessage';
@@ -29,7 +31,7 @@ const PartPost = () => {
   const [content, setContent] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
 
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (!title) {
       toastError('제목을 입력해주세요.');
       return;
@@ -81,28 +83,32 @@ const PartPost = () => {
       alert('게시 중 오류가 발생했습니다.');
     }
   };
-
-  const headerTitle =
-    category === 'StudyLog' ? `${part} 스터디` : `${part} 아티클`;
-
   return (
-    <StudyWriteTemplate
-      category={category}
-      headerTitle={headerTitle}
-      title={title}
-      setTitle={setTitle}
-      selectedCardinal={selectedCardinal}
-      setSelectedCardinal={setSelectedCardinal}
-      selectedWeek={selectedWeek}
-      setSelectedWeek={setSelectedWeek}
-      selectedStudy={selectedStudy}
-      setSelectedStudy={setSelectedStudy}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      onSave={onSave}
-    />
+    <>
+      <EditGNB onClickButton={handleClickButton} />
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+          { label: '글쓰기' },
+        ]}
+      />
+      <StudyWriteTemplate
+        category={category}
+        title={title}
+        setTitle={setTitle}
+        selectedCardinal={selectedCardinal}
+        setSelectedCardinal={setSelectedCardinal}
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
+        selectedStudy={selectedStudy}
+        setSelectedStudy={setSelectedStudy}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+      />
+    </>
   );
 };
 

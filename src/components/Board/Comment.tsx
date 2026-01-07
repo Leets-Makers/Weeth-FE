@@ -98,13 +98,25 @@ const Comment = ({
   return (
     <S.CommentContainer $isSelect={selectedComment?.[commentId] || false}>
       <S.CommentContentContainer>
-        <S.NameText>
-          <S.PositionIcon
-            src={setPositionIcon(role, position)}
-            alt="포지션 아이콘"
-          />
-          {name}
-        </S.NameText>
+        <S.CommentTop>
+          <S.NameText>
+            <S.PositionIcon
+              src={setPositionIcon(role, position)}
+              alt="포지션 아이콘"
+            />
+            {name}
+          </S.NameText>
+          <S.ButtonContainer>
+            <S.ImageButton onClick={onClickReply}>
+              <img src={ReplyImage} alt="답댓글 버튼" />
+            </S.ImageButton>
+            {isMyComment && (
+              <S.ImageButton onClick={onClickMenu}>
+                <img src={MenuImage} alt="메뉴 버튼" />
+              </S.ImageButton>
+            )}
+          </S.ButtonContainer>
+        </S.CommentTop>
         <S.ContentContainer>
           <S.ContentText>{parse(convertLinksInText(content))}</S.ContentText>
           {fileUrls.length > 0 && (

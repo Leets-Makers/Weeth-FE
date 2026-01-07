@@ -1,4 +1,6 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 const TabContainer = styled.div`
@@ -23,17 +25,16 @@ const TabText = styled.div<{ $isActive: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 10px 15px 0px 15px;
-  font-size: 16px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub2};
   color: ${({ $isActive }) =>
-    $isActive ? theme.color.gray[100] : theme.color.gray[65]};
+    $isActive ? colors.semantic.text.strong : theme.color.gray[65]};
   cursor: pointer;
 `;
 
 const Underline = styled.div`
   width: 100%;
   height: 2px;
-  background-color: ${theme.color.gray[100]};
+  background-color: ${colors.semantic.text.strong};
   margin-top: 6px;
   position: absolute;
   bottom: -2px;

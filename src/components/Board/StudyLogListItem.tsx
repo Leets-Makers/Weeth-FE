@@ -26,11 +26,6 @@ type ItemProps = {
   isStudy?: boolean;
 };
 
-const truncateText = (text: string | null | undefined, maxLength: number) => {
-  const safe = text ?? '';
-  return safe.length > maxLength ? `${safe.slice(0, maxLength)}...` : safe;
-};
-
 const StudyLogListItem = ({
   name,
   time,
@@ -62,7 +57,7 @@ const StudyLogListItem = ({
             <S.TitleText>{title}</S.TitleText>
             {isNew && <NewIcon />}
           </S.TitleContainer>
-          <S.ContentText>{truncateText(content, 78)}</S.ContentText>
+          <S.ContentText>{content}</S.ContentText>
         </S.PostContentContainer>
         {isStudy && (
           <S.StudyTagContainer>
