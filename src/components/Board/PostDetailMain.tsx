@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import CommentImage from '@/assets/images/ic_comment_count.svg?react';
 import * as S from '@/styles/board/PostDetail.styled';
 import PostFile from '@/components/Board/PostFile';
@@ -22,7 +22,7 @@ import {
   useCloseSelectModal,
   useOpenSelectModal,
 } from '@/stores/selectModalStore';
-import MenuModal from '../Modal/MenuModal';
+import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
 import Loading from '../common/Loading';
 
 interface Comment {
@@ -71,7 +71,6 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
   );
   const userName = useGetUserName();
   const formattedDate = formatDateTime(info?.time ?? '');
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
@@ -85,6 +84,9 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
   const isMyPost = boardDetailInfo?.name === userName;
   const openSelectModal = useOpenSelectModal();
   const closeSelectModal = useCloseSelectModal();
+
+  const openMenuModal = useOpenMenuModal();
+  const closeMenuModal = useCloseMenuModal();
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
     fetch(fileUrl, { method: 'GET' })
@@ -127,7 +129,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
   };
 
   const handleSelectModal = () => {
-    setIsModalOpen(false);
+    closeMenuModal();
     openSelectModal({
       title: '게시물 삭제',
       content: '이 게시물을 정말 삭제하시겠습니까?',
@@ -137,68 +139,74 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
 
   if (!info) return <Loading />;
 
-  return (
-    <>
-      {isModalOpen && (
-        <MenuModal
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        >
-          <S.TextButton onClick={() => navigate(editPath)}>수정</S.TextButton>
+  const onClickMenu = () => {
+    openMenuModal({
+      mobileOnly: true,
+      children: (
+        <>
+          <S.TextButton
+            onClick={() => {
+              navigate(editPath);
+              closeMenuModal();
+            }}
+          >
+            수정
+          </S.TextButton>
           <S.TextButton $isLast onClick={handleSelectModal}>
             삭제
           </S.TextButton>
-        </MenuModal>
-      )}
+        </>
+      ),
+    });
+  };
 
-      <S.PostMainContainer>
-        <S.PostContentContainer>
-          <S.PostMainTitle>
-            <S.TitleContainer>
-              <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
-              {isMyPost && <S.KebabIcon onClick={() => setIsModalOpen(true)} />}
-            </S.TitleContainer>
-            <S.SmallText>
-              <S.PositionIcon
-                src={setPositionIcon(info.role, info.position)}
-                alt="포지션 아이콘"
-              />
-              <div>{info.name}</div>
-              <S.DateText>{formattedDate}</S.DateText>
-            </S.SmallText>
-          </S.PostMainTitle>
-          <S.PostingContianer>
-            <ReactMarkdown
-              rehypePlugins={[rehypeRaw]}
-              remarkPlugins={[remarkBreaks, remarkGfm]}
-              components={{
-                a: MarkdownLink,
-                input: CustomCheckbox,
-              }}
-            >
-              {info.content || ''}
-            </ReactMarkdown>
-          </S.PostingContianer>
-        </S.PostContentContainer>
-        <S.PostBottomContent>
-          <S.PostFileList>
-            {info.fileUrls.map((file) => (
-              <PostFile
-                key={file.fileId}
-                fileName={file.fileName}
-                isDownload
-                onClick={() => onClickDownload(file.fileUrl, file.fileName)}
-              />
-            ))}
-          </S.PostFileList>
-          <S.CommentText>
-            <CommentImage />
-            <div>{info.commentCount}</div>
-          </S.CommentText>
-        </S.PostBottomContent>
-      </S.PostMainContainer>
-    </>
+  return (
+    <S.PostMainContainer>
+      <S.PostContentContainer>
+        <S.PostMainTitle>
+          <S.TitleContainer>
+            <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
+            {isMyPost && <S.KebabIcon onClick={onClickMenu} />}
+          </S.TitleContainer>
+          <S.SmallText>
+            <S.PositionIcon
+              src={setPositionIcon(info.role, info.position)}
+              alt="포지션 아이콘"
+            />
+            <div>{info.name}</div>
+            <S.DateText>{formattedDate}</S.DateText>
+          </S.SmallText>
+        </S.PostMainTitle>
+        <S.PostingContianer>
+          <ReactMarkdown
+            rehypePlugins={[rehypeRaw]}
+            remarkPlugins={[remarkBreaks, remarkGfm]}
+            components={{
+              a: MarkdownLink,
+              input: CustomCheckbox,
+            }}
+          >
+            {info.content || ''}
+          </ReactMarkdown>
+        </S.PostingContianer>
+      </S.PostContentContainer>
+      <S.PostBottomContent>
+        <S.PostFileList>
+          {info.fileUrls.map((file) => (
+            <PostFile
+              key={file.fileId}
+              fileName={file.fileName}
+              isDownload
+              onClick={() => onClickDownload(file.fileUrl, file.fileName)}
+            />
+          ))}
+        </S.PostFileList>
+        <S.CommentText>
+          <CommentImage />
+          <div>{info.commentCount}</div>
+        </S.CommentText>
+      </S.PostBottomContent>
+    </S.PostMainContainer>
   );
 };
 
