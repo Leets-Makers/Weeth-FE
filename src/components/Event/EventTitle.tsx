@@ -7,7 +7,10 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
 import MenuModal from '@/components/common/MenuModal';
-import SelectModal from '@/components/Modal/SelectModal';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
 import { toastSuccess, toastError } from '../common/ToastMessage';
 
 const EventTitle = ({
@@ -18,13 +21,15 @@ const EventTitle = ({
   isAdmin: boolean;
 }) => {
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const { id, type } = useParams();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
+
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
   const handleDelete = async () => {
     try {
@@ -35,7 +40,7 @@ const EventTitle = ({
       toastError('삭제 중 오류가 발생했습니다.');
       console.error(err);
     } finally {
-      setIsSelectModalOpen(false);
+      closeSelectModal();
     }
   };
 
@@ -71,21 +76,16 @@ const EventTitle = ({
               $isLast
               onClick={() => {
                 setIsMenuModalOpen(false);
-                setIsSelectModalOpen(true);
+                openSelectModal({
+                  title: '일정 삭제',
+                  content: '정말 삭제하시겠습니까?',
+                  onDelete: handleDelete,
+                });
               }}
             >
               삭제
             </S.TextButton>
           </MenuModal>
-        )}
-
-        {isSelectModalOpen && (
-          <SelectModal
-            title="일정 삭제"
-            content="정말 삭제하시겠습니까?"
-            onClose={() => setIsSelectModalOpen(false)}
-            onDelete={handleDelete}
-          />
         )}
       </S.EventTitleWrapper>
     </>
