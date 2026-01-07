@@ -3,13 +3,11 @@ import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
 import PostDetailMain from '@/components/Board/PostDetailMain';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
 import useSmartLoading from '@/hooks/useSmartLoading';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 const PartDetail = () => {
   const { category, part, postId } = useParams<{
@@ -45,8 +43,6 @@ const PartDetail = () => {
     Record<number, boolean>
   >({});
 
-  const navigate = useNavigate();
-
   const handleRefresh = () => {
     setRefreshKey((prev) => prev + 1);
     setParentCommentId(null);
@@ -79,28 +75,16 @@ const PartDetail = () => {
     return <div>잘못된 경로입니다.</div>;
   }
 
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPart = () => {
-    navigate(`/board/study/${part}`);
-  };
-
   return (
     <>
       <S.Container>
-        <BreadCrumContainer>
-          <BreadcrumHomeIcon onClick={handleClickHome} />
-          <BreadcrumArrowRightIcon />
-          <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-          <BreadcrumArrowRightIcon />
-          <CrumbButton onClick={handleClickPart}>{part} 파트게시판</CrumbButton>
-          <BreadcrumArrowRightIcon />
-          게시판상세
-        </BreadCrumContainer>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+            { label: '게시판상세' },
+          ]}
+        />
         {boardDetailInfo && (
           <>
             <PostDetailMain info={boardDetailInfo} />

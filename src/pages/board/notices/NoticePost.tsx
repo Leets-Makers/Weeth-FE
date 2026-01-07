@@ -1,11 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import postBoardNotice from '@/api/postBoardNotice';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
 
 const NoticePost = () => {
@@ -71,28 +69,17 @@ const NoticePost = () => {
       );
     }
   };
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickNotice = () => {
-    navigate(`/board/notices`);
-  };
 
   return (
     <>
       <EditGNB onClickButton={handleClickButton} />
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickNotice}>공지사항</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        글쓰기
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: '공지사항', path: '/board/notices' },
+          { label: '글쓰기' },
+        ]}
+      />
       <NoticeWrite
         title={title}
         setTitle={setTitle}

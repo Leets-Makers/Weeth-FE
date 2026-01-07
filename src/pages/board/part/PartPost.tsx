@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
 import postBoardNotice from '@/api/postBoardNotice';
 import { PostRequestType } from '@/types/PostRequestType';
@@ -85,30 +83,16 @@ const PartPost = () => {
       alert('게시 중 오류가 발생했습니다.');
     }
   };
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPartBoard = () => {
-    navigate(`/board/study/${part}`);
-  };
-
   return (
     <>
       <EditGNB onClickButton={handleClickButton} />
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickPartBoard}>
-          {part} 파트게시판
-        </CrumbButton>
-        <BreadcrumArrowRightIcon />
-        글쓰기
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+          { label: '글쓰기' },
+        ]}
+      />
       <StudyWriteTemplate
         category={category}
         title={title}

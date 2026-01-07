@@ -5,7 +5,6 @@ import { Suspense } from 'react';
 import DelayedFallback from '@/hooks/DelayedFallback';
 import { units } from '@/theme/designTokens';
 import Footer from '@/components/Navigation/Footer';
-import useWindowSize from '@/hooks/useWindowSize';
 
 const Wrapper = styled.div`
   width: 375px;
@@ -18,9 +17,6 @@ const Wrapper = styled.div`
 const Content = styled.main``;
 
 const FixedLayout = () => {
-  const { width } = useWindowSize();
-  const isMobile = width <= units.device.tablet;
-
   return (
     <Suspense fallback={<DelayedFallback delay={300} />}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -30,7 +26,7 @@ const FixedLayout = () => {
             <Outlet />
           </Content>
         </Wrapper>
-        <Footer isMobile={isMobile} />
+        <Footer isMobile />
       </div>
     </Suspense>
   );

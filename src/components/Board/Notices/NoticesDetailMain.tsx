@@ -55,7 +55,6 @@ interface PostDetailMainProps {
 
 const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   const navigate = useNavigate();
-  const formattedDate = formatDateTime(info?.time ?? '');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const { postId } = useParams();
@@ -66,14 +65,36 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   const type = path === 'notices' ? 'notices' : 'board';
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
+  const { boardDetailInfo } = useGetBoardDetail(type, numericPostId ?? 0);
+  const userName = useGetUserName();
+  const isMyPost = boardDetailInfo?.name === userName;
+  const formattedDate = formatDateTime(info?.time ?? '');
+
+  const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
+    fetch(fileUrl, { method: 'GET' })
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url2 = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url2;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url2);
+          a.remove();
+        }, 1000);
+        toastSuccess('저장되었습니다');
+      })
+      .catch((err) => {
+        toastError('저장에 실패했습니다');
+        console.error('err', err);
+      });
+  }, []);
 
   if (!numericPostId) {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
-
-  const { boardDetailInfo } = useGetBoardDetail(type, numericPostId);
-
-  const isMyPost = boardDetailInfo?.name === useGetUserName();
 
   const openSelectModal = () => {
     setIsSelectModalOpen(true);
@@ -98,28 +119,6 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   };
 
   if (!info) return <div>Loading...</div>;
-
-  const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
-    fetch(fileUrl, { method: 'GET' })
-      .then((res) => res.blob())
-      .then((blob) => {
-        const url2 = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url2;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          window.URL.revokeObjectURL(url2);
-          a.remove();
-        }, 1000);
-        toastSuccess('저장되었습니다');
-      })
-      .catch((err) => {
-        toastError('저장에 실패했습니다');
-        console.error('err', err);
-      });
-  }, []);
 
   return (
     <>

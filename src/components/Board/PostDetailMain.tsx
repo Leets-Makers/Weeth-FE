@@ -20,6 +20,7 @@ import useGetUserName from '@/hooks/useGetUserName';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import MenuModal from '../common/MenuModal';
 import SelectModal from '../Modal/SelectModal';
+import Loading from '../common/Loading';
 
 interface Comment {
   id: number;
@@ -55,14 +56,20 @@ interface PostDetailMainProps {
 
 const PostDetailMain = ({ info }: PostDetailMainProps) => {
   const navigate = useNavigate();
-  const formattedDate = formatDateTime(info?.time ?? '');
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const { category, part, postId } = useParams<{
     category: string;
     part: string;
     postId: string;
   }>();
+  const numericPostId = postId ? parseInt(postId, 10) : null;
+  const { boardDetailInfo } = useGetBoardDetail(
+    numericPostId ? 'board' : 'board',
+    numericPostId ?? 0,
+  );
+  const userName = useGetUserName();
+  const formattedDate = formatDateTime(info?.time ?? '');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
@@ -72,15 +79,33 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
       ? `/board/${category}/${part}/${postId}/edit`
       : `/education/${part}/${postId}/edit`;
 
-  const numericPostId = postId ? parseInt(postId, 10) : null;
+  const isMyPost = boardDetailInfo?.name === userName;
+
+  const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
+    fetch(fileUrl, { method: 'GET' })
+      .then((res) => res.blob())
+      .then((blob) => {
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          window.URL.revokeObjectURL(downloadUrl);
+          a.remove();
+        }, 1000);
+        toastSuccess('저장되었습니다');
+      })
+      .catch((err) => {
+        toastError('저장에 실패했습니다');
+        console.error('err', err);
+      });
+  }, []);
 
   if (!numericPostId) {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
-
-  const { boardDetailInfo } = useGetBoardDetail(type, numericPostId);
-
-  const isMyPost = boardDetailInfo?.name === useGetUserName();
 
   const openSelectModal = () => {
     setIsSelectModalOpen(true);
@@ -104,29 +129,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     closeSelectModal();
   };
 
-  if (!info) return <div>Loading...</div>;
-
-  const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
-    fetch(fileUrl, { method: 'GET' })
-      .then((res) => res.blob())
-      .then((blob) => {
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          window.URL.revokeObjectURL(downloadUrl);
-          a.remove();
-        }, 1000);
-        toastSuccess('저장되었습니다');
-      })
-      .catch((err) => {
-        toastError('저장에 실패했습니다');
-        console.error('err', err);
-      });
-  }, []);
+  if (!info) return <Loading />;
 
   return (
     <>

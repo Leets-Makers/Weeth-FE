@@ -2,13 +2,11 @@ import { useState } from 'react';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
 import useSmartLoading from '@/hooks/useSmartLoading';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import PostDetailMain from '@/components/Board/PostDetailMain';
 
 const EduDetail = () => {
@@ -38,8 +36,6 @@ const EduDetail = () => {
   const [selectedComment, setSelectedComment] = useState<
     Record<number, boolean>
   >({});
-
-  const navigate = useNavigate();
 
   const { loading: smartLoading } = useSmartLoading(
     new Promise<void>((resolve) => {
@@ -73,28 +69,16 @@ const EduDetail = () => {
   if (error) return <div>오류: {error}</div>;
   if (smartLoading) return <Loading />;
 
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPart = () => {
-    navigate(`/board/education/${part}`);
-  };
-
   return (
     <>
       <S.Container>
-        <BreadCrumContainer>
-          <BreadcrumHomeIcon onClick={handleClickHome} />
-          <BreadcrumArrowRightIcon />
-          <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-          <BreadcrumArrowRightIcon />
-          <CrumbButton onClick={handleClickPart}>{part} 교육자료</CrumbButton>
-          <BreadcrumArrowRightIcon />
-          교육자료상세
-        </BreadCrumContainer>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 교육자료`, path: `/board/education/${part}` },
+            { label: '교육자료상세' },
+          ]}
+        />
 
         {boardDetailInfo && (
           <>

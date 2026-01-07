@@ -5,9 +5,7 @@ import { PostRequestType } from '@/types/PostRequestType';
 import EduWrite from '@/components/Board/EduWrite';
 import { PartTypes } from '@/types/part';
 import { toastError } from '@/components/common/ToastMessage';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
 
 type RealPart = Exclude<PartTypes, '' | 'ALL'>;
@@ -74,30 +72,17 @@ const EduPost = () => {
   const { part } = useParams<{
     part: string;
   }>();
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPartBoard = () => {
-    navigate(`/board/education/${part}`);
-  };
 
   return (
     <>
       <EditGNB onClickButton={handleClickButton} />
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickPartBoard}>
-          {part} 교육자료
-        </CrumbButton>
-        <BreadcrumArrowRightIcon />
-        글쓰기
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 교육자료`, path: `/board/education/${part}` },
+          { label: '글쓰기' },
+        ]}
+      />
       <EduWrite
         title={title}
         setTitle={setTitle}

@@ -8,7 +8,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 3.125rem;
-  align-self: center;
+  margin: 0 auto;
 
   width: 100%;
   max-width: ${MOBILE};
@@ -18,8 +18,6 @@ export const Container = styled.div`
 export const TabContainer = styled.div`
   display: flex;
   box-sizing: border-box;
-  padding-left: -18px;
-  maring-right: -18px;
   border-bottom: 1px solid ${colors.semantic.line};
   padding: 0 ${units.padding['450']}px;
   gap: ${units.margin['200']}px;

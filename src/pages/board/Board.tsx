@@ -1,5 +1,4 @@
 import * as S from '@/styles/board/Board.styled';
-import useCustomBack from '@/hooks/useCustomBack';
 import NoticePreview from '@/components/Board/NoticePreview';
 import PartBoard from '@/components/Board/PartBoard';
 import EduMaterial from '@/components/Board/EduMaterial/EduMaterial';
@@ -9,15 +8,10 @@ import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
 import useGetAllCardinals from '@/api/useGetCardinals';
 import { useEffect, useState } from 'react';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
-import { useNavigate } from 'react-router-dom';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 const Board = () => {
-  useCustomBack('/home');
-  const navigate = useNavigate();
-
   const { currentCardinal } = useGetAllCardinals();
 
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(
@@ -53,19 +47,11 @@ const Board = () => {
 
   const recentEdu = eduBoardData?.pages.flatMap((page) => page.content) ?? [];
 
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-
   return (
     <S.Container>
       <S.BoardContainer>
         <S.BoardTitle>
-          <S.BreadCrumContainer>
-            <BreadcrumHomeIcon onClick={handleClickHome} />
-            <BreadcrumArrowRightIcon />
-            게시판
-          </S.BreadCrumContainer>
+          <Breadcrumb items={[{ label: '게시판' }]} hasTitle />
           게시판
         </S.BoardTitle>
         <PartBoard />

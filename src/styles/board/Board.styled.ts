@@ -53,7 +53,6 @@ export const PartPreviewContainer = styled.div`
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 0;
   gap: ${units.margin['300']}px;
   padding: 0 ${units.padding['450']}px;
 
@@ -117,6 +116,11 @@ export const PartBoardContainer = styled.div`
   display: flex;
   overflow-x: auto;
   gap: ${units.margin['300']}px;
+
+  @media (min-width: ${units.device.desktop}px) {
+    overflow: visible;
+    width: 100%;
+  }
 `;
 
 export const EduScrollContainer = styled.div`
@@ -280,7 +284,6 @@ export const ImgContainer = styled.img`
 
 export const PartTitleText = styled.p`
   display: flex;
-  color: white;
   font-size: 1.1875rem;
   font-family: ${theme.font.semiBold};
   line-height: 1;
@@ -291,6 +294,14 @@ export const PartTitleText = styled.p`
 export const PartList = styled.div`
   display: flex;
   gap: ${units.margin['300']}px;
+  width: 100%;
+
+  @media (min-width: ${units.device.desktop}px) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    width: 100%;
+  }
 `;
 
 export const PartItem = styled.div`
@@ -300,6 +311,10 @@ export const PartItem = styled.div`
   gap: 10px;
   cursor: pointer;
   width: 100%;
+
+  @media (min-width: ${units.device.desktop}px) {
+    width: 100%;
+  }
 
   ${pcResponsive}
 `;
@@ -316,6 +331,11 @@ export const PartIcon = styled.div`
   svg {
     width: 100%;
     height: 100%;
+  }
+
+  @media (min-width: ${units.device.desktop}px) {
+    width: 185.5px;
+    height: 73px;
   }
 `;
 

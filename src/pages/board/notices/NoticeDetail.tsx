@@ -6,9 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
 import useSmartLoading from '@/hooks/useSmartLoading';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import NoticesDetailMain from '@/components/Board/Notices/NoticesDetailMain';
 
 const NoticePostDetail = () => {
@@ -69,28 +67,16 @@ const NoticePostDetail = () => {
   if (error) return <div>오류: {error}</div>;
   if (smartLoading) return <Loading />;
 
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPart = () => {
-    navigate(`/board/notices`);
-  };
-
   return (
     <>
       <S.Container>
-        <BreadCrumContainer>
-          <BreadcrumHomeIcon onClick={handleClickHome} />
-          <BreadcrumArrowRightIcon />
-          <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-          <BreadcrumArrowRightIcon />
-          <CrumbButton onClick={handleClickPart}>공지사항</CrumbButton>
-          <BreadcrumArrowRightIcon />
-          공지상세
-        </BreadCrumContainer>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: '공지사항', path: '/board/notices' },
+            { label: '공지상세' },
+          ]}
+        />
         {boardDetailInfo && (
           <>
             <NoticesDetailMain info={boardDetailInfo} />

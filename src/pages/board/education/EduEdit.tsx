@@ -4,9 +4,7 @@ import useGetBoardDetail from '@/api/useGetBoardDetail';
 import EduWrite from '@/components/Board/EduWrite';
 import { RealPart } from '@/types/part';
 import { originFile } from '@/pages/board/part/PartEdit';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
 import {
   toastError,
@@ -14,6 +12,7 @@ import {
   toastSuccess,
 } from '@/components/common/ToastMessage';
 import postBoardNotice from '@/api/postBoardNotice';
+import * as S from '@/styles/board/BoardDetail.styled';
 
 const EduEdit = () => {
   const navigate = useNavigate();
@@ -90,30 +89,16 @@ const EduEdit = () => {
     }
   };
 
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPartBoard = () => {
-    navigate(`/board/education/${part}`);
-  };
-
   return (
-    <>
+    <S.Container>
       <EditGNB onClickButton={handleClickButton} save />
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickPartBoard}>
-          {part} 교육자료
-        </CrumbButton>
-        <BreadcrumArrowRightIcon />
-        교육자료 수정
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 교육자료`, path: `/board/education/${part}` },
+          { label: '교육자료 수정' },
+        ]}
+      />
       <EduWrite
         title={title}
         setTitle={setTitle}
@@ -128,7 +113,7 @@ const EduEdit = () => {
         originFiles={originFiles}
         setOriginFiles={setOriginFiles}
       />
-    </>
+    </S.Container>
   );
 };
 

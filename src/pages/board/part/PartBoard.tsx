@@ -10,14 +10,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useGetPartBoard from '@/api/useGetPartBoard';
 import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 // import useGetUserInfo from '@/api/useGetUserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/types/board';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -158,23 +156,14 @@ const PartBoard = () => {
     navigate(`/board/${categoryPrefix}/${part}/${id}`);
   };
 
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-
   return (
     <S.Container>
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        {part} 파트게시판
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 파트게시판` },
+        ]}
+      />
       <PartBoardTap activeTab={activeCategory} onTabChange={handleTabChange} />
       <S.InformationContainer>
         <S.DropdownContainer>

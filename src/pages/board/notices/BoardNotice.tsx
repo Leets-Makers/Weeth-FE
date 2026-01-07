@@ -1,5 +1,4 @@
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
@@ -16,7 +15,6 @@ import useSmartLoading, {
   useSmartCombinedLoading,
 } from '@/hooks/useSmartLoading';
 import { BoardContent } from '@/types/board';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
 
 const BoardNotice = () => {
   useCustomBack('/board');
@@ -112,22 +110,15 @@ const BoardNotice = () => {
   };
 
   const list = searchMode ? searchResults : posts;
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
 
   return (
     <S.Container>
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        공지사항
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: '공지사항' },
+        ]}
+      />
       <StudyBoardSearch
         requestType="notices"
         onSearchDone={handleSearchDone}

@@ -10,6 +10,12 @@ import DefaultFE from '@/assets/images/ic_default_board_FE.svg?react';
 import DefaultPM from '@/assets/images/ic_default_board_PM.svg?react';
 import { useState } from 'react';
 import type { ComponentType, SVGProps } from 'react';
+import useWindowSize from '@/hooks/useWindowSize';
+import { units } from '@/theme/designTokens';
+import PCDefaultD from '@/assets/images/ic_pc_avatar_d.svg?react';
+import PCDefaultBE from '@/assets/images/ic_pc_avatar_be.svg?react';
+import PCDefaultFE from '@/assets/images/ic_pc_avatar_fe.svg?react';
+import PCDefaultPM from '@/assets/images/ic_pc_avatar_pm.svg?react';
 
 type SvgCmp = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -18,6 +24,7 @@ type PartItem = {
   url: 'ALL' | 'FE' | 'BE' | 'D' | 'PM';
   defaultIcon: SvgCmp;
   pressedIcon: SvgCmp;
+  pcIcon: SvgCmp;
 };
 
 const parts: PartItem[] = [
@@ -26,30 +33,36 @@ const parts: PartItem[] = [
     url: 'FE',
     defaultIcon: DefaultFE,
     pressedIcon: PressedFE,
+    pcIcon: PCDefaultFE,
   },
   {
     key: 'BE',
     url: 'BE',
     defaultIcon: DefaultBE,
     pressedIcon: PressedBE,
+    pcIcon: PCDefaultBE,
   },
   {
     key: 'D',
     url: 'D',
     defaultIcon: DefaultD,
     pressedIcon: PressedD,
+    pcIcon: PCDefaultD,
   },
   {
     key: 'PM',
     url: 'PM',
     defaultIcon: DefaultPM,
     pressedIcon: PressedPM,
+    pcIcon: PCDefaultPM,
   },
 ];
 
 const PartBoard = () => {
   const navigate = useNavigate();
   const [pressedKey, setPressedKey] = useState<PartItem['key'] | null>(null);
+  const { width } = useWindowSize();
+  const isDesktop = width >= units.device.desktop;
 
   return (
     <S.PartPreviewContainer>
@@ -58,7 +71,14 @@ const PartBoard = () => {
         <S.PartList>
           {parts.map((part) => {
             const isPressed = pressedKey === part.key;
-            const Icon = isPressed ? part.pressedIcon : part.defaultIcon;
+            let Icon: SvgCmp;
+            if (isDesktop) {
+              Icon = part.pcIcon;
+            } else if (isPressed) {
+              Icon = part.pressedIcon;
+            } else {
+              Icon = part.defaultIcon;
+            }
 
             return (
               <S.PartItem

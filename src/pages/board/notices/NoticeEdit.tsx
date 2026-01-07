@@ -6,13 +6,12 @@ import {
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import NoticeWrite from '@/components/Board/NoticeWrite';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import { originFile } from '@/pages/board/part/PartEdit';
 import EditGNB from '@/components/Navigation/EditGNB';
+import * as S from '@/styles/board/BoardDetail.styled';
 
 const NoticeEdit = () => {
   const navigate = useNavigate();
@@ -84,28 +83,17 @@ const NoticeEdit = () => {
       );
     }
   };
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPart = () => {
-    navigate(`/board/notices`);
-  };
 
   return (
-    <>
+    <S.Container>
       <EditGNB onClickButton={handleClickButton} save />
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickPart}>공지사항</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        글쓰기 수정
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: '공지사항', path: '/board/notices' },
+          { label: '글쓰기 수정' },
+        ]}
+      />
       <NoticeWrite
         title={title}
         setTitle={setTitle}
@@ -116,7 +104,7 @@ const NoticeEdit = () => {
         originFiles={originFiles}
         setOriginFiles={setOriginFiles}
       />
-    </>
+    </S.Container>
   );
 };
 

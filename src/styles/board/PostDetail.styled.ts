@@ -21,9 +21,9 @@ export const PostMainContainer = styled.div`
 `;
 
 export const PostMainTitleText = styled.div`
-  wdith: 100%;
+  width: 100%;
   ${typography.H3};
-  colors: ${colors.semantic.text.normal};
+  color: ${colors.semantic.text.normal};
 `;
 
 export const TitleContainer = styled.div`

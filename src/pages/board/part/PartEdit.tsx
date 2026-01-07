@@ -8,10 +8,9 @@ import {
 } from '@/components/common/ToastMessage';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
-import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
+import * as S from '@/styles/board/PartBoard.styled';
 
 export interface originFile {
   fileId: number;
@@ -103,30 +102,16 @@ const PartEdit = () => {
     return <div>잘못된 경로입니다.</div>;
   }
 
-  const handleClickHome = () => {
-    navigate('/home');
-  };
-  const handleClickBoard = () => {
-    navigate('/board');
-  };
-  const handleClickPartBoard = () => {
-    navigate(`/board/study/${part}`);
-  };
-
   return (
-    <>
+    <S.Container>
       <EditGNB onClickButton={handleClickButton} save />
-      <BreadCrumContainer>
-        <BreadcrumHomeIcon onClick={handleClickHome} />
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickBoard}>게시판</CrumbButton>
-        <BreadcrumArrowRightIcon />
-        <CrumbButton onClick={handleClickPartBoard}>
-          {part} 파트게시판
-        </CrumbButton>
-        <BreadcrumArrowRightIcon />
-        글쓰기 수정
-      </BreadCrumContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+          { label: '글쓰기 수정' },
+        ]}
+      />
       <StudyWriteTemplate
         category={category}
         selectedCardinal={selectedCardinal}
@@ -145,7 +130,7 @@ const PartEdit = () => {
         setOriginFiles={setOriginFiles}
         // onSave={onSave}
       />
-    </>
+    </S.Container>
   );
 };
 

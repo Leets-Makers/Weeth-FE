@@ -5,7 +5,7 @@ import { MOBILE, pcResponsive } from '@/styles';
 export const PostWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  ustify-content: center
   width: 100%;
   max-width: ${MOBILE};
   padding-bottom: 1.25rem;
