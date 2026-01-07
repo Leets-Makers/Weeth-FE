@@ -2,6 +2,7 @@ import Modal from '@/components/Modal/Modal';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
+import { useSelectModalStore } from '@/stores/selectModalStore';
 
 const Container = styled.div`
   display: flex;
@@ -9,6 +10,7 @@ const Container = styled.div`
   align-self: start;
   margin-left: 4px;
 `;
+
 const Title = styled.div`
   font-size: 16px;
   font-weight: 600;
@@ -48,7 +50,6 @@ const CancelButton = styled(ModalButton)`
   &:hover {
     opacity: 0.7;
   }
-  cursor: pointer;
 `;
 
 const ActionButton = styled(ModalButton)<{
@@ -61,30 +62,50 @@ const ActionButton = styled(ModalButton)<{
     props.type === 'positive'
       ? colors.semantic.text.inverse
       : colors.semantic.text.normal};
+
   background: ${(props) =>
     props.type === 'positive'
       ? colors.semantic.brand.primary
       : colors.semantic.state.error};
+
   &:hover {
     background: ${(props) =>
       props.type === 'positive' ? colors.dark.primary[200] : '#BF4242'};
-    color: ${(props) =>
-      props.type === 'positive'
-        ? colors.semantic.text.inverse
-        : colors.semantic.text.alternative};
   }
-  cursor: pointer;
 `;
+
 const SelectModal = () => {
+  const { isOpen, modalProps, close } = useSelectModalStore();
+
+  if (!isOpen || !modalProps) return null;
+
+  const {
+    title,
+    content,
+    buttonContent,
+    type,
+    visibility,
+    cancelText,
+    onDelete,
+  } = modalProps;
+
   return (
-    <Modal isDelete hasCloseButton={false} onClose={onClose}>
+    <Modal isDelete hasCloseButton={false} onClose={close}>
       <Container>
         <Title>{title}</Title>
         <Description>{content}</Description>
       </Container>
+
       <ButtonContainer>
-        <CancelButton onClick={onClose}>{cancleText}</CancelButton>
-        <ActionButton onClick={onDelete} type={type} $visible={visibility}>
+        <CancelButton onClick={close}>{cancelText}</CancelButton>
+        <ActionButton
+          type={type ?? 'negative'}
+          $visible={visibility ?? true}
+          onClick={() => {
+            onDelete?.();
+            close();
+          }}
+        >
           {buttonContent}
         </ActionButton>
       </ButtonContainer>
