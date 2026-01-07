@@ -3,15 +3,18 @@ import ReplyImage from '@/assets/images/ic_reply_comment.svg';
 import MenuImage from '@/assets/images/ic_comment_delete.svg';
 import * as S from '@/styles/board/Comment.styled';
 import deleteComment from '@/api/deleteComment';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import formatDateTime from '@/hooks/formatDateTime';
 import useGetUserName from '@/hooks/useGetUserName';
 import setPositionIcon from '@/hooks/setPositionIcon';
-import SelectModal from '@/components/Modal/SelectModal';
 import convertLinksInText from '@/hooks/convertLinksInText';
 import { originFile } from '@/pages/board/part/PartEdit';
 import PostFile from '@/components/Board/PostFile';
 import { toastError, toastSuccess } from '@/components/common/ToastMessage';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
 
 interface CommentProps {
   name: string;
@@ -42,29 +45,28 @@ const Comment = ({
   onReply,
   selectedComment,
 }: CommentProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const onClickReply = () => {
     onReply(commentId);
   };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const onClickMenu = () => {
-    setIsModalOpen(true);
-  };
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
   const handleDeleteComment = async () => {
     try {
       await deleteComment(path, postId, commentId);
       onDelete();
-      handleCloseModal();
+      closeSelectModal();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Failed to delete comment:', error);
     }
+  };
+  const onClickMenu = () => {
+    openSelectModal({
+      title: '댓글 삭제',
+      content: '댓글을 정말 삭제하시겠습니까?',
+      onDelete: handleDeleteComment,
+    });
   };
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
@@ -131,14 +133,6 @@ const Comment = ({
           </S.ImageButton>
         )}
       </S.ButtonContainer>
-      {isModalOpen && (
-        <SelectModal
-          title="댓글 삭제"
-          content="댓글을 정말 삭제하시겠습니까?"
-          onClose={handleCloseModal}
-          onDelete={handleDeleteComment}
-        />
-      )}
     </S.CommentContainer>
   );
 };
