@@ -75,25 +75,7 @@ const ActionButton = styled(ModalButton)<{
   }
   cursor: pointer;
 `;
-const SelectModal = ({
-  title,
-  content,
-  buttonContent = '삭제',
-  onClose,
-  onDelete,
-  type = 'negative',
-  visibility = true,
-  cancleText = '취소',
-}: {
-  title: string;
-  content: string;
-  buttonContent?: string;
-  onClose: () => void;
-  onDelete?: () => void;
-  type?: 'positive' | 'negative';
-  visibility?: boolean;
-  cancleText?: string;
-}) => {
+const SelectModal = () => {
   return (
     <Modal isDelete hasCloseButton={false} onClose={onClose}>
       <Container>
