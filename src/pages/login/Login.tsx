@@ -8,8 +8,8 @@ import toggleVisibleIcon from '@/assets/images/ic_toggleVisible.svg';
 import Header from '@/components/Header/Header';
 import SignupTextComponent from '@/components/Signup/SignupTextComponent';
 import useCustomBack from '@/hooks/useCustomBack';
-import SelectModal from '@/components/Modal/SelectModal';
 import { colors } from '@/theme/designTokens';
+import { toastError } from '@/components/common/ToastMessage';
 
 const Container = styled.div`
   display: flex;
@@ -92,8 +92,6 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [modalMessage, setModalMessage] = useState<string>('');
 
   useEffect(() => {
     const kakaoId = localStorage.getItem('kakaoId');
@@ -135,26 +133,21 @@ const Login: React.FC = () => {
     setError(null);
   };
 
-  const showModal = (message: string) => {
-    setModalMessage(message);
-    setModalVisible(true);
-  };
-
   const handleLogin = async () => {
     if (email === '') {
-      showModal('이메일을 입력해 주세요.');
+      toastError('이메일을 입력해 주세요.');
       return;
     }
     if (!validateEmail(email)) {
-      showModal('올바른 이메일 형식이 아닙니다.');
+      toastError('올바른 이메일 형식이 아닙니다.');
       return;
     }
     if (password === '') {
-      showModal('비밀번호를 입력해 주세요.');
+      toastError('비밀번호를 입력해 주세요.');
       return;
     }
     if (password.length < 6 || password.length > 12) {
-      showModal('비밀번호를 6~12자리로 입력해 주세요.');
+      toastError('비밀번호를 6~12자리로 입력해 주세요.');
       return;
     }
     const params = {
@@ -243,16 +236,6 @@ const Login: React.FC = () => {
       <LoginButtonContainer>
         <LoginButton onClick={handleLogin}>연동하기</LoginButton>
       </LoginButtonContainer>
-      {modalVisible && (
-        <SelectModal
-          title="알림"
-          content={modalMessage}
-          onClose={() => setModalVisible(false)}
-          type="positive"
-          visibility={false}
-          cancleText="닫기"
-        />
-      )}
     </Container>
   );
 };
