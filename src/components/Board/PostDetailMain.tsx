@@ -18,8 +18,11 @@ import deletePost from '@/api/deletePost';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGetUserName from '@/hooks/useGetUserName';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
 import MenuModal from '../common/MenuModal';
-import SelectModal from '../Modal/SelectModal';
 import Loading from '../common/Loading';
 
 interface Comment {
@@ -69,7 +72,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
   const userName = useGetUserName();
   const formattedDate = formatDateTime(info?.time ?? '');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
@@ -80,6 +83,8 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
       : `/education/${part}/${postId}/edit`;
 
   const isMyPost = boardDetailInfo?.name === userName;
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
     fetch(fileUrl, { method: 'GET' })
@@ -107,14 +112,6 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
 
-  const openSelectModal = () => {
-    setIsSelectModalOpen(true);
-  };
-
-  const closeSelectModal = () => {
-    setIsSelectModalOpen(false);
-  };
-
   const confirmDelete = async () => {
     try {
       await deletePost(numericPostId, type);
@@ -129,6 +126,15 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     closeSelectModal();
   };
 
+  const handleSelectModal = () => {
+    setIsModalOpen(false);
+    openSelectModal({
+      title: '게시물 삭제',
+      content: '이 게시물을 정말 삭제하시겠습니까?',
+      onDelete: confirmDelete,
+    });
+  };
+
   if (!info) return <Loading />;
 
   return (
@@ -140,18 +146,10 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
           }}
         >
           <S.TextButton onClick={() => navigate(editPath)}>수정</S.TextButton>
-          <S.TextButton $isLast onClick={openSelectModal}>
+          <S.TextButton $isLast onClick={handleSelectModal}>
             삭제
           </S.TextButton>
         </MenuModal>
-      )}
-      {isSelectModalOpen && (
-        <SelectModal
-          title="게시물 삭제"
-          content="이 게시물을 정말 삭제하시겠습니까?"
-          onClose={closeSelectModal}
-          onDelete={confirmDelete}
-        />
       )}
 
       <S.PostMainContainer>
