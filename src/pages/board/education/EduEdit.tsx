@@ -1,15 +1,18 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import postBoardNotice from '@/api/postBoardNotice';
+import useGetBoardDetail from '@/api/useGetBoardDetail';
+import EduWrite from '@/components/Board/EduWrite';
+import { RealPart } from '@/types/part';
+import { originFile } from '@/pages/board/part/PartEdit';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import EditGNB from '@/components/Navigation/EditGNB';
 import {
   toastError,
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import useGetBoardDetail from '@/api/useGetBoardDetail';
-import EduWrite from '@/components/Board/EduWrite';
-import { RealPart } from '@/types/part';
-import { originFile } from '@/pages/board/part/PartEdit';
+import postBoardNotice from '@/api/postBoardNotice';
+import * as S from '@/styles/board/BoardDetail.styled';
 
 const EduEdit = () => {
   const navigate = useNavigate();
@@ -40,7 +43,7 @@ const EduEdit = () => {
     setSelectedPart((boardDetailInfo?.parts ?? []) as RealPart[]);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -87,22 +90,30 @@ const EduEdit = () => {
   };
 
   return (
-    <EduWrite
-      headerTitle="교육자료"
-      title={title}
-      setTitle={setTitle}
-      selectedCardinal={selectedCardinal}
-      setSelectedCardinal={setSelectedCardinal}
-      selectedPart={selectedPart}
-      setSelectedPart={setSelectedPart}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <S.Container>
+      <EditGNB onClickButton={handleClickButton} save />
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 교육자료`, path: `/board/education/${part}` },
+          { label: '교육자료 수정' },
+        ]}
+      />
+      <EduWrite
+        title={title}
+        setTitle={setTitle}
+        selectedCardinal={selectedCardinal}
+        setSelectedCardinal={setSelectedCardinal}
+        selectedPart={selectedPart}
+        setSelectedPart={setSelectedPart}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+        originFiles={originFiles}
+        setOriginFiles={setOriginFiles}
+      />
+    </S.Container>
   );
 };
 

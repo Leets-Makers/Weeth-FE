@@ -1,4 +1,3 @@
-import Header from '@/components/Header/Header';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
@@ -8,10 +7,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EduPartTap from '@/components/Board/EduPartTap';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
+import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
@@ -97,32 +98,36 @@ const EducationBoard = () => {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleRightButton = () => {
-    navigate(`/board/education/${part}/post`);
-  };
-
   const handleDetail = (id: number) => {
     navigate(`/education/${part}/${id}?${searchParams.toString()}`);
   };
 
+  const handleWriting = () => {
+    navigate(`/board/education/${part}/post`);
+  };
+
   return (
     <S.Container>
-      <Header
+      {/* <Header
         isAccessible={isAdmin}
         RightButtonType="WRITING"
         onClickRightButton={handleRightButton}
       >
         교육자료
-      </Header>
+      </Header> */}
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 교육자료` },
+        ]}
+      />
       <EduPartTap activePart={part} onPartChange={handleTabChange} />
       <S.InformationContainer>
-        <S.DropdownContainer>
-          <CardinalDropdown
-            origValue={selectedCardinal}
-            editValue={setSelectedCardinal}
-            isMember
-          />
-        </S.DropdownContainer>
+        <CardinalDropdown
+          origValue={selectedCardinal}
+          editValue={setSelectedCardinal}
+          isMember
+        />
       </S.InformationContainer>
       <StudyBoardSearch
         requestType="education"
@@ -166,6 +171,11 @@ const EducationBoard = () => {
             <S.Text>마지막 게시물입니다.</S.Text>
           )}
         </S.PostContainer>
+      )}
+      {isAdmin && (
+        <S.FloatingButton>
+          <FloatingWritingIcon onClick={handleWriting} />
+        </S.FloatingButton>
       )}
     </S.Container>
   );

@@ -1,4 +1,3 @@
-import Header from '@/components/Header/Header';
 import PartBoardTap from '@/components/Board/PartBoardTap';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import WeekDropdown from '@/components/Board/WeekDropdown';
@@ -10,12 +9,13 @@ import * as S from '@/styles/board/PartBoard.styled';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useGetPartBoard from '@/api/useGetPartBoard';
-
+import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
-import useGetUserInfo from '@/api/useGetUserInfo';
+// import useGetUserInfo from '@/api/useGetUserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/types/board';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -29,7 +29,7 @@ type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 const PartBoard = () => {
   useCustomBack('/board');
 
-  const { userInfo } = useGetUserInfo();
+  // const { userInfo } = useGetUserInfo();
 
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
@@ -53,12 +53,12 @@ const PartBoard = () => {
   );
   const isStudyLog = activeCategory === 'StudyLog';
 
-  const canWrite = useMemo(() => {
-    if (!userInfo) return false;
-    if (userInfo.role === 'ADMIN') return true;
+  // const canWrite = useMemo(() => {
+  //   if (!userInfo) return false;
+  //   if (userInfo.role === 'ADMIN') return true;
 
-    return part === 'ALL' || userInfo.position === part;
-  }, [userInfo, part]);
+  //   return part === 'ALL' || userInfo.position === part;
+  // }, [userInfo, part]);
 
   useEffect(() => {
     const c = searchParams.get('cardinal');
@@ -146,7 +146,7 @@ const PartBoard = () => {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleRightButton = () => {
+  const handleWriting = () => {
     const slug = enumToSlug(activeCategory);
     navigate(`/board/${slug}/${part}/post`);
   };
@@ -156,21 +156,14 @@ const PartBoard = () => {
     navigate(`/board/${categoryPrefix}/${part}/${id}`);
   };
 
-  const handleRefreshFilters = () => {
-    setSelectedCardinal(null);
-    setSelectedWeek(null);
-    setSelectedTag(null);
-  };
-
   return (
     <S.Container>
-      <Header
-        isAccessible={canWrite}
-        RightButtonType="WRITING"
-        onClickRightButton={handleRightButton}
-      >
-        {part}
-      </Header>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 파트게시판` },
+        ]}
+      />
       <PartBoardTap activeTab={activeCategory} onTabChange={handleTabChange} />
       <S.InformationContainer>
         <S.DropdownContainer>
@@ -191,7 +184,6 @@ const PartBoard = () => {
           <ExpandableTagList
             selectedTag={selectedTag}
             onSelectTag={setSelectedTag}
-            onRefresh={handleRefreshFilters}
           />
         )}
       </S.InformationContainer>
@@ -238,6 +230,9 @@ const PartBoard = () => {
           )}
         </S.PostContainer>
       )}
+      <S.FloatingButton>
+        <FloatingWritingIcon onClick={handleWriting} />
+      </S.FloatingButton>
     </S.Container>
   );
 };

@@ -1,12 +1,13 @@
 import { MOBILE, pcResponsive } from '@/styles';
-import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 15px;
-  gap: 10px;
+  padding: 0 ${units.padding['450']}px;
+  gap: ${units.margin['200']}px;
   width: 100%;
   max-width: ${MOBILE};
   box-sizing: border-box;
@@ -15,26 +16,24 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 12px;
-  color: ${theme.color.gray[65]};
-  font-family: ${theme.font.semiBold};
+  ${typography.Caption1};
+  color: ${colors.semantic.text.alternative};
 `;
 
 const TitleInput = styled.input`
-  height: 52px;
+  height: 48px;
   width: 100%;
   box-sizing: border-box;
-  border-radius: 10px;
-  padding: 15px 10px;
-  background-color: ${theme.color.gray[18]};
+  border-radius: ${units.radius.lg}px;
+  padding: ${units.padding['300']}px ${units.padding['400']}px;
+  background-color: ${colors.semantic.container.neutral};
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-  color: ${theme.color.gray[100]};
-  font-size: 16px;
-  font-family: ${theme.font.semiBold};
+  color: ${colors.semantic.text.normal};
+  ${typography.Body1};
   border: none;
 
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 
   &:focus {

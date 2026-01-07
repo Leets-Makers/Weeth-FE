@@ -1,4 +1,5 @@
-import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -9,9 +10,9 @@ export const Container = styled.div`
   align-items: center;
   gap: 15px;
   box-sizing: border-box;
-  border: 1px solid ${theme.color.gray[30]};
-  background-color: ${theme.color.gray[18]};
-  border-radius: 5px;
+  border: 1px solid ${colors.semantic.line};
+  background-color: #ffffff0d;
+  border-radius: ${units.radius.sm}px;
   padding: 6px 8px;
 `;
 
@@ -21,22 +22,10 @@ export const FileContainer = styled.div`
   gap: 8px;
 `;
 
-export const FolderIcon = styled.img`
-  width: 1rem;
-  height: 1rem;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const FileName = styled.div`
-  font-size: 0.875rem;
+  ${typography.Button2};
+  color: ${colors.semantic.text.normal};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
-
-export const RightIcon = styled.img`
-  width: 1rem;
-  height: 1rem;
-  cursor: pointer;
 `;

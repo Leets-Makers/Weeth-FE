@@ -8,7 +8,9 @@ import {
 } from '@/components/common/ToastMessage';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
-import getHeaderTitle from '@/utils/getHeaderTitle';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import EditGNB from '@/components/Navigation/EditGNB';
+import * as S from '@/styles/board/PartBoard.styled';
 
 export interface originFile {
   fileId: number;
@@ -47,7 +49,7 @@ const PartEdit = () => {
     setSelectedWeek(boardDetailInfo?.week ?? null);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -101,25 +103,34 @@ const PartEdit = () => {
   }
 
   return (
-    <StudyWriteTemplate
-      category={category}
-      headerTitle={getHeaderTitle(category, part)}
-      selectedCardinal={selectedCardinal}
-      setSelectedCardinal={setSelectedCardinal}
-      selectedWeek={selectedWeek}
-      setSelectedWeek={setSelectedWeek}
-      selectedStudy={selectedStudy}
-      setSelectedStudy={setSelectedStudy}
-      title={title}
-      setTitle={setTitle}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <S.Container>
+      <EditGNB onClickButton={handleClickButton} save />
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+          { label: '글쓰기 수정' },
+        ]}
+      />
+      <StudyWriteTemplate
+        category={category}
+        selectedCardinal={selectedCardinal}
+        setSelectedCardinal={setSelectedCardinal}
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
+        selectedStudy={selectedStudy}
+        setSelectedStudy={setSelectedStudy}
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+        originFiles={originFiles}
+        setOriginFiles={setOriginFiles}
+        // onSave={onSave}
+      />
+    </S.Container>
   );
 };
 

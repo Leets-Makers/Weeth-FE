@@ -8,25 +8,26 @@ import useInsertAtCursor from '@/hooks/useInsertAtCursor';
 import useImageUpload from '@/hooks/useImageUpload';
 import useImagePasteDropHandlers from '@/hooks/useImagePasteDropHandlers';
 import { PC } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: ${units.margin['200']}px;
 `;
 
 const ContentWrapper = styled.textarea`
-  // all: unset;
-  padding: 15px 10px 0px 10px;
+  padding: ${units.padding['300']}px ${units.padding['200']}px
+    ${units.padding['300']}px ${units.padding['400']}px;
   width: 100%;
   box-sizing: border-box;
   height: 340.12px;
-  color: ${theme.color.gray[100]};
-  background-color: ${theme.color.gray[18]};
+  color: ${colors.semantic.text.strong};
+  background-color: ${colors.semantic.container.neutral};
   border: none;
   resize: none;
-  font-size: 16px;
-  font-family: ${theme.font.regular};
+  ${typography.Body1};
   overflow-y: auto;
   scrollbar-gutter: stable;
 
@@ -36,7 +37,7 @@ const ContentWrapper = styled.textarea`
   }
 
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 
   &:focus {

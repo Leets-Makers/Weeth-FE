@@ -6,9 +6,12 @@ import {
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import NoticeWrite from '@/components/Board/NoticeWrite';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import { originFile } from '@/pages/board/part/PartEdit';
+import EditGNB from '@/components/Navigation/EditGNB';
+import * as S from '@/styles/board/BoardDetail.styled';
 
 const NoticeEdit = () => {
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ const NoticeEdit = () => {
     setOriginFiles(boardDetailInfo?.fileUrls ?? []);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -82,17 +85,26 @@ const NoticeEdit = () => {
   };
 
   return (
-    <NoticeWrite
-      title={title}
-      setTitle={setTitle}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <S.Container>
+      <EditGNB onClickButton={handleClickButton} save />
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: '공지사항', path: '/board/notices' },
+          { label: '글쓰기 수정' },
+        ]}
+      />
+      <NoticeWrite
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+        originFiles={originFiles}
+        setOriginFiles={setOriginFiles}
+      />
+    </S.Container>
   );
 };
 

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import postBoardNotice from '@/api/postBoardNotice';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import EditGNB from '@/components/Navigation/EditGNB';
 
 const NoticePost = () => {
   const navigate = useNavigate();
@@ -20,11 +22,7 @@ const NoticePost = () => {
   const isContentEmpty = content.trim() === '';
   const numericPostId = postId ? parseInt(postId, 10) : 0;
 
-  //   const handleDeleteFile = (fileName: string) => {
-  //     setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
-  //   };
-
-  const onSave = async () => {
+  const handleClickButton = async () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -73,15 +71,24 @@ const NoticePost = () => {
   };
 
   return (
-    <NoticeWrite
-      title={title}
-      setTitle={setTitle}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      onSave={onSave}
-    />
+    <>
+      <EditGNB onClickButton={handleClickButton} />
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: '공지사항', path: '/board/notices' },
+          { label: '글쓰기' },
+        ]}
+      />
+      <NoticeWrite
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        files={files}
+        setFiles={setFiles}
+      />
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
-import Header from '@/components/Header/Header';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
@@ -7,7 +8,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
-
 import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
@@ -92,7 +92,7 @@ const BoardNotice = () => {
     return <Loading />;
   }
 
-  const handleRightButton = () => {
+  const handleWriting = () => {
     navigate(`/board/notices/post`);
   };
 
@@ -113,21 +113,18 @@ const BoardNotice = () => {
 
   return (
     <S.Container>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="WRITING"
-        onClickRightButton={handleRightButton}
-      >
-        공지사항
-      </Header>
-      <S.SearchContainer>
-        <StudyBoardSearch
-          requestType="notices"
-          onSearchDone={handleSearchDone}
-          onClear={handleSearchClear}
-          onLoading={setSearchLoading}
-        />
-      </S.SearchContainer>
+      <Breadcrumb
+        items={[
+          { label: '게시판', path: '/board' },
+          { label: '공지사항' },
+        ]}
+      />
+      <StudyBoardSearch
+        requestType="notices"
+        onSearchDone={handleSearchDone}
+        onClear={handleSearchClear}
+        onLoading={setSearchLoading}
+      />
       {combinedSmartLoading ? (
         <Loading />
       ) : (
@@ -163,6 +160,11 @@ const BoardNotice = () => {
             <S.Text>마지막 게시물입니다.</S.Text>
           )}
         </S.PostContainer>
+      )}
+      {isAdmin && (
+        <S.FloatingButton>
+          <FloatingWritingIcon onClick={handleWriting} />
+        </S.FloatingButton>
       )}
     </S.Container>
   );

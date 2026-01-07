@@ -1,12 +1,13 @@
 import { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 import CommentSend from '@/assets/images/ic_comment_send.svg';
 import createComment from '@/api/postComment';
 import { toastError } from '@/components/common/ToastMessage';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
 import { MOBILE, pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   display: flex;
@@ -16,52 +17,40 @@ const Container = styled.div`
   ${pcResponsive}
 `;
 
-const FileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px 15px;
-  gap: 10px;
-  background-color: ${theme.color.gray[18]}50;
-`;
-
 const CommentContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-end;
   padding: 10px 10px 22px 10px;
   gap: 10px;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.light.neutral[800]};
   color: white;
   box-sizing: border-box;
 `;
 
 const Input = styled.textarea`
   flex: 1;
-  width: 271px;
-  min-height: 33px;
+  width: 255px;
   box-sizing: border-box;
   resize: none;
   border: none;
   outline: none;
-  border-radius: 20px;
-  padding: 7px 15px;
-  gap: 10px;
-  background-color: ${theme.color.gray[30]};
-  color: white;
-  font-size: 16px;
-  font-family: ${theme.font.medium};
+  border-radius: ${units.radius.sm}px;
+  padding: ${units.padding['200']}px 15px;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
+  ${typography.Body1};
   white-space: pre-wrap;
   word-break: break-word;
 
   &::placeholder {
-    color: white;
-    font-family: ${theme.font.medium};
+    ${typography.Body1};
   }
 `;
 
 const SendButton = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -152,7 +141,7 @@ const CommentInput = ({
   return (
     <Container>
       {files.length > 0 && (
-        <FileContainer>
+        <>
           {files.map((file) => (
             <PostFile
               key={`${file.name}-${file.lastModified}`}
@@ -161,7 +150,7 @@ const CommentInput = ({
               onClick={() => handleDeleteFile(file)}
             />
           ))}
-        </FileContainer>
+        </>
       )}
 
       <CommentContainer>
