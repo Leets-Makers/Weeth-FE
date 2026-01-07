@@ -139,7 +139,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
 
   if (!info) return <Loading />;
 
-  const onClickMenu = () => {
+  const handleMenu = () => {
     openMenuModal({
       mobileOnly: true,
       children: (
@@ -166,7 +166,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
         <S.PostMainTitle>
           <S.TitleContainer>
             <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
-            {isMyPost && <S.KebabIcon onClick={onClickMenu} />}
+            {isMyPost && <S.KebabIcon onClick={handleMenu} />}
           </S.TitleContainer>
           <S.SmallText>
             <S.PositionIcon
