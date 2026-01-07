@@ -33,12 +33,6 @@ export const BoardTitle = styled.div`
   padding: 0 ${units.padding['450']}px;
 `;
 
-export const BreadCrumContainer = styled.div`
-  display: flex;
-  ${typography.Caption1};
-  color: ${colors.semantic.text.alternative};
-`;
-
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
