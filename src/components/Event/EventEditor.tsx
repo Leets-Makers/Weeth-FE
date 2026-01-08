@@ -197,7 +197,7 @@ const EventEditor = () => {
         toastSuccess('저장이 완료되었습니다.');
         navigate('/calendar');
       } catch (err: any) {
-        if (err.response.status === 403) {
+        if (err.response && err.response.status === 403) {
           toastInfo('일정 생성 및 수정은 운영진만 가능합니다.');
           return;
         }

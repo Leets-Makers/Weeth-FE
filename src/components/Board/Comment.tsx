@@ -135,16 +135,6 @@ const Comment = ({
         </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
       </S.CommentContentContainer>
-      <S.ButtonContainer>
-        <S.ImageButton onClick={onClickReply}>
-          <img src={ReplyImage} alt="답댓글 버튼" />
-        </S.ImageButton>
-        {isMyComment && (
-          <S.ImageButton onClick={onClickMenu}>
-            <img src={MenuImage} alt="메뉴 버튼" />
-          </S.ImageButton>
-        )}
-      </S.ButtonContainer>
     </S.CommentContainer>
   );
 };
