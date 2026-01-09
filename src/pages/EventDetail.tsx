@@ -11,6 +11,7 @@ export interface EventDetailData {
   id: number;
   title: string;
   content: string;
+  createdAt: string;
   location: string;
   cardinal: number;
   code?: number;
@@ -36,8 +37,7 @@ const EventDetail = () => {
   return (
     <S.EventDetailWrapper>
       <EventTitle data={eventDetailData} isAdmin={isAdmin} />
-      <S.Line />
-      <EventContent data={eventDetailData} isAdmin={isAdmin} />
+      <EventContent data={eventDetailData} />
     </S.EventDetailWrapper>
   );
 };
