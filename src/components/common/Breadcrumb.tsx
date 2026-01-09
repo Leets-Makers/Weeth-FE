@@ -37,7 +37,7 @@ const Breadcrumb = ({ items, hasTitle = false }: BreadcrumbProps) => {
         const isClickable = !isLast && (item.path || item.onClick);
 
         return (
-          <div key={`${item.label}-${item.path || index}`}>
+          <>
             <BreadcrumArrowRightIcon />
             {isClickable ? (
               <CrumbButton onClick={() => handleItemClick(item)}>
@@ -46,7 +46,7 @@ const Breadcrumb = ({ items, hasTitle = false }: BreadcrumbProps) => {
             ) : (
               <span>{item.label}</span>
             )}
-          </div>
+          </>
         );
       })}
     </BreadCrumContainer>
