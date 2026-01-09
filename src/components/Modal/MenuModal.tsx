@@ -1,7 +1,8 @@
-import styled, { css } from 'styled-components';
-import theme from '@/styles/theme';
+import styled from 'styled-components';
 import { MOBILE, PC } from '@/styles';
 import { useMenuModal } from '@/stores/menuModalStore';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   position: fixed;
@@ -15,21 +16,15 @@ const Container = styled.div`
   }
 `;
 
-const ModalContainer = styled.div<{ $mobileOnly?: boolean }>`
+const ModalContainer = styled.div<{ $topPadding?: boolean }>`
   position: fixed;
-  top: 130px;
-  z-index: 1000;
-  right: calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px);
-  max-width: ${MOBILE};
+  top: ${({ $topPadding }) => ($topPadding ? '140px' : '130px')};
 
-  ${({ $mobileOnly }) =>
-    !$mobileOnly &&
-    css`
-      @media (min-width: ${PC}) {
-        right: calc((100vw - ${PC}) / 2 + 18px);
-        max-width: ${PC};
-      }
-    `}
+  z-index: 1000;
+
+  right: ${`calc((100vw - min(100vw, ${PC})) / 2 + 18px)`};
+
+  width: ${MOBILE};
 `;
 
 const Content = styled.div`
@@ -42,22 +37,23 @@ const Content = styled.div`
   margin-left: auto;
   margin-right: 10px;
 
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
+
+  ${typography.Button2};
   border-radius: 10px;
-  font-size: 14px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   z-index: 100;
 `;
 
 const MenuModal = () => {
-  const { isOpen, children, mobileOnly, close } = useMenuModal();
+  const { isOpen, children, topPadding, close } = useMenuModal();
 
   if (!isOpen || !children) return null;
 
   return (
     <Container onClick={close}>
-      <ModalContainer $mobileOnly={mobileOnly}>
+      <ModalContainer $topPadding={topPadding}>
         <Content onClick={(e) => e.stopPropagation()}>{children}</Content>
       </ModalContainer>
     </Container>

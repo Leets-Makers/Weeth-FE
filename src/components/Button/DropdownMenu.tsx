@@ -1,5 +1,6 @@
 import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -17,20 +18,28 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 26px;
-  font-size: 16px;
+  ${typography.Body1};
+  width: 100%;
 `;
 
 const Label = styled.label<{ $isProfile?: boolean }>`
-  width: 42px;
-  font-size: 16px;
+  flex: 1;
+  ${typography.Body1};
   color: ${({ $isProfile }) =>
     $isProfile
       ? colors.semantic.text.normal
       : colors.semantic.text.alternative};
 `;
+const DropdownWrapper = styled.div`
+  position: relative;
+  flex: 7;
+`;
 
 const Button = styled.button<{ $hasValue: boolean }>`
-  width: 257px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
   height: 45px;
   padding: 0 10px;
   font-size: 16px;
@@ -39,9 +48,6 @@ const Button = styled.button<{ $hasValue: boolean }>`
   background-color: ${colors.semantic.container.neutral};
   color: ${({ $hasValue }) =>
     $hasValue ? colors.semantic.text.normal : colors.semantic.text.alternative};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   cursor: pointer;
 
   &:focus {
@@ -51,9 +57,10 @@ const Button = styled.button<{ $hasValue: boolean }>`
 
 const List = styled.ul`
   position: absolute;
+  width: 100%;
   right: 22.5px;
-  width: 257px;
   top: calc(100% + 4px);
+  right: 0;
   border-radius: 4px;
   max-height: 200px;
   overflow-y: auto;
@@ -67,7 +74,7 @@ const List = styled.ul`
 const Item = styled.li`
   list-style: none;
   padding: 10px 14px;
-  font-size: 15px;
+  box-sizing: boder-box;
   color: ${colors.semantic.text.normal};
   cursor: pointer;
 
@@ -131,22 +138,25 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   return (
     <Container ref={dropdownRef}>
       <Label $isProfile={isProfile}>{text}</Label>
-      <Button
-        onClick={() => setIsOpen((prev) => !prev)}
-        $hasValue={!!selectedValue}
-      >
-        {selectedValue ||
-          (isCardinal ? '기수를 선택해주세요' : '학과를 선택해주세요')}
-      </Button>
-      {isOpen && (
-        <List>
-          {options.map((option) => (
-            <Item key={option} onClick={() => handleSelect(option)}>
-              {option}
-            </Item>
-          ))}
-        </List>
-      )}
+      <DropdownWrapper>
+        <Button
+          onClick={() => setIsOpen((prev) => !prev)}
+          $hasValue={!!selectedValue}
+        >
+          {selectedValue ||
+            (isCardinal ? '기수를 선택해주세요' : '학과를 선택해주세요')}
+        </Button>
+
+        {isOpen && (
+          <List>
+            {options.map((option) => (
+              <Item key={option} onClick={() => handleSelect(option)}>
+                {option}
+              </Item>
+            ))}
+          </List>
+        )}
+      </DropdownWrapper>
     </Container>
   );
 };

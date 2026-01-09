@@ -134,6 +134,7 @@ const Login: React.FC = () => {
   };
 
   const handleLogin = async () => {
+    setError(null);
     if (email === '') {
       toastError('이메일을 입력해 주세요.');
       return;

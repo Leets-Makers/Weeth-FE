@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 26px;
-  font-size: 16px;
+  ${typography.Body1};
+  width: 100%;
 `;
 
 const Label = styled.div<{ isProfile?: boolean }>`
-  width: 42px;
+  flex: 1;
   text-align: left;
   color: ${(props) =>
     props.isProfile
@@ -20,7 +22,7 @@ const Label = styled.div<{ isProfile?: boolean }>`
 `;
 
 const Input = styled.input`
-  width: 257px;
+  flex: 7;
   height: 45px;
   box-sizing: border-box;
   padding-left: 10px;
@@ -29,7 +31,7 @@ const Input = styled.input`
   border-radius: 4px;
   background-color: ${colors.semantic.container.neutral};
   color: ${colors.semantic.text.normal};
-  font-size: 16px;
+  ${typography.Body1};
 
   &::placeholder {
     color: ${colors.semantic.container.neutral};

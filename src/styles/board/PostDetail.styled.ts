@@ -49,6 +49,7 @@ export const PostMainTitle = styled.div`
 
 export const KebabIcon = styled(KebabButton)`
   cursor: pointer;
+  padding: 5px;
 `;
 
 export const DateText = styled.div`

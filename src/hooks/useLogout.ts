@@ -1,20 +1,23 @@
-import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useNavigate } from 'react-router-dom';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
 
-const handleLogout = () => {
+const useLogout = () => {
   const navigate = useNavigate();
   const openSelectModal = useOpenSelectModal();
 
   const onClickLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('kakaoId');
+    localStorage.removeItem('register');
+    localStorage.removeItem('appleAuthCode');
     navigate('/');
   };
 
   const confirmLogout = () => {
     openSelectModal({
-      title: '로그아웃 하시겠습니까?',
-      content: '',
+      title: '로그아웃',
+      content: '로그아웃 하시겠습니까?',
       onDelete: onClickLogout,
       buttonContent: '확인',
     });
@@ -23,4 +26,4 @@ const handleLogout = () => {
   return confirmLogout;
 };
 
-export default handleLogout;
+export default useLogout;

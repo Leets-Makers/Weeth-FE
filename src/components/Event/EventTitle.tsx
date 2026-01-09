@@ -5,10 +5,7 @@ import * as S from '@/styles/calendar/EventDetailTitle.styled';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
-import {
-  useCloseSelectModal,
-  useOpenSelectModal,
-} from '@/stores/selectModalStore';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
 import formatDateTime from '@/hooks/formatDateTime';
 import { toastSuccess, toastError } from '../common/ToastMessage';
@@ -28,7 +25,6 @@ const EventTitle = ({
   const path = pathArray[1];
 
   const openSelectModal = useOpenSelectModal();
-  const closeSelectModal = useCloseSelectModal();
 
   const openMenuModal = useOpenMenuModal();
   const closeMenuModal = useCloseMenuModal();
@@ -41,14 +37,12 @@ const EventTitle = ({
     } catch (err) {
       toastError('삭제 중 오류가 발생했습니다.');
       console.error(err);
-    } finally {
-      closeSelectModal();
     }
   };
 
   const handleMenu = () => {
     openMenuModal({
-      mobileOnly: true,
+      topPadding: true,
       children: (
         <>
           <S.TextButton

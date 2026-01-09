@@ -208,11 +208,13 @@ const EventEditor = () => {
 
     if (startISO === endISO) {
       toastInfo('시작 시간과 종료 시간은 같을 수 없습니다.');
+      return;
     }
     if (startISO > endISO) {
       toastInfo('종료 시간은 시작 시간보다 빠를 수 없습니다.');
     } else {
       openSelectModal({
+        type: 'positive',
         title: modalTitle,
         content: modalContent,
         buttonContent: modalButtonContent,

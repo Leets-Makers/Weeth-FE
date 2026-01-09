@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/Button/Button';
-import handleLogout from '@/hooks/handleLogout';
+import useLogout from '@/hooks/useLogout';
 
 export const TopBarWrapper = styled.div`
   position: sticky;
@@ -43,7 +43,7 @@ interface TopBarProps {
 }
 
 const TopBar: React.FC<TopBarProps> = ({ title, description }) => {
-  const logout = handleLogout();
+  const logout = useLogout();
 
   return (
     <TopBarWrapper>
