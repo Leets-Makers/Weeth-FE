@@ -2,12 +2,17 @@
 import { deleteEvent } from '@/api/EventAdminAPI';
 import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/calendar/EventDetailTitle.styled';
-import { useState } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
-import MenuModal from '@/components/common/MenuModal';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
+import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
 import SelectModal from '@/components/Modal/SelectModal';
 import formatDateTime from '@/hooks/formatDateTime';
+import MenuModal from '@/components/common/MenuModal';
 import { toastSuccess, toastError } from '../common/ToastMessage';
 import Breadcrumb from '../common/Breadcrumb';
 
@@ -18,14 +23,18 @@ const EventTitle = ({
   data: EventDetailData;
   isAdmin: boolean;
 }) => {
-  const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const navigate = useNavigate();
   console.log(data);
   const { id, type } = useParams();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
   const path = pathArray[1];
+
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
+
+  const openMenuModal = useOpenMenuModal();
+  const closeMenuModal = useCloseMenuModal();
 
   const handleDelete = async () => {
     try {
@@ -36,8 +45,39 @@ const EventTitle = ({
       toastError('삭제 중 오류가 발생했습니다.');
       console.error(err);
     } finally {
-      setIsSelectModalOpen(false);
+      closeSelectModal();
     }
+  };
+
+  const handleMenu = () => {
+    openMenuModal({
+      mobileOnly: true,
+      children: (
+        <>
+          <S.TextButton
+            onClick={() => {
+              closeMenuModal();
+              navigate(`/${type}/${id}/edit`);
+            }}
+          >
+            수정
+          </S.TextButton>
+          <S.TextButton
+            $isLast
+            onClick={() => {
+              closeMenuModal();
+              openSelectModal({
+                title: '일정 삭제',
+                content: '정말 삭제하시겠습니까?',
+                onDelete: handleDelete,
+              });
+            }}
+          >
+            삭제
+          </S.TextButton>
+        </>
+      ),
+    });
   };
 
   return (
@@ -52,7 +92,7 @@ const EventTitle = ({
 
       <S.SpaceBetween>
         <S.Title>{data.title}</S.Title>
-        {isAdmin && <S.KebabIcon onClick={() => setIsMenuModalOpen(true)} />}
+        {isAdmin && <S.KebabIcon onClick={() => handleMenu()} />}
       </S.SpaceBetween>
 
       <S.WriteInfo>
@@ -60,32 +100,6 @@ const EventTitle = ({
         <S.Writer>{data.name}</S.Writer>
         <S.Writer>{formatDateTime(data.createdAt)}</S.Writer>
       </S.WriteInfo>
-
-      {isMenuModalOpen && (
-        <MenuModal mobileOnly onClose={() => setIsMenuModalOpen(false)}>
-          <S.TextButton onClick={() => navigate(`/${type}/${id}/edit`)}>
-            수정
-          </S.TextButton>
-          <S.TextButton
-            $isLast
-            onClick={() => {
-              setIsMenuModalOpen(false);
-              setIsSelectModalOpen(true);
-            }}
-          >
-            삭제
-          </S.TextButton>
-        </MenuModal>
-      )}
-
-      {isSelectModalOpen && (
-        <SelectModal
-          title="일정 삭제"
-          content="정말 삭제하시겠습니까?"
-          onClose={() => setIsSelectModalOpen(false)}
-          onDelete={handleDelete}
-        />
-      )}
     </S.EventTitleWrapper>
   );
 };

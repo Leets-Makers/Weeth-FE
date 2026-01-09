@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useGetEventInfo from '@/api/getEventInfo';
 import replaceNewLines from '@/hooks/newLine';
 import CardinalDropdown from '@/components/common/CardinalDropdown';
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/Modal/Modal';
 import Button from '@/components/Button/Button';
 import ToggleButton from '@/components/common/ToggleButton';
 import EventInput, { EventInputBlock } from '@/components/Event/EventInput';
@@ -24,9 +24,9 @@ import {
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import SelectModal from '@/components/Modal/SelectModal';
 import useGetAllCardinals from '@/api/useGetCardinals';
 import useSmartLoading from '@/hooks/useSmartLoading';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { colors } from '@/theme/designTokens';
 import EditGNB from '../Navigation/EditGNB';
 import Breadcrumb from '../common/Breadcrumb';
@@ -62,7 +62,6 @@ const EventEditor = () => {
   const navigate = useNavigate();
 
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [isStartDateModalOpen, setIsStartDateModalOpen] = useState(false);
   const [isEndDateModalOpen, setIsEndDateModalOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | undefined>(new Date());
@@ -80,6 +79,11 @@ const EventEditor = () => {
     requiredItem: '',
     content: '',
   });
+  const modalTitle = path === 'edit' ? '일정 수정' : '일정 생성';
+  const modalContent =
+    path === 'edit' ? '일정을 수정하시겠습니까?' : '일정을 생성하시겠습니까?';
+  const modalButtonContent = path === 'edit' ? '수정' : '생성';
+  const openSelectModal = useOpenSelectModal();
 
   useEffect(() => {
     if (eventDetailData) {
@@ -186,29 +190,34 @@ const EventEditor = () => {
       .toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' })
       .replace(' ', 'T');
 
+    const handleSave = async () => {
+      try {
+        if (isEditMode) await editEvent(eventRequest, Number(id));
+        else await createEvent(eventRequest);
+
+        toastSuccess('저장이 완료되었습니다.');
+        navigate('/calendar');
+      } catch (err: any) {
+        if (err.response && err.response.status === 403) {
+          toastInfo('일정 생성 및 수정은 운영진만 가능합니다.');
+          return;
+        }
+        toastError('저장 중 오류가 발생했습니다.');
+      }
+    };
+
     if (startISO === endISO) {
       toastInfo('시작 시간과 종료 시간은 같을 수 없습니다.');
     }
     if (startISO > endISO) {
       toastInfo('종료 시간은 시작 시간보다 빠를 수 없습니다.');
     } else {
-      setIsSelectModalOpen(true);
-    }
-  };
-
-  const handleSave = async () => {
-    try {
-      if (isEditMode) await editEvent(eventRequest, Number(id));
-      else await createEvent(eventRequest);
-
-      toastSuccess('저장이 완료되었습니다.');
-      navigate('/calendar');
-    } catch (err: any) {
-      if (err.response.status === 403) {
-        toastInfo('일정 생성 및 수정은 운영진만 가능합니다.');
-        return;
-      }
-      toastError('저장 중 오류가 발생했습니다.');
+      openSelectModal({
+        title: modalTitle,
+        content: modalContent,
+        buttonContent: modalButtonContent,
+        onDelete: handleSave,
+      });
     }
   };
 
@@ -285,22 +294,6 @@ const EventEditor = () => {
           />
         </PickerModal>
       )}
-
-      {isSelectModalOpen && (
-        <SelectModal
-          type="positive"
-          title={path === 'edit' ? '일정 수정' : '일정 생성'}
-          content={
-            path === 'edit'
-              ? '일정을 수정하시겠습니까?'
-              : '일정을 생성하시겠습니까?'
-          }
-          buttonContent={path === 'edit' ? '수정' : '생성'}
-          onClose={() => setIsSelectModalOpen(false)}
-          onDelete={handleSave}
-        />
-      )}
-
       <EditGNB onClickButton={checkValid} />
       <S.EventEditorWrapper>
         <Breadcrumb

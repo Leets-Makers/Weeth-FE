@@ -9,10 +9,14 @@ import useGetUserInfo from '@/api/useGetUserInfo';
 import Line from '@/components/common/Line';
 import usePatchUserInfo from '@/api/usePatchMyInfo';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
-import SelectModal from '@/components/Modal/SelectModal';
+
 import Loading from '@/components/common/Loading';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import EditGNB from '@/components/Navigation/EditGNB';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
 
 const Container = styled.div`
   width: 370px;
@@ -54,8 +58,10 @@ const Edit = () => {
 
   const { userInfo, loading } = useGetUserInfo();
   const [userData, setUserData] = useState<{ key: string; value: any }[]>([]);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
   const navi = useNavigate();
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
   const positionMap: Record<string, string> = {
     FE: '프론트엔드',
@@ -140,7 +146,7 @@ const Edit = () => {
       // TODO: 에러 코드에 따른 세분화
       toastInfo(err);
     } finally {
-      setIsSelectModalOpen(false);
+      closeSelectModal();
     }
   };
 
@@ -159,7 +165,12 @@ const Edit = () => {
       <EditGNB
         onClickButton={() => {
           if (validateUserData(userData)) {
-            setIsSelectModalOpen(true);
+            openSelectModal({
+              title: '정보 수정',
+              content: '변경사항을 저장하시겠습니까?',
+              onDelete: onSave,
+              buttonContent: '저장',
+            });
           }
         }}
       />
@@ -199,17 +210,6 @@ const Edit = () => {
         </InfoWrapper>
       ) : (
         <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>
-      )}
-
-      {isSelectModalOpen && (
-        <SelectModal
-          type="positive"
-          title="정보 수정"
-          content="변경사항을 저장하시겠습니까?"
-          onClose={() => setIsSelectModalOpen(false)}
-          onDelete={onSave}
-          buttonContent="저장"
-        />
       )}
     </Container>
   );
