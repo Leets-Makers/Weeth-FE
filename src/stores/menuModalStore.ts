@@ -5,9 +5,9 @@ import { ReactNode } from 'react';
 interface MenuModalState {
   isOpen: boolean;
   children: ReactNode | null;
-  mobileOnly?: boolean;
+  topPadding?: boolean;
 
-  open: (params: { children: ReactNode; mobileOnly?: boolean }) => void;
+  open: (params: { children: ReactNode; topPadding?: boolean }) => void;
 
   close: () => void;
 }
@@ -17,20 +17,20 @@ const useMenuModalStore = create<MenuModalState>()(
     (set) => ({
       isOpen: false,
       children: null,
-      mobileOnly: false,
+      topPadding: false,
 
-      open: ({ children, mobileOnly }) =>
+      open: ({ children, topPadding }) =>
         set({
           isOpen: true,
           children,
-          mobileOnly,
+          topPadding,
         }),
 
       close: () =>
         set({
           isOpen: false,
           children: null,
-          mobileOnly: false,
+          topPadding: false,
         }),
     }),
     { name: 'menuModalStore' },

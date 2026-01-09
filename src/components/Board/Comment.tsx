@@ -11,10 +11,7 @@ import convertLinksInText from '@/hooks/convertLinksInText';
 import { originFile } from '@/pages/board/part/PartEdit';
 import PostFile from '@/components/Board/PostFile';
 import { toastError, toastSuccess } from '@/components/common/ToastMessage';
-import {
-  useCloseSelectModal,
-  useOpenSelectModal,
-} from '@/stores/selectModalStore';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
 
 interface CommentProps {
   name: string;
@@ -49,13 +46,11 @@ const Comment = ({
     onReply(commentId);
   };
   const openSelectModal = useOpenSelectModal();
-  const closeSelectModal = useCloseSelectModal();
 
   const handleDeleteComment = async () => {
     try {
       await deleteComment(path, postId, commentId);
       onDelete();
-      closeSelectModal();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Failed to delete comment:', error);

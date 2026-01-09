@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import logo from '@/assets/images/ic_name_logo.svg';
 
-import { colors, units } from '@/theme/designTokens';
+import { colors } from '@/theme/designTokens';
 import { useNavigate } from 'react-router-dom';
 
 import HeaderButton from './HeaderButton';
@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 12px ${units.padding[450]}px;
+  padding: 12px 0;
   background-color: ${colors.dark.neutral[200]};
   box-sizing: border-box;
 `;

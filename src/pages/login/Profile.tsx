@@ -1,19 +1,21 @@
 /* eslint-disable no-console */
-/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import DropdownMenu from '@/components/Button/DropdownMenu';
 import Header from '@/components/Header/Header';
 import PositionSector from '@/components/Signup/PositionSector';
 import useCustomBack from '@/hooks/useCustomBack';
-import SelectModal from '@/components/Modal/SelectModal';
-import theme from '@/styles/theme';
-import Line from '@/components/common/Line';
 import InfoInput from '@/components/MyPage/InfoInput';
+import Line from '@/components/common/Line';
+
 import { colors } from '@/theme/designTokens';
-import axios from 'axios';
+import theme from '@/styles/theme';
+
+import { useOpenSelectModal } from '@/stores/selectModalStore';
+import { toastError } from '@/components/common/ToastMessage';
 
 const ProfileContainer = styled.div`
   width: 370px;
@@ -33,11 +35,7 @@ const ProfileTitle = styled.div`
 
 const ProfileSubTitle = styled.div`
   font-size: 14px;
-  font-weight: 400;
   line-height: 20px;
-  display: flex;
-  text-align: center;
-  align-items: center;
   margin-left: 7%;
   color: ${colors.semantic.text.alternative};
 `;
@@ -47,30 +45,22 @@ const ProfileButtonContainer = styled.div`
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 100%;
 `;
 
 const ProfileButton = styled.button<{ disabled: boolean }>`
   width: 315px;
   height: 50px;
   border-radius: 10px;
-  background-color: ${(props: { disabled: boolean }) =>
-    props.disabled
-      ? colors.semantic.button.disabled
-      : colors.semantic.brand.primary};
-  color: ${colors.semantic.text.inverse};
+  border: none;
   font-size: 16px;
   font-weight: 600;
-  line-height: 19px;
-  border: none;
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-  outline: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: ${colors.semantic.text.inverse};
+  background-color: ${({ disabled }) =>
+    disabled ? colors.semantic.button.disabled : colors.semantic.brand.primary};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const InfoWrapper = styled.div`
@@ -92,23 +82,13 @@ const InputContainer = styled.div`
   margin-top: 30px;
 `;
 
-const Title = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Content>
-      <Text>{children}</Text>
-      <Line />
-    </Content>
-  );
-};
+const Title = ({ children }: { children: React.ReactNode }) => (
+  <Content>
+    <Text>{children}</Text>
+    <Line />
+  </Content>
+);
 
-const roleMapping: Record<string, string> = {
-  FE: 'FE',
-  BE: 'BE',
-  DE: 'D',
-  PM: 'PM',
-};
-
-// Member info state type
 interface MemberInfo {
   name?: string;
   studentId?: string;
@@ -119,8 +99,14 @@ interface MemberInfo {
   email?: string;
 }
 
-// Define a type for the valid keys of MemberInfo
 type MemberInfoKeys = keyof MemberInfo;
+
+const roleMapping: Record<string, string> = {
+  FE: 'FE',
+  BE: 'BE',
+  DE: 'D',
+  PM: 'PM',
+};
 
 const Profile: React.FC = () => {
   const registerMethod = localStorage.getItem('register');
@@ -128,6 +114,8 @@ const Profile: React.FC = () => {
 
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_API_URL;
+
+  const openSelectModal = useOpenSelectModal();
 
   const [memberInfo, setMemberInfo] = useState<MemberInfo>({
     name: '',
@@ -138,32 +126,23 @@ const Profile: React.FC = () => {
     position: '',
     email: '',
   });
-  const [isNextEnabled, setIsNextEnabled] = useState<boolean>(false);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [modalMessage, setModalMessage] = useState<string>('');
 
-  // useEffect(() => {
-  //   const kakaoId = localStorage.getItem('kakaoId');
-  //   if (!kakaoId) {
-  //     navigate('/');
-  //   }
-  // }, []);
+  const [isNextEnabled, setIsNextEnabled] = useState(false);
 
-  const validateEmail = (validEmail: string): boolean => {
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.(com|net|org|edu|ac\.kr|co\.kr|go\.kr|or\.kr|kakao\.com)$/;
-    return emailRegex.test(validEmail);
-  };
+  /* ================= 유틸 ================= */
 
-  const validatePhone = (tel: string): boolean => /^\d{10,11}$/.test(tel);
+  const validateEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.(com|net|org|edu|ac\.kr|co\.kr|go\.kr|or\.kr|kakao\.com)$/.test(
+      email,
+    );
 
-  const showModal = (message: string) => {
-    setModalMessage(message);
-    setModalVisible(true);
-  };
+  const validatePhone = (tel: string) => /^\d{10,11}$/.test(tel);
 
-  const handleNextClick = async () => {
-    const allFieldsFilled = [
+  const handleChange = (key: MemberInfoKeys, value: string | number) => {
+    const next = { ...memberInfo, [key]: String(value) };
+    setMemberInfo(next);
+
+    const allFilled = [
       'name',
       'studentId',
       'department',
@@ -172,30 +151,40 @@ const Profile: React.FC = () => {
       'position',
       'email',
     ].every(
-      (field) =>
-        typeof memberInfo[field as keyof MemberInfo] === 'string' &&
-        memberInfo[field as keyof MemberInfo]?.trim() !== '',
+      (k) =>
+        typeof next[k as MemberInfoKeys] === 'string' &&
+        next[k as MemberInfoKeys]?.trim() !== '',
     );
 
+    setIsNextEnabled(allFilled);
+  };
+  const openAlert = (content: string) => {
+    openSelectModal({
+      title: '알림',
+      content,
+      type: 'positive',
+      visibility: false,
+      cancelText: '닫기',
+    });
+  };
+
+  const handleNextClick = async () => {
     if (!/^\d{9}$/.test(memberInfo.studentId || '')) {
-      showModal('올바른 학번을 입력해 주세요.');
+      openAlert('올바른 학번을 입력해 주세요.');
       return;
     }
+
     if (!validatePhone(memberInfo.tel || '')) {
-      showModal('올바른 휴대폰 번호를 입력해 주세요.');
-      return;
-    }
-    if ((memberInfo.email && validateEmail(memberInfo.email)) === false) {
-      showModal('올바른 이메일을 입력해 주세요.');
+      openAlert('올바른 휴대폰 번호를 입력해 주세요.');
       return;
     }
 
-    if (!allFieldsFilled) {
-      showModal('모든 항목을 입력해 주세요.');
+    if (memberInfo.email && !validateEmail(memberInfo.email)) {
+      openAlert('올바른 이메일을 입력해 주세요.');
       return;
     }
 
-    const mappedMemberInfo = {
+    const mappedData = {
       kakaoId: Number(localStorage.getItem('kakaoId')),
       appleAuthCode: localStorage.getItem('appleAuthCode'),
       ...memberInfo,
@@ -208,64 +197,37 @@ const Profile: React.FC = () => {
     try {
       const response = await axios.post(
         `${BASE_URL}/api/v1/users/${registerApi}/register`,
-        mappedMemberInfo,
+        mappedData,
       );
 
       if (response.data.code === 200) {
-        showModal(`가입 신청이 완료되었습니다.
-      운영진의 승인 후 서비스 이용이 가능합니다.`);
-        navigate('/register-success', { replace: true });
+        openSelectModal({
+          title: '가입 완료',
+          content:
+            '가입 신청이 완료되었습니다.\n운영진 승인 후 이용 가능합니다.',
+          type: 'positive',
+          visibility: false,
+          cancelText: '확인',
+          onDelete: () => {
+            navigate('/register-success', { replace: true });
+          },
+        });
       } else {
-        showModal(response.data.message);
+        toastError(response.data.message);
       }
-    } catch (error: any) {
-      console.error('===== REGISTER ERROR =====');
-
-      if (error.response) {
-        console.error('status:', error.response.status);
-        console.error('data:', error.response.data);
-        console.error('headers:', error.response.headers);
-      } else {
-        console.error('message:', error.message);
-      }
-
-      alert('회원가입 중 에러가 발생했습니다.');
+    } catch (error) {
+      toastError('회원가입 중 오류가 발생했습니다.');
+      console.error(error);
     }
-  };
-
-  const handleChange = (key: MemberInfoKeys, value: string | number) => {
-    const newMemberInfo = { ...memberInfo, [key]: value };
-    setMemberInfo(newMemberInfo);
-
-    const allFieldsFilled = [
-      'name',
-      'studentId',
-      'department',
-      'tel',
-      'cardinal',
-      'position',
-      'email',
-    ].every(
-      (field) =>
-        typeof newMemberInfo[field as keyof MemberInfo] === 'string' &&
-        newMemberInfo[field as keyof MemberInfo]?.trim() !== '',
-    );
-
-    setIsNextEnabled(allFieldsFilled);
   };
 
   return (
     <ProfileContainer>
       <Header isAccessible isComplete={isNextEnabled} RightButtonType="none" />
+
       <ProfileTitle>회원 정보 입력하기</ProfileTitle>
       <ProfileSubTitle>신규 회원님의 정보를 입력해주세요.</ProfileSubTitle>
-      <ProfileSubTitle>
-        작성이 완료되면 <span style={{ margin: '0 2px' }} />
-        <p style={{ color: '#508FFF', margin: 0 }}>
-          승인 후 서비스 이용이 가능
-        </p>
-        합니다.
-      </ProfileSubTitle>
+
       <InputContainer>
         <InfoWrapper>
           <Title>개인정보</Title>
@@ -273,19 +235,19 @@ const Profile: React.FC = () => {
             isProfile
             text="이름"
             origValue={memberInfo.name || ''}
-            editValue={(value) => handleChange('name', value)}
+            editValue={(v) => handleChange('name', v)}
           />
           <InfoInput
             isProfile
             text="핸드폰"
             origValue={memberInfo.tel || ''}
-            editValue={(value) => handleChange('tel', value)}
+            editValue={(v) => handleChange('tel', v)}
           />
           <InfoInput
             isProfile
             text="메일"
             origValue={memberInfo.email || ''}
-            editValue={(value) => handleChange('email', value)}
+            editValue={(v) => handleChange('email', v)}
           />
 
           <Title>활동정보</Title>
@@ -293,43 +255,34 @@ const Profile: React.FC = () => {
             text="학과"
             isProfile
             origValue={memberInfo.department || ''}
-            editValue={(value) => handleChange('department', value)}
+            editValue={(v) => handleChange('department', v)}
           />
           <InfoInput
             isProfile
             text="학번"
             origValue={memberInfo.studentId || ''}
-            editValue={(value) => handleChange('studentId', value)}
+            editValue={(v) => handleChange('studentId', v)}
           />
           <DropdownMenu
             isCardinal
             text="기수"
             isProfile
             origValue={memberInfo.cardinal || ''}
-            editValue={(value) => handleChange('cardinal', value)}
+            editValue={(v) => handleChange('cardinal', v)}
           />
           <PositionSector
             labelName="역할"
             value={memberInfo.position || ''}
-            onChange={(value) => handleChange('position', value)}
+            onChange={(v) => handleChange('position', v)}
           />
         </InfoWrapper>
       </InputContainer>
+
       <ProfileButtonContainer>
         <ProfileButton onClick={handleNextClick} disabled={!isNextEnabled}>
           작성 완료
         </ProfileButton>
       </ProfileButtonContainer>
-      {modalVisible && (
-        <SelectModal
-          title="알림"
-          content={modalMessage}
-          onClose={() => setModalVisible(false)}
-          type="positive"
-          visibility={false}
-          cancleText="닫기"
-        />
-      )}
     </ProfileContainer>
   );
 };

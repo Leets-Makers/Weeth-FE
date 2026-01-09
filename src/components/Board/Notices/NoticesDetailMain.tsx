@@ -131,7 +131,7 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
 
   const handleMenu = () => {
     openMenuModal({
-      mobileOnly: true,
+      topPadding: true,
       children: (
         <>
           <S.TextButton

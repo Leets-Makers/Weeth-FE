@@ -4,56 +4,51 @@ import styled from 'styled-components';
 import DropdownMenu from '@/components/Button/DropdownMenu';
 import InfoInput from '@/components/MyPage/InfoInput';
 import useCustomBack from '@/hooks/useCustomBack';
-import theme from '@/styles/theme';
 import useGetUserInfo from '@/api/useGetUserInfo';
-import Line from '@/components/common/Line';
 import usePatchUserInfo from '@/api/usePatchMyInfo';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
 
 import Loading from '@/components/common/Loading';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import EditGNB from '@/components/Navigation/EditGNB';
-import {
-  useCloseSelectModal,
-  useOpenSelectModal,
-} from '@/stores/selectModalStore';
-
-const Container = styled.div`
-  width: 370px;
-  padding-bottom: 183px;
-`;
+import { useOpenSelectModal } from '@/stores/selectModalStore';
+import { ResponsiveContainer } from '@/styles';
+import typography from '@/theme/typography';
+import { colors } from '@/theme/designTokens';
+import { PageHeader } from './attend/Penalty';
 
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 24px;
+  margin-top: 18px;
 `;
 
-const Content = styled.div``;
+const Title = styled.div`
+  ${typography.Sub1};
+  color: ${colors.semantic.text.alternative};
 
-const Text = styled.div`
-  font-size: 20px;
-  font-family: ${theme.font.semiBold};
-  margin: 24px 0 10px 25px;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: ${colors.semantic.line};
+  }
 `;
 
-const Error = styled.div`
+const ErrorText = styled.div`
   display: flex;
   justify-content: center;
   margin: 50px 0px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub1};
 `;
 
-const Title = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Content>
-      <Text>{children}</Text>
-      <Line />
-    </Content>
-  );
-};
-
-const Edit = () => {
+const MyPageEdit = () => {
   useCustomBack('/mypage');
 
   const { userInfo, loading } = useGetUserInfo();
@@ -61,7 +56,6 @@ const Edit = () => {
 
   const navi = useNavigate();
   const openSelectModal = useOpenSelectModal();
-  const closeSelectModal = useCloseSelectModal();
 
   const positionMap: Record<string, string> = {
     FE: '프론트엔드',
@@ -145,8 +139,6 @@ const Edit = () => {
     } catch (err: any) {
       // TODO: 에러 코드에 따른 세분화
       toastInfo(err);
-    } finally {
-      closeSelectModal();
     }
   };
 
@@ -161,11 +153,12 @@ const Edit = () => {
   }
 
   return (
-    <Container>
+    <ResponsiveContainer>
       <EditGNB
         onClickButton={() => {
           if (validateUserData(userData)) {
             openSelectModal({
+              type: 'positive',
               title: '정보 수정',
               content: '변경사항을 저장하시겠습니까?',
               onDelete: onSave,
@@ -174,6 +167,7 @@ const Edit = () => {
           }
         }}
       />
+      <PageHeader>My</PageHeader>
 
       {userInfo ? (
         <InfoWrapper>
@@ -209,10 +203,10 @@ const Edit = () => {
           <InfoInput text="역할" origValue={position} />
         </InfoWrapper>
       ) : (
-        <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>
+        <ErrorText>데이터를 불러오는 중 문제가 발생했습니다.</ErrorText>
       )}
-    </Container>
+    </ResponsiveContainer>
   );
 };
 
-export default Edit;
+export default MyPageEdit;

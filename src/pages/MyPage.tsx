@@ -1,29 +1,32 @@
 import deleteUser from '@/api/deleteUser';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
-import Header from '@/components/Header/Header';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
-import handleLogout from '@/hooks/handleLogout';
 import * as S from '@/styles/mypage/Mypage.styled';
 
 import { useNavigate } from 'react-router-dom';
-import {
-  useCloseSelectModal,
-  useOpenSelectModal,
-} from '@/stores/selectModalStore';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
+import { ResponsiveContainer } from '@/styles';
+import { KebabIcon } from '@/styles/board/PostDetail.styled';
+import useLogout from '@/hooks/useLogout';
+import { PageHeader } from './attend/Penalty';
 
 const MyPage = () => {
   useCustomBack('/home');
 
   const navigate = useNavigate();
   const openSelectModal = useOpenSelectModal();
-  const closeSelectModal = useCloseSelectModal();
 
   const openMenuModal = useOpenMenuModal();
   const closeMenuModal = useCloseMenuModal();
 
-  const confirmLogout = handleLogout();
+  const logout = useLogout();
+
+  const handleLogoutClick = () => {
+    closeMenuModal();
+    logout();
+  };
 
   const onClickLeave = async () => {
     try {
@@ -36,12 +39,11 @@ const MyPage = () => {
     } catch (err) {
       toastError('탈퇴 중 문제가 발생하였습니다.');
     }
-    closeSelectModal();
   };
 
   const handleMenu = () => {
     openMenuModal({
-      mobileOnly: true,
+      topPadding: false,
       children: (
         <>
           <S.TextButton
@@ -52,7 +54,8 @@ const MyPage = () => {
           >
             정보 수정
           </S.TextButton>
-          <S.TextButton onClick={confirmLogout}>로그아웃</S.TextButton>
+          <S.TextButton onClick={handleLogoutClick}>로그아웃</S.TextButton>
+
           <S.TextButton
             $isSignOut
             onClick={() => {
@@ -73,16 +76,13 @@ const MyPage = () => {
   };
 
   return (
-    <S.Container>
-      <Header
-        RightButtonType="MENU"
-        onClickRightButton={handleMenu}
-        isAccessible
-      >
-        MY
-      </Header>
+    <ResponsiveContainer>
+      <PageHeader>
+        My
+        <KebabIcon onClick={handleMenu} />
+      </PageHeader>
       <MyInfo />
-    </S.Container>
+    </ResponsiveContainer>
   );
 };
 

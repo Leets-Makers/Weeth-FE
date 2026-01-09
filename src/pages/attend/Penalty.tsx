@@ -15,7 +15,7 @@ export const PageHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   ${typography.H1};
-  margin-top: 18px;
+  margin-top: 12px;
 `;
 
 const Penalty: React.FC = () => {
