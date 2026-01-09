@@ -15,6 +15,7 @@ import { useMemo } from 'react';
 
 import * as S from '@/styles/member/MemberDetail.styled';
 import { colors } from '@/theme/designTokens';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 const MemberDetail = () => {
   const { memberDetail, error, loading } = useGetMemberDetail();
@@ -59,49 +60,57 @@ const MemberDetail = () => {
     positionMap[memberDetail.position as keyof typeof positionMap];
 
   return (
-    <S.Wrapper>
-      {positionData && (
-        <>
-          <S.PositionCharacter
-            src={positionData.char}
-            alt={memberDetail.position}
-          />
-          <S.ClipContainer>
-            <S.Clip src={positionData.clip} alt="clip" />
-          </S.ClipContainer>
-        </>
-      )}
+    <>
+      <Breadcrumb
+        items={[
+          { label: '멤버', path: '/member' },
+          { label: '멤버 상세', path: `/member/${memberDetail.id}` },
+        ]}
+      />
+      <S.Wrapper>
+        {positionData && (
+          <>
+            <S.PositionCharacter
+              src={positionData.char}
+              alt={memberDetail.position}
+            />
+            <S.ClipContainer>
+              <S.Clip src={positionData.clip} alt="clip" />
+            </S.ClipContainer>
+          </>
+        )}
 
-      <S.ContentTop>
-        <S.Title>
-          <span>{memberDetail.name}</span>
-          {memberDetail.role === 'ADMIN' && (
-            <img src={Master} alt="관리자 아이콘" />
-          )}
-        </S.Title>
-        <S.CardinalList>
-          {memberDetail.cardinals?.map((c) => (
-            <CardinalTag key={c} type="member" cardinal={c} />
-          ))}
-        </S.CardinalList>
-      </S.ContentTop>
+        <S.ContentTop>
+          <S.Title>
+            <span>{memberDetail.name}</span>
+            {memberDetail.role === 'ADMIN' && (
+              <img src={Master} alt="관리자 아이콘" />
+            )}
+          </S.Title>
+          <S.CardinalList>
+            {memberDetail.cardinals?.map((c) => (
+              <CardinalTag key={c} type="member" cardinal={c} />
+            ))}
+          </S.CardinalList>
+        </S.ContentTop>
 
-      <S.ContentBottom>
-        <S.InfoSection>
-          {positionData && (
-            <S.Position color={positionData.color}>
-              {positionData.name}
-            </S.Position>
-          )}
-          <S.Department>
-            <div>{memberDetail.department}</div>
-            <S.Gray>|</S.Gray>
-            <S.Gray>{memberDetail.studentId}</S.Gray>
-          </S.Department>
-          <div>{memberDetail.email}</div>
-        </S.InfoSection>
-      </S.ContentBottom>
-    </S.Wrapper>
+        <S.ContentBottom>
+          <S.InfoSection>
+            {positionData && (
+              <S.Position color={positionData.color}>
+                {positionData.name}
+              </S.Position>
+            )}
+            <S.Department>
+              <div>{memberDetail.department}</div>
+              <S.Gray>|</S.Gray>
+              <S.Gray>{memberDetail.studentId}</S.Gray>
+            </S.Department>
+            <div>{memberDetail.email}</div>
+          </S.InfoSection>
+        </S.ContentBottom>
+      </S.Wrapper>
+    </>
   );
 };
 
