@@ -101,7 +101,6 @@ const router = createBrowserRouter([
       { path: '/dues', element: <Dues /> },
       { path: '/receipt', element: <Receipt /> },
       { path: '/mypage', element: <MyPage /> },
-      { path: '/edit', element: <MyPageEdit /> },
 
       // board layout
       {
@@ -134,6 +133,7 @@ const router = createBrowserRouter([
         ],
       },
       { path: 'education/:part/:postId/edit', element: <EduEdit /> },
+      { path: '/edit', element: <MyPageEdit /> },
     ],
   },
 

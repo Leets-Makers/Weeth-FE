@@ -48,7 +48,7 @@ const EventTitle = ({
 
   const handleMenu = () => {
     openMenuModal({
-      mobileOnly: true,
+      topPadding: true,
       children: (
         <>
           <S.TextButton

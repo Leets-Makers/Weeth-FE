@@ -15,17 +15,15 @@ const Container = styled.div`
   }
 `;
 
-const ModalContainer = styled.div<{ $mobileOnly?: boolean }>`
+const ModalContainer = styled.div<{ $topPadding?: boolean }>`
   position: fixed;
-  top: ${({ $mobileOnly }) =>
-    $mobileOnly ? `calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px)` : '130px'};
+  top: ${({ $topPadding }) => ($topPadding ? '140px' : '130px')};
 
   z-index: 1000;
 
-  right: ${({ $mobileOnly }) =>
-    $mobileOnly ? `calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px)` : '18px'};
+  right: ${`calc((100vw - min(100vw, ${PC})) / 2 + 18px)`};
 
-  max-width: ${({ $mobileOnly }) => ($mobileOnly ? MOBILE : PC)};
+  width: ${MOBILE}px;
 `;
 
 const Content = styled.div`
@@ -47,13 +45,13 @@ const Content = styled.div`
 `;
 
 const MenuModal = () => {
-  const { isOpen, children, mobileOnly, close } = useMenuModal();
+  const { isOpen, children, topPadding, close } = useMenuModal();
 
   if (!isOpen || !children) return null;
 
   return (
     <Container onClick={close}>
-      <ModalContainer $mobileOnly={mobileOnly}>
+      <ModalContainer $topPadding={topPadding}>
         <Content onClick={(e) => e.stopPropagation()}>{children}</Content>
       </ModalContainer>
     </Container>
