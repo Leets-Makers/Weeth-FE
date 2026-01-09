@@ -18,17 +18,30 @@ import {
 import { ResponsiveContainer } from '@/styles';
 import typography from '@/theme/typography';
 import { colors } from '@/theme/designTokens';
+import { PageHeader } from './attend/Penalty';
 
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 24px;
+  margin-top: 18px;
 `;
 
 const Title = styled.div`
   ${typography.Sub1};
   color: ${colors.semantic.text.alternative};
-  margin: 24px 0 10px 25px;
+
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: ${colors.semantic.line};
+  }
 `;
 
 const Error = styled.div`
@@ -159,6 +172,7 @@ const MyPageEdit = () => {
           }
         }}
       />
+      <PageHeader>My</PageHeader>
 
       {userInfo ? (
         <InfoWrapper>

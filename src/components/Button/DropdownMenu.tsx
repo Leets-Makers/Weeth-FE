@@ -1,5 +1,6 @@
 import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -17,12 +18,13 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 26px;
-  font-size: 16px;
+  ${typography.Body1};
+  width: 100%;
 `;
 
 const Label = styled.label<{ $isProfile?: boolean }>`
-  width: 42px;
-  font-size: 16px;
+  flex: 1;
+  ${typography.Body1};
   color: ${({ $isProfile }) =>
     $isProfile
       ? colors.semantic.text.normal
@@ -30,7 +32,7 @@ const Label = styled.label<{ $isProfile?: boolean }>`
 `;
 
 const Button = styled.button<{ $hasValue: boolean }>`
-  width: 257px;
+  flex: 7;
   height: 45px;
   padding: 0 10px;
   font-size: 16px;
@@ -52,8 +54,9 @@ const Button = styled.button<{ $hasValue: boolean }>`
 const List = styled.ul`
   position: absolute;
   right: 22.5px;
-  width: 257px;
+  flex: 7;
   top: calc(100% + 4px);
+  right: 0;
   border-radius: 4px;
   max-height: 200px;
   overflow-y: auto;
@@ -67,7 +70,7 @@ const List = styled.ul`
 const Item = styled.li`
   list-style: none;
   padding: 10px 14px;
-  font-size: 15px;
+  width: inherit;
   color: ${colors.semantic.text.normal};
   cursor: pointer;
 
