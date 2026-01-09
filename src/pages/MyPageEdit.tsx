@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import DropdownMenu from '@/components/Button/DropdownMenu';
 import InfoInput from '@/components/MyPage/InfoInput';
 import useCustomBack from '@/hooks/useCustomBack';
-import theme from '@/styles/theme';
 import useGetUserInfo from '@/api/useGetUserInfo';
-import Line from '@/components/common/Line';
 import usePatchUserInfo from '@/api/usePatchMyInfo';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
 
@@ -17,11 +15,9 @@ import {
   useCloseSelectModal,
   useOpenSelectModal,
 } from '@/stores/selectModalStore';
-
-const Container = styled.div`
-  width: 370px;
-  padding-bottom: 183px;
-`;
+import { ResponsiveContainer } from '@/styles';
+import typography from '@/theme/typography';
+import { colors } from '@/theme/designTokens';
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -29,11 +25,9 @@ const InfoWrapper = styled.div`
   gap: 24px;
 `;
 
-const Content = styled.div``;
-
-const Text = styled.div`
-  font-size: 20px;
-  font-family: ${theme.font.semiBold};
+const Title = styled.div`
+  ${typography.Sub1};
+  color: ${colors.semantic.text.alternative};
   margin: 24px 0 10px 25px;
 `;
 
@@ -41,19 +35,10 @@ const Error = styled.div`
   display: flex;
   justify-content: center;
   margin: 50px 0px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub1};
 `;
 
-const Title = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Content>
-      <Text>{children}</Text>
-      <Line />
-    </Content>
-  );
-};
-
-const Edit = () => {
+const MyPageEdit = () => {
   useCustomBack('/mypage');
 
   const { userInfo, loading } = useGetUserInfo();
@@ -161,7 +146,7 @@ const Edit = () => {
   }
 
   return (
-    <Container>
+    <ResponsiveContainer>
       <EditGNB
         onClickButton={() => {
           if (validateUserData(userData)) {
@@ -211,8 +196,8 @@ const Edit = () => {
       ) : (
         <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>
       )}
-    </Container>
+    </ResponsiveContainer>
   );
 };
 
-export default Edit;
+export default MyPageEdit;

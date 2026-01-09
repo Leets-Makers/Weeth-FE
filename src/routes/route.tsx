@@ -15,7 +15,7 @@ const Penalty = lazy(() => import('@/pages/attend/Penalty'));
 
 const Calendar = lazy(() => import('@/pages/Calendar'));
 const Dues = lazy(() => import('@/pages/Dues'));
-const Edit = lazy(() => import('@/pages/Edit'));
+const MyPageEdit = lazy(() => import('@/pages/MyPageEdit'));
 
 const EventPost = lazy(() => import('@/pages/EventPost'));
 const EventDetail = lazy(() => import('@/pages/EventDetail'));
@@ -84,8 +84,6 @@ const router = createBrowserRouter([
       { path: '/calendar', element: <Calendar /> },
       { path: '/member', element: <Member /> },
       { path: '/member/:userId', element: <MemberDetail /> },
-      { path: '/mypage', element: <MyPage /> },
-      { path: '/edit', element: <Edit /> },
 
       { path: '/events/create', element: <EventPost /> },
       { path: '/:type/:id', element: <EventDetail /> },
@@ -102,6 +100,8 @@ const router = createBrowserRouter([
       { path: '/penalty', element: <Penalty /> },
       { path: '/dues', element: <Dues /> },
       { path: '/receipt', element: <Receipt /> },
+      { path: '/mypage', element: <MyPage /> },
+      { path: '/edit', element: <MyPageEdit /> },
 
       // board layout
       {
