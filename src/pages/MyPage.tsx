@@ -43,7 +43,7 @@ const MyPage = () => {
 
   const handleMenu = () => {
     openMenuModal({
-      mobileOnly: true,
+      mobileOnly: false,
       children: (
         <>
           <S.TextButton

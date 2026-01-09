@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { MOBILE, PC } from '@/styles';
 import { useMenuModal } from '@/stores/menuModalStore';
@@ -17,19 +17,15 @@ const Container = styled.div`
 
 const ModalContainer = styled.div<{ $mobileOnly?: boolean }>`
   position: fixed;
-  top: 130px;
-  z-index: 1000;
-  right: calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px);
-  max-width: ${MOBILE};
+  top: ${({ $mobileOnly }) =>
+    $mobileOnly ? `calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px)` : '130px'};
 
-  ${({ $mobileOnly }) =>
-    !$mobileOnly &&
-    css`
-      @media (min-width: ${PC}) {
-        right: calc((100vw - ${PC}) / 2 + 18px);
-        max-width: ${PC};
-      }
-    `}
+  z-index: 1000;
+
+  right: ${({ $mobileOnly }) =>
+    $mobileOnly ? `calc((100vw - min(100vw, ${MOBILE})) / 2 + 18px)` : '18px'};
+
+  max-width: ${({ $mobileOnly }) => ($mobileOnly ? MOBILE : PC)};
 `;
 
 const Content = styled.div`

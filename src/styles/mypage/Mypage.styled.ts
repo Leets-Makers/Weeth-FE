@@ -19,6 +19,9 @@ export const TextButton = styled.div<{ $isSignOut?: boolean }>`
   color: ${({ $isSignOut }) =>
     $isSignOut ? colors.semantic.state.error : 'white'};
   cursor: pointer;
+  &:hover {
+    background-color: ${colors.semantic.button['neutral-interaction']};
+  }
 `;
 
 export const ImgButton = styled.div`
