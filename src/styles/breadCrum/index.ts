@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 import typography from '@/theme/typography';
+import BreadcrumHome from '@/assets/images/ic_breadcrum_home.svg?react';
 import { colors, units } from '@/theme/designTokens';
 
 export const BreadcrumbPadding = styled.div`
   padding-left: ${units.padding['450']}px;
+`;
+
+export const BreadcrumHomeIcon = styled(BreadcrumHome)`
+  cursor: pointer;
 `;
 
 export const BreadCrumContainer = styled.div<{ $hasTitle?: boolean }>`

@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import BreadcrumHomeIcon from '@/assets/images/ic_breadcrum_home.svg?react';
 import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
-import { BreadCrumContainer, CrumbButton } from '@/styles/breadCrum';
+import {
+  BreadCrumContainer,
+  CrumbButton,
+  BreadcrumHomeIcon,
+} from '@/styles/breadCrum';
 
 export interface BreadcrumbItem {
   label: string;

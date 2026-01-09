@@ -82,7 +82,6 @@ const router = createBrowserRouter([
     children: [
       { path: '/home', element: <Home /> },
       { path: '/calendar', element: <Calendar /> },
-      { path: '/member', element: <Member /> },
       { path: '/member/:userId', element: <MemberDetail /> },
       { path: '/:type/:id', element: <EventDetail /> },
     ],
@@ -98,6 +97,7 @@ const router = createBrowserRouter([
       { path: '/dues', element: <Dues /> },
       { path: '/receipt', element: <Receipt /> },
       { path: '/mypage', element: <MyPage /> },
+      { path: '/member', element: <Member /> },
 
       // board layout
       {

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   padding: 10px ${units.padding['400']}px;
-  width: 339px;
+  min-width: 339px;
+  width: 100%;
   box-sizing: border-box;
   background-color: ${colors.semantic.container.neutral};
   border-radius: 10px;

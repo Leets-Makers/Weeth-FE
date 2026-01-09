@@ -9,6 +9,8 @@ import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import Loading from '../common/Loading';
 
 const List = styled.div`
+  width: 100%;
+  min-width: 339px;
   display: flex;
   flex-direction: column;
   align-items: center;

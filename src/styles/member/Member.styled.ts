@@ -6,17 +6,18 @@ import { pcResponsive } from '..';
 export const MemberContainer = styled.div`
   width: 100%;
   display: flex;
+  margin-bottom: 50px;
   flex-direction: column;
-  padding: 0 ${units.padding['450']}px;
   min-width: ${units.device.mobile}px;
   ${pcResponsive}
   box-sizing: border-box;
-  margin-bottom: 50px;
+  padding: 0 ${units.padding['450']}px;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
 `;
 
@@ -26,7 +27,8 @@ export const Search = styled.div`
   border-radius: 4px;
   padding: ${units.padding['450']}px 0;
   gap: ${units.padding['200']}px;
-  width: 345px;
+  width: 100%;
+  min-width: 345px;
   box-sizing: border-box;
 `;
 
