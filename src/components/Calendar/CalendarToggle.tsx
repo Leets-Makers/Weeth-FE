@@ -1,12 +1,16 @@
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Switch = styled.label`
   position: relative;
+  display: flex;
   display: inline-block;
-  width: 343px;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
   height: 32px;
-  margin-bottom: 15px;
 `;
 
 export const Checkbox = styled.input`
@@ -32,14 +36,14 @@ export const Slider = styled.span<{ $isMonth: boolean }>`
     position: absolute;
     content: '';
     height: 28px;
-    width: 170px;
+    width: 32px;
     left: 2px;
     bottom: 2px;
     background-color: ${theme.color.gray[30]};
     transition: 0.4s;
     border-radius: 9px;
     transform: ${(props) =>
-      props.$isMonth ? 'translateX(0)' : 'translateX(169px)'};
+      props.$isMonth ? 'translateX(0)' : 'translateX(33px)'};
   }
 `;
 
@@ -47,19 +51,21 @@ export const TextMonth = styled.div<{ $isMonth: boolean }>`
   position: absolute;
   left: 18%;
   color: ${(props) =>
-    props.$isMonth ? theme.color.gray[100] : theme.color.gray[65]};
-  font-family: ${theme.font.semiBold};
-  font-size: 12px;
+    props.$isMonth
+      ? colors.semantic.text.normal
+      : colors.semantic.text.alternative};
+  ${typography.Caption1};
   z-index: 1;
 `;
 
 export const TextYear = styled.div<{ $isMonth: boolean }>`
   position: absolute;
-  right: 22%;
+  right: 20%;
   color: ${(props) =>
-    props.$isMonth ? theme.color.gray[65] : theme.color.gray[100]};
-  font-family: ${theme.font.semiBold};
-  font-size: 12px;
+    props.$isMonth
+      ? colors.semantic.text.alternative
+      : colors.semantic.text.normal};
+  ${typography.Caption1};
   z-index: 1;
 `;
 
@@ -74,8 +80,8 @@ const CalendarToggle = ({
     <Switch>
       <Checkbox type="checkbox" onChange={onToggle} />
       <Slider $isMonth={isMonth}>
-        <TextMonth $isMonth={isMonth}>Month</TextMonth>
-        <TextYear $isMonth={isMonth}>Year</TextYear>
+        <TextMonth $isMonth={isMonth}>M</TextMonth>
+        <TextYear $isMonth={isMonth}>Y</TextYear>
       </Slider>
     </Switch>
   );
