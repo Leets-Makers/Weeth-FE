@@ -30,9 +30,16 @@ const Label = styled.label<{ $isProfile?: boolean }>`
       ? colors.semantic.text.normal
       : colors.semantic.text.alternative};
 `;
+const DropdownWrapper = styled.div`
+  position: relative;
+  flex: 7;
+`;
 
 const Button = styled.button<{ $hasValue: boolean }>`
-  flex: 7;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
   height: 45px;
   padding: 0 10px;
   font-size: 16px;
@@ -41,9 +48,6 @@ const Button = styled.button<{ $hasValue: boolean }>`
   background-color: ${colors.semantic.container.neutral};
   color: ${({ $hasValue }) =>
     $hasValue ? colors.semantic.text.normal : colors.semantic.text.alternative};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   cursor: pointer;
 
   &:focus {
@@ -53,8 +57,8 @@ const Button = styled.button<{ $hasValue: boolean }>`
 
 const List = styled.ul`
   position: absolute;
+  width: 100%;
   right: 22.5px;
-  flex: 7;
   top: calc(100% + 4px);
   right: 0;
   border-radius: 4px;
@@ -70,7 +74,7 @@ const List = styled.ul`
 const Item = styled.li`
   list-style: none;
   padding: 10px 14px;
-  width: inherit;
+  box-sizing: borer-box;
   color: ${colors.semantic.text.normal};
   cursor: pointer;
 
@@ -134,22 +138,25 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   return (
     <Container ref={dropdownRef}>
       <Label $isProfile={isProfile}>{text}</Label>
-      <Button
-        onClick={() => setIsOpen((prev) => !prev)}
-        $hasValue={!!selectedValue}
-      >
-        {selectedValue ||
-          (isCardinal ? '기수를 선택해주세요' : '학과를 선택해주세요')}
-      </Button>
-      {isOpen && (
-        <List>
-          {options.map((option) => (
-            <Item key={option} onClick={() => handleSelect(option)}>
-              {option}
-            </Item>
-          ))}
-        </List>
-      )}
+      <DropdownWrapper>
+        <Button
+          onClick={() => setIsOpen((prev) => !prev)}
+          $hasValue={!!selectedValue}
+        >
+          {selectedValue ||
+            (isCardinal ? '기수를 선택해주세요' : '학과를 선택해주세요')}
+        </Button>
+
+        {isOpen && (
+          <List>
+            {options.map((option) => (
+              <Item key={option} onClick={() => handleSelect(option)}>
+                {option}
+              </Item>
+            ))}
+          </List>
+        )}
+      </DropdownWrapper>
     </Container>
   );
 };
