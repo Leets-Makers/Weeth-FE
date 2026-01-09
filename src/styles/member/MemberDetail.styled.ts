@@ -1,12 +1,19 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
-import { colors } from '@/theme/designTokens';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
+
+export const MemberDetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 375px;
+  padding: 0 ${units.padding['450']}px;
+  height: 100vh;
+`;
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 370px;
   height: 100vh;
 `;
 
@@ -24,62 +31,66 @@ export const ClipContainer = styled.div`
 
 export const Clip = styled.img`
   position: absolute;
-  top: -10px;
-  left: 20px;
+  top: 27px;
+  left: 30px;
 `;
 
 export const ContentTop = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${colors.semantic.container.neutral};
-  gap: 20px;
-  width: 350px;
+  gap: 12px;
+  width: 339px;
   height: 136px;
-  margin-top: 35px;
+  margin-top: 50px;
   border-radius: 19px 19px 0 0;
-  padding: 16px;
+  padding: 47px 0 20px 16px;
   box-sizing: border-box;
+  border: 1px solid ${colors.semantic.line};
+  border-bottom: none;
 `;
 
 export const ContentBottom = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 350px;
-  border: 1px solid ${colors.semantic.container.neutral};
+  gap: 12px;
+  width: 339px;
+  border: 1px solid ${colors.semantic.line};
+  border-top: none;
   border-radius: 0 0 19px 19px;
-  padding: 17px 14px 34px;
+  padding: 16px;
   box-sizing: border-box;
 `;
 
 export const CardinalList = styled.div`
   display: flex;
-  gap: 4px;
+  gap: 3px;
 `;
 
 export const InfoSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  ${typography.Body1};
 `;
 
 export const Position = styled.div<{ color: string }>`
   color: ${({ color }) => color};
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub2};
 `;
 
 export const Title = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 32px;
-  font-family: ${theme.font.semiBold};
+  ${typography.H2};
 `;
 
 export const Department = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+  ${typography.Body1};
 `;
 
 export const Gray = styled.div`

@@ -1,10 +1,10 @@
-import theme from '@/styles/theme';
-import { colors } from '@/theme/designTokens';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding: 14px;
-  width: 345px;
+  padding: 10px ${units.padding['400']}px;
+  width: 339px;
   box-sizing: border-box;
   background-color: ${colors.semantic.container.neutral};
   border-radius: 10px;
@@ -17,17 +17,18 @@ export const Content = styled.div`
 `;
 
 export const TextWrapper = styled.div`
-  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 export const Title = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
+  ${typography.Sub1};
 `;
 
 export const Caption = styled.div`
   display: flex;
   gap: 5px;
-  font-size: 12px;
+  ${typography.Caption1};
   color: ${colors.semantic.text.alternative};
 `;

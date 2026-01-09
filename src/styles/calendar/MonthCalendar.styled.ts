@@ -1,9 +1,10 @@
 import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  font-size: 16px;
   z-index: 2;
 `;
 
@@ -11,7 +12,7 @@ export const Bar = styled.div<{ $isMeeting: boolean }>`
   width: 1.5px;
   height: 10px;
   background-color: ${({ $isMeeting }) =>
-    $isMeeting ? theme.color.main : '#fff'};
+    $isMeeting ? colors.semantic.brand.primary : colors.semantic.icon.nomal};
   border-radius: 20px;
   margin: 0 2px;
 `;
@@ -52,13 +53,13 @@ export const Calendar = styled.div`
 
   // 월화수목금토일 표시 스타일링
   .fc-col-header-cell {
-    background-color: ${theme.color.gray[12]};
+    background-color: ${colors.semantic.backGround};
     padding-bottom: 8px;
     border: none;
   }
 
   .fc-col-header {
-    background-color: ${theme.color.gray[12]};
+    background-color: ${colors.semantic.backGround};
     border: 1.5px solid ${theme.color.gray[20]};
   }
 
@@ -86,15 +87,15 @@ export const Calendar = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
-    font-family: ${theme.font.semiBold};
+    ${typography.Caption1};
   }
 
   // 주말 색상 변경
   .fc-day-sun a {
-    color: ${theme.color.negative};
+    color: #FF5858;
   }
   .fc-day-sat a {
-    color: ${theme.color.positive};
+    color: ${colors.light.secondary[500]};
   }
 
   // 기본 일정 표시 스타일링
@@ -106,7 +107,7 @@ export const Calendar = styled.div`
     background-color: rgba(255, 255, 255, 0.03); !important;
     border: none;
     border-radius: 1px;
-    font-family: ${theme.font.semiBold};
+    ${typography.Caption1};
   }
 
   // 2일 이상 일정 표시 스타일링
@@ -153,7 +154,7 @@ export const SelectedDateOnCalendar = styled.div`
   position: absolute;
   top: 2px;
   right: 0.5px;
-  background: ${theme.color.mainMiddle};
+  background-color: ${colors.semantic.container['primary-alternative']};
   border-radius: 10px;
   padding-top: 2px;
   width: 52px;
@@ -168,7 +169,7 @@ export const Today = styled.div`
   position: absolute;
   top: 2px;
   right: 0.5px;
-  background: ${theme.color.gray[9]};
+  background-color: ${colors.light.neutral[800]};
   border-radius: 10px;
   padding-top: 2px;
   width: 52px;
@@ -183,19 +184,19 @@ export const ScheduleList = styled.div`
 `;
 
 export const SelectedDate = styled.div`
-  font-weight: 600;
-  font-size: 18px;
-  margin: 20px 0 15px 25px;
+  ${typography.Sub1};
+  color: ${colors.semantic.text.normal};
+  margin: 18px 0 15px 18px;
 `;
 
 export const NoEvent = styled.div`
-  width: 345px;
+  width: 339px;
   height: 63px;
-  background-color: ${theme.color.gray[18]};
-  border-radius: 5px;
+  background-color: ${colors.semantic.container.neutral};
+  border-radius: ${units.radius.md}px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
   font-weight: 500;
 `;
