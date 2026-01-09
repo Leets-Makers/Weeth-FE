@@ -8,14 +8,14 @@ import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import * as S from '@/styles/navigation/Navigation.styled';
 import LogoutButton from '@/components/home/LogoutButton';
-import handleLogout from '@/hooks/handleLogout';
+import useLogout from '@/hooks/useLogout';
 
 const LNB = ({ onClose }: { onClose: () => void }) => {
   const { userInfo } = useGetUserInfo();
   const { characterImg } = useSetPosition(userInfo?.position || '');
   const navigate = useNavigate();
   const location = useLocation();
-  const logout = handleLogout();
+  const logout = useLogout();
 
   const menus = [
     {

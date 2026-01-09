@@ -2,7 +2,6 @@ import deleteUser from '@/api/deleteUser';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
-import handleLogout from '@/hooks/handleLogout';
 import * as S from '@/styles/mypage/Mypage.styled';
 
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +9,7 @@ import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
 import { ResponsiveContainer } from '@/styles';
 import { KebabIcon } from '@/styles/board/PostDetail.styled';
+import useLogout from '@/hooks/useLogout';
 import { PageHeader } from './attend/Penalty';
 
 const MyPage = () => {
@@ -21,7 +21,12 @@ const MyPage = () => {
   const openMenuModal = useOpenMenuModal();
   const closeMenuModal = useCloseMenuModal();
 
-  const confirmLogout = handleLogout();
+  const logout = useLogout();
+
+  const handleLogoutClick = () => {
+    closeMenuModal();
+    logout();
+  };
 
   const onClickLeave = async () => {
     try {
@@ -49,7 +54,8 @@ const MyPage = () => {
           >
             정보 수정
           </S.TextButton>
-          <S.TextButton onClick={confirmLogout}>로그아웃</S.TextButton>
+          <S.TextButton onClick={handleLogoutClick}>로그아웃</S.TextButton>
+
           <S.TextButton
             $isSignOut
             onClick={() => {
