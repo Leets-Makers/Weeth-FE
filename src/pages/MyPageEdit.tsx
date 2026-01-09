@@ -11,10 +11,7 @@ import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
 import Loading from '@/components/common/Loading';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import EditGNB from '@/components/Navigation/EditGNB';
-import {
-  useCloseSelectModal,
-  useOpenSelectModal,
-} from '@/stores/selectModalStore';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { ResponsiveContainer } from '@/styles';
 import typography from '@/theme/typography';
 import { colors } from '@/theme/designTokens';
@@ -44,7 +41,7 @@ const Title = styled.div`
   }
 `;
 
-const Error = styled.div`
+const ErrorText = styled.div`
   display: flex;
   justify-content: center;
   margin: 50px 0px;
@@ -59,7 +56,6 @@ const MyPageEdit = () => {
 
   const navi = useNavigate();
   const openSelectModal = useOpenSelectModal();
-  const closeSelectModal = useCloseSelectModal();
 
   const positionMap: Record<string, string> = {
     FE: '프론트엔드',
@@ -143,8 +139,6 @@ const MyPageEdit = () => {
     } catch (err: any) {
       // TODO: 에러 코드에 따른 세분화
       toastInfo(err);
-    } finally {
-      closeSelectModal();
     }
   };
 
@@ -164,6 +158,7 @@ const MyPageEdit = () => {
         onClickButton={() => {
           if (validateUserData(userData)) {
             openSelectModal({
+              type: 'positive',
               title: '정보 수정',
               content: '변경사항을 저장하시겠습니까?',
               onDelete: onSave,
@@ -208,7 +203,7 @@ const MyPageEdit = () => {
           <InfoInput text="역할" origValue={position} />
         </InfoWrapper>
       ) : (
-        <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>
+        <ErrorText>데이터를 불러오는 중 문제가 발생했습니다.</ErrorText>
       )}
     </ResponsiveContainer>
   );

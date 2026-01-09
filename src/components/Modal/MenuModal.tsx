@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 import { MOBILE, PC } from '@/styles';
 import { useMenuModal } from '@/stores/menuModalStore';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   position: fixed;
@@ -23,7 +24,7 @@ const ModalContainer = styled.div<{ $topPadding?: boolean }>`
 
   right: ${`calc((100vw - min(100vw, ${PC})) / 2 + 18px)`};
 
-  width: ${MOBILE}px;
+  width: ${MOBILE};
 `;
 
 const Content = styled.div`
@@ -36,9 +37,10 @@ const Content = styled.div`
   margin-left: auto;
   margin-right: 10px;
 
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
+
+  ${typography.Button2};
   border-radius: 10px;
-  font-size: 14px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   z-index: 100;

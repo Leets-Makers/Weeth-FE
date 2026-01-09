@@ -6,10 +6,7 @@ import handleLogout from '@/hooks/handleLogout';
 import * as S from '@/styles/mypage/Mypage.styled';
 
 import { useNavigate } from 'react-router-dom';
-import {
-  useCloseSelectModal,
-  useOpenSelectModal,
-} from '@/stores/selectModalStore';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
 import { ResponsiveContainer } from '@/styles';
 import { KebabIcon } from '@/styles/board/PostDetail.styled';
@@ -20,7 +17,6 @@ const MyPage = () => {
 
   const navigate = useNavigate();
   const openSelectModal = useOpenSelectModal();
-  const closeSelectModal = useCloseSelectModal();
 
   const openMenuModal = useOpenMenuModal();
   const closeMenuModal = useCloseMenuModal();
@@ -38,7 +34,6 @@ const MyPage = () => {
     } catch (err) {
       toastError('탈퇴 중 문제가 발생하였습니다.');
     }
-    closeSelectModal();
   };
 
   const handleMenu = () => {

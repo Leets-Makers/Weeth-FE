@@ -74,7 +74,7 @@ const List = styled.ul`
 const Item = styled.li`
   list-style: none;
   padding: 10px 14px;
-  box-sizing: borer-box;
+  box-sizing: boder-box;
   color: ${colors.semantic.text.normal};
   cursor: pointer;
 
