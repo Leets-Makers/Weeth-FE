@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { deleteEvent } from '@/api/EventAdminAPI';
-import Header from '@/components/Header/Header';
 import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/calendar/EventDetailTitle.styled';
 import { useState } from 'react';
@@ -8,7 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
 import MenuModal from '@/components/common/MenuModal';
 import SelectModal from '@/components/Modal/SelectModal';
+import formatDateTime from '@/hooks/formatDateTime';
 import { toastSuccess, toastError } from '../common/ToastMessage';
+import Breadcrumb from '../common/Breadcrumb';
 
 const EventTitle = ({
   data,
@@ -20,7 +21,7 @@ const EventTitle = ({
   const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const navigate = useNavigate();
-
+  console.log(data);
   const { id, type } = useParams();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
@@ -40,55 +41,52 @@ const EventTitle = ({
   };
 
   return (
-    <>
-      <Header
-        isAccessible={isAdmin}
-        onClickRightButton={() => {
-          setIsMenuModalOpen(true);
-        }}
-        RightButtonType="MENU"
+    <S.EventTitleWrapper>
+      <Breadcrumb
+        items={[
+          { label: '동아리 일정', path: '/calendar' },
+          { label: '일정 상세', path: `/${type}/${id}` },
+        ]}
+        hasTitle
       />
 
-      <S.EventTitleWrapper>
-        <S.SpaceBetween>
-          <S.Title>{data.title}</S.Title>
-          {type === 'meetings' && <Tag />}
-        </S.SpaceBetween>
+      <S.SpaceBetween>
+        <S.Title>{data.title}</S.Title>
+        {isAdmin && <S.KebabIcon onClick={() => setIsMenuModalOpen(true)} />}
+      </S.SpaceBetween>
 
-        <S.SpaceBetween>
-          <S.WriteInfo>
-            <S.Writer>{data.name}</S.Writer>
-          </S.WriteInfo>
-          <S.Cardinal>{data.cardinal}기</S.Cardinal>
-        </S.SpaceBetween>
+      <S.WriteInfo>
+        {type === 'meetings' && <Tag />}
+        <S.Writer>{data.name}</S.Writer>
+        <S.Writer>{formatDateTime(data.createdAt)}</S.Writer>
+      </S.WriteInfo>
 
-        {isMenuModalOpen && (
-          <MenuModal mobileOnly onClose={() => setIsMenuModalOpen(false)}>
-            <S.TextButton onClick={() => navigate(`/${type}/${id}/edit`)}>
-              수정
-            </S.TextButton>
-            <S.TextButton
-              $isLast
-              onClick={() => {
-                setIsMenuModalOpen(false);
-                setIsSelectModalOpen(true);
-              }}
-            >
-              삭제
-            </S.TextButton>
-          </MenuModal>
-        )}
+      {isMenuModalOpen && (
+        <MenuModal mobileOnly onClose={() => setIsMenuModalOpen(false)}>
+          <S.TextButton onClick={() => navigate(`/${type}/${id}/edit`)}>
+            수정
+          </S.TextButton>
+          <S.TextButton
+            $isLast
+            onClick={() => {
+              setIsMenuModalOpen(false);
+              setIsSelectModalOpen(true);
+            }}
+          >
+            삭제
+          </S.TextButton>
+        </MenuModal>
+      )}
 
-        {isSelectModalOpen && (
-          <SelectModal
-            title="일정 삭제"
-            content="정말 삭제하시겠습니까?"
-            onClose={() => setIsSelectModalOpen(false)}
-            onDelete={handleDelete}
-          />
-        )}
-      </S.EventTitleWrapper>
-    </>
+      {isSelectModalOpen && (
+        <SelectModal
+          title="일정 삭제"
+          content="정말 삭제하시겠습니까?"
+          onClose={() => setIsSelectModalOpen(false)}
+          onDelete={handleDelete}
+        />
+      )}
+    </S.EventTitleWrapper>
   );
 };
 
