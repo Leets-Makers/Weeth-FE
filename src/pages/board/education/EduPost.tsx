@@ -7,6 +7,7 @@ import { PartTypes } from '@/types/part';
 import { toastError } from '@/components/common/ToastMessage';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 type RealPart = Exclude<PartTypes, '' | 'ALL'>;
 const REAL_PARTS: RealPart[] = ['FE', 'BE', 'D', 'PM'];
@@ -76,25 +77,27 @@ const EduPost = () => {
   return (
     <>
       <EditGNB onClickButton={handleClickButton} />
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: `${part} 교육자료`, path: `/board/education/${part}` },
-          { label: '글쓰기' },
-        ]}
-      />
-      <EduWrite
-        title={title}
-        setTitle={setTitle}
-        selectedCardinal={selectedCardinal}
-        setSelectedCardinal={setSelectedCardinal}
-        selectedPart={selectedPart}
-        setSelectedPart={setSelectedPart}
-        content={content}
-        setContent={setContent}
-        files={files}
-        setFiles={setFiles}
-      />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 교육자료`, path: `/board/education/${part}` },
+            { label: '글쓰기' },
+          ]}
+        />
+        <EduWrite
+          title={title}
+          setTitle={setTitle}
+          selectedCardinal={selectedCardinal}
+          setSelectedCardinal={setSelectedCardinal}
+          selectedPart={selectedPart}
+          setSelectedPart={setSelectedPart}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+        />
+      </PostContainerWrapper>
     </>
   );
 };

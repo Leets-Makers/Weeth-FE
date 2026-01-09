@@ -1,6 +1,7 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { MOBILE, pcResponsive } from '@/styles';
+import { units } from '@/theme/designTokens';
 
 export const PostWrapper = styled.div`
   display: flex;
@@ -14,6 +15,15 @@ export const PostWrapper = styled.div`
   }
 
   ${pcResponsive}
+`;
+
+export const PostContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: ${units.device.mobile};
+  padding: 0 ${units.padding['450']}px ${units.padding['450']}px
+    ${units.padding['450']}px;
 `;
 
 export const TitleInput = styled.input`
