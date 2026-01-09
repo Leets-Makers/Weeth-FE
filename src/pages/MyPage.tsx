@@ -1,28 +1,27 @@
 import deleteUser from '@/api/deleteUser';
-import MenuModal from '@/components/common/MenuModal';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import Header from '@/components/Header/Header';
-import SelectModal from '@/components/Modal/SelectModal';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import handleLogout from '@/hooks/handleLogout';
 import * as S from '@/styles/mypage/Mypage.styled';
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
+import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
 
 const MyPage = () => {
   useCustomBack('/home');
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
   const navigate = useNavigate();
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
 
-  const openSelectModal = () => {
-    setIsSelectModalOpen(true);
-  };
-
-  const closeSelectModal = () => {
-    setIsSelectModalOpen(false);
-  };
+  const openMenuModal = useOpenMenuModal();
+  const closeMenuModal = useCloseMenuModal();
 
   const confirmLogout = handleLogout();
 
@@ -40,42 +39,44 @@ const MyPage = () => {
     closeSelectModal();
   };
 
-  return (
-    <S.Container>
-      {isModalOpen && (
-        <MenuModal
-          mobileOnly
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        >
+  const handleMenu = () => {
+    openMenuModal({
+      mobileOnly: true,
+      children: (
+        <>
           <S.TextButton
             onClick={() => {
+              closeMenuModal();
               navigate('/edit');
             }}
           >
             정보 수정
           </S.TextButton>
           <S.TextButton onClick={confirmLogout}>로그아웃</S.TextButton>
-          <S.TextButton $isSignOut onClick={openSelectModal}>
+          <S.TextButton
+            $isSignOut
+            onClick={() => {
+              closeMenuModal();
+              openSelectModal({
+                title: '회원 탈퇴',
+                content: '정말 탈퇴하시겠습니까?',
+                buttonContent: '탈퇴',
+                onDelete: onClickLeave,
+              });
+            }}
+          >
             탈퇴
           </S.TextButton>
-        </MenuModal>
-      )}
-      {isSelectModalOpen && (
-        <SelectModal
-          title="회원 탈퇴"
-          content="정말 탈퇴하시겠습니까?"
-          buttonContent="탈퇴"
-          onClose={closeSelectModal}
-          onDelete={onClickLeave}
-        />
-      )}
+        </>
+      ),
+    });
+  };
+
+  return (
+    <S.Container>
       <Header
         RightButtonType="MENU"
-        onClickRightButton={() => {
-          setIsModalOpen(true);
-        }}
+        onClickRightButton={handleMenu}
         isAccessible
       >
         MY

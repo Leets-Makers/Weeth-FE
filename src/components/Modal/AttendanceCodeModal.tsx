@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/Modal/Modal';
 import fullscreen from '@/assets/images/ic_fullscreen.svg';
 import smallscreen from '@/assets/images/ic_smallscreen.svg';
 import close from '@/assets/images/ic_close.svg';
