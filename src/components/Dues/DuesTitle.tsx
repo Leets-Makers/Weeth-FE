@@ -1,17 +1,10 @@
 import formatDateTime from '@/hooks/formatDateTime';
-import { PageHeader } from '@/pages/attend/Penalty';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { HeaderContainer, PageHeader } from '@/styles';
 import Breadcrumb from '../common/Breadcrumb';
-
-export const DuesHeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  ${typography.H2};
-  width: 100%;
-`;
 
 const DateText = styled.span`
   ${typography.Caption2};
@@ -47,7 +40,7 @@ const DuesTitle: React.FC<DuesTitleProps> = ({ time }) => {
   const formattedTime = time ? formatDateTime(time) : 'N/A';
 
   return (
-    <DuesHeaderContainer>
+    <HeaderContainer>
       <Breadcrumb items={[{ label: '회비', path: '/dues' }]} hasTitle />
       <PageHeader>
         회비
@@ -57,7 +50,7 @@ const DuesTitle: React.FC<DuesTitleProps> = ({ time }) => {
         <div>최근 업데이트</div>
         <div>{formattedTime}</div>
       </DateText>
-    </DuesHeaderContainer>
+    </HeaderContainer>
   );
 };
 

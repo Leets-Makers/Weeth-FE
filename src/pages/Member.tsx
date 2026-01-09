@@ -9,7 +9,7 @@ import { User } from '@/types/user';
 import { toastError } from '@/components/common/ToastMessage';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import * as S from '@/styles/member/Member.styled';
-import { PageHeader } from './attend/Penalty';
+import { PageHeader } from '@/styles';
 
 const Member = () => {
   useCustomBack('/home');

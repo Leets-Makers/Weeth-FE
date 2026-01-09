@@ -6,17 +6,9 @@ import PenaltyItem from '@/components/Penalty/PenaltyItem';
 import useGetPenalty from '@/api/useGetPenalty';
 import Loading from '@/components/common/Loading';
 import InfoButton from '@/components/Penalty/InfoButton';
-import styled from 'styled-components';
-import typography from '@/theme/typography';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import { PageHeader } from '@/styles';
 import { AttendContainer } from './Attendance';
-
-export const PageHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  ${typography.H2};
-`;
 
 const Penalty: React.FC = () => {
   useCustomBack('/attendance');

@@ -3,15 +3,14 @@ import useCustomBack from '@/hooks/useCustomBack';
 
 import { StyledDues } from '@/styles/dues/Dues.styled';
 import Breadcrumb from '@/components/common/Breadcrumb';
-import { DuesHeaderContainer } from '@/components/Dues/DuesTitle';
-import { PageHeader } from './attend/Penalty';
+import { HeaderContainer, PageHeader } from '@/styles';
 
 const Receipt: React.FC = () => {
   useCustomBack('/dues');
 
   return (
     <StyledDues>
-      <DuesHeaderContainer>
+      <HeaderContainer>
         <Breadcrumb
           items={[
             { label: '회비', path: '/dues' },
@@ -20,7 +19,7 @@ const Receipt: React.FC = () => {
           hasTitle
         />
         <PageHeader>영수증</PageHeader>
-      </DuesHeaderContainer>
+      </HeaderContainer>
       <ReceiptList />
     </StyledDues>
   );
