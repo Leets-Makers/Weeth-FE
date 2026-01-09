@@ -6,7 +6,6 @@ import styled from 'styled-components';
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 ${units.padding['450']}px;
   gap: ${units.margin['200']}px;
   width: 100%;
   max-width: ${MOBILE};

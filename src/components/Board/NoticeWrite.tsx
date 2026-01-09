@@ -13,8 +13,6 @@ const Container = styled.div`
 
 const MarkdownContainer = styled.div`
   display: flex;
-  padding: 0 ${units.padding['450']}px ${units.padding['450']}px
-    ${units.padding['450']}px;
 `;
 
 interface StudyWriteTemplateProps {
