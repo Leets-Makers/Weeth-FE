@@ -86,10 +86,7 @@ const router = createBrowserRouter([
       { path: '/member/:userId', element: <MemberDetail /> },
       { path: '/mypage', element: <MyPage /> },
       { path: '/edit', element: <Edit /> },
-
-      { path: '/events/create', element: <EventPost /> },
       { path: '/:type/:id', element: <EventDetail /> },
-      { path: '/:type/:id/edit', element: <EventPost /> },
     ],
   },
 
@@ -115,7 +112,6 @@ const router = createBrowserRouter([
           { path: ':category/:part/:postId', element: <PartDetail /> },
         ],
       },
-
       { path: '/education/:part/:postId', element: <EduDetail /> },
     ],
   },
@@ -134,6 +130,8 @@ const router = createBrowserRouter([
         ],
       },
       { path: 'education/:part/:postId/edit', element: <EduEdit /> },
+      { path: '/events/create', element: <EventPost /> },
+      { path: '/:type/:id/edit', element: <EventPost /> },
     ],
   },
 
