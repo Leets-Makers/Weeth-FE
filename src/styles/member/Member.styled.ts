@@ -67,7 +67,7 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const DividerLine = styled.img`
+export const DividerLine = styled.div`
   width: 1px;
   height: 100%;
   margin: 0 ${units.padding['200']}px;

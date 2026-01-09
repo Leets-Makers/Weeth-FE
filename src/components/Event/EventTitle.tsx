@@ -2,12 +2,11 @@
 import { deleteEvent } from '@/api/EventAdminAPI';
 import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/calendar/EventDetailTitle.styled';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
-import formatDateTime from '@/hooks/formatDateTime';
+import { formatDateTime } from '@/hooks/formatDate';
 import { toastSuccess, toastError } from '../common/ToastMessage';
 import Breadcrumb from '../common/Breadcrumb';
 

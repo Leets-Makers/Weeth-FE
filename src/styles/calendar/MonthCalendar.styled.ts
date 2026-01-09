@@ -92,7 +92,7 @@ export const Calendar = styled.div`
 
   // 주말 색상 변경
   .fc-day-sun a {
-    color: #FF5858;
+    color: #ff5858;
   }
   .fc-day-sat a {
     color: ${colors.light.secondary[500]};
@@ -104,7 +104,7 @@ export const Calendar = styled.div`
     padding-right: 2px;
     display: flex;
     height: 16px;
-    background-color: rgba(255, 255, 255, 0.03); !important;
+    background-color: rgba(255, 255, 255, 0.03) !important;
     border: none;
     border-radius: 1px;
     ${typography.Caption1};
@@ -123,9 +123,10 @@ export const Calendar = styled.div`
     display: none !important;
   }
 
-  .fc-event-selected, .fc-event:focus {
+  .fc-event-selected,
+  .fc-event:focus {
     box-shadow: none;
-}
+  }
 
   .fc-event-main {
     overflow: hidden;
