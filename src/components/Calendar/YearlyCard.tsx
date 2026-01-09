@@ -1,29 +1,32 @@
 import icDot from '@/assets/images/ic_dot.svg';
 import { CURRENT_MONTH, CURRENT_YEAR } from '@/constants/dateConstants';
-import theme from '@/styles/theme';
+import typography from '@/theme/typography';
+import { colors, units } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const StyledYear = styled.div`
   display: flex;
+  width: 344px;
+  margin: 0px 16px 16px 15px;
   flex-direction: column;
   justify-content: center;
-  font-size: 16px;
 `;
 
 export const ContentWrapper = styled.div`
-  background-color: ${theme.color.gray[18]};
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
+  ${typography.Body2};
+  border-radius: ${units.radius.lg}px;
   padding: 10px;
-  margin-bottom: 15px;
-  width: 324px;
-  border-radius: 10px;
-  font-size: 14px;
 `;
 
 export const Content = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 5px 0px;
 `;
 
 export const Dot = styled.img`
@@ -34,9 +37,11 @@ export const Dot = styled.img`
 export const MonthName = styled.div<{ $isToday: boolean }>`
   padding-left: 10px;
   padding-bottom: 7px;
-  color: ${(props) => (props.$isToday === true ? '#00dda8' : '#ffffff')};
-  font-size: 18px;
-  font-family: ${theme.font.semiBold};
+  color: ${(props) =>
+    props.$isToday
+      ? colors.semantic.brand.primary
+      : colors.semantic.text.normal};
+  ${typography.Sub1};
 `;
 
 interface Event {
