@@ -4,12 +4,12 @@ import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Breadcrumb from '../common/Breadcrumb';
 
-const DuesHeaderContainer = styled.div`
+export const DuesHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 21px;
-  font-size: 18px;
+  ${typography.H2};
   width: 100%;
 `;
 
@@ -44,11 +44,11 @@ interface DuesTitleProps {
 
 const DuesTitle: React.FC<DuesTitleProps> = ({ time }) => {
   const navi = useNavigate();
-
   const formattedTime = time ? formatDateTime(time) : 'N/A';
 
   return (
     <DuesHeaderContainer>
+      <Breadcrumb items={[{ label: '회비', path: '/dues' }]} hasTitle />
       <PageHeader>
         회비
         <CaptionButton onClick={() => navi('/receipt')}>영수증</CaptionButton>
