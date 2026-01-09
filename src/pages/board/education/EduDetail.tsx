@@ -8,6 +8,7 @@ import * as S from '@/styles/board/BoardDetail.styled';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import PostDetailMain from '@/components/Board/PostDetailMain';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 const EduDetail = () => {
   const { part, postId } = useParams<{
@@ -72,13 +73,16 @@ const EduDetail = () => {
   return (
     <>
       <S.Container>
-        <Breadcrumb
-          items={[
-            { label: '게시판', path: '/board' },
-            { label: `${part} 교육자료`, path: `/board/education/${part}` },
-            { label: '교육자료상세' },
-          ]}
-        />
+        <BreadcrumbPadding>
+          <Breadcrumb
+            items={[
+              { label: '게시판', path: '/board' },
+              { label: `${part} 교육자료`, path: `/board/education/${part}` },
+              { label: '교육자료상세' },
+            ]}
+            hasTitle
+          />
+        </BreadcrumbPadding>
 
         {boardDetailInfo && (
           <>

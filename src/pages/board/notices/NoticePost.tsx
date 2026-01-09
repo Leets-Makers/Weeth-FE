@@ -5,6 +5,7 @@ import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 const NoticePost = () => {
   const navigate = useNavigate();
@@ -73,21 +74,23 @@ const NoticePost = () => {
   return (
     <>
       <EditGNB onClickButton={handleClickButton} />
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: '공지사항', path: '/board/notices' },
-          { label: '글쓰기' },
-        ]}
-      />
-      <NoticeWrite
-        title={title}
-        setTitle={setTitle}
-        content={content}
-        setContent={setContent}
-        files={files}
-        setFiles={setFiles}
-      />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: '공지사항', path: '/board/notices' },
+            { label: '글쓰기' },
+          ]}
+        />
+        <NoticeWrite
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+        />
+      </PostContainerWrapper>
     </>
   );
 };

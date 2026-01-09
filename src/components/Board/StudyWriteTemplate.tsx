@@ -23,7 +23,6 @@ export const Container = styled.div`
 
 export const InformationContainer = styled.div`
   display: flex;
-  padding: 0 ${units.padding['450']}px;
   gap: 5px;
 `;
 
@@ -42,8 +41,6 @@ export const DropdownContainer = styled.div`
 
 export const MarkdownContainer = styled.div`
   display: flex;
-  padding: 0 ${units.padding['450']}px ${units.padding['450']}px
-    ${units.padding['450']}px;
   width: 100%;
   max-width: ${MOBILE};
   box-sizing: border-box;

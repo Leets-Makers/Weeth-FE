@@ -46,10 +46,10 @@ const MemberItem: React.FC<MemberItemProps> = ({
   return (
     <S.Wrapper>
       <S.Content onClick={onClickMember}>
-        <img src={positionIcon} alt={positionName} loading="lazy" />
         <S.TextWrapper>
           <S.Title>{name}</S.Title>
           <S.Caption>
+            <img src={positionIcon} alt={positionName} loading="lazy" />
             {role === 'ADMIN' ? (
               <img src={Master} alt="master" loading="lazy" />
             ) : null}

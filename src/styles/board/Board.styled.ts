@@ -17,7 +17,6 @@ export const Container = styled.div`
 export const BoardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 15px;
   width: 100%;
   gap: ${units.margin['400']}px;
 
@@ -27,7 +26,6 @@ export const BoardContainer = styled.div`
 export const BoardTitle = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${units.margin['200']}px;
   ${typography.H2}
   color: ${colors.semantic.text.normal};
   padding: 0 ${units.padding['450']}px;
@@ -74,8 +72,8 @@ export const NoticeTextContainer = styled.div`
 `;
 
 export const NoticeTitleText = styled.div`
-  font-size: 1.1875rem;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub1};
+  color: ${colors.light.neutral['300']};
   line-height: 1;
 `;
 
@@ -278,11 +276,9 @@ export const ImgContainer = styled.img`
 
 export const PartTitleText = styled.p`
   display: flex;
-  font-size: 1.1875rem;
-  font-family: ${theme.font.semiBold};
-  line-height: 1;
   margin: 0;
-  color: ${colors.semantic.text.alternative};
+  ${typography.Sub1};
+  color: ${colors.light.neutral['300']};
 `;
 
 export const PartList = styled.div`

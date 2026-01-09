@@ -13,6 +13,7 @@ import { SearchContent } from '@/types/search';
 import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
@@ -115,12 +116,14 @@ const EducationBoard = () => {
       >
         교육자료
       </Header> */}
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: `${part} 교육자료` },
-        ]}
-      />
+      <BreadcrumbPadding>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 교육자료` },
+          ]}
+        />
+      </BreadcrumbPadding>
       <EduPartTap activePart={part} onPartChange={handleTabChange} />
       <S.InformationContainer>
         <CardinalDropdown

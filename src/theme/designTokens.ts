@@ -119,7 +119,7 @@ export const colors = {
     },
     icon: {
       strong: '#FFFFFF',
-      nomal: '#F8F8F8',
+      normal: '#F8F8F8',
       alternative: '#46494D',
       disabled: '#6E7173',
       inverse: '#000000',

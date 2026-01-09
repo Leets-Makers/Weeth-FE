@@ -1,6 +1,5 @@
 import * as S from '@/styles/attendCheck/AttendCheck.styled';
 import useGetAttendCheck from '@/api/useGetAttendCheck';
-import useGetUserName from '@/hooks/useGetUserName';
 import { formatMeetingDates } from '@/hooks/formatDate';
 import Loading from '@/components/common/Loading';
 import AttendCheckItem from '@/components/AttendCheck/AttendCheckItem';
@@ -9,7 +8,6 @@ import AttendCheckInfoBox from '@/components/AttendCheck/AttendCheckInfoBox';
 
 const AttendCheckMain: React.FC = () => {
   const { attendCheckInfo, error } = useGetAttendCheck();
-  const userName = useGetUserName();
 
   if (error) {
     return <S.Sub2Text>error</S.Sub2Text>;
@@ -21,13 +19,7 @@ const AttendCheckMain: React.FC = () => {
 
   return (
     <S.Container>
-      <S.Header>
-        <S.SemiTitle>
-          <S.Sub2Text>{userName}</S.Sub2Text>
-          &nbsp;님의 출석횟수
-        </S.SemiTitle>
-        <S.AttendCount>{attendCheckInfo.attendanceCount}회</S.AttendCount>
-      </S.Header>
+      <S.Header>출석 조회</S.Header>
       <S.StyledBox>
         <S.SmallStyledBoxContainer>
           <AttendCheckInfoBox

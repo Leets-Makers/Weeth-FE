@@ -16,6 +16,7 @@ import { SearchContent } from '@/types/search';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/types/board';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -158,12 +159,14 @@ const PartBoard = () => {
 
   return (
     <S.Container>
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: `${part} 파트게시판` },
-        ]}
-      />
+      <BreadcrumbPadding>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 파트게시판` },
+          ]}
+        />
+      </BreadcrumbPadding>
       <PartBoardTap activeTab={activeCategory} onTabChange={handleTabChange} />
       <S.InformationContainer>
         <S.DropdownContainer>

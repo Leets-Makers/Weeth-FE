@@ -1,20 +1,22 @@
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import CalendarToggle from '@/components/Calendar/CalendarToggle';
 import { CURRENT_MONTH, CURRENT_YEAR } from '@/constants/dateConstants';
 import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/calendar/Calendar.styled';
-import Header from '@/components/Header/Header';
 import icLeftArrow from '@/assets/images/ic_leftArrow.svg';
 import icRightArrow from '@/assets/images/ic_rightArrow.svg';
 import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import { lazy, Suspense, useState } from 'react';
 import Loading from '@/components/common/Loading';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import FloatingWritingIcon from '@/assets/images/ic_calendar_floating_button.svg?react';
 
 const MonthCalendar = lazy(() => import('@/components/Calendar/MonthCalendar'));
 const YearCalendar = lazy(() => import('@/components/Calendar/YearCalendar'));
 
 const Calendar = () => {
   useCustomBack('/home');
+  const navigate = useNavigate();
   const [isMonth, setIsMonth] = useState(true);
   const { isAdmin } = useGetGlobaluserInfo();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,78 +46,78 @@ const Calendar = () => {
 
   return (
     <S.CalendarWrapper>
-      <Header
-        RightButtonType="PLUS"
-        isAccessible={isAdmin}
-        onClickRightButton={() => {}}
-      >
-        <S.DateWrapper>
-          <S.ImgButton
-            src={icLeftArrow}
-            alt="left"
-            onClick={() => {
-              if (isMonth) {
-                if (month === 1) {
-                  updateParams(year - 1, 12);
+      <S.CalendarHeader>
+        <Breadcrumb items={[{ label: '동아리 일정', path: '/calendar' }]} />
+        <S.CalendarToggleContainer>
+          <S.DateWrapper>
+            <S.ImgButton
+              src={icLeftArrow}
+              alt="left"
+              onClick={() => {
+                if (isMonth) {
+                  if (month === 1) {
+                    updateParams(year - 1, 12);
+                  } else {
+                    updateParams(year, month - 1);
+                  }
                 } else {
-                  updateParams(year, month - 1);
+                  // eslint-disable-next-line no-lonely-if
+                  if (term === 1) {
+                    updateParams(year - 1, undefined, 2);
+                  } else {
+                    updateParams(year, undefined, term - 1);
+                  }
                 }
-              } else {
-                // eslint-disable-next-line no-lonely-if
-                if (term === 1) {
-                  updateParams(year - 1, undefined, 2);
-                } else {
-                  updateParams(year, undefined, term - 1);
-                }
-              }
-            }}
-          />
-          <S.Title>
-            {!isMonth && month <= 2 ? year - 2001 : year - 2000}년{' '}
-            {isMonth ? `${month}월` : `${term}학기`}
-          </S.Title>
-          <S.ImgButton
-            src={icRightArrow}
-            alt="right"
-            onClick={() => {
-              if (isMonth) {
-                if (month === 12) {
-                  updateParams(year + 1, 1);
-                } else {
-                  updateParams(year, month + 1);
-                }
-              } else {
-                // eslint-disable-next-line no-lonely-if
-                if (term === 2) {
-                  updateParams(year + 1, undefined, 1);
-                } else {
-                  updateParams(year, undefined, term + 1);
-                }
-              }
-            }}
-          />
-        </S.DateWrapper>
-      </Header>
-      <S.Content>
-        <CalendarToggle
-          isMonth={isMonth}
-          onToggle={() => {
-            updateParams(year, month, term);
-            setIsMonth(!isMonth);
-          }}
-        />
-        <Suspense fallback={<Loading />}>
-          {isMonth ? (
-            <MonthCalendar />
-          ) : (
-            <YearCalendar
-              key={`${year}-${term}`}
-              year={month === 1 || month === 2 ? year - 1 : year}
-              term={term}
+              }}
             />
-          )}
-        </Suspense>
-      </S.Content>
+            <S.Title>
+              {!isMonth && month <= 2 ? year - 2001 : year - 2000}년{' '}
+              {isMonth ? `${month}월` : `${term}학기`}
+            </S.Title>
+            <S.ImgButton
+              src={icRightArrow}
+              alt="right"
+              onClick={() => {
+                if (isMonth) {
+                  if (month === 12) {
+                    updateParams(year + 1, 1);
+                  } else {
+                    updateParams(year, month + 1);
+                  }
+                } else {
+                  // eslint-disable-next-line no-lonely-if
+                  if (term === 2) {
+                    updateParams(year + 1, undefined, 1);
+                  } else {
+                    updateParams(year, undefined, term + 1);
+                  }
+                }
+              }}
+            />
+          </S.DateWrapper>
+          <CalendarToggle
+            isMonth={isMonth}
+            onToggle={() => {
+              updateParams(year, month, term);
+              setIsMonth(!isMonth);
+            }}
+          />
+        </S.CalendarToggleContainer>
+      </S.CalendarHeader>
+      <Suspense fallback={<Loading />}>
+        {isMonth ? (
+          <MonthCalendar />
+        ) : (
+          <YearCalendar
+            key={`${year}-${term}`}
+            year={month === 1 || month === 2 ? year - 1 : year}
+            term={term}
+          />
+        )}
+      </Suspense>
+      <S.FloatingButton onClick={() => isAdmin && navigate('/events/create')}>
+        <FloatingWritingIcon />
+      </S.FloatingButton>
     </S.CalendarWrapper>
   );
 };

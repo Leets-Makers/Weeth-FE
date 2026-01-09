@@ -8,6 +8,7 @@ import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 const PartDetail = () => {
   const { category, part, postId } = useParams<{
@@ -78,13 +79,19 @@ const PartDetail = () => {
   return (
     <>
       <S.Container>
-        <Breadcrumb
-          items={[
-            { label: '게시판', path: '/board' },
-            { label: `${part} 파트게시판`, path: `/board/study/${part}` },
-            { label: '게시판상세' },
-          ]}
-        />
+        <BreadcrumbPadding>
+          <Breadcrumb
+            items={[
+              { label: '게시판', path: '/board' },
+              {
+                label: `${part} 파트게시판`,
+                path: `/board/${category}/${part}`,
+              },
+              { label: '게시판상세' },
+            ]}
+            hasTitle
+          />
+        </BreadcrumbPadding>
         {boardDetailInfo && (
           <>
             <PostDetailMain info={boardDetailInfo} />

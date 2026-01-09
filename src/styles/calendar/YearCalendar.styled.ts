@@ -3,8 +3,10 @@ import styled from 'styled-components';
 
 export const MonthlyBox = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   padding-bottom: 40px;
+  box-sizing: border-box;
 `;
 
 export const Error = styled.div`

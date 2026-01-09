@@ -6,6 +6,7 @@ import EditGNB from '@/components/Navigation/EditGNB';
 import postBoardNotice from '@/api/postBoardNotice';
 import { PostRequestType } from '@/types/PostRequestType';
 import { toastError } from '@/components/common/ToastMessage';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 type CategorySlug = 'study' | 'article';
 type CategoryEnum = 'StudyLog' | 'Article';
@@ -86,28 +87,30 @@ const PartPost = () => {
   return (
     <>
       <EditGNB onClickButton={handleClickButton} />
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: `${part} 파트게시판`, path: `/board/study/${part}` },
-          { label: '글쓰기' },
-        ]}
-      />
-      <StudyWriteTemplate
-        category={category}
-        title={title}
-        setTitle={setTitle}
-        selectedCardinal={selectedCardinal}
-        setSelectedCardinal={setSelectedCardinal}
-        selectedWeek={selectedWeek}
-        setSelectedWeek={setSelectedWeek}
-        selectedStudy={selectedStudy}
-        setSelectedStudy={setSelectedStudy}
-        content={content}
-        setContent={setContent}
-        files={files}
-        setFiles={setFiles}
-      />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+            { label: '글쓰기' },
+          ]}
+        />
+        <StudyWriteTemplate
+          category={category}
+          title={title}
+          setTitle={setTitle}
+          selectedCardinal={selectedCardinal}
+          setSelectedCardinal={setSelectedCardinal}
+          selectedWeek={selectedWeek}
+          setSelectedWeek={setSelectedWeek}
+          selectedStudy={selectedStudy}
+          setSelectedStudy={setSelectedStudy}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+        />
+      </PostContainerWrapper>
     </>
   );
 };

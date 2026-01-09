@@ -1,4 +1,4 @@
-import { colors } from '@/theme/designTokens';
+import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
 
@@ -10,7 +10,8 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
-  margin-left: 15px;
+  margin-top: ${units.margin['200']}px;
+  ${typography.H2};
 `;
 
 export const Sub2Text = styled.div`
@@ -22,17 +23,6 @@ export const Body1Text = styled.div`
   ${typography.Body1};
 `;
 
-export const SemiTitle = styled(Body1Text)`
-  display: flex;
-  flex-direction: row;
-  margin-top: 25px;
-`;
-
-export const AttendCount = styled.div`
-  margin-top: 19px;
-  ${typography.H2};
-`;
-
 export const StyledBox = styled.div`
   background-color: ${colors.semantic.container.neutral};
   border-radius: 14px;
@@ -42,7 +32,7 @@ export const StyledBox = styled.div`
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  margin-top: 26px;
+  margin-top: 18px;
 `;
 
 export const SmallStyledBoxContainer = styled.div`

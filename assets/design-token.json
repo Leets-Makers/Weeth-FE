@@ -292,7 +292,7 @@
         "value": "{neutral.#900}",
         "type": "color"
       },
-      "nomal": {
+      "normal": {
         "value": "{neutral.#800}",
         "type": "color"
       },
@@ -374,7 +374,7 @@
         "value": "{neutral.#900}",
         "type": "color"
       },
-      "nomal": {
+      "normal": {
         "value": "{neutral.#800}",
         "type": "color"
       },

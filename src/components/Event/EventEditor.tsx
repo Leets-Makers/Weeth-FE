@@ -27,7 +27,9 @@ import {
 import useGetAllCardinals from '@/api/useGetCardinals';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
+import { colors } from '@/theme/designTokens';
 import EditGNB from '../Navigation/EditGNB';
+import Breadcrumb from '../common/Breadcrumb';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -173,7 +175,6 @@ const EventEditor = () => {
       checkEmpty(eventRequest.start, '시작 시간을 입력해 주세요.') ||
       checkEmpty(eventRequest.end, '종료 시간을 입력해 주세요.') ||
       checkEmpty(eventRequest.location, '장소를 입력해 주세요.') ||
-      checkEmpty(eventRequest.requiredItem, '준비물을 입력해 주세요.') ||
       checkEmpty(eventRequest.content, '내용을 입력해 주세요.')
     ) {
       return;
@@ -295,93 +296,109 @@ const EventEditor = () => {
           />
         </PickerModal>
       )}
-
+      <EditGNB onClickButton={checkValid} />
       <S.EventEditorWrapper>
-        <EditGNB onClickButton={checkValid} />
-        <EventInputBlock>
-          <EventInput
-            origValue={eventRequest.title}
-            placeholder="제목"
-            editValue={(value) => editEventInfo('title', value)}
-          />
-        </EventInputBlock>
-
-        <EventInputBlock>
-          <S.Meeting>
-            <S.Align>
-              <span>정기모임</span>
-              <S.Help onClick={() => setIsHelpModalOpen(true)}>?</S.Help>
-            </S.Align>
-
-            <ToggleButton
-              isMeeting={eventRequest.type === 'MEETING'}
-              isEditMode={isEditMode}
-              onToggle={() => {
-                setEventRequest((prevInfo) => ({
-                  ...prevInfo,
-                  type: prevInfo.type === 'MEETING' ? 'EVENT' : 'MEETING',
-                }));
-              }}
+        <Breadcrumb
+          items={[
+            { label: '동아리 일정', path: '/calendar' },
+            {
+              label: isEditMode ? '일정 수정' : '일정 추가',
+              path: isEditMode ? `/events/${id}/edit` : '/events/create',
+            },
+          ]}
+        />
+        <S.EventEditorContent>
+          <EventInputBlock>
+            <EventInput
+              origValue={eventRequest.title}
+              placeholder="제목"
+              editValue={(value) => editEventInfo('title', value)}
             />
-          </S.Meeting>
-          <S.Meeting>
-            <div>기수</div>
-            <CardinalDropdown
-              origValue={eventRequest.cardinal}
-              editValue={(value) => editEventInfo('cardinal', value)}
+          </EventInputBlock>
+
+          <EventInputBlock>
+            <S.Meeting>
+              <S.Align>
+                <span>정기모임</span>
+                <S.Help onClick={() => setIsHelpModalOpen(true)}>?</S.Help>
+              </S.Align>
+
+              <ToggleButton
+                isMeeting={eventRequest.type === 'MEETING'}
+                isEditMode={isEditMode}
+                onToggle={() => {
+                  setEventRequest((prevInfo) => ({
+                    ...prevInfo,
+                    type: prevInfo.type === 'MEETING' ? 'EVENT' : 'MEETING',
+                  }));
+                }}
+              />
+            </S.Meeting>
+            <S.Line />
+            <S.Meeting>
+              <div>기수</div>
+              <CardinalDropdown
+                origValue={eventRequest.cardinal}
+                editValue={(value) => editEventInfo('cardinal', value)}
+                styles={{
+                  buttonBackgroundColor: colors.semantic.button.neutral,
+                  buttonPadding: `7px 10px`,
+                }}
+              />
+            </S.Meeting>
+            <S.Line />
+            <S.DateTime>
+              <div>시작</div>
+              <S.Time>
+                <S.TimeBlock onClick={() => setIsStartDateModalOpen(true)}>
+                  {startDate?.toLocaleDateString() ||
+                    dayjs(eventRequest.start).format('YYYY.MM.DD')}
+                </S.TimeBlock>
+                <S.TimeBlock>
+                  <TimePicker
+                    inputValue={startTime}
+                    setInputValue={setStartTime}
+                  />
+                </S.TimeBlock>
+              </S.Time>
+            </S.DateTime>
+            <S.Line />
+            <S.DateTime>
+              <div>끝</div>
+              <S.Time>
+                <S.TimeBlock onClick={() => setIsEndDateModalOpen(true)}>
+                  {endDate?.toLocaleDateString() ||
+                    dayjs(eventRequest.end).format('YYYY.MM.DD')}
+                </S.TimeBlock>
+                <S.TimeBlock>
+                  <TimePicker inputValue={endTime} setInputValue={setEndTime} />
+                </S.TimeBlock>
+              </S.Time>
+            </S.DateTime>
+          </EventInputBlock>
+
+          <EventInputBlock>
+            <EventInput
+              origValue={eventRequest.location}
+              placeholder="장소"
+              editValue={(value) => editEventInfo('location', value)}
             />
-          </S.Meeting>
-          <S.DateTime>
-            <div>시작</div>
-            <S.Time>
-              <S.TimeBlock onClick={() => setIsStartDateModalOpen(true)}>
-                {startDate?.toLocaleDateString() ||
-                  dayjs(eventRequest.start).format('YYYY.MM.DD')}
-              </S.TimeBlock>
-              <S.TimeBlock>
-                <TimePicker
-                  inputValue={startTime}
-                  setInputValue={setStartTime}
-                />
-              </S.TimeBlock>
-            </S.Time>
-          </S.DateTime>
-          <S.Line />
-          <S.DateTime>
-            <div>끝</div>
-            <S.Time>
-              <S.TimeBlock onClick={() => setIsEndDateModalOpen(true)}>
-                {endDate?.toLocaleDateString() ||
-                  dayjs(eventRequest.end).format('YYYY.MM.DD')}
-              </S.TimeBlock>
-              <S.TimeBlock>
-                <TimePicker inputValue={endTime} setInputValue={setEndTime} />
-              </S.TimeBlock>
-            </S.Time>
-          </S.DateTime>
-        </EventInputBlock>
+            <S.Line />
+            <EventInput
+              origValue={eventRequest.requiredItem}
+              placeholder="준비물"
+              editValue={(value) => editEventInfo('requiredItem', value)}
+            />
+          </EventInputBlock>
 
-        <EventInputBlock>
-          <EventInput
-            origValue={eventRequest.location}
-            placeholder="장소"
-            editValue={(value) => editEventInfo('location', value)}
-          />
-          <S.Line />
-          <EventInput
-            origValue={eventRequest.requiredItem}
-            placeholder="준비물"
-            editValue={(value) => editEventInfo('requiredItem', value)}
-          />
-        </EventInputBlock>
-
-        <S.TextAreaWrapper>
-          <S.TextArea
-            placeholder="내용"
-            value={eventRequest.content}
-            onChange={(e) => editEventInfo('content', e.target.value)}
-          />
-        </S.TextAreaWrapper>
+          <S.TextAreaWrapper>
+            <S.TextArea
+              placeholder="내용"
+              value={eventRequest.content}
+              onChange={(e) => editEventInfo('content', e.target.value)}
+            />
+          </S.TextAreaWrapper>
+        </S.EventEditorContent>
       </S.EventEditorWrapper>
     </>
   );

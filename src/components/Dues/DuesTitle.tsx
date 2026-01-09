@@ -1,17 +1,10 @@
 import formatDateTime from '@/hooks/formatDateTime';
-import { PageHeader } from '@/pages/attend/Penalty';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-const DuesHeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 21px;
-  font-size: 18px;
-  width: 100%;
-`;
+import { HeaderContainer, PageHeader } from '@/styles';
+import Breadcrumb from '../common/Breadcrumb';
 
 const DateText = styled.span`
   ${typography.Caption2};
@@ -44,11 +37,11 @@ interface DuesTitleProps {
 
 const DuesTitle: React.FC<DuesTitleProps> = ({ time }) => {
   const navi = useNavigate();
-
   const formattedTime = time ? formatDateTime(time) : 'N/A';
 
   return (
-    <DuesHeaderContainer>
+    <HeaderContainer>
+      <Breadcrumb items={[{ label: '회비', path: '/dues' }]} hasTitle />
       <PageHeader>
         회비
         <CaptionButton onClick={() => navi('/receipt')}>영수증</CaptionButton>
@@ -57,7 +50,7 @@ const DuesTitle: React.FC<DuesTitleProps> = ({ time }) => {
         <div>최근 업데이트</div>
         <div>{formattedTime}</div>
       </DateText>
-    </DuesHeaderContainer>
+    </HeaderContainer>
   );
 };
 

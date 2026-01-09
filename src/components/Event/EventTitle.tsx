@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 import { deleteEvent } from '@/api/EventAdminAPI';
-import Header from '@/components/Header/Header';
 import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/calendar/EventDetailTitle.styled';
-
 import { useNavigate, useParams } from 'react-router-dom';
 import Tag from '@/components/Event/Tag';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
+import { formatDateTime } from '@/hooks/formatDate';
 import { toastSuccess, toastError } from '../common/ToastMessage';
+import Breadcrumb from '../common/Breadcrumb';
 
 const EventTitle = ({
   data,
@@ -18,7 +18,6 @@ const EventTitle = ({
   isAdmin: boolean;
 }) => {
   const navigate = useNavigate();
-
   const { id, type } = useParams();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
@@ -72,27 +71,26 @@ const EventTitle = ({
   };
 
   return (
-    <>
-      <Header
-        isAccessible={isAdmin}
-        onClickRightButton={handleMenu}
-        RightButtonType="MENU"
+    <S.EventTitleWrapper>
+      <Breadcrumb
+        items={[
+          { label: '동아리 일정', path: '/calendar' },
+          { label: '일정 상세', path: `/${type}/${id}` },
+        ]}
+        hasTitle
       />
 
-      <S.EventTitleWrapper>
-        <S.SpaceBetween>
-          <S.Title>{data.title}</S.Title>
-          {type === 'meetings' && <Tag />}
-        </S.SpaceBetween>
+      <S.SpaceBetween>
+        <S.Title>{data.title}</S.Title>
+        {isAdmin && <S.KebabIcon onClick={() => handleMenu()} />}
+      </S.SpaceBetween>
 
-        <S.SpaceBetween>
-          <S.WriteInfo>
-            <S.Writer>{data.name}</S.Writer>
-          </S.WriteInfo>
-          <S.Cardinal>{data.cardinal}기</S.Cardinal>
-        </S.SpaceBetween>
-      </S.EventTitleWrapper>
-    </>
+      <S.WriteInfo>
+        {type === 'meetings' && <Tag />}
+        <S.Writer>{data.name}</S.Writer>
+        <S.Writer>{formatDateTime(data.createdAt)}</S.Writer>
+      </S.WriteInfo>
+    </S.EventTitleWrapper>
   );
 };
 

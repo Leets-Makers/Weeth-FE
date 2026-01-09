@@ -3,51 +3,13 @@ import MemberList from '@/components/Member/MemberList';
 import useCustomBack from '@/hooks/useCustomBack';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
 import search from '@/assets/images/ic_search.svg';
 import getSearchMember from '@/api/getSearchMember';
 import { User } from '@/types/user';
 import { toastError } from '@/components/common/ToastMessage';
-import { colors } from '@/theme/designTokens';
-
-const Wrapper = styled.div`
-  width: 375px;
-  margin-bottom: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Search = styled.div`
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid ${colors.semantic.line};
-  border-radius: 4px;
-  padding: 7px 10px;
-  margin-bottom: 10px;
-  width: 345px;
-  box-sizing: border-box;
-`;
-
-export const SearchInput = styled.input`
-  border: none;
-  outline: none;
-  background-color: transparent;
-  font-size: 16px;
-  color: ${colors.semantic.text.normal};
-  padding: 0;
-  width: 211px;
-  margin-left: 10px;
-
-  &::placeholder {
-    font-size: 16px;
-    color: ${colors.semantic.text.alternative};
-  }
-`;
-
-const SearchButton = styled.img`
-  cursor: pointer;
-`;
+import Breadcrumb from '@/components/common/Breadcrumb';
+import * as S from '@/styles/member/Member.styled';
+import { PageHeader } from '@/styles';
 
 const Member = () => {
   useCustomBack('/home');
@@ -87,23 +49,32 @@ const Member = () => {
   };
 
   return (
-    <Wrapper>
-      <Search>
-        <CardinalDropdown
-          origValue={selectedCardinal}
-          editValue={setSelectedCardinal}
-          isMember
-        />
-        <SearchInput
-          placeholder="멤버 이름을 검색하세요"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          onKeyDown={handleEnter}
-        />
-        <SearchButton src={search} alt={search} onClick={handleSearch} />
-      </Search>
-      <MemberList searchResults={searchResults} loading={loading} />
-    </Wrapper>
+    <S.MemberContainer>
+      <Breadcrumb items={[{ label: '멤버', path: '/member' }]} hasTitle />
+      <PageHeader>멤버</PageHeader>
+      <S.Wrapper>
+        <S.Search>
+          <CardinalDropdown
+            origValue={selectedCardinal}
+            editValue={setSelectedCardinal}
+            isMember
+          />
+          <S.SearchBar>
+            <S.SearchInput
+              placeholder="멤버 이름을 검색하세요"
+              value={keyword}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setKeyword(e.target.value)
+              }
+              onKeyDown={handleEnter}
+            />
+            <S.DividerLine />
+            <S.SearchButton src={search} alt={search} onClick={handleSearch} />
+          </S.SearchBar>
+        </S.Search>
+        <MemberList searchResults={searchResults} loading={loading} />
+      </S.Wrapper>
+    </S.MemberContainer>
   );
 };
 

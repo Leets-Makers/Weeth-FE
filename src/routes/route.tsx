@@ -82,12 +82,8 @@ const router = createBrowserRouter([
     children: [
       { path: '/home', element: <Home /> },
       { path: '/calendar', element: <Calendar /> },
-      { path: '/member', element: <Member /> },
       { path: '/member/:userId', element: <MemberDetail /> },
-
-      { path: '/events/create', element: <EventPost /> },
       { path: '/:type/:id', element: <EventDetail /> },
-      { path: '/:type/:id/edit', element: <EventPost /> },
     ],
   },
 
@@ -101,6 +97,7 @@ const router = createBrowserRouter([
       { path: '/dues', element: <Dues /> },
       { path: '/receipt', element: <Receipt /> },
       { path: '/mypage', element: <MyPage /> },
+      { path: '/member', element: <Member /> },
 
       // board layout
       {
@@ -114,7 +111,6 @@ const router = createBrowserRouter([
           { path: ':category/:part/:postId', element: <PartDetail /> },
         ],
       },
-
       { path: '/education/:part/:postId', element: <EduDetail /> },
     ],
   },
@@ -134,6 +130,8 @@ const router = createBrowserRouter([
       },
       { path: 'education/:part/:postId/edit', element: <EduEdit /> },
       { path: '/edit', element: <MyPageEdit /> },
+      { path: '/events/create', element: <EventPost /> },
+      { path: '/:type/:id/edit', element: <EventPost /> },
     ],
   },
 

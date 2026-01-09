@@ -2,12 +2,13 @@ import { useState } from 'react';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/board/BoardDetail.styled';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import NoticesDetailMain from '@/components/Board/Notices/NoticesDetailMain';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 const NoticePostDetail = () => {
   const { postId } = useParams();
@@ -32,8 +33,6 @@ const NoticePostDetail = () => {
   const [selectedComment, setSelectedComment] = useState<
     Record<number, boolean>
   >({});
-
-  const navigate = useNavigate();
 
   const { loading: smartLoading } = useSmartLoading(
     new Promise<void>((resolve) => {
@@ -70,13 +69,16 @@ const NoticePostDetail = () => {
   return (
     <>
       <S.Container>
-        <Breadcrumb
-          items={[
-            { label: '게시판', path: '/board' },
-            { label: '공지사항', path: '/board/notices' },
-            { label: '공지상세' },
-          ]}
-        />
+        <BreadcrumbPadding>
+          <Breadcrumb
+            items={[
+              { label: '게시판', path: '/board' },
+              { label: '공지사항', path: '/board/notices' },
+              { label: '공지상세' },
+            ]}
+            hasTitle
+          />
+        </BreadcrumbPadding>
         {boardDetailInfo && (
           <>
             <NoticesDetailMain info={boardDetailInfo} />

@@ -15,6 +15,7 @@ import useSmartLoading, {
   useSmartCombinedLoading,
 } from '@/hooks/useSmartLoading';
 import { BoardContent } from '@/types/board';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 const BoardNotice = () => {
   useCustomBack('/board');
@@ -113,12 +114,11 @@ const BoardNotice = () => {
 
   return (
     <S.Container>
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: '공지사항' },
-        ]}
-      />
+      <BreadcrumbPadding>
+        <Breadcrumb
+          items={[{ label: '게시판', path: '/board' }, { label: '공지사항' }]}
+        />
+      </BreadcrumbPadding>
       <StudyBoardSearch
         requestType="notices"
         onSearchDone={handleSearchDone}

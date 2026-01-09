@@ -4,23 +4,9 @@ import icCalendar from '@/assets/images/ic_date.svg';
 import { WEEK_DAYS } from '@/constants/dateConstants';
 import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/event/EventContent.styled';
-import Button from '@/components/Button/Button';
-import theme from '@/styles/theme';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import convertLinksInText from '@/hooks/convertLinksInText';
-import AttendanceCodeModal from '../Modal/AttendanceCodeModal';
 
-const EventContent = ({
-  data,
-  isAdmin,
-}: {
-  data: EventDetailData;
-  isAdmin: boolean;
-}) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { type } = useParams();
-
+const EventContent = ({ data }: { data: EventDetailData }) => {
   const start = dayjs(data.start);
   const end = dayjs(data.end);
 
@@ -28,20 +14,6 @@ const EventContent = ({
 
   return (
     <S.Container>
-      <AttendanceCodeModal
-        code={data.code?.toString() || '0000'}
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-
-      {isAdmin && type === 'meetings' && (
-        <Button
-          color={theme.color.mainMiddle}
-          onClick={() => setIsModalOpen(true)}
-        >
-          출석코드 확인
-        </Button>
-      )}
       <S.ContentBlock>
         {isOneday ? (
           <S.Time>
