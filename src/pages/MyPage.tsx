@@ -7,10 +7,10 @@ import * as S from '@/styles/mypage/Mypage.styled';
 import { useNavigate } from 'react-router-dom';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
-import { ResponsiveContainer } from '@/styles';
+import { PageHeader, ResponsiveContainer } from '@/styles';
 import { KebabIcon } from '@/styles/board/PostDetail.styled';
 import useLogout from '@/hooks/useLogout';
-import { PageHeader } from './attend/Penalty';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 const MyPage = () => {
   useCustomBack('/home');
@@ -77,6 +77,7 @@ const MyPage = () => {
 
   return (
     <ResponsiveContainer>
+      <Breadcrumb items={[{ label: 'My', path: '/mypage' }]} hasTitle />
       <PageHeader>
         My
         <KebabIcon onClick={handleMenu} />
