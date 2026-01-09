@@ -8,6 +8,9 @@ const useLogout = () => {
   const onClickLogout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('kakaoId');
+    localStorage.removeItem('register');
+    localStorage.removeItem('appleAuthCode');
     navigate('/');
   };
 
