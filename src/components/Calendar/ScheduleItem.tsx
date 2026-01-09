@@ -27,7 +27,7 @@ const Line = styled.div<{ $isMeeting: boolean }>`
   background-color: ${(props) =>
     props.$isMeeting
       ? colors.semantic.brand.primary
-      : colors.semantic.icon.nomal};
+      : colors.semantic.icon.normal};
   border-radius: 11px;
   margin-left: 5px;
 `;

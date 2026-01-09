@@ -83,7 +83,10 @@ const PartDetail = () => {
           <Breadcrumb
             items={[
               { label: '게시판', path: '/board' },
-              { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+              {
+                label: `${part} 파트게시판`,
+                path: `/board/${category}/${part}`,
+              },
               { label: '게시판상세' },
             ]}
             hasTitle

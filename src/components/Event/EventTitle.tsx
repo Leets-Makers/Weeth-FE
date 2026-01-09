@@ -22,7 +22,6 @@ const EventTitle = ({
   isAdmin: boolean;
 }) => {
   const navigate = useNavigate();
-  console.log(data);
   const { id, type } = useParams();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');

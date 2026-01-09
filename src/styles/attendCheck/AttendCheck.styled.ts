@@ -32,7 +32,7 @@ export const StyledBox = styled.div`
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  margin-top: ${units.padding['450']}px;
+  margin-top: 18px;
 `;
 
 export const SmallStyledBoxContainer = styled.div`

@@ -36,7 +36,7 @@ const AttendSection: React.FC<AttendSectionProps> = ({
           <RightArrow
             width={6.58}
             height={11.17}
-            color={colors.semantic.icon.nomal}
+            color={colors.semantic.icon.normal}
           />
         )}
       </S.BoxHeader>

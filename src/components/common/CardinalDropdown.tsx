@@ -26,10 +26,11 @@ const DropdownContainer = styled.div<{ $styles?: DropdownStyles }>`
   box-sizing: border-box;
 `;
 
-const DropdownButton = styled.div<{
+const DropdownButton = styled.button<{
   $hasValue: boolean;
   $styles?: DropdownStyles;
 }>`
+  border: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -133,9 +134,12 @@ const CardinalDropdown = ({
   return (
     <DropdownContainer ref={dropdownRef} $styles={styles}>
       <DropdownButton
+        type="button"
         onClick={handleToggle}
         $hasValue={!!selectedValue}
         $styles={styles}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
       >
         {selectedValue ? `${selectedValue}기` : '기수'}
         {isOpen ? (

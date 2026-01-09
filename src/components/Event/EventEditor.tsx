@@ -299,7 +299,10 @@ const EventEditor = () => {
         <Breadcrumb
           items={[
             { label: '동아리 일정', path: '/calendar' },
-            { label: '일정 추가', path: '/events/create' },
+            {
+              label: isEditMode ? '일정 수정' : '일정 추가',
+              path: isEditMode ? `/events/${id}/edit` : '/events/create',
+            },
           ]}
         />
         <S.EventEditorContent>

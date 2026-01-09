@@ -12,7 +12,7 @@ export const Bar = styled.div<{ $isMeeting: boolean }>`
   width: 1.5px;
   height: 10px;
   background-color: ${({ $isMeeting }) =>
-    $isMeeting ? colors.semantic.brand.primary : colors.semantic.icon.nomal};
+    $isMeeting ? colors.semantic.brand.primary : colors.semantic.icon.normal};
   border-radius: 20px;
   margin: 0 2px;
 `;
