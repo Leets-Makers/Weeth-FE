@@ -1,6 +1,5 @@
 import deleteUser from '@/api/deleteUser';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
-import Header from '@/components/Header/Header';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import handleLogout from '@/hooks/handleLogout';
@@ -12,6 +11,9 @@ import {
   useOpenSelectModal,
 } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
+import { ResponsiveContainer } from '@/styles';
+import { KebabIcon } from '@/styles/board/PostDetail.styled';
+import { PageHeader } from './attend/Penalty';
 
 const MyPage = () => {
   useCustomBack('/home');
@@ -73,16 +75,13 @@ const MyPage = () => {
   };
 
   return (
-    <S.Container>
-      <Header
-        RightButtonType="MENU"
-        onClickRightButton={handleMenu}
-        isAccessible
-      >
-        MY
-      </Header>
+    <ResponsiveContainer>
+      <PageHeader>
+        My
+        <KebabIcon onClick={handleMenu} />
+      </PageHeader>
       <MyInfo />
-    </S.Container>
+    </ResponsiveContainer>
   );
 };
 
