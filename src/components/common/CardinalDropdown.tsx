@@ -1,56 +1,79 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 import open from '@/assets/images/ic_opened_dropdown.svg';
 import close from '@/assets/images/ic_default_dropdown.svg';
 import useGetAllCardinals from '@/api/useGetCardinals';
-import { colors } from '@/theme/designTokens';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
-const DropdownContainer = styled.div`
+interface DropdownStyles {
+  containerWidth?: string;
+  buttonPadding?: string;
+  buttonBackgroundColor?: string;
+  listWidth?: string;
+  listMarginTop?: string;
+  itemPadding?: string;
+  itemBackgroundColor?: string;
+  itemHoverBackgroundColor?: string;
+  itemGap?: string;
+}
+
+const DropdownContainer = styled.div<{ $styles?: DropdownStyles }>`
   position: relative;
   display: flex;
-  width: 76px;
-  min-width: 76px;
-  height: 31px;
+  width: ${(props) => props.$styles?.containerWidth || '93px'};
+  min-width: ${(props) => props.$styles?.containerWidth || '93px'};
   box-sizing: border-box;
-  font-family: ${theme.font.semiBold};
 `;
 
-const DropdownButton = styled.div<{ $hasValue: boolean }>`
+const DropdownButton = styled.div<{
+  $hasValue: boolean;
+  $styles?: DropdownStyles;
+}>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 100%;
   outline: none;
-  background-color: ${colors.semantic.button.neutral};
+  background-color: ${(props) =>
+    props.$styles?.buttonBackgroundColor || colors.semantic.container.neutral};
   color: ${colors.semantic.text.normal};
-  font-size: 14px;
-  border-radius: 10px;
-  padding: 0 10px 0 15px;
+  ${typography.Button2};
+  border-radius: ${units.radius.lg}px;
+  padding: ${(props) =>
+    props.$styles?.buttonPadding ||
+    `10px ${units.padding['200']}px 10px ${units.padding['300']}px`};
+  box-sizing: border-box;
   cursor: pointer;
 `;
 
-const DropdownList = styled.div`
+const DropdownList = styled.div<{ $styles?: DropdownStyles }>`
   position: absolute;
-  width: 76px;
+  width: ${(props) => props.$styles?.listWidth || '93px'};
   max-height: 190px;
   top: 100%;
-  margin-top: 5px;
+  margin-top: ${(props) => props.$styles?.listMarginTop || '5px'};
   z-index: 1000;
   overflow-y: auto;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: ${(props) => props.$styles?.itemGap || '0'};
 `;
 
-const DropdownItem = styled.div`
-  padding: 10px;
+const DropdownItem = styled.div<{ $styles?: DropdownStyles }>`
+  padding: ${(props) => props.$styles?.itemPadding || '10px'};
   font-size: 14px;
   color: white;
   cursor: pointer;
-  background-color: ${colors.semantic.button.neutral};
+  background-color: ${(props) =>
+    props.$styles?.itemBackgroundColor || colors.semantic.button.neutral};
 
   &:hover {
-    background-color: ${colors.semantic.button['neutral-interaction']};
+    background-color: ${(props) =>
+      props.$styles?.itemHoverBackgroundColor ||
+      colors.semantic.button['neutral-interaction']};
   }
 `;
 
@@ -58,10 +81,12 @@ const CardinalDropdown = ({
   origValue,
   editValue,
   isMember,
+  styles,
 }: {
   origValue: number | null;
   editValue: (value: number | null) => void;
   isMember?: boolean;
+  styles?: DropdownStyles;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<number | null>(origValue);
@@ -106,8 +131,12 @@ const CardinalDropdown = ({
   }, [origValue]);
 
   return (
-    <DropdownContainer ref={dropdownRef}>
-      <DropdownButton onClick={handleToggle} $hasValue={!!selectedValue}>
+    <DropdownContainer ref={dropdownRef} $styles={styles}>
+      <DropdownButton
+        onClick={handleToggle}
+        $hasValue={!!selectedValue}
+        $styles={styles}
+      >
         {selectedValue ? `${selectedValue}기` : '기수'}
         {isOpen ? (
           <img src={open} alt="open" />
@@ -117,11 +146,12 @@ const CardinalDropdown = ({
       </DropdownButton>
 
       {isOpen && (
-        <DropdownList>
+        <DropdownList $styles={styles}>
           {options.map((option) => (
             <DropdownItem
               key={option.value}
               onClick={() => handleSelect(option.value)}
+              $styles={styles}
             >
               {option.label}
             </DropdownItem>
