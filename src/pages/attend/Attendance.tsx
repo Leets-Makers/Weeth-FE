@@ -1,4 +1,5 @@
 import AttendMain from '@/components/Attendance/AttendMain';
+import Breadcrumb from '@/components/common/Breadcrumb';
 import useCustomBack from '@/hooks/useCustomBack';
 import { pcResponsive } from '@/styles';
 import { units } from '@/theme/designTokens';
@@ -20,6 +21,7 @@ const Attendance: React.FC = () => {
 
   return (
     <AttendContainer>
+      <Breadcrumb items={[{ label: '출석', path: '/attendance' }]} />
       <AttendMain />
     </AttendContainer>
   );
