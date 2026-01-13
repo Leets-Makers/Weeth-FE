@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import DownButton from '@/assets/images/ic_admin_cardinal.svg';
 import DuesRegisterDropDown from '@/components/Admin/DuesRegisterDropDown';
+import { units } from '@/theme/designTokens';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -9,7 +10,7 @@ export const Wrapper = styled.div`
   background-color: #fff;
   padding: 0 30px;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: ${units.radius.lg}px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 `;
 

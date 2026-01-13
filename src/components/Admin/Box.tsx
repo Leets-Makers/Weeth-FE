@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { units } from '@/theme/designTokens';
 
 export interface BoxProps {
   title?: string;
@@ -37,6 +38,7 @@ export const Wrapper = styled.div<{
   justify-content: space-between;
   padding: 16px;
   box-sizing: border-box;
+  border-radius: ${units.radius.sm}px;
   cursor: ${({ isClick }) => (isClick ? 'pointer' : 'auto')};
 
   ${({ isClick, isSelected, isIncomplete }) =>

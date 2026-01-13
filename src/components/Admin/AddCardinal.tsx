@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import plusIcon from '@/assets/images/ic_admin_plus.svg';
 import { useState } from 'react';
 import CardinalModal from '@/components/Admin/Modal/CardinalModal';
+import { units } from '@/theme/designTokens';
 
 export const AddCardinalWrapper = styled.div`
   min-width: 80px;
@@ -14,6 +15,7 @@ export const AddCardinalWrapper = styled.div`
   text-align: center;
   align-items: center;
   cursor: pointer;
+  border-radius: ${units.radius.lg}px;
 `;
 
 const AddCardinal: React.FC = () => {

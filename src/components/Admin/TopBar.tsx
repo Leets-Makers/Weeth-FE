@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/Button/Button';
 import useLogout from '@/hooks/useLogout';
+import { units } from '@/theme/designTokens';
 
 export const TopBarWrapper = styled.div`
   position: sticky;
@@ -56,7 +57,7 @@ const TopBar: React.FC<TopBarProps> = ({ title, description }) => {
         textcolor="#fff"
         height="45px"
         width="85px"
-        borderRadius="4px"
+        borderRadius={`${units.radius.md}px`}
         isSemibold={false}
         onClick={logout}
       >

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import icSearch from '@/assets/images/ic_admin_search.svg';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
+import { units } from '@/theme/designTokens';
 
 export const SearchBarWrapper = styled.div<{
   $isWrapped?: boolean;
@@ -15,7 +16,7 @@ export const SearchBarWrapper = styled.div<{
   width: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '63%' : '100%')};
   min-width: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '950px' : '1400px')};
   padding: 15px 20px;
-  border-radius: 4px;
+  border-radius: ${units.radius.lg}px;
   margin: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '0px' : '30px 0 10px')};
   box-shadow: 0px 3px 8px 0px rgba(133, 141, 138, 0.2);
   gap: 15px;
@@ -28,7 +29,7 @@ export const StyledInput = styled.input`
   box-sizing: border-box;
   padding: 12px 12px 12px 40px;
   border: 1px solid #dedede;
-  border-radius: 4px;
+  border-radius: ${units.radius.sm}px;
   &::placeholder {
     color: ${theme.color.gray[20]};
   }

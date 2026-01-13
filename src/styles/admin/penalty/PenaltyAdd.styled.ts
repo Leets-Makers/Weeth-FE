@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import theme from '@/styles/theme';
 import { Wrapper } from '@/styles/admin/DuesRegisterDropDown.styled';
+import { units } from '@/theme/designTokens';
 
 export const TitleWrapper = styled.div`
   padding: 20px 30px;
@@ -12,7 +13,7 @@ export const SubTitle = styled.div`
 `;
 
 export const PenaltyWrapper = styled(Wrapper)`
-  border-radius: 4px;
+  border-radius: ${units.radius.lg}px;
   width: 468px;
   // height: max-content;
   min-width: 468px;
