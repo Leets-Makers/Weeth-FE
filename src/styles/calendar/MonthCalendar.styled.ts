@@ -95,7 +95,7 @@ export const Calendar = styled.div`
     color: #ff5858;
   }
   .fc-day-sat a {
-    color: ${colors.light.secondary[500]};
+    color: ${colors.dark.secondary[500]};
   }
 
   // 기본 일정 표시 스타일링
@@ -170,7 +170,7 @@ export const Today = styled.div`
   position: absolute;
   top: 2px;
   right: 0.5px;
-  background-color: ${colors.light.neutral[800]};
+  background-color: ${colors.dark.neutral[100]};
   border-radius: 10px;
   padding-top: 2px;
   width: 52px;

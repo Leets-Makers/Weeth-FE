@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 // LNB
 
@@ -21,8 +22,8 @@ export const Sidebar = styled.aside`
   top: 0;
   left: 0;
   height: 100%;
-  background-color: ${colors.dark.neutral[300]};
-  color: ${colors.light.neutral[0]};
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.dark.neutral[900]};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -61,14 +62,14 @@ export const LNBMenuItem = styled.li<{ active?: boolean }>`
   gap: 8px;
   cursor: pointer;
   color: ${({ active }) =>
-    active ? colors.light.primary : colors.light.neutral[0]};
+    active ? colors.dark.primary : colors.dark.neutral[900]};
   font-size: 16px;
   transition: color 0.2s ease;
   padding: 12px 8px;
   border-radius: 12px;
 
   &:hover {
-    background-color: ${colors.light.neutral[500]};
+    background-color: ${colors.dark.neutral[400]};
   }
 
   span {
@@ -85,15 +86,15 @@ export const Footer = styled.div`
 export const Logout = styled.div`
   display: flex;
   align-items: center;
-  color: ${colors.light.neutral[100]};
+  color: ${colors.dark.neutral[800]};
   cursor: pointer;
   transition: color 0.2s ease;
   padding: 8px 12px;
   border-radius: 12px;
-  font-size: 16px;
+  ${typography.Button1};
 
   &:hover {
-    background-color: ${colors.light.neutral[500]};
+    background-color: ${colors.dark.neutral[400]};
   }
 
   span {
@@ -124,21 +125,20 @@ export const UserInfo = styled.div`
   }
 
   p {
-    color: ${colors.light.neutral[100]};
-    font-weight: 600;
-    font-size: 16px;
+    color: ${colors.dark.neutral[800]};
+    ${typography.Sub2};
     margin: 0;
     line-height: 20px;
   }
 
   small {
     color: #a6a6a6;
-    font-size: 12px;
+    ${typography.Caption1};
     margin-top: 4px;
   }
 
   &:hover {
-    background-color: ${colors.light.neutral[500]};
+    background-color: ${colors.semantic.container['neutral-interaction']};
   }
 
   &:before {
@@ -149,7 +149,7 @@ export const UserInfo = styled.div`
     left: 0;
     width: 100%;
     height: 1px;
-    background-color: ${colors.light.neutral[500]};
+    background-color: ${colors.dark.neutral[400]};
   }
 `;
 
@@ -180,7 +180,7 @@ export const Logo = styled.img`
 export const GNBMenu = styled.ul`
   display: flex;
   gap: 16px;
-  color: ${colors.light.neutral[0]};
+  color: ${colors.dark.neutral[900]};
   list-style: none;
   padding: 5px 0 0 0;
 `;
@@ -189,11 +189,11 @@ export const GNBMenuItem = styled.li<{ $active?: boolean }>`
   cursor: pointer;
   font-weight: ${({ $active }) => ($active ? 600 : 400)};
   color: ${({ $active }) =>
-    $active ? colors.light.primary[500] : colors.light.neutral[0]};
+    $active ? colors.dark.primary[500] : colors.dark.neutral[900]};
   transition: color 0.2s;
 
   &:hover {
-    color: ${colors.light.primary[500]};
+    color: ${colors.dark.primary[500]};
   }
 `;
 
