@@ -66,21 +66,21 @@ export const NoticeTextContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: ${colors.light.neutral['300']};
+  color: ${colors.dark.neutral['600']};
 
   ${pcResponsive}
 `;
 
 export const NoticeTitleText = styled.div`
   ${typography.Sub1};
-  color: ${colors.light.neutral['300']};
+  color: ${colors.dark.neutral['600']};
   line-height: 1;
 `;
 
 export const AllText = styled.div`
   font-size: 0.75rem;
   line-height: 1.25rem;
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
   cursor: pointer;
   margin-top: 0.1875rem;
 
@@ -100,7 +100,7 @@ export const ScrollContainer = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 0.25rem;
-    background: ${theme.color.gray[65]};
+    background: ${colors.semantic.button.neutral};
   }
 `;
 
@@ -128,7 +128,7 @@ export const EduScrollContainer = styled.div`
 
   &::-webkit-scrollbar-thumb {
     border-radius: 0.25rem;
-    background: ${theme.color.gray[65]};
+    background: ${colors.semantic.button.neutral};
   }
 
   @media (min-width: ${PC}) {
@@ -277,7 +277,7 @@ export const PartTitleText = styled.p`
   display: flex;
   margin: 0;
   ${typography.Sub1};
-  color: ${colors.light.neutral['300']};
+  color: ${colors.dark.neutral['600']};
 `;
 
 export const PartList = styled.div`
@@ -350,7 +350,7 @@ export const PartLabel = styled.p`
   margin: 0;
   ${typography.Sub1};
   line-height: 1;
-  color: ${colors.light.neutral['200']};
+  color: ${colors.dark.neutral['700']};
 `;
 
 export const EduTitle = styled.div`

@@ -32,7 +32,7 @@ const CommentContainer = styled.div`
   align-items: flex-end;
   padding: 10px 10px 22px 10px;
   gap: 10px;
-  background-color: ${colors.light.neutral[800]};
+  background-color: ${colors.dark.neutral[100]};
   color: white;
   box-sizing: border-box;
 `;
