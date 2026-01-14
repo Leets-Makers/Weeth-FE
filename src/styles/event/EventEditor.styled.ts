@@ -2,8 +2,13 @@ import theme from '@/styles/theme';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
+import { pcResponsive } from '..';
 
 export const EventEditorWrapper = styled.div`
+  width: 100%;
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
+  ${pcResponsive}
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,11 +17,14 @@ export const EventEditorWrapper = styled.div`
 `;
 
 export const EventEditorContent = styled.div`
+  width: 100%;
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
+  ${pcResponsive}
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: ${units.margin['300']}px;
-  width: 100%;
 `;
 
 export const Bold = styled.div`
@@ -49,7 +57,7 @@ export const Help = styled.div`
 
 export const DefaultStyle = styled.div`
   height: 50px;
-  width: 345px;
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -117,12 +125,12 @@ export const TimeBlock = styled.div`
 `;
 
 export const Line = styled.div`
-  width: 345px;
+  width: 100%;
   border-bottom: 1px solid ${theme.color.gray[30]};
 `;
 
 export const TextAreaWrapper = styled.div`
-  width: 345px;
+  width: 100%;
   background-color: ${theme.color.gray[18]};
   display: flex;
   align-items: center;
@@ -132,7 +140,7 @@ export const TextAreaWrapper = styled.div`
 
 export const TextArea = styled.textarea`
   height: 229px;
-  width: 325px;
+  width: 100%;
   padding: ${units.padding['300']}px ${units.padding['200']}px
     ${units.padding['300']}px ${units.padding['400']}px;
   border-radius: ${units.radius.lg}px;
