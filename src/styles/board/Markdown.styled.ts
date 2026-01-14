@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, PC, pcResponsive } from '@/styles';
+import { PC, pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
@@ -12,7 +12,8 @@ export const Container = styled.div`
   box-sizing: border-box;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: ${MOBILE};
+  height: 100%;
+  box-sizing: border-box;
 
   ${pcResponsive}
 `;
@@ -74,7 +75,7 @@ export const PreviewWrapper = styled.div`
   width: 100%;
   white-space: normal;
   box-sizing: border-box;
-  height: 340.12px;
+  height: 100%;
   color: ${colors.semantic.text.strong};
   background-color: ${colors.semantic.container.neutral};
   border: none;

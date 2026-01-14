@@ -5,7 +5,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  width: 171px;
+  width: 100%;
+
   height: 32px;
   box-sizing: border-box;
   padding: 6px 10px;

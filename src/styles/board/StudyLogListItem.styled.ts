@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
@@ -11,7 +11,6 @@ export const Container = styled.div`
   gap: ${units.margin['300']}px;
   cursor: pointer;
   width: 100%;
-  max-width: ${MOBILE};
   box-sizing: border-box;
 
   ${pcResponsive}

@@ -1,4 +1,4 @@
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ const TitleWrapper = styled.div`
   flex-direction: column;
   gap: ${units.margin['200']}px;
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
   box-sizing: border-box;
 
   ${pcResponsive}
