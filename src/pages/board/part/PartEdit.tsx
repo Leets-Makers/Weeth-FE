@@ -11,6 +11,7 @@ import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
 import * as S from '@/styles/board/PartBoard.styled';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 export interface originFile {
   fileId: number;
@@ -105,31 +106,33 @@ const PartEdit = () => {
   return (
     <S.Container>
       <EditGNB onClickButton={handleClickButton} save />
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: `${part} 파트게시판`, path: `/board/study/${part}` },
-          { label: '글쓰기 수정' },
-        ]}
-      />
-      <StudyWriteTemplate
-        category={category}
-        selectedCardinal={selectedCardinal}
-        setSelectedCardinal={setSelectedCardinal}
-        selectedWeek={selectedWeek}
-        setSelectedWeek={setSelectedWeek}
-        selectedStudy={selectedStudy}
-        setSelectedStudy={setSelectedStudy}
-        title={title}
-        setTitle={setTitle}
-        content={content}
-        setContent={setContent}
-        files={files}
-        setFiles={setFiles}
-        originFiles={originFiles}
-        setOriginFiles={setOriginFiles}
-        // onSave={onSave}
-      />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+            { label: '글쓰기 수정' },
+          ]}
+        />
+        <StudyWriteTemplate
+          category={category}
+          selectedCardinal={selectedCardinal}
+          setSelectedCardinal={setSelectedCardinal}
+          selectedWeek={selectedWeek}
+          setSelectedWeek={setSelectedWeek}
+          selectedStudy={selectedStudy}
+          setSelectedStudy={setSelectedStudy}
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
+          // onSave={onSave}
+        />
+      </PostContainerWrapper>
     </S.Container>
   );
 };

@@ -1,22 +1,20 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
 export const CommentContainer = styled.div<{ $isSelect: boolean }>`
   box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   padding: ${units.padding['400']}px ${units.padding['450']}px;
   background-color: ${(props) =>
     props.$isSelect ? '#508FFF1A' : 'transparent'};
   transition: background-color 0.3s ease;
   word-break: break-all;
-
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
 
   ${pcResponsive}
 `;
@@ -100,9 +98,9 @@ export const ReplyCommentContainer = styled.div`
   padding: 0 15px;
   align-items: flex-start;
   word-break: break-all;
-
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
 
   ${pcResponsive}
 `;

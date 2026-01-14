@@ -7,7 +7,7 @@ import Markdown from '@/components/Board/Markdown';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyDropdown from '@/components/Board/StudyDropdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
 import { units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
@@ -15,7 +15,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
   gap: ${units.margin['300']}px;
 
   ${pcResponsive}
@@ -42,7 +43,6 @@ export const DropdownContainer = styled.div`
 export const MarkdownContainer = styled.div`
   display: flex;
   width: 100%;
-  max-width: ${MOBILE};
   box-sizing: border-box;
 
   ${pcResponsive}
