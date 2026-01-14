@@ -1,6 +1,6 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import KebabButton from '@/assets/images/ic_board_detail_kebabButton.svg?react';
@@ -14,7 +14,6 @@ export const PostMainContainer = styled.div`
   word-break: break-all;
   border-bottom: 1px solid ${theme.color.gray[30]};
   width: 100%;
-  max-width: ${MOBILE};
   box-sizing: border-box;
 
   ${pcResponsive}

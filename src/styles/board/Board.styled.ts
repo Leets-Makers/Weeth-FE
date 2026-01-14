@@ -1,17 +1,17 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { PC, MOBILE, pcResponsive } from '@/styles';
+import { PC, pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: ${MOBILE};
-  margin: 0 auto;
-
+  min-width: ${units.device.mobile}px;
   ${pcResponsive}
+  box-sizing: border-box;
+  margin-bottom: 50px;
 `;
 
 export const BoardContainer = styled.div`
@@ -152,7 +152,6 @@ export const NoticeCard = styled.div`
   gap: 15px;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   text-decoration: none;
 
   &:hover {
@@ -285,13 +284,6 @@ export const PartList = styled.div`
   display: flex;
   gap: ${units.margin['300']}px;
   width: 100%;
-
-  @media (min-width: ${units.device.desktop}px) {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    width: 100%;
-  }
 `;
 
 export const PartItem = styled.div`
@@ -315,18 +307,43 @@ export const PartImage = styled.img`
 `;
 
 export const PartIcon = styled.div`
-  width: 73px;
+  width: 100%;
+  min-width: 73px;
   height: 73px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 
   svg {
-    width: 100%;
-    height: 100%;
+    width: 73px;
+    height: 73px;
+    flex-shrink: 0;
   }
 
   @media (min-width: ${units.device.desktop}px) {
-    width: 185.5px;
-    height: 73px;
+    width: 100%;
+    height: 100%;
+
+    svg {
+      width: 185.5px;
+      height: 73px;
+      flex-shrink: 0;
+    }
   }
+`;
+
+export const PartBackground = styled.div`
+  width: 100%;
+  height: 73px;
+  background-color: ${colors.semantic.container.neutral};
+  border-radius: ${units.radius.lg}px;
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 11px;
+  overflow: hidden;
 `;
 
 export const PartLabel = styled.p`

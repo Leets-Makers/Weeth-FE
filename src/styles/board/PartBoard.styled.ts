@@ -1,18 +1,17 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, PC, pcResponsive } from '@/styles';
+import { PC, pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
 export const Container = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 3.125rem;
-  margin: 0 auto;
-
-  width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
   ${pcResponsive}
+  box-sizing: border-box;
+  margin-bottom: 50px;
 `;
 
 export const TabContainer = styled.div`
@@ -59,6 +58,7 @@ export const DropdownContainer = styled.div`
 export const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const PostListItemContainer = styled.div`
@@ -71,7 +71,7 @@ export const PostListItemContainer = styled.div`
 
 export const Line = styled.div`
   border: 1px solid;
-  width: 366px;
+  width: 100%;
   color: ${(props) => props.theme.color.gray[18]};
 
   @media (min-width: ${PC}) {

@@ -7,6 +7,7 @@ import postBoardNotice from '@/api/postBoardNotice';
 import { PostRequestType } from '@/types/PostRequestType';
 import { toastError } from '@/components/common/ToastMessage';
 import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
+import * as S from '@/styles/board/BoardDetail.styled';
 
 type CategorySlug = 'study' | 'article';
 type CategoryEnum = 'StudyLog' | 'Article';
@@ -85,7 +86,7 @@ const PartPost = () => {
     }
   };
   return (
-    <>
+    <S.Container>
       <EditGNB onClickButton={handleClickButton} />
       <PostContainerWrapper>
         <Breadcrumb
@@ -111,7 +112,7 @@ const PartPost = () => {
           setFiles={setFiles}
         />
       </PostContainerWrapper>
-    </>
+    </S.Container>
   );
 };
 

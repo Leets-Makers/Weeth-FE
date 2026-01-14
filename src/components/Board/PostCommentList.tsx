@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import Comment from '@/components/Board/Comment';
 import ReplyComment from '@/components/Board/ReplyComment';
 import { originFile } from '@/pages/board/part/PartEdit';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
+import { units } from '@/theme/designTokens';
 
 interface CommentType {
   id: number;
@@ -21,7 +22,9 @@ const Container = styled.div`
   margin: 5px 5px 56px 5px;
   overflow-y: scroll;
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
+  margin-bottom: 50px;
 
   ${pcResponsive}
 `;

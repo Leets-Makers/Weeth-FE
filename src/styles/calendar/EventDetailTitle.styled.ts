@@ -10,6 +10,7 @@ export const KebabIcon = styled(KebabButton)`
 `;
 
 export const EventTitleWrapper = styled.div`
+  width: 100%;
   padding: 0 ${units.padding['450']}px;
   box-sizing: border-box;
 `;

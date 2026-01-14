@@ -13,6 +13,7 @@ import {
 } from '@/components/common/ToastMessage';
 import postBoardNotice from '@/api/postBoardNotice';
 import * as S from '@/styles/board/BoardDetail.styled';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 const EduEdit = () => {
   const navigate = useNavigate();
@@ -92,27 +93,29 @@ const EduEdit = () => {
   return (
     <S.Container>
       <EditGNB onClickButton={handleClickButton} save />
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: `${part} 교육자료`, path: `/board/education/${part}` },
-          { label: '교육자료 수정' },
-        ]}
-      />
-      <EduWrite
-        title={title}
-        setTitle={setTitle}
-        selectedCardinal={selectedCardinal}
-        setSelectedCardinal={setSelectedCardinal}
-        selectedPart={selectedPart}
-        setSelectedPart={setSelectedPart}
-        content={content}
-        setContent={setContent}
-        files={files}
-        setFiles={setFiles}
-        originFiles={originFiles}
-        setOriginFiles={setOriginFiles}
-      />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 교육자료`, path: `/board/education/${part}` },
+            { label: '교육자료 수정' },
+          ]}
+        />
+        <EduWrite
+          title={title}
+          setTitle={setTitle}
+          selectedCardinal={selectedCardinal}
+          setSelectedCardinal={setSelectedCardinal}
+          selectedPart={selectedPart}
+          setSelectedPart={setSelectedPart}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
+        />
+      </PostContainerWrapper>
     </S.Container>
   );
 };

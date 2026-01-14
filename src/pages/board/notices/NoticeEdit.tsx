@@ -12,6 +12,7 @@ import useGetBoardDetail from '@/api/useGetBoardDetail';
 import { originFile } from '@/pages/board/part/PartEdit';
 import EditGNB from '@/components/Navigation/EditGNB';
 import * as S from '@/styles/board/BoardDetail.styled';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 const NoticeEdit = () => {
   const navigate = useNavigate();
@@ -87,23 +88,25 @@ const NoticeEdit = () => {
   return (
     <S.Container>
       <EditGNB onClickButton={handleClickButton} save />
-      <Breadcrumb
-        items={[
-          { label: '게시판', path: '/board' },
-          { label: '공지사항', path: '/board/notices' },
-          { label: '글쓰기 수정' },
-        ]}
-      />
-      <NoticeWrite
-        title={title}
-        setTitle={setTitle}
-        content={content}
-        setContent={setContent}
-        files={files}
-        setFiles={setFiles}
-        originFiles={originFiles}
-        setOriginFiles={setOriginFiles}
-      />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: '공지사항', path: '/board/notices' },
+            { label: '글쓰기 수정' },
+          ]}
+        />
+        <NoticeWrite
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
+        />
+      </PostContainerWrapper>
     </S.Container>
   );
 };

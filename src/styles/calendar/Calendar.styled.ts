@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
-import { MOBILE, pcResponsive } from '..';
+import { pcResponsive } from '..';
 
 export const CalendarWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
   ${pcResponsive}
   box-sizing: border-box;
   margin-bottom: 50px;
@@ -51,7 +51,7 @@ export const ImgButton = styled.img`
 
 export const FloatingButton = styled.div`
   position: fixed;
-  right: calc(max(0px, (100vw - ${MOBILE}) / 2) + 16px);
+  right: 16px;
   bottom: 24px;
   width: 44px;
   height: 45px;

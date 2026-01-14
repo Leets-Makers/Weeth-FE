@@ -158,7 +158,7 @@ export const SelectedDateOnCalendar = styled.div`
   background-color: ${colors.semantic.container['primary-alternative']};
   border-radius: 10px;
   padding-top: 2px;
-  width: 52px;
+  width: 100%;
   height: 66px;
   z-index: 10;
   color: white !important;
@@ -173,7 +173,7 @@ export const Today = styled.div`
   background-color: ${colors.dark.neutral[100]};
   border-radius: 10px;
   padding-top: 2px;
-  width: 52px;
+  width: 100%;
   height: 66px;
 `;
 
@@ -182,6 +182,7 @@ export const ScheduleList = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  padding: 0 ${units.padding['450']}px;
 `;
 
 export const SelectedDate = styled.div`
@@ -191,7 +192,7 @@ export const SelectedDate = styled.div`
 `;
 
 export const NoEvent = styled.div`
-  width: 339px;
+  width: 100%;
   height: 63px;
   background-color: ${colors.semantic.container.neutral};
   border-radius: ${units.radius.md}px;
