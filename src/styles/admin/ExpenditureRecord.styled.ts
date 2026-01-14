@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '../theme';
+import { units } from '@/theme/designTokens';
 
 export const Container = styled.div`
   width: 95%;
@@ -11,6 +12,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   background-color: #fff;
   border: 1px solid #dedede;
+  border-radius: ${units.radius.sm}px;
 `;
 
 export const DateWrapper = styled.div`
