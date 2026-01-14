@@ -5,7 +5,7 @@ import createComment from '@/api/postComment';
 import { toastError } from '@/components/common/ToastMessage';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
@@ -13,8 +13,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
+
   ${pcResponsive}
+`;
+
+const FileListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const CommentContainer = styled.div`
@@ -141,7 +150,7 @@ const CommentInput = ({
   return (
     <Container>
       {files.length > 0 && (
-        <>
+        <FileListContainer>
           {files.map((file) => (
             <PostFile
               key={`${file.name}-${file.lastModified}`}
@@ -150,7 +159,7 @@ const CommentInput = ({
               onClick={() => handleDeleteFile(file)}
             />
           ))}
-        </>
+        </FileListContainer>
       )}
 
       <CommentContainer>

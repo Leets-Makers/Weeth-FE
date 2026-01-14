@@ -1,3 +1,4 @@
+import { pcResponsive } from '@/styles';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import { useEffect, useState } from 'react';
@@ -6,6 +7,10 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
+  box-sizing: border-box;
 `;
 
 const Content = styled.div`
@@ -14,10 +19,12 @@ const Content = styled.div`
   align-items: center;
   background-color: ${colors.semantic.container.neutral};
   border-radius: ${units.radius.lg}px;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const StyledInput = styled.input`
-  width: 345px;
+  width: 100%;
   box-sizing: border-box;
   outline: none;
   border: none;

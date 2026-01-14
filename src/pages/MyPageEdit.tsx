@@ -12,10 +12,10 @@ import Loading from '@/components/common/Loading';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import EditGNB from '@/components/Navigation/EditGNB';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
-import { ResponsiveContainer } from '@/styles';
+import { PageHeader, ResponsiveContainer } from '@/styles';
 import typography from '@/theme/typography';
 import { colors } from '@/theme/designTokens';
-import { PageHeader } from './attend/Penalty';
+
 
 const InfoWrapper = styled.div`
   display: flex;

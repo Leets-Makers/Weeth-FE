@@ -17,7 +17,7 @@ problematicEnvVars.forEach((varName) => {
 });
 
 export default defineConfig({
-  plugins: [react(), svgr(), EnvironmentPlugin('all')],
+  plugins: [react(), svgr()],
   server: {
     port: 3000,
   },

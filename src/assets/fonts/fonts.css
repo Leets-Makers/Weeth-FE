@@ -1,18 +1,18 @@
 @font-face {
   font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-Regular.woff2') format('woff2');
+  src: url('./Pretendard-Regular.woff2') format('woff2');
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-SemiBold.woff2') format('woff2');
+  src: url('./Pretendard-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-display: swap;
 }
 @font-face {
   font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-Bold.woff2') format('woff2');
+  src: url('./Pretendard-Bold.woff2') format('woff2');
   font-weight: 700;
   font-display: swap;
 }
