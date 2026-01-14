@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 export const StyledYear = styled.div`
   display: flex;
-  width: 344px;
+  width: 100%;
   margin: 0px 16px 16px 15px;
   flex-direction: column;
   justify-content: center;
