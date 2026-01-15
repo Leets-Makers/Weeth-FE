@@ -1,8 +1,7 @@
-// styles/theme/adminTheme.ts
 import legacyTheme from '@/styles/theme';
-import { buildTheme } from './buildTheme';
+import { buildAdminTheme } from './buildAdminTheme';
 
 export const adminTheme = {
-  ...legacyTheme, // 기존 컬러 유지
-  ...buildTheme('light'), // semantic + palette (light)
+  ...legacyTheme, // 기존 theme
+  ...buildAdminTheme('light'), // semantic만 Admin 전용
 };
