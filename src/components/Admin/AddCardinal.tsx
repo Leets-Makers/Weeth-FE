@@ -9,10 +9,7 @@ export const AddCardinalWrapper = styled.div`
   min-width: 80px;
   height: 164px;
   box-sizing: border-box;
-  /* background-color: ${theme.color.gray[100]}; */
-  /* background-color: ${colors.semantic.button.primary}; */
-  background-color: ${({ theme }) => theme.semantic.button.primary};
-
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   display: flex;
   justify-content: center;
   text-align: center;

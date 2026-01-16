@@ -31,8 +31,8 @@ export const Wrapper = styled.div<{
     if (isSelected) return theme.color.gray[18];
     return color;
   }};
-  border: ${({ isIncomplete }) =>
-    isIncomplete ? `1.5px dashed ${theme.color.gray[18]}` : 'none'};
+  border: ${({ isIncomplete, theme }) =>
+    isIncomplete ? `1.5px dashed ${theme.semantic.line}` : 'none'};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -58,15 +58,15 @@ export const Title = styled.div<{
 }>`
   font-size: 18px;
   min-height: 24px;
-  color: ${({ isIncomplete }) =>
-    isIncomplete ? theme.color.gray[18] : theme.color.gray[100]};
+  color: ${({ isIncomplete, theme }) =>
+    isIncomplete ? theme.semantic.text.disabled : theme.semantic.text.strong};
 `;
 
 export const Description = styled.div<{ isIncomplete?: boolean }>`
   font-size: 24px;
   font-family: ${theme.font.semiBold};
-  color: ${({ isIncomplete }) =>
-    isIncomplete ? theme.color.gray[18] : theme.color.gray[100]};
+  color: ${({ isIncomplete, theme }) =>
+    isIncomplete ? theme.semantic.text.disabled : theme.semantic.text.strong};
   margin-top: 20px;
   white-space: nowrap;
 `;

@@ -3,17 +3,17 @@ import styled from 'styled-components';
 import CardinalSVG from '@/assets/images/ic_admin_cardinal.svg';
 import { CardinalProps } from '@/types/adminCardinal';
 import { useGetAllCardinals } from '@/api/useGetCardinals';
+import { units } from '@/theme/designTokens';
 
 export const CardinalButton = styled.div`
   width: 118px;
   height: 48px;
-  border: 1px solid #dedede;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.semantic.button.neutral};
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: ${units.radius.md}px;
   color: black;
 `;
 
@@ -28,8 +28,8 @@ export const DropdownMenu = styled.div.attrs<{ itemCount: number }>(
   width: 118px;
   background-color: #ffffff;
   border: 1px solid #dedede;
-  border-radius: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: ${units.radius.md}px;
+  box-shadow: 0 5px 20px 0 rgba(17, 33, 49, 0.2);
   color: black;
   position: absolute;
   z-index: 5;
@@ -39,11 +39,20 @@ export const DropdownItem = styled.div`
   width: 100%;
   height: 48px;
   background-color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  &:first-child {
+    border-top-left-radius: ${units.radius.md}px;
+    border-top-right-radius: ${units.radius.md}px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: ${units.radius.md}px;
+    border-bottom-right-radius: ${units.radius.md}px;
+  }
 `;
 
 export const ArrowIcon = styled.img`

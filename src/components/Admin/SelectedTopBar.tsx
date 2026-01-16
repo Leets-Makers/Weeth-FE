@@ -15,7 +15,7 @@ const SelectedTopBarWrapper = styled.div`
   right: 0;
   width: 100%;
   min-width: 1500px;
-  background-color: ${theme.color.main};
+  background-color: ${({ theme }) => theme.semantic.container.primary};
   color: ${theme.color.gray[100]};
   display: flex;
   justify-content: space-between;

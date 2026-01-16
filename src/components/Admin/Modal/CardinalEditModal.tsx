@@ -9,6 +9,8 @@ import {
   handleNumericInput,
   preventNonNumeric,
 } from '@/utils/admin/handleNumericInput';
+import { units } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
 
 interface CardinalChangeModalProps {
   isOpen: boolean;
@@ -29,6 +31,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
   position = 'absolute',
   overlayColor = 'transparent',
 }) => {
+  const theme = useTheme();
   const [cardinalNumber, setCardinalNumber] = useState('');
   const [isCustomInput, setIsCustomInput] = useState(true);
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
@@ -110,19 +113,20 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
       footer={
         <S.FooterWrapper>
           <Button
-            width="80px"
-            height="45px"
-            borderRadius="4px"
-            color="#2f2f2f"
+            width="60px"
+            height="48px"
+            borderRadius={`${units.radius.md}px`}
+            textcolor={`${theme.semantic.text.strong}`}
+            color={`${theme.semantic.button.neutral}`}
             onClick={onClose}
           >
-            Cancel
+            취소
           </Button>
           <Button
-            width="70px"
-            height="45px"
-            color="#2f2f2f"
-            borderRadius="4px"
+            width="60px"
+            height="48px"
+            color={`${theme.semantic.button.primary}`}
+            borderRadius={`${units.radius.md}px`}
             onClick={handleSave}
           >
             저장

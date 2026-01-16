@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import icSearch from '@/assets/images/ic_admin_search.svg';
+import icSearch from '@/assets/images/ic_search.svg';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import { units } from '@/theme/designTokens';
 
@@ -28,10 +28,10 @@ export const StyledInput = styled.input`
   font-size: 18px;
   box-sizing: border-box;
   padding: 12px 12px 12px 40px;
-  border: 1px solid #dedede;
+  border: 1px solid ${({ theme }) => theme.semantic.line};
   border-radius: ${units.radius.sm}px;
   &::placeholder {
-    color: ${theme.color.gray[20]};
+    color: ${({ theme }) => theme.semantic.text.alternative};
   }
   &:focus {
     border: none;
