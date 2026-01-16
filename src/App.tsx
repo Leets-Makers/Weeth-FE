@@ -5,7 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { CustomToastContainer } from '@/components/common/ToastMessage';
 import theme from '@/styles/theme';
-import ModalProvider from './modalProvider';
+import ModalProvider from '@/modalProvider';
 
 const App = () => {
   return (
