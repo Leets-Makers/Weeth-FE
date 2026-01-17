@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import theme from '../theme';
+import { units } from '@/theme/designTokens';
 
 export const Wrapper = styled.div`
   width: 94.7%;
   margin-left: 2.5%;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   display: flex;
   flex-direction: column;
   justify-content: center;

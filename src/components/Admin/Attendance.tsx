@@ -54,12 +54,17 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
     <>
       {data.map((item) => (
         <div key={item.id}>
-          <AttendanceTable onClick={() => toggleDropdown(item.id)}>
+          <AttendanceTable
+            onClick={() => toggleDropdown(item.id)}
+            $isOpen={openDropdownId === item.id}
+          >
             <Wrapper>
               <div>
                 <DateInfoWrapper>
-                  <DateText>{formatDate(item.start)}</DateText>
-                  <ContentText>
+                  <DateText $isOpen={openDropdownId === item.id}>
+                    {formatDate(item.start)}
+                  </DateText>
+                  <ContentText $isOpen={openDropdownId === item.id}>
                     {item.content} {item.title}
                   </ContentText>
                 </DateInfoWrapper>

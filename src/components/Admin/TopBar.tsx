@@ -12,7 +12,7 @@ export const TopBarWrapper = styled.div`
   right: 0;
   width: 100%;
   min-width: 1500px;
-  background-color: ${({ theme }) => theme.backGround};
+  background-color: ${({ theme }) => theme.semantic.backGround};
   padding: 0 20px;
   box-sizing: border-box;
   display: flex;
@@ -39,6 +39,7 @@ export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
 `;
+
 interface TopBarProps {
   title: string;
   description: string;

@@ -4,7 +4,7 @@ import NavMenuList from '@/components/Admin/NavMenuList';
 
 const NavMenuWrapper = styled.div`
   width: 250px;
-  background-color: ${({ theme }) => theme.backGround};
+  background-color: ${({ theme }) => theme.semantic.backGround};
   border: 1px solid ${({ theme }) => theme.semantic.line};
   overflow-y: auto;
 `;
