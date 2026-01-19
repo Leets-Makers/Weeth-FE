@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { USER_QUERY_KEYS } from '@/constants/queryKeys';
 import getAllMembers from '@/api/getAllMembers';
 
-const useAllMemberData = (cardinal: number | null) => {
+export const useAllMemberData = (cardinal: number | null) => {
   return useInfiniteQuery({
     queryKey: USER_QUERY_KEYS.member.list(cardinal),
 
