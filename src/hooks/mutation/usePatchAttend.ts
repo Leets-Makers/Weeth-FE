@@ -17,6 +17,10 @@ const usePatchAttend = (callbacks?: useMutationCallback) => {
       });
 
       await queryClient.invalidateQueries({
+        queryKey: ATTEND_QUERY_KEYS.attendCheck.me,
+      });
+
+      await queryClient.invalidateQueries({
         queryKey: ATTEND_QUERY_KEYS.penalty.me,
       });
       callbacks?.onSuccess?.();

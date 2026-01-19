@@ -11,6 +11,10 @@ export const ATTEND_QUERY_KEYS = {
     all: ['attend'],
     me: ['attend', 'me'],
   },
+  attendCheck: {
+    all: ['attendCheck'],
+    me: ['attnedCheck', 'me'],
+  },
   penalty: {
     all: ['penalty'],
     me: ['penalty', 'me'],
