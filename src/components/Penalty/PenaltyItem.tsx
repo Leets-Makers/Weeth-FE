@@ -1,4 +1,4 @@
-import { Penalty } from '@/api/useGetPenalty';
+import { Penalty } from '@/api/getPenalty';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/penalty/PenaltyItem.styled';
 
