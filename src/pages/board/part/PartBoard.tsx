@@ -12,7 +12,6 @@ import useGetPartBoard from '@/api/useGetPartBoard';
 import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
-// import useGetUserInfo from '@/api/useGetUserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/types/board';
 import Breadcrumb from '@/components/common/Breadcrumb';
@@ -29,8 +28,6 @@ type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
 const PartBoard = () => {
   useCustomBack('/board');
-
-  // const { userInfo } = useGetUserInfo();
 
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
@@ -53,13 +50,6 @@ const PartBoard = () => {
     [categorySlug],
   );
   const isStudyLog = activeCategory === 'StudyLog';
-
-  // const canWrite = useMemo(() => {
-  //   if (!userInfo) return false;
-  //   if (userInfo.role === 'ADMIN') return true;
-
-  //   return part === 'ALL' || userInfo.position === part;
-  // }, [userInfo, part]);
 
   useEffect(() => {
     const c = searchParams.get('cardinal');

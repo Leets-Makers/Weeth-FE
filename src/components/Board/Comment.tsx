@@ -5,13 +5,13 @@ import * as S from '@/styles/board/Comment.styled';
 import deleteComment from '@/api/deleteComment';
 import { useCallback } from 'react';
 import formatDateTime from '@/hooks/formatDateTime';
-import useGetUserName from '@/hooks/useGetNameAndRole';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import convertLinksInText from '@/hooks/convertLinksInText';
 import { originFile } from '@/pages/board/part/PartEdit';
 import PostFile from '@/components/Board/PostFile';
 import { toastError, toastSuccess } from '@/components/common/ToastMessage';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
+import useUserData from '@/hooks/queries/useUserData';
 
 interface CommentProps {
   name: string;
@@ -42,6 +42,8 @@ const Comment = ({
   onReply,
   selectedComment,
 }: CommentProps) => {
+  const { data: userInfo } = useUserData();
+
   const onClickReply = () => {
     onReply(commentId);
   };
@@ -88,7 +90,7 @@ const Comment = ({
 
   const formattedTime = formatDateTime(time);
 
-  const isMyComment = name === useGetUserName();
+  const isMyComment = name === userInfo?.name;
 
   return (
     <S.CommentContainer $isSelect={selectedComment?.[commentId] || false}>
