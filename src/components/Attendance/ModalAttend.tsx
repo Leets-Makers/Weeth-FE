@@ -1,12 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import {
-  StyledModal,
-  ModalContent,
-  ModalHeader,
-} from '@/styles/attend/CommonModal.styled';
+import { StyledModal, ModalContent } from '@/styles/attend/CommonModal.styled';
 import * as S from '@/styles/attend/ModalAttend.styled';
 
-import check from '@/assets/images/ic_check.svg';
 import icClose from '@/assets/images/ic_close.svg';
 import Correct from '@/assets/images/ic_correct.svg?react';
 import Wrong from '@/assets/images/ic_wrong.svg?react';
@@ -62,7 +57,6 @@ const ModalAttend: React.FC<ModalAttendProps> = ({
   useEffect(() => {
     if (!open) {
       setInputValue('');
-      setFeedback({ type: null, message: '' });
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
         timeoutRef.current = null;
@@ -96,6 +90,7 @@ const ModalAttend: React.FC<ModalAttendProps> = ({
       }
 
       timeoutRef.current = setTimeout(() => {
+        setFeedback({ type: null, message: '' });
         close();
         timeoutRef.current = null;
       }, 2000);
