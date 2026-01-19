@@ -19,6 +19,7 @@ const QueryProviders = ({ children }: ProvidersProps) => {
         defaultOptions: {
           queries: {
             retry: 0,
+            refetchOnWindowFocus: false,
           },
           mutations: {
             onError: errorHandler,

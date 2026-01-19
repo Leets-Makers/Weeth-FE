@@ -1,4 +1,4 @@
-import { getUserInfo, UserInfo } from '@/api/useGetUserInfo';
+import { getUserInfo, UserInfo } from '@/api/getUserInfo';
 import { USER_QUERY_KEYS } from '@/constants/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 

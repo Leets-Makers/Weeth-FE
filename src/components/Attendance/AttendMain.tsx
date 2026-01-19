@@ -10,7 +10,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 
 import * as S from '@/styles/attend/AttendMain.styled';
 
-import useGetAttend from '@/api/useGetAttend';
+import useGetAttend from '@/api/getAttendInfo';
 import useGetPenalty from '@/api/useGetPenalty';
 import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 

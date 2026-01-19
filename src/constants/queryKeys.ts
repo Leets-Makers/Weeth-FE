@@ -6,4 +6,9 @@ export const USER_QUERY_KEYS = {
   },
 };
 
-export const ATTEND_QUERY_KEYS = {};
+export const ATTEND_QUERY_KEYS = {
+  attend: {
+    all: ['attend'],
+    me: ['attend', 'me'],
+  },
+};
