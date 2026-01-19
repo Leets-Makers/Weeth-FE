@@ -4,7 +4,7 @@ import MenuImage from '@/assets/images/ic_comment_delete.svg?react';
 import * as S from '@/styles/board/Comment.styled';
 import deleteComment from '@/api/deleteComment';
 import formatDateTime from '@/hooks/formatDateTime';
-import useGetUserName from '@/hooks/useGetUserName';
+import useGetUserName from '@/hooks/useGetNameAndRole';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import { useCallback } from 'react';
 import convertLinksInText from '@/hooks/convertLinksInText';

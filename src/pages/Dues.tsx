@@ -1,36 +1,31 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import useGetDuesInfo from '@/api/useGetDuesInfo';
 import { toastError } from '@/components/common/ToastMessage';
-import Loading from '@/components/common/Loading';
 
 import DueCategory from '@/components/Dues/DueCategory';
 import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
 import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/dues/Dues.styled';
-import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
+import useUserData from '@/hooks/queries/useUserData';
+import Loading from '@/components/common/Loading';
 
 const Dues: React.FC = () => {
   useCustomBack('/home');
 
-  const { globalInfo, loading: globalLoading } = useGetGlobaluserInfo();
+  const { data: userInfo } = useUserData();
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [cardinal, setCardinal] = useState<number | null>(null);
 
   useEffect(() => {
-    if (globalInfo?.cardinals?.length) {
-      setCardinal(globalInfo.cardinals[0]);
+    if (userInfo?.cardinals?.length) {
+      setCardinal(userInfo.cardinals[0]);
     }
-  }, [globalInfo]);
+  }, [userInfo]);
 
-  const {
-    duesInfo,
-    loading: duesLoading,
-    duesError,
-  } = useGetDuesInfo(cardinal);
+  const { duesInfo, loading, duesError } = useGetDuesInfo(cardinal);
 
   useEffect(() => {
     if (duesError) toastError(duesError);
@@ -53,15 +48,7 @@ const Dues: React.FC = () => {
     );
   }, [duesInfo, selectedCategory, cardinal]);
 
-  const combinedLoading = useSmartCombinedLoading(globalLoading, duesLoading);
-
-  if (combinedLoading && !duesInfo) {
-    return (
-      <S.StyledDues>
-        <Loading />
-      </S.StyledDues>
-    );
-  }
+  if (loading) return <Loading />;
 
   return (
     <S.StyledDues>

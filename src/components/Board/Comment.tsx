@@ -5,7 +5,7 @@ import * as S from '@/styles/board/Comment.styled';
 import deleteComment from '@/api/deleteComment';
 import { useCallback } from 'react';
 import formatDateTime from '@/hooks/formatDateTime';
-import useGetUserName from '@/hooks/useGetUserName';
+import useGetUserName from '@/hooks/useGetNameAndRole';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import convertLinksInText from '@/hooks/convertLinksInText';
 import { originFile } from '@/pages/board/part/PartEdit';

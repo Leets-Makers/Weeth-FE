@@ -16,7 +16,7 @@ import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
 import deletePost from '@/api/deletePost';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetUserName from '@/hooks/useGetUserName';
+import useGetUserName from '@/hooks/useGetNameAndRole';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import {
   useCloseSelectModal,

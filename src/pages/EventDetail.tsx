@@ -4,8 +4,8 @@ import EventTitle from '@/components/Event/EventTitle';
 import EventContent from '@/components/Event/EventContent';
 import useCustomBack from '@/hooks/useCustomBack';
 import { useLocation, useParams } from 'react-router-dom';
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import { CURRENT_MONTH, CURRENT_YEAR } from '@/constants/dateConstants';
+import useUserData from '@/hooks/queries/useUserData';
 
 export interface EventDetailData {
   id: number;
@@ -29,7 +29,8 @@ const EventDetail = () => {
   useCustomBack(`/calendar?year=${year}&month=${month}`);
 
   const { id, type } = useParams();
-  const { isAdmin } = useGetGlobaluserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
   const { data: eventDetailData, error } = useGetEventInfo(type, id);
 
   if (error || !eventDetailData) return <S.Error>{error}</S.Error>;

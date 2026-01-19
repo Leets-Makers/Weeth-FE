@@ -1,6 +1,5 @@
 import * as S from '@/styles/attend/AttendMain.styled';
 import * as P from '@/styles/attend/AttendRate.styled';
-import useGetUserName from '@/hooks/useGetUserName';
 
 const AttendRate: React.FC<{ attendRate: number }> = ({ attendRate }) => {
   const userName = useGetUserName();
