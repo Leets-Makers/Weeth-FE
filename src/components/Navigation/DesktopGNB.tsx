@@ -1,14 +1,13 @@
 import logo from '@/assets/images/ic_name_logo.svg';
-import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '@/styles/navigation/Navigation.styled';
-import React from 'react';
+import useUserData from '@/hooks/queries/useUserData';
 
 const DesktopGNB = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userInfo } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
   const { characterImg } = useSetPosition(userInfo?.position || '');
 
   const menus = [

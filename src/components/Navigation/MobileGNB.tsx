@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import logo from '@/assets/images/ic_name_logo.svg';
-import React, { useState } from 'react';
-import useGetUserInfo from '@/api/useGetUserInfo';
+import { useState } from 'react';
 import useSetPosition from '@/hooks/useSetPosition';
 import Menu from '@/assets/images/ic_hamburger_menu.svg?react';
 import { colors } from '@/theme/designTokens';
 import { useNavigate } from 'react-router-dom';
 import LNB from '@/components/Navigation/LNB';
+import useUserData from '@/hooks/queries/useUserData';
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ const Profile = styled.img`
 
 const MobileGNB = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userInfo } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
   const { characterImg } = useSetPosition(userInfo?.position || '');
 
   const navi = useNavigate();

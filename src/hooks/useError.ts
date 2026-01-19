@@ -1,13 +1,11 @@
 import { AxiosError } from 'axios';
 import { toastError } from '@/components/common/ToastMessage';
-import { useNavigate } from 'react-router-dom';
 
 interface ErrorResponse {
   message?: string;
 }
 
 const useError = () => {
-  const navigate = useNavigate();
   return (error: unknown) => {
     if (!(error instanceof AxiosError)) {
       toastError('알 수 없는 오류가 발생했습니다.');
@@ -21,7 +19,6 @@ const useError = () => {
       // 인증, 인가
       case 401:
         toastError(message ?? '로그인이 필요합니다.');
-        navigate('/');
         return;
 
       case 403:
