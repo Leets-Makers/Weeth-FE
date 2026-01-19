@@ -18,15 +18,20 @@ export const ATTEND_QUERY_KEYS = {
   },
   attendCheck: {
     all: ['attendCheck'],
-    me: ['attnedCheck', 'me'],
+    list: ['attnedCheck', 'list'],
   },
   penalty: {
     all: ['penalty'],
-    me: ['penalty', 'me'],
+    list: ['penalty', 'list'],
   },
 };
 
-export const DUES_QUERY_KEYS = {};
+export const DUES_QUERY_KEYS = {
+  dues: {
+    all: ['dues'],
+    list: ['dues', 'list'],
+  },
+};
 
 export const BOARD_QUERY_KEYS = {};
 

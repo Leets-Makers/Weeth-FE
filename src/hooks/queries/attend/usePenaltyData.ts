@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const usePenaltyData = () => {
   return useQuery({
-    queryKey: ATTEND_QUERY_KEYS.penalty.me,
+    queryKey: ATTEND_QUERY_KEYS.penalty.list,
     queryFn: getPenalty,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,

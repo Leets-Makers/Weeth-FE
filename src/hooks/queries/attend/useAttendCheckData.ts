@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const useAttendCheckData = () => {
   return useQuery<AttendData>({
-    queryKey: ATTEND_QUERY_KEYS.attendCheck.me,
+    queryKey: ATTEND_QUERY_KEYS.attendCheck.list,
     queryFn: getAttendCheck,
   });
 };

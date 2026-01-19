@@ -8,6 +8,8 @@ const useMemberDetailData = (memberId: number) => {
     queryKey: USER_QUERY_KEYS.member.byId(memberId),
     queryFn: () => getMemberDetail(memberId as number),
     enabled: typeof memberId === 'number',
+    staleTime: 1000 * 60 * 10,
+    gcTime: 1000 * 60 * 5,
   });
 };
 
