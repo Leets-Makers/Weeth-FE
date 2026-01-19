@@ -4,18 +4,15 @@ import styled from 'styled-components';
 import DropdownMenu from '@/components/Button/DropdownMenu';
 import InfoInput from '@/components/MyPage/InfoInput';
 import useCustomBack from '@/hooks/useCustomBack';
-import useGetUserInfo from '@/api/useGetUserInfo';
 import usePatchUserInfo from '@/api/usePatchMyInfo';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
 
-import Loading from '@/components/common/Loading';
-import useSmartLoading from '@/hooks/useSmartLoading';
 import EditGNB from '@/components/Navigation/EditGNB';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { PageHeader, ResponsiveContainer } from '@/styles';
 import typography from '@/theme/typography';
 import { colors } from '@/theme/designTokens';
-
+import useUserData from '@/hooks/queries/useUserData';
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -51,7 +48,7 @@ const ErrorText = styled.div`
 const MyPageEdit = () => {
   useCustomBack('/mypage');
 
-  const { userInfo, loading } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
   const [userData, setUserData] = useState<{ key: string; value: any }[]>([]);
 
   const navi = useNavigate();
@@ -141,16 +138,6 @@ const MyPageEdit = () => {
       toastInfo(err);
     }
   };
-
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!loading) resolve();
-    }),
-  );
-
-  if (smartLoading) {
-    return <Loading />;
-  }
 
   return (
     <ResponsiveContainer>

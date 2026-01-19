@@ -9,18 +9,18 @@ import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import useSmartLoading, {
   useSmartCombinedLoading,
 } from '@/hooks/useSmartLoading';
 import { BoardContent } from '@/types/board';
 import { BreadcrumbPadding } from '@/styles/breadCrum';
+import useUserData from '@/hooks/queries/useUserData';
 
 const BoardNotice = () => {
   useCustomBack('/board');
 
-  const { isAdmin } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
 
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -161,7 +161,7 @@ const BoardNotice = () => {
           )}
         </S.PostContainer>
       )}
-      {isAdmin && (
+      {userInfo?.role === 'ADMIN' && (
         <S.FloatingButton>
           <FloatingWritingIcon onClick={handleWriting} />
         </S.FloatingButton>

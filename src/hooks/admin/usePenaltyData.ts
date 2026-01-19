@@ -8,26 +8,29 @@ import {
 interface UsePenaltyDataProps {
   selectedCardinal: number | null;
   isAdmin?: boolean;
-  loading?: boolean;
   dispatch: React.Dispatch<PenaltyAction>;
 }
 
-export const usePenaltyData = ({
+const usePenaltyData = ({
   selectedCardinal,
   isAdmin,
-  loading,
   dispatch,
 }: UsePenaltyDataProps) => {
   const fetchPenaltyData = useCallback(async () => {
     try {
-      if (loading || isAdmin === undefined || !isAdmin) return;
+      if (isAdmin === undefined || !isAdmin) return;
 
       const resp = await getPenaltyApi(selectedCardinal ?? 0);
 
       if (resp.code === 200 || resp.code === 0) {
-        const data = resp.data;
+        const { data } = resp;
 
-        const groups = Array.isArray(data) ? data : data ? [data] : [];
+        let groups = [];
+        if (Array.isArray(data)) {
+          groups = data;
+        } else if (data) {
+          groups = [data];
+        }
         const users = groups.flatMap((g: any) => g?.responses ?? []);
 
         const penalties = users.reduce((acc: PenaltyState, u: any) => {
@@ -50,7 +53,7 @@ export const usePenaltyData = ({
     } catch (e: any) {
       console.error('페널티 조회 오류:', e.message);
     }
-  }, [selectedCardinal, isAdmin, loading, dispatch]);
+  }, [selectedCardinal, isAdmin, dispatch]);
 
   useEffect(() => {
     fetchPenaltyData();
@@ -58,3 +61,5 @@ export const usePenaltyData = ({
 
   return { fetchPenaltyData };
 };
+
+export default usePenaltyData;

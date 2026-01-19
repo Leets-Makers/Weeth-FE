@@ -10,17 +10,17 @@ import useGetEducationBoard from '@/api/useGetEducationBoard';
 import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { BreadcrumbPadding } from '@/styles/breadCrum';
+import useUserData from '@/hooks/queries/useUserData';
 
 type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
 
 const EducationBoard = () => {
   useCustomBack('/board');
 
-  const { isAdmin } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
 
   const [searchLoading, setSearchLoading] = useState(false);
 
@@ -175,7 +175,7 @@ const EducationBoard = () => {
           )}
         </S.PostContainer>
       )}
-      {isAdmin && (
+      {userInfo?.role === 'ADMIN' && (
         <S.FloatingButton>
           <FloatingWritingIcon onClick={handleWriting} />
         </S.FloatingButton>

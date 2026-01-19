@@ -12,7 +12,7 @@ const DesktopGNB = () => {
 
   const menus = [
     { name: '동아리일정', path: '/calendar' },
-    { name: '게시판', path: ['/board', '/education'] },
+    { name: '게시판', path: '/board' },
     { name: '출석', path: '/attendance' },
     { name: '멤버', path: '/member' },
     { name: '회비', path: '/dues' },

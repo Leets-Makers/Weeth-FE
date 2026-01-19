@@ -3,7 +3,7 @@ import { getAllUsers } from '@/api/admin/member/getAdminUser';
 import formatDate from '@/utils/admin/dateUtils';
 import useGetAllCardinals from '@/api/useGetCardinals';
 import getHighestCardinal from '@/utils/admin/getHighestCardinal';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
+import useUserData from '@/hooks/queries/useUserData';
 
 export type MemberData = {
   id: number;
@@ -71,12 +71,10 @@ export const MemberProvider: React.FC<{ children: React.ReactNode }> = ({
     allCardinals.find((c) => c.status === 'IN_PROGRESS')?.cardinalNumber ||
     null;
 
-  const { isAdmin, loading } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
 
   useEffect(() => {
-    if (loading || isAdmin === undefined || !isAdmin) {
-      return;
-    }
     const fetchMembers = async () => {
       try {
         const response = await getAllUsers(sortingOrder);
@@ -118,12 +116,9 @@ export const MemberProvider: React.FC<{ children: React.ReactNode }> = ({
     };
 
     fetchMembers();
-  }, [sortingOrder, isAdmin, loading]);
+  }, [sortingOrder, isAdmin]);
 
   useEffect(() => {
-    if (loading || isAdmin === undefined || !isAdmin) {
-      return;
-    }
     if (selectedCardinal === null) {
       setFilteredMembers(members);
       return;
