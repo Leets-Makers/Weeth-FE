@@ -4,7 +4,7 @@ import * as S from '@/styles/admin/cardinal/CardinalModal.styled';
 import CommonCardinalModal from '@/components/Admin/Modal/CommonCardinalModal';
 import DirectCardinalDropdown from '@/components/Admin/DirectCardinal';
 import { continueNextCardinalApi } from '@/api/admin/member/patchUserManagement';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import {
   handleNumericInput,
   preventNonNumeric,

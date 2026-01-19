@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { DirectCardinalProps } from '@/types/adminCardinal';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import CardinalSVG from '@/assets/images/ic_admin_column_meatball.svg';
 import DuesCardinalSVG from '@/assets/images/ic_admin_cardinal.svg';
 import {

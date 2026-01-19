@@ -6,7 +6,7 @@ import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import { useEffect, useState } from 'react';
 import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Breadcrumb from '@/components/common/Breadcrumb';

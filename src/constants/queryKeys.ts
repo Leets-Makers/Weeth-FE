@@ -33,6 +33,13 @@ export const DUES_QUERY_KEYS = {
   },
 };
 
+export const CARDINAL_QUERY_KEYS = {
+  cardinal: {
+    all: ['cardinal'],
+    list: ['cardinal', 'list'],
+  },
+};
+
 export const BOARD_QUERY_KEYS = {};
 
 export const EVENT_QUERY_KEYS = {};

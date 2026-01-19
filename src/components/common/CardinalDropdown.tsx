@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import open from '@/assets/images/ic_opened_dropdown.svg';
 import close from '@/assets/images/ic_default_dropdown.svg';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 

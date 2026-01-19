@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getAllUsers } from '@/api/admin/member/getAdminUser';
 import formatDate from '@/utils/admin/dateUtils';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import getHighestCardinal from '@/utils/admin/getHighestCardinal';
 import useUserData from '@/hooks/queries/useUserData';
 

@@ -1,4 +1,4 @@
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 

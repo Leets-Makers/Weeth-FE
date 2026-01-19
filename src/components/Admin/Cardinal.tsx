@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import CardinalSVG from '@/assets/images/ic_admin_cardinal.svg';
 import { CardinalProps } from '@/types/adminCardinal';
-import { useGetAllCardinals } from '@/api/useGetCardinals';
+import { useGetAllCardinals } from '@/api/getCardinals';
 
 export const CardinalButton = styled.div`
   width: 118px;

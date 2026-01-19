@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import CardinalDropDown from '@/components/Admin/Cardinal';
 import SearchBar, { SearchBarWrapper } from '@/components/Admin/SearchBar';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 
 interface CombinedSearchBarProps {
   selectedCardinal: number | null;

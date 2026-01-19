@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import CardinalDropdown from '@/components/Admin/Cardinal';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import { useEffect } from 'react';
 
 interface TotalCardinalProps {

@@ -2,7 +2,7 @@ import theme from '@/styles/theme';
 import Box from '@/components/Admin/Box';
 import * as S from '@/styles/admin/cardinal/CardinalInfo.styled';
 import AddCardinal from '@/components/Admin/AddCardinal';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import { useEffect, useState } from 'react';
 import { useGetAdminUsers } from '@/api/admin/member/getAdminUser';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';

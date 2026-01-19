@@ -24,7 +24,7 @@ import {
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useGetAllCardinals from '@/api/getCardinals';
 import useSmartLoading from '@/hooks/useSmartLoading';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { colors } from '@/theme/designTokens';
