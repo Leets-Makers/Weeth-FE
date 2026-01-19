@@ -8,7 +8,6 @@ const useAttendData = () => {
     queryKey: ATTEND_QUERY_KEYS.attend.me,
     queryFn: getAttendInfo,
     staleTime: Infinity,
-    gcTime: 1000 * 60 * 10,
 
     retry: 1,
   });

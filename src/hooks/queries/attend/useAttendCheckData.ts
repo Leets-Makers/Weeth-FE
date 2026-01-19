@@ -7,9 +7,6 @@ const useAttendCheckData = () => {
   return useQuery<AttendData>({
     queryKey: ATTEND_QUERY_KEYS.attendCheck.me,
     queryFn: getAttendCheck,
-
-    staleTime: Infinity,
-    gcTime: 1000 * 60 * 10,
   });
 };
 

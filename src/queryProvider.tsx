@@ -18,6 +18,8 @@ const QueryProviders = ({ children }: ProvidersProps) => {
       new QueryClient({
         defaultOptions: {
           queries: {
+            staleTime: Infinity,
+            gcTime: 1000 * 60 * 15,
             retry: 0,
             refetchOnWindowFocus: false,
           },

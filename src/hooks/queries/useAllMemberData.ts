@@ -25,7 +25,7 @@ export const useAllMemberData = (cardinal: number | null) => {
     },
 
     initialPageParam: 0,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 60,
   });
 };
 

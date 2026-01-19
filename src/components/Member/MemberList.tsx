@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { User } from '@/types/user'; // User 타입이 API 응답과 맞는지 확인 필요
-import useMemberData from '@/hooks/queries/useMemberData';
+import useMemberData from '@/hooks/queries/useAllMemberData';
 import Loading from '../common/Loading';
 
 const List = styled.div`
