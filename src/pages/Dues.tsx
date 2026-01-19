@@ -1,37 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import useGetDuesInfo from '@/api/useGetDuesInfo';
-import { toastError } from '@/components/common/ToastMessage';
-
 import DueCategory from '@/components/Dues/DueCategory';
 import DuesInfo from '@/components/Dues/DuesInfo';
 import DuesTitle from '@/components/Dues/DuesTitle';
 import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/dues/Dues.styled';
 import useUserData from '@/hooks/queries/useUserData';
-import Loading from '@/components/common/Loading';
+import useDuesData from '@/hooks/queries/useDuesData';
 
 const Dues: React.FC = () => {
   useCustomBack('/home');
 
   const { data: userInfo } = useUserData();
+  const cardinal = userInfo?.cardinals[0];
+  console.log(cardinal);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [cardinal, setCardinal] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (userInfo?.cardinals?.length) {
-      setCardinal(userInfo.cardinals[0]);
-    }
-  }, [userInfo]);
+  const { data: duesInfo } = useDuesData(cardinal ?? 0);
 
-  const { duesInfo, loading, duesError } = useGetDuesInfo(cardinal);
-
-  useEffect(() => {
-    if (duesError) toastError(duesError);
-  }, [duesError]);
-
-  // 기본 선택값 설정 (렌더링 중 setState 방지)
+  // 기본 선택값 설정
   useEffect(() => {
     if (!duesInfo) return;
     const hasDues = duesInfo.receipts?.some(
@@ -48,8 +36,6 @@ const Dues: React.FC = () => {
     );
   }, [duesInfo, selectedCategory, cardinal]);
 
-  if (loading) return <Loading />;
-
   return (
     <S.StyledDues>
       <DuesTitle time={duesInfo?.time ?? ''} />
@@ -61,7 +47,7 @@ const Dues: React.FC = () => {
       ) : (
         <S.DuesListBox>
           <S.TotalMoney>
-            {duesInfo.currentAmount.toLocaleString()}원
+            {duesInfo?.currentAmount.toLocaleString()}원
           </S.TotalMoney>
 
           <S.DuesList>
@@ -69,11 +55,11 @@ const Dues: React.FC = () => {
             {(selectedCategory === null || selectedCategory === '회비') && (
               <DuesInfo
                 key="dues"
-                dues={duesInfo.totalAmount}
+                dues={duesInfo?.totalAmount ?? 0}
                 category="회비"
                 date="2024-04-01"
-                memo={duesInfo.description}
-                source={duesInfo.description}
+                memo={duesInfo?.description ?? ' '}
+                source={duesInfo?.description ?? ''}
               />
             )}
 
