@@ -3,6 +3,7 @@ import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 const Label = styled.div`
+  width: 70px;
   height: 20px;
   border-radius: 5px;
   display: flex;
