@@ -6,7 +6,7 @@ export const USER_QUERY_KEYS = {
   },
   member: {
     all: ['member'],
-    list: (cardinal: number) => ['member', 'list', cardinal],
+    list: (cardinal: number | null) => ['member', 'list', cardinal],
     byId: (memberId: string) => ['member', memberId],
   },
 };

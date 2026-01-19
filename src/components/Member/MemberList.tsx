@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import MemberItem from '@/components/Member/MemberItem';
 import { useSearchParams } from 'react-router-dom';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { User } from '@/types/user';
+import { User } from '@/types/user'; // User 타입이 API 응답과 맞는지 확인 필요
 import useMemberData from '@/hooks/queries/useMemberData';
 import Loading from '../common/Loading';
 
@@ -36,18 +36,21 @@ const MemberList = ({
   const selectedCardinal = cardinal ? Number(cardinal) : null;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useMemberData(selectedCardinal ?? 0);
+    useMemberData(selectedCardinal ?? null);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const members = data?.pages;
+  const members = useMemo(() => {
+    return data?.pages.flatMap((page) => page.content) ?? [];
+  }, [data]);
 
-  // IntersectionObserver
   useEffect(() => {
-    if (!observerRef.current) return;
+    const element = observerRef.current;
+    if (!element) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // 중복 요청 방지
         if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
           fetchNextPage();
         }
@@ -55,12 +58,14 @@ const MemberList = ({
       { threshold: 0.1 },
     );
 
-    observer.observe(observerRef.current);
+    observer.observe(element);
 
-    observer.disconnect();
+    // eslint-disable-next-line consistent-return
+    return () => {
+      observer.disconnect();
+    };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  // 최초 로딩
   if (!isSearch && searchLoading) {
     return (
       <List>
@@ -69,7 +74,6 @@ const MemberList = ({
     );
   }
 
-  // 검색 결과 없음
   if (isSearch && searchResults?.length === 0) {
     return (
       <List>
@@ -83,26 +87,25 @@ const MemberList = ({
       {isSearch
         ? searchResults?.map((user) => (
             <MemberItem
-              key={user.studentId}
-              userId={user.id}
+              key={user.id}
+              id={user.id}
               name={user.name}
-              cardinal={user.cardinals}
+              cardinals={user.cardinals}
               position={user.position}
               role={user.role}
             />
           ))
         : members.map((user) => (
             <MemberItem
-              key={user.studentId}
-              userId={user.id}
+              key={user.id}
+              id={user.id}
               name={user.name}
-              cardinal={user.cardinals}
+              cardinals={user.cardinals}
               position={user.position}
               role={user.role}
             />
           ))}
 
-      {/* observer target */}
       {!isSearch && hasNextPage && (
         <div
           ref={observerRef}
@@ -110,12 +113,12 @@ const MemberList = ({
         />
       )}
 
-      {/* 마지막 페이지 */}
+      {isFetchingNextPage && <Loading />}
+
       {!isSearch && !hasNextPage && members.length > 0 && (
         <Error>마지막 멤버입니다.</Error>
       )}
 
-      {/* 멤버 없음 */}
       {!isSearch && !isLoading && members.length === 0 && (
         <Error>
           {selectedCardinal
