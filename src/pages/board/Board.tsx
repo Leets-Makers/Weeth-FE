@@ -6,20 +6,18 @@ import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
-import useGetAllCardinals from '@/api/getCardinals';
 import { useEffect, useState } from 'react';
 import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 
 const Board = () => {
-  const { currentCardinal } = useGetAllCardinals();
+  const { currentCardinal } = useCardinalData();
 
-  const [selectedCardinal, setSelectedCardinal] = useState<number | null>(
-    currentCardinal ?? null,
-  );
+  const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
 
   useEffect(() => {
-    if (currentCardinal) {
+    if (currentCardinal !== null) {
       setSelectedCardinal(currentCardinal);
     }
   }, [currentCardinal]);

@@ -1,14 +1,15 @@
+/* eslint-disable no-alert */
 import React, { useRef, useState } from 'react';
 import Button from '@/components/Button/Button';
 import * as S from '@/styles/admin/cardinal/CardinalModal.styled';
 import CommonCardinalModal from '@/components/Admin/Modal/CommonCardinalModal';
 import DirectCardinalDropdown from '@/components/Admin/DirectCardinal';
 import { continueNextCardinalApi } from '@/api/admin/member/patchUserManagement';
-import useGetAllCardinals from '@/api/getCardinals';
 import {
   handleNumericInput,
   preventNonNumeric,
 } from '@/utils/admin/handleNumericInput';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 
 interface CardinalChangeModalProps {
   isOpen: boolean;
@@ -34,8 +35,11 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { allCardinals } = useGetAllCardinals();
-  const existingCardinalNumbers = allCardinals.map((c) => c.cardinalNumber);
+  const { data: allCardinals } = useCardinalData();
+
+  const existingCardinalNumbers = Array.isArray(allCardinals)
+    ? allCardinals.map((c) => c.cardinalNumber)
+    : [];
 
   const handleSelectCardinal = (value: number, isCustom: boolean) => {
     setIsCustomInput(isCustom);
@@ -58,8 +62,10 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
     try {
       const newCardinalNumber = Number(cardinalNumber);
 
-      // 기존 기수 중 최대값
-      const maxExistingCardinal = Math.max(...existingCardinalNumbers);
+      const maxExistingCardinal =
+        existingCardinalNumbers.length > 0
+          ? Math.max(...existingCardinalNumbers)
+          : 0;
 
       // 기존 기수 or 기존 기수 중 최대 기수 +1 인 경우만 허용
       const isValidCardinal =
@@ -67,9 +73,8 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
         newCardinalNumber === maxExistingCardinal + 1;
 
       if (!isValidCardinal) {
-        alert(
-          `새로운 기수는 ${maxExistingCardinal + 1}기만 입력할 수 있습니다.`,
-        );
+        const nextCardinal = maxExistingCardinal + 1;
+        alert(`새로운 기수는 ${nextCardinal}기만 입력할 수 있습니다.`);
         return;
       }
 

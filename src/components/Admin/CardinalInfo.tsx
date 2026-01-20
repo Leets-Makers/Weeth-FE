@@ -2,16 +2,17 @@ import theme from '@/styles/theme';
 import Box from '@/components/Admin/Box';
 import * as S from '@/styles/admin/cardinal/CardinalInfo.styled';
 import AddCardinal from '@/components/Admin/AddCardinal';
-import useGetAllCardinals from '@/api/getCardinals';
+
 import { useEffect, useState } from 'react';
 import { useGetAdminUsers } from '@/api/admin/member/getAdminUser';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import CardinalModal from '@/components/Admin/Modal/CardinalModal';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 
 const CardinalInfo: React.FC = () => {
   const { selectedCardinal, setSelectedCardinal, setFilteredMembers } =
     useMemberContext();
-  const { allCardinals } = useGetAllCardinals();
+  const { data: allCardinals } = useCardinalData();
   const { allUsers } = useGetAdminUsers();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEditingCardinal, setCurrentEditingCardinal] = useState<{
@@ -29,7 +30,8 @@ const CardinalInfo: React.FC = () => {
   >([]);
 
   useEffect(() => {
-    const sortedCardinals = [...allCardinals].sort(
+    if (!allCardinals || allCardinals.length === 0) return;
+    const sortedCardinals = allCardinals.sort(
       (a, b) => b.cardinalNumber - a.cardinalNumber,
     );
     setCardinalList(sortedCardinals);

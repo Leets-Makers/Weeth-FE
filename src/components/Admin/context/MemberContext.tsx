@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { getAllUsers } from '@/api/admin/member/getAdminUser';
 import formatDate from '@/utils/admin/dateUtils';
-import useGetAllCardinals from '@/api/getCardinals';
 import getHighestCardinal from '@/utils/admin/getHighestCardinal';
 import useUserData from '@/hooks/queries/useUserData';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 
 export type MemberData = {
   id: number;
@@ -66,10 +66,7 @@ export const MemberProvider: React.FC<{ children: React.ReactNode }> = ({
     BANNED: '추방',
   };
 
-  const { allCardinals } = useGetAllCardinals();
-  const currentCardinal =
-    allCardinals.find((c) => c.status === 'IN_PROGRESS')?.cardinalNumber ||
-    null;
+  const { currentCardinal } = useCardinalData();
 
   const { data: userInfo } = useUserData();
   const isAdmin = userInfo?.role === 'ADMIN';

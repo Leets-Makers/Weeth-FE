@@ -1,4 +1,4 @@
-import useGetAllCardinals from '@/api/getCardinals';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 import theme from '@/styles/theme';
 import styled from 'styled-components';
 
@@ -31,7 +31,7 @@ type Props = {
 };
 
 const Cardinal = ({ value, onChange }: Props) => {
-  const { allCardinals } = useGetAllCardinals();
+  const { data: allCardinals } = useCardinalData();
 
   const sortedCardinals = [...allCardinals].reverse();
 

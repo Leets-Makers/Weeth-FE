@@ -24,10 +24,11 @@ import {
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import useGetAllCardinals from '@/api/getCardinals';
+
 import useSmartLoading from '@/hooks/useSmartLoading';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { colors } from '@/theme/designTokens';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 import EditGNB from '../Navigation/EditGNB';
 import Breadcrumb from '../common/Breadcrumb';
 
@@ -56,7 +57,7 @@ const EventEditor = () => {
   const path = pathArray[3];
 
   const { id } = useParams();
-  const { currentCardinal } = useGetAllCardinals();
+  const { currentCardinal } = useCardinalData();
   const { data: eventDetailData, loading, error } = useGetEventInfo(type, id);
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
