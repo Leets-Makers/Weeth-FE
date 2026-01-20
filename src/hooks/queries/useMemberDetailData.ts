@@ -6,8 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 const useMemberDetailData = (memberId: number) => {
   return useQuery<MemberDetail>({
     queryKey: USER_QUERY_KEYS.member.byId(memberId),
-    queryFn: () => getMemberDetail(memberId as number),
-    enabled: typeof memberId === 'number',
+    queryFn: () => getMemberDetail(memberId),
+    enabled: Number.isFinite(memberId),
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 5,
   });

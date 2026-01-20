@@ -32,7 +32,6 @@ const ReceiptList: React.FC = () => {
   const { data: userInfo } = useUserData();
 
   const cardinal = userInfo?.cardinals?.[0];
-  console.log(cardinal);
   const { data: duesInfo } = useDuesData(cardinal ?? 0);
 
   // 모달 상태

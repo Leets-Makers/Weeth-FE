@@ -60,8 +60,8 @@ const CardinalDropdown: React.FC<CardinalProps> = ({
   const { data: allCardinals } = useCardinalData();
 
   const sortedCardinals = allCardinals
-    ?.reverse()
-    .filter((item) => item.cardinalNumber !== 0);
+    ?.filter((item) => item.cardinalNumber !== 0)
+    .reverse();
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 

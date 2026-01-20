@@ -18,7 +18,7 @@ export const ATTEND_QUERY_KEYS = {
   },
   attendCheck: {
     all: ['attendCheck'],
-    list: ['attnedCheck', 'list'],
+    list: ['attendCheck', 'list'],
   },
   penalty: {
     all: ['penalty'],
@@ -29,7 +29,7 @@ export const ATTEND_QUERY_KEYS = {
 export const DUES_QUERY_KEYS = {
   dues: {
     all: ['dues'],
-    list: ['dues', 'list'],
+    byCardinal: (cardinal: number) => ['dues', 'cardinal', cardinal],
   },
 };
 
