@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import CardinalDropdown from '@/components/Admin/Cardinal';
-import useGetAllCardinals from '@/api/useGetCardinals';
 import { useEffect } from 'react';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 
 interface TotalCardinalProps {
   selectedCardinal: number | null;
@@ -27,16 +27,16 @@ const TotalCardinal: React.FC<TotalCardinalProps> = ({
   setSelectedCardinal,
   autoSelectLatest = false,
 }) => {
-  const { allCardinals } = useGetAllCardinals();
+  const { data: allCardinals } = useCardinalData();
 
   useEffect(() => {
-    if (!autoSelectLatest || allCardinals.length === 0) return;
+    if (!autoSelectLatest || !allCardinals || allCardinals.length === 0) return;
 
     const numbers = allCardinals
-      .map((c) => c.cardinalNumber)
+      ?.map((c: { cardinalNumber: number }) => c.cardinalNumber)
       .filter((n) => n > 0);
 
-    if (numbers.length === 0) return;
+    if (numbers?.length === 0) return;
     const latest = Math.max(...numbers);
     setSelectedCardinal(latest);
   }, [allCardinals, setSelectedCardinal, autoSelectLatest]);

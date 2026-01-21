@@ -1,19 +1,18 @@
 import logo from '@/assets/images/ic_name_logo.svg';
-import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '@/styles/navigation/Navigation.styled';
-import React from 'react';
+import useUserData from '@/hooks/queries/useUserData';
 
 const DesktopGNB = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userInfo } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
   const { characterImg } = useSetPosition(userInfo?.position || '');
 
   const menus = [
     { name: '동아리일정', path: '/calendar' },
-    { name: '게시판', path: ['/board', '/education'] },
+    { name: '게시판', path: '/board' },
     { name: '출석', path: '/attendance' },
     { name: '멤버', path: '/member' },
     { name: '회비', path: '/dues' },

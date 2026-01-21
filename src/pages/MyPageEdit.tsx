@@ -4,18 +4,15 @@ import styled from 'styled-components';
 import DropdownMenu from '@/components/Button/DropdownMenu';
 import InfoInput from '@/components/MyPage/InfoInput';
 import useCustomBack from '@/hooks/useCustomBack';
-import useGetUserInfo from '@/api/useGetUserInfo';
-import usePatchUserInfo from '@/api/usePatchMyInfo';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
 
-import Loading from '@/components/common/Loading';
-import useSmartLoading from '@/hooks/useSmartLoading';
 import EditGNB from '@/components/Navigation/EditGNB';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { PageHeader, ResponsiveContainer } from '@/styles';
 import typography from '@/theme/typography';
 import { colors } from '@/theme/designTokens';
-
+import useUserData from '@/hooks/queries/useUserData';
+import usePatchMyInfo from '@/hooks/mutation/usePatchMyInfo';
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -51,11 +48,18 @@ const ErrorText = styled.div`
 const MyPageEdit = () => {
   useCustomBack('/mypage');
 
-  const { userInfo, loading } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
   const [userData, setUserData] = useState<{ key: string; value: any }[]>([]);
 
   const navi = useNavigate();
   const openSelectModal = useOpenSelectModal();
+
+  const { mutate: patchMyInfo } = usePatchMyInfo({
+    onSuccess: () => {
+      toastSuccess('저장이 완료되었습니다.');
+      navi('/mypage');
+    },
+  });
 
   const positionMap: Record<string, string> = {
     FE: '프론트엔드',
@@ -87,8 +91,6 @@ const MyPageEdit = () => {
     setUserData(newuserData);
   };
 
-  const { updateInfo } = usePatchUserInfo();
-
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const validateUserData = (data: any[]) => {
@@ -115,42 +117,14 @@ const MyPageEdit = () => {
     return true;
   };
 
-  const onSave = async () => {
-    try {
-      const data = userData.reduce((acc: any, item: any) => {
-        acc[item.key] = item.value;
-        return acc;
-      }, {});
+  const onSave = () => {
+    const data = userData.reduce((acc: any, item: any) => {
+      acc[item.key] = item.value;
+      return acc;
+    }, {});
 
-      const response = await updateInfo(data);
-
-      if (response?.data?.code === 400) {
-        // TODO: 에러 코드에 따른 세분화
-        toastInfo(response?.data?.message);
-        return;
-      }
-
-      if (response?.data?.code === 200) {
-        toastSuccess('저장이 완료되었습니다.');
-        navi('/mypage');
-      } else {
-        toastInfo('저장 중 오류가 발생했습니다.');
-      }
-    } catch (err: any) {
-      // TODO: 에러 코드에 따른 세분화
-      toastInfo(err);
-    }
+    patchMyInfo(data);
   };
-
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!loading) resolve();
-    }),
-  );
-
-  if (smartLoading) {
-    return <Loading />;
-  }
 
   return (
     <ResponsiveContainer>

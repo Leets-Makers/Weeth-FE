@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as S from '@/styles/board/Dropdown.styled';
 import open from '@/assets/images/ic_opened_dropdown.svg';
 import close from '@/assets/images/ic_default_dropdown.svg';
-import useGetAllCardinals from '@/api/useGetCardinals';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 
 const CardinalDropdown = ({
   origValue,
@@ -16,7 +16,7 @@ const CardinalDropdown = ({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<number | null>(origValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { allCardinals } = useGetAllCardinals();
+  const { data: allCardinals } = useCardinalData();
 
   const options: { value: number | null; label: string }[] =
     allCardinals
