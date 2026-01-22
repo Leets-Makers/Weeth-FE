@@ -143,7 +143,7 @@ const Login: React.FC = () => {
       toastError('비밀번호를 입력해 주세요.');
       return;
     }
-    if (password.length < 6 || password.length > 12) {
+    if (!validatePwd(password)) {
       toastError('비밀번호를 6~12자리로 입력해 주세요.');
       return;
     }

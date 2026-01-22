@@ -122,7 +122,7 @@ const Register: React.FC = () => {
   return (
     <Container>
       <div style={{ marginLeft: -15 }}>
-        <Header RightButtonType="none" isAccessible />
+        <Header />
       </div>
 
       <TitleWrapper>
