@@ -79,10 +79,7 @@ const router = createBrowserRouter([
   // 1. FixedLayout (로그인 필요)
   {
     element: <PrivateRoute element={<FixedLayout />} />,
-    children: [
-      { path: '/home', element: <Home /> },
-      { path: '/member/:userId', element: <MemberDetail /> },
-    ],
+    children: [{ path: '/member/:userId', element: <MemberDetail /> }],
   },
 
   // 2. ResponsiveLayout (로그인 필요)
@@ -98,6 +95,7 @@ const router = createBrowserRouter([
       { path: '/member', element: <Member /> },
       { path: '/calendar', element: <Calendar /> },
       { path: '/:type/:id', element: <EventDetail /> },
+      { path: '/home', element: <Home /> },
 
       // board layout
       {
