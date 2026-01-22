@@ -110,10 +110,6 @@ const Login: React.FC = () => {
     return pw.length >= 6 && pw.length <= 12;
   };
 
-  const isEmailValid = email && validateEmail(email);
-  const isPwdValid = password && validatePwd(password);
-  const isAllValid = isEmailValid && isPwdValid;
-
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevState) => !prevState);
   };
@@ -180,11 +176,7 @@ const Login: React.FC = () => {
 
   return (
     <Container>
-      <Header
-        isAccessible
-        isComplete={!!isAllValid && isPwdValid && isEmailValid}
-        RightButtonType="none"
-      />
+      <Header />
       <LoginHeaderMargin />
       <LoginTitle>계정 연동하기</LoginTitle>
       <LoginSubTitle>

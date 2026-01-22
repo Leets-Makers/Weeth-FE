@@ -23,7 +23,7 @@ const AccountCheck: React.FC = () => {
   }, []);
   return (
     <Container>
-      <Header isAccessible RightButtonType="none" />
+      <Header />
       <Title />
       <AccountButton />
     </Container>
