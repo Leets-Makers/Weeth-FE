@@ -110,10 +110,6 @@ const Login: React.FC = () => {
     return pw.length >= 6 && pw.length <= 12;
   };
 
-  const isEmailValid = email && validateEmail(email);
-  const isPwdValid = password && validatePwd(password);
-  const isAllValid = isEmailValid && isPwdValid;
-
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevState) => !prevState);
   };
@@ -147,7 +143,7 @@ const Login: React.FC = () => {
       toastError('비밀번호를 입력해 주세요.');
       return;
     }
-    if (password.length < 6 || password.length > 12) {
+    if (!validatePwd(password)) {
       toastError('비밀번호를 6~12자리로 입력해 주세요.');
       return;
     }
@@ -180,11 +176,7 @@ const Login: React.FC = () => {
 
   return (
     <Container>
-      <Header
-        isAccessible
-        isComplete={!!isAllValid && isPwdValid && isEmailValid}
-        RightButtonType="none"
-      />
+      <Header />
       <LoginHeaderMargin />
       <LoginTitle>계정 연동하기</LoginTitle>
       <LoginSubTitle>

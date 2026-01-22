@@ -61,10 +61,10 @@ const AdminPenalty = lazy(() => import('@/pages/admin/AdminPenalty'));
 
 const router = createBrowserRouter([
   // 0. 비로그인 페이지 (NoHeaderLayout)
+  { path: '/', element: <Landing /> },
   {
     element: <NoHeaderLayout />,
     children: [
-      { path: '/', element: <Landing /> },
       { path: '/login', element: <Login /> },
       { path: '/profile', element: <Profile /> },
       { path: '/accountcheck', element: <AccountCheck /> },
