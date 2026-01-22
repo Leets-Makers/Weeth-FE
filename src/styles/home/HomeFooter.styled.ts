@@ -48,6 +48,10 @@ export const GridItem = styled.a`
   &:last-child {
     margin-right: 0;
   }
+  &:hover {
+    background-color: ${colors.semantic.brand.primary};
+    color: ${colors.semantic.text.inverse};
+  }
 `;
 
 export const GridItemWithImage = styled(GridItem)<{ $image: string }>`
