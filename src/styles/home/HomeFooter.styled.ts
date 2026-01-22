@@ -1,18 +1,18 @@
-import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const StyledHomeFooter = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
-  width: 86.8%;
-  margin: 8% 6.6% 0px 6.6%;
+  ${typography.Sub1};
+  width: 100%;
+  margin-top: 32px;
 `;
 
 export const ScrollContainer = styled.div`
   display: flex;
-  width: 94%;
-  margin: 4% 3% 0px 3%;
+  width: 100%;
+  margin-top: 8px;
+
   overflow-x: auto;
   cursor: grab;
   &::-webkit-scrollbar {
@@ -33,7 +33,6 @@ export const GridItem = styled.a`
   margin-right: 10px;
   padding: 10px 15px 15px 0;
   background-color: ${colors.semantic.container.neutral};
-  font-family: ${theme.font.semiBold};
   width: 34%;
   height: 77px;
   color: ${colors.semantic.text.strong};
@@ -42,9 +41,9 @@ export const GridItem = styled.a`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  font-size: 16px;
   white-space: nowrap;
   text-decoration: none;
+  ${typography.Sub2};
 
   &:last-child {
     margin-right: 0;
@@ -83,6 +82,6 @@ export const GridItemWithImage = styled(GridItem)<{ $image: string }>`
     position: relative;
     z-index: 2;
     color: ${colors.semantic.text.strong};
-    font-size: 16px;
+    ${typography.Sub2};
   }
 `;
