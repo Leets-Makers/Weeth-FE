@@ -34,6 +34,8 @@ const ContentCard = styled.div`
   padding: 0 20px;
   box-sizing: border-box;
 
+  border-radius: ${units.radius.lg}px;
+
   @media screen and (min-width: ${units.device.desktop}px) {
     flex-direction: row;
     max-width: 900px;
