@@ -7,9 +7,9 @@ import { useGetRecentNotice } from '@/api/useGetBoardInfo';
 import useGetEducationBoard from '@/api/useGetEducationBoard';
 import Loading from '@/components/common/Loading';
 import { useEffect, useState } from 'react';
-import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import useCardinalData from '@/hooks/queries/useCardinalData';
+import BoardWriteFloatingButton from '@/components/Board/BoardWriteFloatingButton';
 
 const Board = () => {
   const { currentCardinal } = useCardinalData();
@@ -60,9 +60,7 @@ const Board = () => {
           onCardinalChange={setSelectedCardinal}
         />
       </S.BoardContainer>
-      <S.FloatingButton>
-        <FloatingWritingIcon />
-      </S.FloatingButton>
+      <BoardWriteFloatingButton />
     </S.Container>
   );
 };
