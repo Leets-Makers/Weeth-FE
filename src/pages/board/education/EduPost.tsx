@@ -63,16 +63,39 @@ const EduPost = () => {
         postType: 'postEdu',
       });
 
-      const backPart = partParam ?? 'ALL';
+      const backPart =
+        selectedPart.length === REAL_PARTS.length || selectedPart.length === 0
+          ? 'ALL'
+          : selectedPart[0];
       navigate(`/board/education/${backPart}`);
     } catch (err) {
       console.error('게시 실패:', err);
       alert('게시 중 오류가 발생했습니다.');
     }
   };
-  const { part } = useParams<{
-    part: string;
-  }>();
+
+  const getBreadcrumbPartLabel = () => {
+    if (
+      selectedPart.length === REAL_PARTS.length ||
+      selectedPart.length === 0
+    ) {
+      return '전체';
+    }
+    if (selectedPart.length === 1) {
+      return selectedPart[0];
+    }
+    return selectedPart.join(', ');
+  };
+
+  const getBreadcrumbPartPath = () => {
+    if (
+      selectedPart.length === REAL_PARTS.length ||
+      selectedPart.length === 0
+    ) {
+      return '/board/education/ALL';
+    }
+    return `/board/education/${selectedPart[0]}`;
+  };
 
   return (
     <>
@@ -81,7 +104,10 @@ const EduPost = () => {
         <Breadcrumb
           items={[
             { label: '게시판', path: '/board' },
-            { label: `${part} 교육자료`, path: `/board/education/${part}` },
+            {
+              label: `${getBreadcrumbPartLabel()} 교육자료`,
+              path: getBreadcrumbPartPath(),
+            },
             { label: '글쓰기' },
           ]}
         />
