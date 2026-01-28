@@ -16,14 +16,33 @@ const Container = styled.div`
   }
 `;
 
-const ModalContainer = styled.div<{ $topPadding?: boolean }>`
+const ModalContainer = styled.div<{
+  $topPadding?: boolean;
+  $floatingButtonPosition?: boolean;
+  $headerButtonTop?: number;
+  $headerButtonRight?: number;
+}>`
   position: fixed;
-  top: ${({ $topPadding }) => ($topPadding ? '140px' : '130px')};
+  ${({ $floatingButtonPosition, $topPadding, $headerButtonTop }) => {
+    if ($floatingButtonPosition) {
+      return `bottom: calc(24px + 45px + 8px);`;
+    }
+    if ($headerButtonTop !== undefined) {
+      return `top: ${$headerButtonTop}px;`;
+    }
+    return `top: ${$topPadding ? '140px' : '130px'};`;
+  }}
 
   z-index: 1000;
-
-  right: ${`calc((100vw - min(100vw, ${PC})) / 2 + 18px)`};
-
+  ${({ $floatingButtonPosition, $headerButtonRight }) => {
+    if ($floatingButtonPosition) {
+      return `right: 16px;`;
+    }
+    if ($headerButtonRight !== undefined) {
+      return `right: ${$headerButtonRight}px;`;
+    }
+    return `right: ${`calc((100vw - min(100vw, ${PC})) / 2 + 18px)`};`;
+  }}
   width: ${MOBILE};
 `;
 
@@ -47,13 +66,26 @@ const Content = styled.div`
 `;
 
 const MenuModal = () => {
-  const { isOpen, children, topPadding, close } = useMenuModal();
+  const {
+    isOpen,
+    children,
+    topPadding,
+    floatingButtonPosition,
+    headerButtonTop,
+    headerButtonRight,
+    close,
+  } = useMenuModal();
 
   if (!isOpen || !children) return null;
 
   return (
     <Container onClick={close}>
-      <ModalContainer $topPadding={topPadding}>
+      <ModalContainer
+        $topPadding={topPadding}
+        $floatingButtonPosition={floatingButtonPosition}
+        $headerButtonTop={headerButtonTop}
+        $headerButtonRight={headerButtonRight}
+      >
         <Content onClick={(e) => e.stopPropagation()}>{children}</Content>
       </ModalContainer>
     </Container>
