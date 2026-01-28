@@ -1,7 +1,7 @@
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Switch = styled.label`
   position: relative;
@@ -52,12 +52,22 @@ export const TextPart = styled.span<{ $isSelected: boolean }>`
 
 const PARTS = ['FE', 'BE', 'D', 'PM'] as const;
 
+type Part = (typeof PARTS)[number];
+
 const PartToggle = ({
+  selectedPart,
   onToggle,
 }: {
-  onToggle: (part: (typeof PARTS)[number]) => void;
+  selectedPart?: Part;
+  onToggle: (part: Part) => void;
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    if (!selectedPart) return;
+    const idx = PARTS.indexOf(selectedPart);
+    if (idx >= 0) setSelectedIndex(idx);
+  }, [selectedPart]);
 
   const handlePartClick = (index: number) => {
     setSelectedIndex(index);

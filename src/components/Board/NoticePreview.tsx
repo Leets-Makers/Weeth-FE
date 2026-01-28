@@ -28,7 +28,7 @@ const NoticePreview = ({ data, error }: NoticePreviewProps) => {
         <S.NoticeTextContainer>
           <S.NoticeTitleText>공지사항</S.NoticeTitleText>
           <S.AllText onClick={handleAllNotice}>
-            전체보기 <ArrowRightIcon />
+            전체보기 <ArrowRightIcon aria-hidden="true" focusable="false" />
           </S.AllText>
         </S.NoticeTextContainer>
       </S.CardContainer>

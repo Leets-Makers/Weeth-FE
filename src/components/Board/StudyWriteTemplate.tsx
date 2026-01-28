@@ -99,7 +99,10 @@ const StudyWriteTemplate = ({
   return (
     <Container>
       {selectedPart !== undefined && setSelectedPart && (
-        <PartToggle onToggle={handlePartToggle} />
+        <PartToggle
+          selectedPart={selectedPart as 'FE' | 'BE' | 'D' | 'PM'}
+          onToggle={handlePartToggle}
+        />
       )}
       <StudyPostTitle title={title} setTitle={setTitle} />
       <InformationContainer>

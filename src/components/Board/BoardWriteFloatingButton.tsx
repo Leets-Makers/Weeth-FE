@@ -12,8 +12,8 @@ const BoardWriteFloatingButton = () => {
   if (!isMobile) return null;
 
   return (
-    <S.FloatingButton>
-      <FloatingWritingIcon onClick={openFromFloating} />
+    <S.FloatingButton onClick={openFromFloating} aria-label="글쓰기 메뉴 열기">
+      <FloatingWritingIcon aria-hidden />
     </S.FloatingButton>
   );
 };

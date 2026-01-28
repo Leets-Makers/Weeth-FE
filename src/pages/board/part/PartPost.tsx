@@ -92,7 +92,6 @@ const PartPost = () => {
             {
               label:
                 category === 'StudyLog' ? '스터디로그 글쓰기' : '아티클 글쓰기',
-              path: `/board/${slug}`,
             },
           ]}
         />
