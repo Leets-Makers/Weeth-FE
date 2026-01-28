@@ -66,6 +66,7 @@ export const NoticeTextContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   color: ${colors.dark.neutral['600']};
 
   ${pcResponsive}
@@ -78,11 +79,11 @@ export const NoticeTitleText = styled.div`
 `;
 
 export const AllText = styled.div`
-  font-size: 0.75rem;
-  line-height: 1.25rem;
+  ${typography.Caption2};
   color: ${colors.semantic.text.alternative};
   cursor: pointer;
-  margin-top: 0.1875rem;
+  display: flex;
+  align-items: center;
 
   ${pcResponsive}
 `;
@@ -230,9 +231,8 @@ export const ReadMoreText = styled.p`
 
 export const EduDateContainer = styled.p`
   margin: 0;
-  font-size: 0.75rem;
-  line-height: 1.25rem;
-  color: rgba(255, 255, 255, 0.8);
+  ${typography.Caption2};
+  color: ${colors.semantic.text.alternative};
   display: flex;
   align-items: center;
   gap: 0.3125rem;
@@ -371,7 +371,7 @@ export const EduCard = styled.div`
   flex: 0 0 auto;
   width: 228px;
   box-sizing: border-box;
-  border-radius: 0.625rem;
+  border-radius: 10px;
   border: 1px solid ${theme.color.gray[20]};
   background-color: ${theme.color.gray[18]};
   padding: 0.9375rem 0.9375rem 0.625rem 0.9375rem;
@@ -388,13 +388,12 @@ export const EduCard = styled.div`
 export const EduPart = styled.div`
   display: flex;
   gap: 0.3125rem;
+  ${typography.Caption1};
 `;
 
 export const EduCardTitle = styled.p`
-  font-size: 16px;
-  height: 19px;
-  font-family: ${theme.font.semiBold};
-  color: ${theme.color.gray[100]};
+  ${typography.Sub2};
+  color: white;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -424,4 +423,18 @@ export const Line = styled.div`
   border: 1px solid;
   margin: 0 0.3125rem;
   color: ${(props) => props.theme.color.gray[18]};
+`;
+
+export const TextButton = styled.div<{ $isFirst?: boolean; $isLast?: boolean }>`
+  width: 144px;
+  height: 40px;
+  box-sizing: border-box;
+  padding: ${units.padding['200']}px 16px;
+  ${({ $isFirst }) => $isFirst && `margin-top: ${units.padding['100']}px;`}
+  ${({ $isLast }) => $isLast && `margin-bottom: ${units.padding['100']}px;`}
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: ${colors.semantic.button['neutral-interaction']};
+  }
 `;

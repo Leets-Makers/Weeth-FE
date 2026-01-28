@@ -197,10 +197,33 @@ export const GNBMenuItem = styled.li<{ $active?: boolean }>`
   }
 `;
 
-export const Right = styled.div``;
+export const Right = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
 
 export const Profile = styled.img`
   width: 40px;
   height: 40px;
   cursor: pointer;
+`;
+
+export const WriteButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${units.margin['100']}px;
+  padding: ${units.margin['200']}px ${units.padding['400']}px;
+  background-color: ${colors.semantic.button.primary};
+  border-radius: ${units.radius.md}px;
+  border: none;
+  cursor: pointer;
+  ${typography.Button1};
+  color: ${colors.semantic.text.inverse};
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: ${colors.semantic.button['primary-interaction']};
+  }
 `;
