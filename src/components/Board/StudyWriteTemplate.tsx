@@ -10,6 +10,7 @@ import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { pcResponsive } from '@/styles';
 import { units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
+import PartToggle from './PartToggle';
 
 export const Container = styled.div`
   display: flex;
@@ -58,6 +59,8 @@ interface StudyWriteTemplateProps {
   setSelectedWeek: Dispatch<SetStateAction<number | null>>;
   selectedStudy: string | null;
   setSelectedStudy: Dispatch<SetStateAction<string | null>>;
+  selectedPart?: string;
+  setSelectedPart?: Dispatch<SetStateAction<string>>;
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
@@ -76,6 +79,8 @@ const StudyWriteTemplate = ({
   setSelectedWeek,
   selectedStudy,
   setSelectedStudy,
+  selectedPart,
+  setSelectedPart,
   content,
   setContent,
   originFiles = [],
@@ -85,8 +90,17 @@ const StudyWriteTemplate = ({
 }: StudyWriteTemplateProps) => {
   const isStudyLog = category === 'StudyLog' || category === 'study';
 
+  const handlePartToggle = (part: string) => {
+    if (setSelectedPart) {
+      setSelectedPart(part);
+    }
+  };
+
   return (
     <Container>
+      {selectedPart !== undefined && setSelectedPart && (
+        <PartToggle onToggle={handlePartToggle} />
+      )}
       <StudyPostTitle title={title} setTitle={setTitle} />
       <InformationContainer>
         <DivisionContainer>
