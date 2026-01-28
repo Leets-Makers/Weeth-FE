@@ -235,13 +235,12 @@ export const EduDateContainer = styled.p`
   color: ${colors.semantic.text.alternative};
   display: flex;
   align-items: center;
-  gap: 0.3125rem;
 `;
 
 export const CommentContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.125rem;
+  gap: 2px;
 `;
 
 export const FloatingButton = styled.div`
@@ -372,10 +371,9 @@ export const EduCard = styled.div`
   width: 228px;
   box-sizing: border-box;
   border-radius: 10px;
-  border: 1px solid ${theme.color.gray[20]};
-  background-color: ${theme.color.gray[18]};
-  padding: 0.9375rem 0.9375rem 0.625rem 0.9375rem;
-  gap: 0.9375rem;
+  background-color: ${colors.semantic.container.neutral};
+  padding: ${units.padding['400']}px ${units.padding['450']}px;
+  gap: ${units.margin['300']}px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -383,6 +381,12 @@ export const EduCard = styled.div`
   &:hover {
     filter: brightness(1.2);
   }
+`;
+
+export const NoticeTopRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const EduPart = styled.div`
