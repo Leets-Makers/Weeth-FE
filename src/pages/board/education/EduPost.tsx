@@ -74,29 +74,6 @@ const EduPost = () => {
     }
   };
 
-  const getBreadcrumbPartLabel = () => {
-    if (
-      selectedPart.length === REAL_PARTS.length ||
-      selectedPart.length === 0
-    ) {
-      return '전체';
-    }
-    if (selectedPart.length === 1) {
-      return selectedPart[0];
-    }
-    return selectedPart.join(', ');
-  };
-
-  const getBreadcrumbPartPath = () => {
-    if (
-      selectedPart.length === REAL_PARTS.length ||
-      selectedPart.length === 0
-    ) {
-      return '/board/education/ALL';
-    }
-    return `/board/education/${selectedPart[0]}`;
-  };
-
   return (
     <>
       <EditGNB onClickButton={handleClickButton} />
@@ -104,11 +81,7 @@ const EduPost = () => {
         <Breadcrumb
           items={[
             { label: '게시판', path: '/board' },
-            {
-              label: `${getBreadcrumbPartLabel()} 교육자료`,
-              path: getBreadcrumbPartPath(),
-            },
-            { label: '글쓰기' },
+            { label: '교육자료 글쓰기' },
           ]}
         />
         <EduWrite

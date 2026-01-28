@@ -90,10 +90,10 @@ const PartPost = () => {
           items={[
             { label: '게시판', path: '/board' },
             {
-              label: `${selectedPart} 파트게시판`,
-              path: `/board/study/${selectedPart}`,
+              label:
+                category === 'StudyLog' ? '스터디로그 글쓰기' : '아티클 글쓰기',
+              path: `/board/${slug}`,
             },
-            { label: '글쓰기' },
           ]}
         />
         <StudyWriteTemplate
