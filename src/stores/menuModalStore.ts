@@ -6,8 +6,17 @@ interface MenuModalState {
   isOpen: boolean;
   children: ReactNode | null;
   topPadding?: boolean;
+  floatingButtonPosition?: boolean;
+  headerButtonTop?: number;
+  headerButtonRight?: number;
 
-  open: (params: { children: ReactNode; topPadding?: boolean }) => void;
+  open: (params: {
+    children: ReactNode;
+    topPadding?: boolean;
+    floatingButtonPosition?: boolean;
+    headerButtonTop?: number;
+    headerButtonRight?: number;
+  }) => void;
 
   close: () => void;
 }
@@ -18,12 +27,24 @@ const useMenuModalStore = create<MenuModalState>()(
       isOpen: false,
       children: null,
       topPadding: false,
+      floatingButtonPosition: false,
+      headerButtonTop: undefined,
+      headerButtonRight: undefined,
 
-      open: ({ children, topPadding }) =>
+      open: ({
+        children,
+        topPadding,
+        floatingButtonPosition,
+        headerButtonTop,
+        headerButtonRight,
+      }) =>
         set({
           isOpen: true,
           children,
           topPadding,
+          floatingButtonPosition,
+          headerButtonTop,
+          headerButtonRight,
         }),
 
       close: () =>
@@ -31,6 +52,9 @@ const useMenuModalStore = create<MenuModalState>()(
           isOpen: false,
           children: null,
           topPadding: false,
+          floatingButtonPosition: false,
+          headerButtonTop: undefined,
+          headerButtonRight: undefined,
         }),
     }),
     { name: 'menuModalStore' },
