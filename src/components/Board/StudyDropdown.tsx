@@ -18,26 +18,33 @@ const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const textWidthRef = useRef<HTMLSpanElement>(null);
   const [textWidth, setTextWidth] = useState(0);
-  const [prevPart, setPrevPart] = useState<RealPart | null>(null);
+  const prevPartRef = useRef<RealPart | null>(null);
 
   useEffect(() => {
-    if (!selectedPart) return;
+    let cancelled = false;
+    const prevPart = prevPartRef.current;
+    if (prevPart && prevPart !== selectedPart) {
+      setInputValue('');
+      editStudy(null);
+    }
 
     (async () => {
       try {
         const names = await getStudyLists(selectedPart);
+        if (cancelled) return;
         setStudyList(names);
-        if (prevPart && prevPart !== selectedPart) {
-          setInputValue('');
-          editStudy(null);
-        }
-        setPrevPart(selectedPart);
+        prevPartRef.current = selectedPart;
       } catch (e) {
+        if (cancelled) return;
         toastError('스터디 목록을 불러오지 못했습니다.');
         console.error(e);
       }
     })();
-  }, [selectedPart, prevPart, editStudy]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedPart, editStudy]);
 
   const isInList = studyList.some(
     (s) => s.toLowerCase() === inputValue.trim().toLowerCase(),
