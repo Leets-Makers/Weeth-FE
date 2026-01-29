@@ -65,7 +65,7 @@ export const PostListItemContainer = styled.div`
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: #262626;
+    background-color: ${colors.semantic.container['neutral-interaction']};
   }
 `;
 

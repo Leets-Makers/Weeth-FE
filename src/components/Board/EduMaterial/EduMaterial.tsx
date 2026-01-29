@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Cardinal from '@/components/Board/EduMaterial/Cardinal';
 import SlideEdu from '@/components/Board/EduMaterial/SlideEdu';
 import { PartEduContent } from '@/types/education';
+import ArrowRightIcon from '@/assets/images/ic_chevron_right.svg?react';
 
 interface EduMaterialProps {
   data: PartEduContent[];
@@ -27,7 +28,9 @@ const EduMaterial = ({
         <S.EduTitle>
           <S.NoticeTextContainer>
             <S.NoticeTitleText>교육자료</S.NoticeTitleText>
-            <S.AllText onClick={handleAllEdu}>전체보기 &gt;</S.AllText>
+            <S.AllText onClick={handleAllEdu}>
+              전체보기 <ArrowRightIcon />
+            </S.AllText>
           </S.NoticeTextContainer>
           <S.EduAddContent>
             참여하신 기수의 자료만 볼 수 있습니다.

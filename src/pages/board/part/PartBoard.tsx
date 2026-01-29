@@ -9,13 +9,13 @@ import * as S from '@/styles/board/PartBoard.styled';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import useGetPartBoard from '@/api/useGetPartBoard';
-import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/types/board';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { BreadcrumbPadding } from '@/styles/breadCrum';
+import BoardWriteFloatingButton from '@/components/Board/BoardWriteFloatingButton';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -137,11 +137,6 @@ const PartBoard = () => {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleWriting = () => {
-    const slug = enumToSlug(activeCategory);
-    navigate(`/board/${slug}/${part}/post`);
-  };
-
   const handleDetail = (id: number) => {
     const categoryPrefix = activeCategory === 'StudyLog' ? 'study' : 'article';
     navigate(`/board/${categoryPrefix}/${part}/${id}`);
@@ -223,9 +218,7 @@ const PartBoard = () => {
           )}
         </S.PostContainer>
       )}
-      <S.FloatingButton>
-        <FloatingWritingIcon onClick={handleWriting} />
-      </S.FloatingButton>
+      <BoardWriteFloatingButton />
     </S.Container>
   );
 };

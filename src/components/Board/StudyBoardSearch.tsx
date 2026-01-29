@@ -35,14 +35,14 @@ const Container = styled.div`
   ${pcResponsive}
 `;
 
-const Search = styled.div<{ isFocused: boolean }>`
+const Search = styled.div<{ $isFocused: boolean }>`
   display: flex;
   align-items: center;
   height: 40px;
   justify-content: space-between;
   border-radius: ${units.radius.sm}px;
   border: ${(props) =>
-    props.isFocused
+    props.$isFocused
       ? `1px solid ${colors.semantic.brand.secondary}`
       : '1px solid transparent'};
   padding: ${units.padding['200']}px ${units.padding['200']}px
@@ -144,7 +144,7 @@ const StudyBoardSearch = ({
 
   return (
     <Container>
-      <Search isFocused={isFocused}>
+      <Search $isFocused={isFocused}>
         <SearchInput
           placeholder="제목, 내용 검색"
           value={keyword}

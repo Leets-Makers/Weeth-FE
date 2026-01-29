@@ -119,8 +119,8 @@ const router = createBrowserRouter([
       {
         path: '/board',
         children: [
-          { path: 'education/:part/post', element: <EduPost /> },
-          { path: ':category/:part/post', element: <PartPost /> },
+          { path: 'education/post', element: <EduPost /> },
+          { path: ':category/post', element: <PartPost /> },
           { path: 'notices/post', element: <NoticePost /> },
           { path: 'notices/:postId/edit', element: <NoticeEdit /> },
           { path: ':category/:part/:postId/edit', element: <PartEdit /> },

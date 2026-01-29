@@ -22,14 +22,11 @@ const PartPost = () => {
   }>();
   const category = slugToEnum(slug);
 
-  const url = new URL(window.location.href);
-  const pathArray = url.pathname.split('/');
-  const part = pathArray[3];
-
   const [title, setTitle] = useState('');
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
   const [selectedStudy, setSelectedStudy] = useState<string | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
+  const [selectedPart, setSelectedPart] = useState<string>('FE');
   const [content, setContent] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
 
@@ -68,7 +65,7 @@ const PartPost = () => {
         category,
         studyName: selectedStudy || undefined,
         week: selectedWeek || undefined,
-        part,
+        part: selectedPart,
         cardinalNumber: selectedCardinal || undefined,
         files: [],
       };
@@ -79,7 +76,7 @@ const PartPost = () => {
         postType: 'postBoard',
       });
 
-      navigate(`/board/${slug}/${part}`);
+      navigate(`/board/${slug}/${selectedPart}`);
     } catch (err) {
       console.error('게시 실패:', err);
       alert('게시 중 오류가 발생했습니다.');
@@ -92,8 +89,10 @@ const PartPost = () => {
         <Breadcrumb
           items={[
             { label: '게시판', path: '/board' },
-            { label: `${part} 파트게시판`, path: `/board/study/${part}` },
-            { label: '글쓰기' },
+            {
+              label:
+                category === 'StudyLog' ? '스터디로그 글쓰기' : '아티클 글쓰기',
+            },
           ]}
         />
         <StudyWriteTemplate
@@ -106,6 +105,8 @@ const PartPost = () => {
           setSelectedWeek={setSelectedWeek}
           selectedStudy={selectedStudy}
           setSelectedStudy={setSelectedStudy}
+          selectedPart={selectedPart}
+          setSelectedPart={setSelectedPart}
           content={content}
           setContent={setContent}
           files={files}

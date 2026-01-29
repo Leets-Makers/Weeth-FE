@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as S from '@/styles/board/Dropdown.styled';
 import Remove from '@/assets/images/ic_remove_study.svg?react';
-import { useParams } from 'react-router-dom';
 import { RealPart } from '@/types/part';
 import getStudyLists from '@/api/useGetStudyList';
 import { toastError } from '../common/ToastMessage';
@@ -9,30 +8,43 @@ import { toastError } from '../common/ToastMessage';
 interface Props {
   origStudy: string | null;
   editStudy: (value: string | null) => void;
+  selectedPart: RealPart;
 }
 
-const StudyDropdown = ({ origStudy, editStudy }: Props) => {
+const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState('');
   const [studyList, setStudyList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const textWidthRef = useRef<HTMLSpanElement>(null);
   const [textWidth, setTextWidth] = useState(0);
-  const { part } = useParams<{ part: RealPart }>();
+  const prevPartRef = useRef<RealPart | null>(null);
 
   useEffect(() => {
-    if (!part) return;
+    let cancelled = false;
+    const prevPart = prevPartRef.current;
+    if (prevPart && prevPart !== selectedPart) {
+      setInputValue('');
+      editStudy(null);
+    }
 
     (async () => {
       try {
-        const names = await getStudyLists(part);
+        const names = await getStudyLists(selectedPart);
+        if (cancelled) return;
         setStudyList(names);
+        prevPartRef.current = selectedPart;
       } catch (e) {
+        if (cancelled) return;
         toastError('스터디 목록을 불러오지 못했습니다.');
         console.error(e);
       }
     })();
-  }, [part]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedPart, editStudy]);
 
   const isInList = studyList.some(
     (s) => s.toLowerCase() === inputValue.trim().toLowerCase(),
