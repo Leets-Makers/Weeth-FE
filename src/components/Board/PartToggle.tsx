@@ -2,6 +2,7 @@ import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { RealPart, REAL_PARTS } from '@/types/part';
 
 export const Switch = styled.label`
   position: relative;
@@ -50,34 +51,30 @@ export const TextPart = styled.span<{ $isSelected: boolean }>`
   cursor: pointer;
 `;
 
-const PARTS = ['FE', 'BE', 'D', 'PM'] as const;
-
-type Part = (typeof PARTS)[number];
-
 const PartToggle = ({
   selectedPart,
   onToggle,
 }: {
-  selectedPart?: Part;
-  onToggle: (part: Part) => void;
+  selectedPart?: RealPart;
+  onToggle: (part: RealPart) => void;
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     if (!selectedPart) return;
-    const idx = PARTS.indexOf(selectedPart);
+    const idx = REAL_PARTS.indexOf(selectedPart);
     if (idx >= 0) setSelectedIndex(idx);
   }, [selectedPart]);
 
   const handlePartClick = (index: number) => {
     setSelectedIndex(index);
-    onToggle(PARTS[index]);
+    onToggle(REAL_PARTS[index]);
   };
 
   return (
     <Switch>
       <Slider $selectedIndex={selectedIndex}>
-        {PARTS.map((part, index) => (
+        {REAL_PARTS.map((part, index) => (
           <TextPart
             key={part}
             $isSelected={selectedIndex === index}
