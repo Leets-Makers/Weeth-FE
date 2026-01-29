@@ -10,6 +10,7 @@ import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { pcResponsive } from '@/styles';
 import { units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
+import { RealPart } from '@/types/part';
 import PartToggle from './PartToggle';
 
 export const Container = styled.div`
@@ -121,12 +122,13 @@ const StudyWriteTemplate = ({
             )}
           </DropdownContainer>
         </DivisionContainer>
-        {isStudyLog && (
+        {isStudyLog && selectedPart && (
           <DivisionContainer>
             <DivisionContainer>스터디</DivisionContainer>
             <StudyDropdown
               origStudy={selectedStudy}
               editStudy={setSelectedStudy}
+              selectedPart={selectedPart as RealPart}
             />
           </DivisionContainer>
         )}
