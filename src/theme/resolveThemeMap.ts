@@ -1,5 +1,5 @@
 import { resolveSemantic } from './resolveSemantic';
-import { Mode } from './buildTheme';
+import { Mode } from '@/types/theme';
 
 export function resolveThemeMap(
   obj: Record<string, any>,

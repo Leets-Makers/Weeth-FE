@@ -1,7 +1,6 @@
 import { colors } from './designTokens';
 import { resolveThemeMap } from './resolveThemeMap';
-
-export type Mode = 'light' | 'dark';
+import { Mode } from '@/types/theme';
 
 export function buildTheme(
   themeMap: Record<string, any>,

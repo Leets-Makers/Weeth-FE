@@ -1,5 +1,5 @@
 import { colors } from './designTokens';
-import { Mode } from './buildTheme';
+import { Mode } from '@/types/theme';
 
 export function resolveSemantic(value: string, mode: Mode): string {
   // 이미 hex 값이면 그대로 사용
