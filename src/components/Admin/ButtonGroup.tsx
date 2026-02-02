@@ -68,8 +68,16 @@ const ButtonGroup: React.FC<ButtonGroupProps & { isHeader?: boolean }> = ({
       {buttons.map(({ label, onClick, disabled, style }) => (
         <Button
           key={label}
-          color={style?.backgroundColor || theme.semantic.button.neutral}
-          textcolor={style?.color || '#000'}
+          color={
+            disabled
+              ? theme.semantic.button.disabled
+              : style?.backgroundColor || theme.semantic.button.neutral
+          }
+          textcolor={
+            disabled
+              ? theme.semantic.text.disabled
+              : style?.color || theme.semantic.text.normal
+          }
           width="auto"
           height="45px"
           borderRadius={`${units.radius.md}px`}

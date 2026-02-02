@@ -1,5 +1,13 @@
-export const adminThemeMap = {
+export const baseThemeMap = {
   backGround: 'neutral.200',
+
+  text: {
+    normal: 'neutral.800',
+    strong: 'neutral.900',
+    alternative: 'neutral.600',
+    disabled: 'neutral.500',
+    inverse: 'neutral.0',
+  },
 
   container: {
     neutral: 'neutral.300',
@@ -9,40 +17,30 @@ export const adminThemeMap = {
     'secondary-alternative': 'secondary.100',
     'primary-interaction': 'primary.600',
     'secondary-interaction': 'secondary.700',
-    'neutral-interaction': 'neutral.400',
+    'neutral-interaction': 'neutral.500',
   },
 
   button: {
-    primary: 'primary.500',
-    'primary-interaction': 'primary.600',
     neutral: 'neutral.400',
     'neutral-interaction': 'neutral.500',
-    disabled: '#6e7173',
-  },
-
-  line: 'neutral.400',
-
-  brand: {
     primary: 'primary.500',
-    purple: 'purple.500',
-    secondary: 'secondary.500',
-    pink: 'pink.500',
-  },
-
-  text: {
-    inverse: '#000000',
-    normal: '#1e2021',
-    alternative: '#909599',
-    disabled: '#b7bcbf',
-    strong: '#000000',
+    'primary-interaction': 'primary.600',
+    disabled: 'neutral.500',
   },
 
   icon: {
-    inverse: '#000000',
-    normal: '#1e2021',
-    alternative: '#46494d',
-    disabled: '#909599',
-    strong: '#000000',
+    normal: 'neutral.800',
+    strong: 'neutral.900',
+    alternative: 'neutral.600',
+    disabled: 'neutral.500',
+    inverse: 'neutral.0',
+  },
+
+  brand: {
+    primary: 'primary.500',
+    secondary: 'secondary.500',
+    purple: 'purple.500',
+    pink: 'pink.500',
   },
 
   state: {

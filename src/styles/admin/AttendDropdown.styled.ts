@@ -68,10 +68,9 @@ export const ButtonWrapper = styled.div`
 export const CancelButton = styled.div`
   width: 64px;
   height: 48px;
-  background-color: #a6a6a6;
-
-  color: ${theme.color.gray[100]};
-  border-radius: 5px;
+  background-color: ${({ theme }) => theme.semantic.button.neutral};
+  border-radius: ${units.radius.md}px;
+  color: ${({ theme }) => theme.semantic.text.strong};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,9 +80,9 @@ export const CancelButton = styled.div`
 export const SaveButton = styled.div`
   width: 64px;
   height: 48px;
-  background-color: #2f2f2f;
-  color: ${theme.color.gray[100]};
-  border-radius: 5px;
+  background-color: ${({ theme }) => theme.semantic.button.primary};
+  color: ${({ theme }) => theme.semantic.text.inverse};
+  border-radius: ${units.radius.md}px;
   display: flex;
   justify-content: center;
   align-items: center;
