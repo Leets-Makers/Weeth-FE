@@ -5,19 +5,12 @@ import FE from '@/assets/images/ic_FE.svg';
 import PM from '@/assets/images/ic_PM.svg';
 import Master from '@/assets/images/ic_Master_BW.svg';
 import * as S from '@/styles/member/MemberItem.styled';
+import { Member } from '@/types/member';
 
-interface MemberItemProps {
-  userId: number;
-  name: string;
-  cardinal: number[];
-  position: string;
-  role: 'USER' | 'ADMIN';
-}
-
-const MemberItem: React.FC<MemberItemProps> = ({
-  userId,
+const MemberItem: React.FC<Member> = ({
+  id,
   name,
-  cardinal,
+  cardinals,
   position,
   role,
 }) => {
@@ -40,7 +33,7 @@ const MemberItem: React.FC<MemberItemProps> = ({
   }
 
   const onClickMember = () => {
-    navi(`/member/${userId}`);
+    navi(`/member/${id}`);
   };
 
   return (
@@ -55,7 +48,7 @@ const MemberItem: React.FC<MemberItemProps> = ({
             ) : null}
             <span>{positionName}</span>
             <span>|</span>
-            <span>{cardinal.map((num) => `${num}기`).join(' · ')}</span>
+            <span>{cardinals.map((num) => `${num}기`).join(' · ')}</span>
           </S.Caption>
         </S.TextWrapper>
       </S.Content>

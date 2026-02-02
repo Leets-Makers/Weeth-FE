@@ -10,8 +10,8 @@ import {
 import DropDown from '@/assets/images/ic_admin_cardinal.svg';
 import fetchAttendancesByCardinal from '@/api/admin/attendance/fetchAttendancesByCardinal';
 import dayjs from 'dayjs';
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import AttendDropdown from '@/components/Admin/AttendDropdown';
+import useUserData from '@/hooks/queries/useUserData';
 
 interface AttendanceItem {
   id: number;
@@ -27,7 +27,8 @@ interface AttendanceProps {
 const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
   const [data, setData] = useState<AttendanceItem[]>([]);
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-  const { isAdmin } = useGetGlobaluserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
 
   const formatDate = (dateString: string) => {
     return dayjs(dateString).format('YYYY년 M월 D일');

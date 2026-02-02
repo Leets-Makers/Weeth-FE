@@ -63,16 +63,16 @@ const EduPost = () => {
         postType: 'postEdu',
       });
 
-      const backPart = partParam ?? 'ALL';
+      const backPart =
+        selectedPart.length === REAL_PARTS.length || selectedPart.length === 0
+          ? 'ALL'
+          : selectedPart[0];
       navigate(`/board/education/${backPart}`);
     } catch (err) {
       console.error('게시 실패:', err);
       alert('게시 중 오류가 발생했습니다.');
     }
   };
-  const { part } = useParams<{
-    part: string;
-  }>();
 
   return (
     <>
@@ -81,8 +81,7 @@ const EduPost = () => {
         <Breadcrumb
           items={[
             { label: '게시판', path: '/board' },
-            { label: `${part} 교육자료`, path: `/board/education/${part}` },
-            { label: '글쓰기' },
+            { label: '교육자료 글쓰기' },
           ]}
         />
         <EduWrite

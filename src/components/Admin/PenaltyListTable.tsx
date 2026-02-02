@@ -8,11 +8,11 @@ import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import { columns } from '@/constants/admin/penaltyColumns';
 import { getStatusColor } from '@/components/Admin/StatusIndicator';
 import { StatusCell } from '@/components/Admin/MemberListTableRow';
-import { usePenaltyData } from '@/hooks/admin/usePenaltyData';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
+import usePenaltyData from '@/hooks/admin/usePenaltyData';
 import { getLatestPenaltyDate } from '@/utils/admin/getLatestPenaltyDate';
 import { useFilteredMembers } from '@/hooks/admin/usePenaltyFilteredMembers';
 import ExpandedPenaltyRow from '@/components/Admin/ExpandedPenaltyRow';
+import useUserData from '@/hooks/queries/useUserData';
 
 interface PenaltyListTableProps {
   selectedCardinal: number | null;
@@ -28,13 +28,13 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
   dispatch,
 }) => {
   const { members } = useMemberContext();
-  const { isAdmin, loading } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
 
   // 페널티 데이터 가져오기 훅
   const { fetchPenaltyData } = usePenaltyData({
     selectedCardinal,
     isAdmin,
-    loading,
     dispatch,
   });
 

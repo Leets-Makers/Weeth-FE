@@ -1,16 +1,16 @@
+import useUserData from '@/hooks/queries/useUserData';
 import * as S from '@/styles/attend/AttendMain.styled';
 import * as P from '@/styles/attend/AttendRate.styled';
-import useGetUserName from '@/hooks/useGetUserName';
 
 const AttendRate: React.FC<{ attendRate: number }> = ({ attendRate }) => {
-  const userName = useGetUserName();
+  const { data: userInfo } = useUserData();
 
   const displayedRate = attendRate ?? 0;
 
   return (
     <S.StyledAttend>
       <P.TitleWrapper>
-        {userName}님의 <br />
+        {userInfo?.name}님의 <br />
         출석률은 {displayedRate}%
       </P.TitleWrapper>
 

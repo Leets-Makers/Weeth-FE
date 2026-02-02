@@ -1,11 +1,10 @@
 import { useMemo, useState } from 'react';
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
-import useGetDuesInfo, { Receipt } from '@/api/useGetDuesInfo';
 import ReceiptItem from '@/components/Receipt/ReceiptItem';
-import Loading from '@/components/common/Loading';
 import * as S from '@/styles/receipt/ReceiptList.styled';
-import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import ReceiptViewerModal from '@/components/Receipt/ReceiptViewerModal';
+import useUserData from '@/hooks/queries/useUserData';
+import useDuesData from '@/hooks/queries/useDuesData';
+import { Receipt } from '@/types/dues';
 
 interface GroupedByMonth {
   [month: string]: Receipt[];
@@ -30,11 +29,10 @@ const getSemesterMonths = (): number[] => {
 };
 
 const ReceiptList: React.FC = () => {
-  const { globalInfo, loading: userLoading } = useGetGlobaluserInfo();
-  const cardinal = globalInfo?.cardinals?.[0] ?? null;
-  const { duesInfo, loading: duesLoading } = useGetDuesInfo(cardinal);
+  const { data: userInfo } = useUserData();
 
-  const combinedLoading = useSmartCombinedLoading(userLoading, duesLoading);
+  const cardinal = userInfo?.cardinals?.[0];
+  const { data: duesInfo } = useDuesData(cardinal ?? 0);
 
   // 모달 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,14 +58,6 @@ const ReceiptList: React.FC = () => {
 
   // 이미지인지 pdf인지 판단
   const isImage = (url: string) => /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-
-  if (combinedLoading && !duesInfo) {
-    return (
-      <S.StyledReceipt>
-        <Loading />
-      </S.StyledReceipt>
-    );
-  }
 
   return (
     <div>

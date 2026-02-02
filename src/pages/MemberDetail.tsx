@@ -1,4 +1,3 @@
-import useGetMemberDetail from '@/api/useGetMemberDetail';
 import FE from '@/assets/images/ic_char_FE.svg';
 import BE from '@/assets/images/ic_char_BE.svg';
 import D from '@/assets/images/ic_char_DE.svg';
@@ -10,15 +9,18 @@ import clipDE from '@/assets/images/ic_DE_clip.svg';
 import clipPM from '@/assets/images/ic_PM_clip.svg';
 
 import CardinalTag from '@/components/common/CardinalTag';
-import Loading from '@/components/common/Loading';
 import { useMemo } from 'react';
 
 import * as S from '@/styles/member/MemberDetail.styled';
 import { colors } from '@/theme/designTokens';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import useMemberDetailData from '@/hooks/queries/useMemberDetailData';
+import { useParams } from 'react-router-dom';
 
 const MemberDetail = () => {
-  const { memberDetail, error, loading } = useGetMemberDetail();
+  const { userId } = useParams();
+
+  const { data: memberDetail } = useMemberDetailData(Number(userId));
 
   const positionMap = useMemo(
     () => ({
@@ -50,21 +52,15 @@ const MemberDetail = () => {
     [],
   );
 
-  if (loading) return <Loading />;
-  if (error)
-    return <S.ErrorMessage>멤버 정보를 불러오지 못했습니다.</S.ErrorMessage>;
-  if (!memberDetail)
-    return <S.ErrorMessage>멤버 정보가 존재하지 않습니다.</S.ErrorMessage>;
-
   const positionData =
-    positionMap[memberDetail.position as keyof typeof positionMap];
+    positionMap[memberDetail?.position as keyof typeof positionMap];
 
   return (
     <>
       <Breadcrumb
         items={[
           { label: '멤버', path: '/member' },
-          { label: '멤버 상세', path: `/member/${memberDetail.id}` },
+          { label: '멤버 상세', path: `/member/${memberDetail?.id}` },
         ]}
       />
       <S.Wrapper>
@@ -72,7 +68,7 @@ const MemberDetail = () => {
           <>
             <S.PositionCharacter
               src={positionData.char}
-              alt={memberDetail.position}
+              alt={memberDetail?.position}
             />
             <S.ClipContainer>
               <S.Clip src={positionData.clip} alt="clip" />
@@ -82,13 +78,13 @@ const MemberDetail = () => {
 
         <S.ContentTop>
           <S.Title>
-            <span>{memberDetail.name}</span>
-            {memberDetail.role === 'ADMIN' && (
+            <span>{memberDetail?.name}</span>
+            {memberDetail?.role === 'ADMIN' && (
               <img src={Master} alt="관리자 아이콘" />
             )}
           </S.Title>
           <S.CardinalList>
-            {memberDetail.cardinals?.map((c) => (
+            {memberDetail?.cardinals?.map((c) => (
               <CardinalTag key={c} type="member" cardinal={c} />
             ))}
           </S.CardinalList>
@@ -102,11 +98,11 @@ const MemberDetail = () => {
               </S.Position>
             )}
             <S.Department>
-              <div>{memberDetail.department}</div>
+              <div>{memberDetail?.department}</div>
               <S.Gray>|</S.Gray>
-              <S.Gray>{memberDetail.studentId}</S.Gray>
+              <S.Gray>{memberDetail?.studentId}</S.Gray>
             </S.Department>
-            <div>{memberDetail.email}</div>
+            <div>{memberDetail?.email}</div>
           </S.InfoSection>
         </S.ContentBottom>
       </S.Wrapper>

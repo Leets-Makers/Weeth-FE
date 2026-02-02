@@ -5,11 +5,11 @@ import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/calendar/Calendar.styled';
 import icLeftArrow from '@/assets/images/ic_leftArrow.svg';
 import icRightArrow from '@/assets/images/ic_rightArrow.svg';
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import { lazy, Suspense, useState } from 'react';
 import Loading from '@/components/common/Loading';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import FloatingWritingIcon from '@/assets/images/ic_calendar_floating_button.svg?react';
+import useUserData from '@/hooks/queries/useUserData';
 
 const MonthCalendar = lazy(() => import('@/components/Calendar/MonthCalendar'));
 const YearCalendar = lazy(() => import('@/components/Calendar/YearCalendar'));
@@ -18,7 +18,8 @@ const Calendar = () => {
   useCustomBack('/home');
   const navigate = useNavigate();
   const [isMonth, setIsMonth] = useState(true);
-  const { isAdmin } = useGetGlobaluserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
   const [searchParams, setSearchParams] = useSearchParams();
 
   const year = Number(searchParams.get('year')) || CURRENT_YEAR;

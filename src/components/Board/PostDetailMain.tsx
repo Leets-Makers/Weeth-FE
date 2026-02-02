@@ -16,13 +16,13 @@ import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
 import deletePost from '@/api/deletePost';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetUserName from '@/hooks/useGetUserName';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import {
   useCloseSelectModal,
   useOpenSelectModal,
 } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
+import useUserData from '@/hooks/queries/useUserData';
 import Loading from '../common/Loading';
 
 interface Comment {
@@ -59,6 +59,7 @@ interface PostDetailMainProps {
 
 const PostDetailMain = ({ info }: PostDetailMainProps) => {
   const navigate = useNavigate();
+  const { data: userInfo } = useUserData();
   const { category, part, postId } = useParams<{
     category: string;
     part: string;
@@ -69,7 +70,6 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     numericPostId ? 'board' : 'board',
     numericPostId ?? 0,
   );
-  const userName = useGetUserName();
   const formattedDate = formatDateTime(info?.time ?? '');
 
   const url = new URL(window.location.href);
@@ -81,7 +81,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
       ? `/board/${category}/${part}/${postId}/edit`
       : `/education/${part}/${postId}/edit`;
 
-  const isMyPost = boardDetailInfo?.name === userName;
+  const isMyPost = boardDetailInfo?.name === userInfo?.name;
   const openSelectModal = useOpenSelectModal();
   const closeSelectModal = useCloseSelectModal();
 

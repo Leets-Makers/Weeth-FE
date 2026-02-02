@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
+import { useQueryClient } from '@tanstack/react-query';
 
 const useLogout = () => {
   const navigate = useNavigate();
   const openSelectModal = useOpenSelectModal();
+  const queryClient = useQueryClient();
 
   const onClickLogout = () => {
     localStorage.removeItem('accessToken');
@@ -21,6 +23,7 @@ const useLogout = () => {
       onDelete: onClickLogout,
       buttonContent: '확인',
     });
+    queryClient.clear();
   };
 
   return confirmLogout;

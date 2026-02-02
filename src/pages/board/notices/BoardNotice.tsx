@@ -1,5 +1,4 @@
 import Breadcrumb from '@/components/common/Breadcrumb';
-import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
@@ -9,18 +8,19 @@ import { useNavigate } from 'react-router-dom';
 import useGetBoardInfo from '@/api/useGetBoardInfo';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
 import useSmartLoading, {
   useSmartCombinedLoading,
 } from '@/hooks/useSmartLoading';
 import { BoardContent } from '@/types/board';
 import { BreadcrumbPadding } from '@/styles/breadCrum';
+import useUserData from '@/hooks/queries/useUserData';
+import BoardWriteFloatingButton from '@/components/Board/BoardWriteFloatingButton';
 
 const BoardNotice = () => {
   useCustomBack('/board');
 
-  const { isAdmin } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
 
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -93,10 +93,6 @@ const BoardNotice = () => {
     return <Loading />;
   }
 
-  const handleWriting = () => {
-    navigate(`/board/notices/post`);
-  };
-
   const handleDetail = (postId: number) => {
     navigate(`/board/notices/${postId}`);
   };
@@ -161,11 +157,7 @@ const BoardNotice = () => {
           )}
         </S.PostContainer>
       )}
-      {isAdmin && (
-        <S.FloatingButton>
-          <FloatingWritingIcon onClick={handleWriting} />
-        </S.FloatingButton>
-      )}
+      {userInfo?.role === 'ADMIN' && <BoardWriteFloatingButton />}
     </S.Container>
   );
 };

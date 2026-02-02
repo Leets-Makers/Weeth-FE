@@ -1,24 +1,26 @@
-import useGetAllCardinals from '@/api/useGetCardinals';
-import theme from '@/styles/theme';
+import useCardinalData from '@/hooks/queries/useCardinalData';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 const CardinalContainer = styled.div`
   display: flex;
-  gap: 0.3125rem;
+  gap: 5px;
 `;
 
 const CardinalBox = styled.div<{ $selected: boolean }>`
-  width: 3.1875rem;
-  height: 2rem;
-  min-width: 2.5rem;
-  border: 1px solid ${theme.color.gray[18]};
-  border-radius: 1.25rem;
+  height: 40px;
+  box-sizing: border-box;
+  min-width: 40px;
+  padding: 8px 15px;
+  border: ${({ $selected }) =>
+    $selected ? 'none' : `1px solid ${colors.semantic.line}`};
+  border-radius: 9999px;
   background-color: ${({ $selected }) =>
-    $selected ? theme.color.main : theme.color.gray[12]};
-  font-size: 0.875rem;
-  line-height: 1;
-  font-family: ${theme.font.semiBold};
-  color: ${({ $selected }) => ($selected ? 'white' : theme.color.gray[100])};
+    $selected ? colors.semantic.button.primary : 'transparent'};
+  ${typography.Button2};
+  color: ${({ $selected }) =>
+    $selected ? colors.semantic.text.inverse : colors.semantic.text.strong};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,9 +33,10 @@ type Props = {
 };
 
 const Cardinal = ({ value, onChange }: Props) => {
-  const { allCardinals } = useGetAllCardinals();
+  const { data: allCardinals } = useCardinalData();
 
-  const sortedCardinals = [...allCardinals].reverse();
+  if (!allCardinals) return null;
+  const sortedCardinals = [...allCardinals]?.reverse();
 
   const handleSelect = (cardinalNumber: number) => {
     onChange(value === cardinalNumber ? null : cardinalNumber);

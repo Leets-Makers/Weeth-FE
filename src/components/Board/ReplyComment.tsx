@@ -4,7 +4,6 @@ import MenuImage from '@/assets/images/ic_comment_delete.svg?react';
 import * as S from '@/styles/board/Comment.styled';
 import deleteComment from '@/api/deleteComment';
 import formatDateTime from '@/hooks/formatDateTime';
-import useGetUserName from '@/hooks/useGetUserName';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import { useCallback } from 'react';
 import convertLinksInText from '@/hooks/convertLinksInText';
@@ -15,6 +14,7 @@ import {
   useCloseSelectModal,
   useOpenSelectModal,
 } from '@/stores/selectModalStore';
+import useUserData from '@/hooks/queries/useUserData';
 
 interface ReplyCommentProps {
   name: string;
@@ -42,7 +42,9 @@ const ReplyComment = ({
   onDelete,
 }: ReplyCommentProps) => {
   const formattedTime = formatDateTime(time);
-  const isMyComment = name === useGetUserName();
+
+  const { data: userInfo } = useUserData();
+  const isMyComment = name === userInfo?.name;
 
   const openSelectModal = useOpenSelectModal();
   const closeSelectModal = useCloseSelectModal();

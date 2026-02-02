@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { DirectCardinalProps } from '@/types/adminCardinal';
-import useGetAllCardinals from '@/api/useGetCardinals';
 import CardinalSVG from '@/assets/images/ic_admin_column_meatball.svg';
 import DuesCardinalSVG from '@/assets/images/ic_admin_cardinal.svg';
 import {
@@ -9,6 +8,7 @@ import {
   DropdownItem,
   DropdownMenu,
 } from '@/components/Admin/Cardinal';
+import useCardinalData from '@/hooks/queries/useCardinalData';
 import { units } from '@/theme/designTokens';
 
 export const StyledCardinal = styled.div`
@@ -24,10 +24,10 @@ const DirectCardinalDropdown: React.FC<DirectCardinalProps> = ({
   isForDues,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { allCardinals } = useGetAllCardinals();
+  const { data: allCardinals } = useCardinalData();
   const [isCustomInput, setIsCustomInput] = useState(false);
 
-  const sortedCardinals = [...allCardinals].reverse();
+  const sortedCardinals = allCardinals?.reverse() ?? [];
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -60,12 +60,12 @@ const DirectCardinalDropdown: React.FC<DirectCardinalProps> = ({
         />
       </CardinalButton>
       {isOpen && (
-        <DropdownMenu itemCount={sortedCardinals.length}>
-          {sortedCardinals.length === 0 && (
+        <DropdownMenu itemCount={sortedCardinals?.length}>
+          {sortedCardinals?.length === 0 && (
             <DropdownItem>기수 없음</DropdownItem>
           )}
-          {sortedCardinals.length > 0 &&
-            sortedCardinals.map((item) => (
+          {sortedCardinals?.length > 0 &&
+            sortedCardinals?.map((item) => (
               <DropdownItem
                 key={item.id}
                 onClick={() => selectCardinal(item.cardinalNumber)}

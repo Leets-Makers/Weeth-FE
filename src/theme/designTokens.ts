@@ -110,6 +110,7 @@ export const colors = {
       'primary-interaction': '#A3FFE0',
       'secondary-interaction': '#92B9FF',
       'neutral-interaction': '#6e7173',
+      'neutral-alternative': '#171819',
     },
     button: {
       neutral: '#46494D',

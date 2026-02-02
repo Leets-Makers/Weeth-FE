@@ -16,13 +16,13 @@ import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
 import deletePost from '@/api/deletePost';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetUserName from '@/hooks/useGetUserName';
 import useGetBoardDetail from '@/api/useGetBoardDetail';
 import {
   useCloseSelectModal,
   useOpenSelectModal,
 } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
+import useUserData from '@/hooks/queries/useUserData';
 
 interface Comment {
   id: number;
@@ -58,6 +58,7 @@ interface PostDetailMainProps {
 
 const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   const navigate = useNavigate();
+  const { data: userInfo } = useUserData();
 
   const { postId } = useParams();
 
@@ -68,8 +69,7 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
   const { boardDetailInfo } = useGetBoardDetail(type, numericPostId ?? 0);
-  const userName = useGetUserName();
-  const isMyPost = boardDetailInfo?.name === userName;
+  const isMyPost = boardDetailInfo?.name === userInfo?.name;
   const formattedDate = formatDateTime(info?.time ?? '');
 
   const openSelectModal = useOpenSelectModal();

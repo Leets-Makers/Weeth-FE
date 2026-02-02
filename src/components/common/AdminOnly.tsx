@@ -1,5 +1,5 @@
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import Button from '@/components/Button/Button';
+import useUserData from '@/hooks/queries/useUserData';
 import theme from '@/styles/theme';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -26,11 +26,9 @@ const Container = styled.div<{ isAdminPage?: boolean }>`
 `;
 
 const AdminOnly = ({ isAdminPage }: { isAdminPage?: boolean }) => {
-  const { isAdmin, loading } = useGetGlobaluserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
   const navigate = useNavigate();
-
-  // TODO: 로딩 컴포넌트 추가
-  if (loading) return <Container />;
 
   return (
     !isAdmin && (

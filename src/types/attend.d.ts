@@ -66,5 +66,4 @@ export interface ModalAttendProps
   endDateTime: string;
   open: boolean;
   close: () => void;
-  onSuccessAttend: () => void;
 }

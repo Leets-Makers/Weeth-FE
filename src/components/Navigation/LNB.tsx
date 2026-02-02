@@ -4,14 +4,14 @@ import Logo from '@/assets/images/ic_name_logo.svg?react';
 import ICCalender from '@/assets/images/ic_home_calendar.svg?react';
 import ICAttend from '@/assets/images/ic_home_attend.svg?react';
 import ICBoard from '@/assets/images/ic_home_board.svg?react';
-import useGetUserInfo from '@/api/useGetUserInfo';
 import useSetPosition from '@/hooks/useSetPosition';
 import * as S from '@/styles/navigation/Navigation.styled';
 import LogoutButton from '@/components/home/LogoutButton';
 import useLogout from '@/hooks/useLogout';
+import useUserData from '@/hooks/queries/useUserData';
 
 const LNB = ({ onClose }: { onClose: () => void }) => {
-  const { userInfo } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
   const { characterImg } = useSetPosition(userInfo?.position || '');
   const navigate = useNavigate();
   const location = useLocation();

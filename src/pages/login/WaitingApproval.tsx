@@ -62,7 +62,7 @@ const WaitingApproval = () => {
 
   return (
     <Container>
-      <Header isWaiting RightButtonType="none" isAccessible={false} />
+      <Header isWaiting />
       <Content>
         <img
           src={weeth}

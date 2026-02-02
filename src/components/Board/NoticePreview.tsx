@@ -4,6 +4,7 @@ import * as S from '@/styles/board/Board.styled';
 import Loading from '@/components/common/Loading';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/types/board';
+import ArrowRightIcon from '@/assets/images/ic_chevron_right.svg?react';
 
 interface NoticePreviewProps {
   data: BoardContent[] | undefined;
@@ -26,7 +27,9 @@ const NoticePreview = ({ data, error }: NoticePreviewProps) => {
       <S.CardContainer>
         <S.NoticeTextContainer>
           <S.NoticeTitleText>공지사항</S.NoticeTitleText>
-          <S.AllText onClick={handleAllNotice}>전체보기 &gt;</S.AllText>
+          <S.AllText onClick={handleAllNotice}>
+            전체보기 <ArrowRightIcon aria-hidden="true" focusable="false" />
+          </S.AllText>
         </S.NoticeTextContainer>
       </S.CardContainer>
       <SlideNotice

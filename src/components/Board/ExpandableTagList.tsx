@@ -34,10 +34,13 @@ export const StudyTag = styled.div<{ $selected?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${colors.semantic.line};
+  border: 1px solid
+    ${({ $selected }) =>
+      $selected ? colors.semantic.brand.primary : colors.semantic.line};
   border-radius: 24px;
   padding: ${units.padding['200']}px ${units.padding['400']}px;
-  color: ${colors.semantic.text.normal};
+  color: ${({ $selected }) =>
+    $selected ? colors.semantic.text.inverse : colors.semantic.text.normal};
   ${typography.Button2};
   white-space: nowrap;
   flex: 0 0 auto;

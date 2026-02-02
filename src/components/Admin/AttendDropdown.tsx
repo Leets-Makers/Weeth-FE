@@ -4,8 +4,8 @@ import * as S from '@/styles/admin/AttendDropdown.styled';
 import CheckBox from '@/assets/images/ic_admin_check.svg';
 import Absence from '@/assets/images/ic_admin_absence.svg';
 import updateAttendanceStatus from '@/api/admin/attendance/updateAttendanceStatus';
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import department from '@/constants/departmentConstants';
+import useUserData from '@/hooks/queries/useUserData';
 import RadioButton from './RadioButton';
 import SearchInput from './SearchInput';
 import { colors } from '@/theme/designTokens';
@@ -57,14 +57,14 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
     [id: number]: string;
   }>({});
 
-  const { isAdmin } = useGetGlobaluserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
 
   useEffect(() => {
     const loadAttendances = async () => {
       if (!isAdmin) return;
 
       const res = await fetchAttendances(meetingId);
-      console.log(res);
 
       if (res.code === 200) {
         const formattedData = res.data.map((item: any) => ({

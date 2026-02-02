@@ -10,10 +10,6 @@ import isBetween from 'dayjs/plugin/isBetween';
 
 import * as S from '@/styles/attend/AttendMain.styled';
 
-import useGetAttend from '@/api/useGetAttend';
-import useGetPenalty from '@/api/useGetPenalty';
-import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
-
 import AttendRate from '@/components/Attendance/AttendRate';
 import { AttendInfo, NoAttnedInfo } from '@/components/Attendance/AttendInfo';
 import {
@@ -21,10 +17,11 @@ import {
   PenaltyInfo,
 } from '@/components/Attendance/PenaltyInfo';
 import ModalAttend from '@/components/Attendance/ModalAttend';
-import Loading from '@/components/common/Loading';
 
 import AttendanceCodeModal from '@/components/Modal/AttendanceCodeModal';
 import AttendSection from '@/components/Attendance/AttendSection';
+import useAttendData from '@/hooks/queries/attend/useAttendData';
+import usePenaltyData from '@/hooks/queries/attend/usePenaltyData';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -72,22 +69,16 @@ const AttendMain: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [codeModalOpen, setCodeModalOpen] = useState(false);
 
-  const { penaltyInfo, isLoading: penaltyLoading } = useGetPenalty();
-  const {
-    attendInfo,
-    hasSchedule,
-    isLoading: attendLoading,
-    refetch: refetchAttend,
-  } = useGetAttend();
+  const { data: penaltyInfo } = usePenaltyData();
+  const { data: attendInfo } = useAttendData();
+
+  const hasSchedule = attendInfo?.title !== null;
 
   const isAttend = attendInfo?.status === 'ATTEND' || false;
 
   const hasPenalty =
     (penaltyInfo?.penaltyCount ?? 0) > 0 ||
     (penaltyInfo?.warningCount ?? 0) > 0;
-
-  const smartLoading = useSmartCombinedLoading(attendLoading, penaltyLoading);
-  if (smartLoading) return <Loading />;
 
   const { title, location, startDateTime, endDateTime, isWithinTimeRange } =
     getAttendTimeInfo(attendInfo);
@@ -156,7 +147,6 @@ const AttendMain: React.FC = () => {
         endDateTime={endDateTime}
         open={modalOpen}
         close={handleCloseModal}
-        onSuccessAttend={refetchAttend}
       />
     </S.StyledAttend>
   );

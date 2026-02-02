@@ -1,4 +1,3 @@
-import theme from '@/styles/theme';
 import { colors } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
@@ -28,7 +27,7 @@ export const Slider = styled.span<{ $isMonth: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.semantic.container.neutral};
   transition: 0.4s;
   border-radius: 10px;
 
@@ -39,7 +38,7 @@ export const Slider = styled.span<{ $isMonth: boolean }>`
     width: 32px;
     left: 2px;
     bottom: 2px;
-    background-color: ${theme.color.gray[30]};
+    background-color: ${colors.semantic.container['neutral-interaction']};
     transition: 0.4s;
     border-radius: 9px;
     transform: ${(props) =>
