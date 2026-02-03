@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import theme from '@/styles/theme';
 import { BoxWrapper } from '@/components/Admin/TotalDues';
 import Box from '@/components/Admin/Box';
+import { colors, units } from '@/theme/designTokens';
 
 export const CardinalBoxWrapper = styled(BoxWrapper)`
   padding: 0 0 20px 0;

@@ -7,8 +7,8 @@ import useAdminActions from '@/hooks/admin/useAdminActions';
 import { useState } from 'react';
 import getHighestCardinal from '@/utils/admin/getHighestCardinal';
 import CardinalEditModal from '@/components/Admin/Modal/CardinalEditModal';
-import theme from '@/styles/theme';
 import Button from '@/components/Button/Button';
+import { useTheme } from 'styled-components';
 
 interface MemberDetailModalProps {
   data: MemberData;
@@ -21,6 +21,7 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
 }) => {
   const { handleAction } = useAdminActions();
   const [isCardinalModalOpen, setIsCardinalModalOpen] = useState(false);
+  const theme = useTheme();
 
   const isApproved = data.status === '승인 완료';
 
@@ -55,9 +56,8 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
       onClick: () => setIsCardinalModalOpen(true),
       style: {
         backgroundColor: isCardinalModalOpen
-          ? theme.color.gray[18]
-          : theme.color.gray[100],
-        color: isCardinalModalOpen ? theme.color.gray[100] : '#000',
+          ? theme.semantic.button['neutral-interaction']
+          : theme.semantic.button.neutral,
       },
     },
   ];

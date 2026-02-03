@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import theme from '../theme';
+import { units } from '@/theme/designTokens';
 
 export const Wrapper = styled.div`
   width: 94.7%;
   margin-left: 2.5%;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 0 solid #dedede;
+  border: 0 solid ${({ theme }) => theme.semantic.line};
   border-width: 0 1px 1px;
+  border-radius: 0 0 ${units.radius.md}px ${units.radius.md}px;
   &:last-child {
     margin-bottom: 15px;
   }
@@ -29,8 +31,9 @@ export const SearchWrapper = styled.div`
 export const SearchBar = styled.div`
   width: 70%;
   height: 48px;
-  border: 1px solid #dedede;
-  border-radius: 5px;
+  border-radius: ${units.radius.sm}px;
+  border: none;
+  outline: none;
   display: flex;
   align-items: center;
   color: #4e4e4e;
@@ -47,10 +50,10 @@ export const EditButton = styled.button`
 export const Edit = styled.div`
   width: 64px;
   height: 48px;
-  background-color: #2f2f2f;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   color: ${theme.color.gray[100]};
   font-size: 18px;
-  border-radius: 5px;
+  border-radius: ${units.radius.md}px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,10 +68,9 @@ export const ButtonWrapper = styled.div`
 export const CancelButton = styled.div`
   width: 64px;
   height: 48px;
-  background-color: #a6a6a6;
-
-  color: ${theme.color.gray[100]};
-  border-radius: 5px;
+  background-color: ${({ theme }) => theme.semantic.button.neutral};
+  border-radius: ${units.radius.md}px;
+  color: ${({ theme }) => theme.semantic.text.strong};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,9 +80,9 @@ export const CancelButton = styled.div`
 export const SaveButton = styled.div`
   width: 64px;
   height: 48px;
-  background-color: #2f2f2f;
-  color: ${theme.color.gray[100]};
-  border-radius: 5px;
+  background-color: ${({ theme }) => theme.semantic.button.primary};
+  color: ${({ theme }) => theme.semantic.text.inverse};
+  border-radius: ${units.radius.md}px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,11 +93,13 @@ export const SaveButton = styled.div`
 export const UserWrapper = styled.div`
   width: 95%;
   background-color: #ffffff;
-  border: 1px solid #dedede;
+  border: 1px solid ${({ theme }) => theme.semantic.line};
+  border-radius: ${units.radius.sm}px;
   margin-top: 15px;
   margin-bottom: 15px;
   border-collapse: collapse;
   border-spacing: 0;
+  overflow: hidden;
 `;
 
 export const Info = styled.div`
@@ -114,8 +118,8 @@ export const InfoWrapper = styled.div`
 `;
 
 export const InfoBox = styled.div`
-  border-left: 1px solid #dedede;
-  border-bottom: 1px solid #dedede;
+  border-left: 1px solid ${({ theme }) => theme.semantic.line};
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   width: 79px;
   height: 100%;
   display: flex;
@@ -124,21 +128,19 @@ export const InfoBox = styled.div`
 `;
 
 export const User = styled.div`
-  width: 626px;
-  height: 48px;
-  border-bottom: 1px solid #dedede;
+  width: 621px;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   font-family: ${theme.font.semiBold};
   font-size: 18px;
   display: flex;
   align-items: center;
-  padding-left: 10px;
+  padding: 15px 0 15px 16px;
 `;
 
 export const Attend = styled.div`
-  width: 160px;
-  height: 48px;
-  border-left: 1px solid #dedede;
-  border-bottom: 1px solid #dedede;
+  width: 158px;
+  border-left: 1px solid ${({ theme }) => theme.semantic.line};
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   font-family: ${theme.font.semiBold};
   font-size: 18px;
   display: flex;
@@ -165,7 +167,7 @@ export const Member = styled.div`
   justify-content: center;
   gap: 5px;
   padding-left: 10px;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
 `;
 
 export const UserName = styled.div`
@@ -180,8 +182,8 @@ export const UserInfo = styled.div`
 export const Check = styled.div`
   width: 160px;
   height: 74px;
-  border-bottom: 1px solid #dedede;
-  border-left: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
+  border-left: 1px solid ${({ theme }) => theme.semantic.line};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,7 +209,7 @@ export const StatusBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid #dedede;
+  border-right: 1px solid ${({ theme }) => theme.semantic.line};
   &:last-child {
     border-right: none;
     border-bottom: none;

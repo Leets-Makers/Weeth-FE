@@ -1,9 +1,10 @@
+import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const TotalDuesWrapper = styled.div`
   width: 100%;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: ${units.radius.md}px;
   border: 1px solid #dedede;
   margin-top: 20px;
 

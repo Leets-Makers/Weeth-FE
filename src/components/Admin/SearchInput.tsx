@@ -1,20 +1,24 @@
 import styled from 'styled-components';
 import SearchIcon from '@/assets/images/ic_admin_search.svg';
+import { units } from '@/theme/designTokens';
 
 const SearchWrapper = styled.div`
   position: relative;
   width: 100%;
-  max-width: 250px;
+  max-width: 492px;
   margin-top: 2%;
-  color: black;
 
   input {
     width: 100%;
-    padding: 10px 40px;
-    border: 1px solid #dedede;
-    font-size: 18px;
+    padding: 13px 40px 13px 52px;
+    border: none;
     outline: none;
-    color: #4e4e4e;
+    border-radius: ${units.radius.sm}px;
+    font-size: 18px;
+
+    &::placeholder {
+      color: ${({ theme }) => theme.semantic.text.alternative};
+    }
   }
 `;
 

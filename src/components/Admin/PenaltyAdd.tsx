@@ -14,6 +14,8 @@ import PenaltyRadioGroup, { PenaltyType } from './PenaltyRadioGroup';
 import { ApiPenaltyType } from '@/types/adminPenalty';
 
 import { toastError, toastSuccess } from '@/components/common/ToastMessage';
+import { useTheme } from 'styled-components';
+import { units } from '@/theme/designTokens';
 
 interface PenaltyAddProps {
   dispatch: React.Dispatch<PenaltyAction>;
@@ -26,6 +28,8 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
   const [selectedMember, setSelectedMember] = useState<string>('');
   const [penaltyDescription, setPenaltyDescription] = useState<string>('');
   const [type, setType] = useState<PenaltyType>('penalty'); // 탭 상태 (페널티/경고)
+
+  const theme = useTheme();
 
   const filteredMembers = members.filter((member) =>
     member.name.includes(searchTerm),
@@ -120,7 +124,6 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
       <S.TitleWrapper>
         <S.Title>{label} 추가</S.Title>
       </S.TitleWrapper>
-      <S.Line />
       <S.ItemWrapper>
         <PenaltyRadioGroup value={type} onChange={setType} />
         <S.InputWrapper>
@@ -153,16 +156,18 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
         <ButtonWrapper>
           <Button
             description="초기화"
-            color="#323232"
+            color={theme.semantic.button.neutral}
+            textColor={theme.semantic.text.strong}
             width="75px"
-            borderRadius="4px"
+            borderRadius={`${units.radius.md}px`}
             onClick={handleReset}
           />
           <Button
             description="추가"
-            color="#ff5858"
+            color={theme.semantic.button.neutral}
+            textColor={theme.semantic.text.strong}
             width="62px"
-            borderRadius="4px"
+            borderRadius={`${units.radius.md}px`}
             onClick={handleAddPenalty}
           />
         </ButtonWrapper>

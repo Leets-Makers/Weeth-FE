@@ -1,4 +1,3 @@
-import theme from '@/styles/theme';
 import Box from '@/components/Admin/Box';
 import * as S from '@/styles/admin/cardinal/CardinalInfo.styled';
 import AddCardinal from '@/components/Admin/AddCardinal';
@@ -8,6 +7,7 @@ import { useGetAdminUsers } from '@/api/admin/member/getAdminUser';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import CardinalModal from '@/components/Admin/Modal/CardinalModal';
 import useCardinalData from '@/hooks/queries/useCardinalData';
+import { colors } from '@/theme/designTokens';
 
 const CardinalInfo: React.FC = () => {
   const { selectedCardinal, setSelectedCardinal, setFilteredMembers } =
@@ -70,8 +70,8 @@ const CardinalInfo: React.FC = () => {
           title=" "
           description="전체"
           last={`총 ${totalMembers}명`}
-          color={theme.color.gray[18]}
-          lastColor="#D3D3D3"
+          color={colors.light.primary[500]}
+          lastColor={colors.light.neutral[300]}
           isCardinalBox
           isClick
           onClick={() => setSelectedCardinal(null)}
@@ -95,8 +95,8 @@ const CardinalInfo: React.FC = () => {
               }
               description={`${cardinal.cardinalNumber}기`}
               last={lastText}
-              color={theme.color.gray[65]}
-              lastColor="#D3D3D3"
+              color={colors.light.neutral[300]}
+              lastColor="#808080"
               isCardinalBox
               isClick
               isIncomplete={!cardinal.year || !cardinal.semester}

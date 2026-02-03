@@ -1,15 +1,18 @@
 import { styled } from 'styled-components';
 import theme from '@/styles/theme';
 import positionMapper from '@/utils/admin/positionMapper';
+import { units } from '@/theme/designTokens';
 
 export const DropdownContainer = styled.div`
   position: absolute;
   top: 90%;
   left: 2%;
   width: 100%;
-  max-height: 200px;
+  max-height: 324px;
   overflow-y: auto;
   z-index: 1000;
+  border-radius: ${units.radius.lg}px;
+  box-shadow: 0px 10px 30px 0px rgba(17, 33, 49, 0.3);
 `;
 
 const NoResult = styled.span`
@@ -23,12 +26,12 @@ const NoResult = styled.span`
 `;
 
 const DropdownItem = styled.div<{ noResult?: boolean }>`
-  background-color: #f5faf9;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   padding: 15px;
   display: grid;
   grid-template-columns: 1fr 1fr 70px 1fr;
   align-items: center;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   ${({ noResult }) =>
     noResult
       ? `

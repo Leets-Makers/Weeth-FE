@@ -12,9 +12,10 @@ export const MenuItemWrapper = styled.div<{ $active?: boolean }>`
   align-items: center;
   padding: 10px 20px;
   height: 36px;
-  background-color: ${({ $active }) =>
-    $active ? `${theme.color.main}` : 'transparent'};
-  color: ${({ $active }) => ($active ? '#fff' : '#000')};
+  background-color: ${({ $active, theme }) =>
+    $active
+      ? `${theme.semantic.container['neutral-interaction']}`
+      : 'transparent'};
   cursor: pointer;
 
   svg {
