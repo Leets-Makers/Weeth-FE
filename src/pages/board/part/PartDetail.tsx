@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useGetBoardDetail from '@/api/useGetBoardDetail';
+import useBoardDetail from '@/hooks/queries/board/useBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
 import PostDetailMain from '@/components/Board/PostDetailMain';
@@ -29,30 +29,27 @@ const PartDetail = () => {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
 
-  const [refreshKey, setRefreshKey] = useState(0);
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
 
   const [files, setFiles] = useState<File[]>([]);
 
-  const { boardDetailInfo, error, loading } = useGetBoardDetail(
-    type,
-    numericPostId,
-    refreshKey,
-  );
+  const {
+    data: boardDetailInfo,
+    error,
+    isLoading: loading,
+  } = useBoardDetail(type, numericPostId);
 
   const [selectedComment, setSelectedComment] = useState<
     Record<number, boolean>
   >({});
 
-  const handleRefresh = () => {
-    setRefreshKey((prev) => prev + 1);
+  const handleCommentDelete = () => {
     setParentCommentId(null);
   };
 
   const handleCommentSuccess = () => {
     setParentCommentId(null);
     setSelectedComment({});
-    handleRefresh();
   };
 
   const handleReply = (commentId: number) => {
@@ -69,7 +66,7 @@ const PartDetail = () => {
     }),
   );
 
-  if (error) return <div>오류: {error}</div>;
+  if (error) return <div>오류: {error.message}</div>;
   if (smartLoading) return <Loading />;
 
   if (!category || !part || !postId) {
@@ -99,7 +96,7 @@ const PartDetail = () => {
               comments={boardDetailInfo.comments}
               postId={boardDetailInfo.id}
               path={commentType}
-              onCommentDelete={handleRefresh}
+              onCommentDelete={handleCommentDelete}
               onReply={handleReply}
               selectedComment={selectedComment}
             />
@@ -110,6 +107,7 @@ const PartDetail = () => {
         {boardDetailInfo && (
           <CommentInput
             postId={boardDetailInfo.id}
+            boardPath={commentType as 'board' | 'notices'}
             initialParentCommentId={parentCommentId}
             onCommentSuccess={handleCommentSuccess}
             files={files}

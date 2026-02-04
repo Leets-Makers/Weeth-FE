@@ -3,7 +3,7 @@ import { useState } from 'react';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
-import postBoardNotice from '@/api/postBoardNotice';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
 import { PostRequestType } from '@/types/PostRequestType';
 import { toastError } from '@/components/common/ToastMessage';
 import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
@@ -30,7 +30,16 @@ const PartPost = () => {
   const [content, setContent] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
 
-  const handleClickButton = async () => {
+  const postBoardMutation = usePostBoard({
+    onSuccess: () => {
+      navigate(`/board/${slug}/${selectedPart}`);
+    },
+    onError: (message) => {
+      toastError(message ?? '게시 중 오류가 발생했습니다.');
+    },
+  });
+
+  const handleClickButton = () => {
     if (!title) {
       toastError('제목을 입력해주세요.');
       return;
@@ -58,29 +67,22 @@ const PartPost = () => {
       return;
     }
 
-    try {
-      const postData: PostRequestType = {
-        title,
-        content,
-        category,
-        studyName: selectedStudy || undefined,
-        week: selectedWeek || undefined,
-        part: selectedPart,
-        cardinalNumber: selectedCardinal || undefined,
-        files: [],
-      };
+    const postData: PostRequestType = {
+      title,
+      content,
+      category,
+      studyName: selectedStudy || undefined,
+      week: selectedWeek || undefined,
+      part: selectedPart,
+      cardinalNumber: selectedCardinal || undefined,
+      files: [],
+    };
 
-      await postBoardNotice({
-        postData,
-        files,
-        postType: 'postBoard',
-      });
-
-      navigate(`/board/${slug}/${selectedPart}`);
-    } catch (err) {
-      console.error('게시 실패:', err);
-      alert('게시 중 오류가 발생했습니다.');
-    }
+    postBoardMutation.mutate({
+      postData,
+      files,
+      postType: 'postBoard',
+    });
   };
   return (
     <S.Container>

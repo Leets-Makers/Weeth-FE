@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as S from '@/styles/board/Dropdown.styled';
 import Remove from '@/assets/images/ic_remove_study.svg?react';
 import { RealPart } from '@/types/part';
-import getStudyLists from '@/api/useGetStudyList';
-import { toastError } from '../common/ToastMessage';
+import useStudyList from '@/hooks/queries/board/useStudyList';
 
 interface Props {
   origStudy: string | null;
@@ -14,39 +13,26 @@ interface Props {
 const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState('');
-  const [studyList, setStudyList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const textWidthRef = useRef<HTMLSpanElement>(null);
   const [textWidth, setTextWidth] = useState(0);
   const prevPartRef = useRef<RealPart | null>(null);
+  const [localAddedStudies, setLocalAddedStudies] = useState<string[]>([]);
+
+  const { data: studyList = [] } = useStudyList(selectedPart);
+  const combinedStudyList = [...studyList, ...localAddedStudies];
 
   useEffect(() => {
-    let cancelled = false;
     const prevPart = prevPartRef.current;
     if (prevPart && prevPart !== selectedPart) {
       setInputValue('');
       editStudy(null);
+      setLocalAddedStudies([]);
     }
-
-    (async () => {
-      try {
-        const names = await getStudyLists(selectedPart);
-        if (cancelled) return;
-        setStudyList(names);
-        prevPartRef.current = selectedPart;
-      } catch (e) {
-        if (cancelled) return;
-        toastError('스터디 목록을 불러오지 못했습니다.');
-        console.error(e);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
+    prevPartRef.current = selectedPart;
   }, [selectedPart, editStudy]);
 
-  const isInList = studyList.some(
+  const isInList = combinedStudyList.some(
     (s) => s.toLowerCase() === inputValue.trim().toLowerCase(),
   );
   const isNew = inputValue.trim().length > 0 && !isInList;
@@ -57,7 +43,7 @@ const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
     }
   }, [inputValue]);
 
-  const filteredList = studyList.filter((item) =>
+  const filteredList = combinedStudyList.filter((item) =>
     item.toLowerCase().includes(inputValue.toLowerCase()),
   );
 
@@ -81,7 +67,9 @@ const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
   const handleAddOption = () => {
     const newStudy = inputValue.trim();
     if (!newStudy) return;
-    setStudyList((prev) => [...prev, newStudy]);
+    setLocalAddedStudies((prev) =>
+      prev.includes(newStudy) ? prev : [...prev, newStudy],
+    );
     handleSelect(newStudy);
   };
 
@@ -111,8 +99,17 @@ const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               const newStudy = inputValue.trim();
-              if (newStudy && !studyList.includes(newStudy)) {
-                setStudyList((prev) => [...prev, newStudy]);
+              if (
+                newStudy &&
+                !combinedStudyList.some(
+                  (s) => s.toLowerCase() === newStudy.toLowerCase(),
+                )
+              ) {
+                setLocalAddedStudies((prev) =>
+                  prev.some((s) => s.toLowerCase() === newStudy.toLowerCase())
+                    ? prev
+                    : [...prev, newStudy],
+                );
                 handleSelect(newStudy);
               }
             }

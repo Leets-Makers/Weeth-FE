@@ -8,7 +8,7 @@ type ApiResponse = {
   data?: { studyNames?: string[] };
 };
 
-const getStudyLists = async (part: RealPart): Promise<string[]> => {
+const getStudyList = async (part: RealPart): Promise<string[]> => {
   const res = await api.get<ApiResponse>('/api/v1/board/part/studies', {
     params: { part },
   });
@@ -16,4 +16,4 @@ const getStudyLists = async (part: RealPart): Promise<string[]> => {
   return res.data.data?.studyNames ?? [];
 };
 
-export default getStudyLists;
+export default getStudyList;

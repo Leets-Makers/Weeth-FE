@@ -1,7 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
 import styled from 'styled-components';
 import CommentSend from '@/assets/images/ic_comment_send.svg';
-import createComment from '@/api/postComment';
+import usePostComment from '@/hooks/mutation/board/usePostComment';
 import { toastError } from '@/components/common/ToastMessage';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
@@ -65,12 +65,14 @@ const SendButton = styled.img`
 
 const CommentInput = ({
   postId,
+  boardPath,
   initialParentCommentId = null,
   onCommentSuccess,
   files,
   setFiles,
 }: {
   postId: number;
+  boardPath: 'board' | 'notices';
   initialParentCommentId?: number | null;
   onCommentSuccess?: () => void;
   files: File[];
@@ -78,7 +80,22 @@ const CommentInput = ({
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
-  const [sending, setSending] = useState(false);
+  const submittingRef = useRef(false);
+
+  const postCommentMutation = usePostComment({
+    onSuccess: () => {
+      setInputValue('');
+      setFiles([]);
+      setParentCommentId(null);
+      onCommentSuccess?.();
+    },
+    onError: (message) => {
+      toastError(message);
+    },
+    onSettled: () => {
+      submittingRef.current = false;
+    },
+  });
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -105,40 +122,27 @@ const CommentInput = ({
     autoResize(e.currentTarget);
   };
 
-  const onClickSend = async () => {
-    if (sending) return;
+  const onClickSend = () => {
+    if (submittingRef.current || postCommentMutation.isPending) return;
     if (inputValue.trim() === '') {
       toastError('댓글을 입력하세요.');
       return;
     }
 
-    setSending(true);
-    try {
-      await createComment(
-        postId,
-        inputValue,
-        parentCommentId ?? undefined,
-        files,
-      );
-      setInputValue('');
-      setFiles([]);
-      setParentCommentId(null);
-
-      if (onCommentSuccess) onCommentSuccess();
-    } catch (error: any) {
-      console.error(
-        '댓글 작성 중 에러:',
-        error.response?.data?.message || error.message,
-      );
-      toastError('댓글 작성에 실패했습니다.');
-    } finally {
-      setSending(false);
-    }
+    submittingRef.current = true;
+    postCommentMutation.mutate({
+      postId,
+      content: inputValue,
+      parentCommentId: parentCommentId ?? undefined,
+      files,
+      boardPath,
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
+      e.stopPropagation();
       onClickSend();
     }
   };

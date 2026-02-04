@@ -3,8 +3,7 @@ import NoticePreview from '@/components/Board/NoticePreview';
 import PartBoard from '@/components/Board/PartBoard';
 import EduMaterial from '@/components/Board/EduMaterial/EduMaterial';
 import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
-import { useGetRecentNotice } from '@/api/useGetBoardInfo';
-import useGetEducationBoard from '@/api/useGetEducationBoard';
+import { useRecentNotices, useEducationBoard } from '@/hooks/queries/board';
 import Loading from '@/components/common/Loading';
 import { useEffect, useState } from 'react';
 import Breadcrumb from '@/components/common/Breadcrumb';
@@ -22,9 +21,13 @@ const Board = () => {
     }
   }, [currentCardinal]);
 
-  const { recentNotices, recentNoticeLoading, error } = useGetRecentNotice();
+  const {
+    data: recentNotices = [],
+    isLoading: recentNoticeLoading,
+    error,
+  } = useRecentNotices();
 
-  const { data: eduBoardData, isLoading: eduLoading } = useGetEducationBoard({
+  const { data: eduBoardData, isLoading: eduLoading } = useEducationBoard({
     part: 'ALL',
     cardinalNumber: selectedCardinal ?? currentCardinal ?? undefined,
     pageSize: 10,
@@ -53,7 +56,7 @@ const Board = () => {
           게시판
         </S.BoardTitle>
         <PartBoard />
-        <NoticePreview data={recentNotices} error={error} />
+        <NoticePreview data={recentNotices} error={error?.message ?? null} />
         <EduMaterial
           data={recentEdu}
           selectedCardinal={selectedCardinal}

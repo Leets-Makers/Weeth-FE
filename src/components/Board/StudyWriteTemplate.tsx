@@ -1,4 +1,3 @@
-import theme from '@/styles/theme';
 import styled from 'styled-components';
 import { Dispatch, SetStateAction } from 'react';
 import { originFile } from '@/pages/board/part/PartEdit';
@@ -8,7 +7,7 @@ import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyDropdown from '@/components/Board/StudyDropdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { pcResponsive } from '@/styles';
-import { units } from '@/theme/designTokens';
+import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import { RealPart } from '@/types/part';
 import PartToggle from './PartToggle';
@@ -26,20 +25,29 @@ export const Container = styled.div`
 
 export const InformationContainer = styled.div`
   display: flex;
-  gap: 5px;
+  width: 100%;
+  align-items: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
 `;
 
 export const DivisionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  flex: 0 0 auto;
   ${typography.Caption1};
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
+`;
+
+export const StudySectionWrapper = styled.div`
+  flex: 1 1 0;
+  min-width: 0;
 `;
 
 export const DropdownContainer = styled.div`
   display: flex;
-  gap: 5px;
+  gap: 0;
 `;
 
 export const MarkdownContainer = styled.div`
@@ -109,28 +117,28 @@ const StudyWriteTemplate = ({
       <InformationContainer>
         <DivisionContainer>
           구분
-          <DropdownContainer>
-            <CardinalDropdown
-              origValue={selectedCardinal}
-              editValue={setSelectedCardinal}
-            />
-            {isStudyLog && (
-              <WeekDropdown
-                origWeek={selectedWeek}
-                editWeek={setSelectedWeek}
-              />
-            )}
-          </DropdownContainer>
+          <CardinalDropdown
+            origValue={selectedCardinal}
+            editValue={setSelectedCardinal}
+          />
+        </DivisionContainer>
+        <DivisionContainer>
+          주차 수
+          {isStudyLog && (
+            <WeekDropdown origWeek={selectedWeek} editWeek={setSelectedWeek} />
+          )}
         </DivisionContainer>
         {isStudyLog && selectedPart && (
-          <DivisionContainer>
-            <DivisionContainer>스터디</DivisionContainer>
-            <StudyDropdown
-              origStudy={selectedStudy}
-              editStudy={setSelectedStudy}
-              selectedPart={selectedPart as RealPart}
-            />
-          </DivisionContainer>
+          <StudySectionWrapper>
+            <DivisionContainer style={{ width: '100%' }}>
+              스터디
+              <StudyDropdown
+                origStudy={selectedStudy}
+                editStudy={setSelectedStudy}
+                selectedPart={selectedPart as RealPart}
+              />
+            </DivisionContainer>
+          </StudySectionWrapper>
         )}
       </InformationContainer>
       <MarkdownContainer>
