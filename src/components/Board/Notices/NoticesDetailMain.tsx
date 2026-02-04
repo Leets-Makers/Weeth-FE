@@ -14,9 +14,8 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
-import deletePost from '@/api/deletePost';
+import useDeletePost from '@/hooks/mutation/useDeletePost';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetBoardDetail from '@/api/useGetBoardDetail';
 import {
   useCloseSelectModal,
   useOpenSelectModal,
@@ -68,8 +67,7 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
   const type = path === 'notices' ? 'notices' : 'board';
 
   const numericPostId = postId ? parseInt(postId, 10) : null;
-  const { boardDetailInfo } = useGetBoardDetail(type, numericPostId ?? 0);
-  const isMyPost = boardDetailInfo?.name === userInfo?.name;
+  const isMyPost = info?.name === userInfo?.name;
   const formattedDate = formatDateTime(info?.time ?? '');
 
   const openSelectModal = useOpenSelectModal();
@@ -77,6 +75,19 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
 
   const openMenuModal = useOpenMenuModal();
   const closeMenuModal = useCloseMenuModal();
+
+  const deletePostMutation = useDeletePost({
+    onSuccess: () => {
+      navigate('/board/notices', { replace: true });
+      setTimeout(() => {
+        toastInfo('게시물이 삭제되었습니다');
+      }, 500);
+      closeSelectModal();
+    },
+    onError: () => {
+      toastError();
+    },
+  });
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
     fetch(fileUrl, { method: 'GET' })
@@ -104,18 +115,9 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
 
-  const confirmDelete = async () => {
-    try {
-      await deletePost(numericPostId, type);
-      navigate('/board/notices', { replace: true });
-      setTimeout(() => {
-        toastInfo('게시물이 삭제되었습니다');
-      }, 500);
-    } catch (err) {
-      toastError();
-      console.error(err);
-    }
-    closeSelectModal();
+  const confirmDelete = () => {
+    if (!numericPostId) return;
+    deletePostMutation.mutate({ postId: numericPostId, path: type });
   };
 
   const handleSelectModal = () => {
