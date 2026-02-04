@@ -1,5 +1,4 @@
 import postBoardNotice from '@/api/board/postBoardNotice';
-import { BOARD_QUERY_KEYS } from '@/constants/queryKeys';
 import { useMutationCallback } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -34,15 +33,7 @@ const usePostBoard = (callbacks?: useMutationCallback) => {
       callbacks?.onMutate?.();
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: BOARD_QUERY_KEYS.notices.all,
-      });
-      await queryClient.invalidateQueries({
-        queryKey: BOARD_QUERY_KEYS.notices.recent,
-      });
-      await queryClient.invalidateQueries({
-        queryKey: ['board'],
-      });
+      await queryClient.invalidateQueries({ queryKey: ['board'] });
       callbacks?.onSuccess?.();
     },
     onError: (error) => {

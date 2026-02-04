@@ -25,9 +25,9 @@ const usePostComment = (callbacks?: useMutationCallback) => {
     }: PostCommentParams) =>
       createComment(
         postId,
+        boardPath as 'notices' | 'board',
         content,
         parentCommentId,
-        boardPath as 'notices' | 'board',
         files,
       ),
     onMutate: () => {
