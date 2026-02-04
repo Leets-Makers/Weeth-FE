@@ -3,8 +3,9 @@ import open from '@/assets/images/ic_study_open.svg';
 import close from '@/assets/images/ic_study_close.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
-import getStudyLists from '@/api/useGetStudyList';
-import { RealPart } from '@/types/part';
+import useStudyList from '@/hooks/queries/board/useStudyList';
+import type { RealPart } from '@/api/board/getStudyList';
+import { RealPart as RealPartType } from '@/types/part';
 import { useParams } from 'react-router-dom';
 import { toastError } from '@/components/common/ToastMessage';
 import { colors, units } from '@/theme/designTokens';
@@ -69,30 +70,24 @@ interface StudyTagProps {
 }
 
 const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
-  const [studyList, setStudyList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
-  const { part } = useParams<{ part: RealPart }>();
+  const { part } = useParams<{ part: RealPartType }>();
+  const { data: studyList = [], error } = useStudyList(
+    (part as RealPart) ?? 'ALL',
+  );
+
+  useEffect(() => {
+    if (error) {
+      toastError('스터디 목록을 불러오지 못했습니다.');
+    }
+  }, [error]);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    if (!part) return;
-
-    (async () => {
-      try {
-        const names = await getStudyLists(part);
-        setStudyList(names);
-      } catch (e) {
-        toastError('스터디 목록을 불러오지 못했습니다.');
-        console.error(e);
-      }
-    })();
-  }, [part]);
 
   return (
     <Container>
