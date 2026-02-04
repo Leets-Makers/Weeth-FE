@@ -2,7 +2,7 @@ import parse from 'html-react-parser';
 import ReplyImage from '@/assets/images/ic_reply_comment.svg';
 import MenuImage from '@/assets/images/ic_comment_delete.svg';
 import * as S from '@/styles/board/Comment.styled';
-import useDeleteComment from '@/hooks/mutation/useDeleteComment';
+import useDeleteComment from '@/hooks/mutation/board/useDeleteComment';
 import { useCallback } from 'react';
 import formatDateTime from '@/hooks/formatDateTime';
 import setPositionIcon from '@/hooks/setPositionIcon';
