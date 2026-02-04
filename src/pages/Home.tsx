@@ -3,14 +3,13 @@ import HomeFooter from '@/components/home/HomeFooter';
 import useCustomBack from '@/hooks/useCustomBack';
 import HomeNotice from '@/components/home/HomeNotice';
 import HomeInfo from '@/components/home/HomeInfo';
-import { useGetRecentNotice } from '@/api/useGetBoardInfo';
-
+import useRecentNotices from '@/hooks/queries/board/useRecentNotices';
 import useUserData from '@/hooks/queries/useUserData';
 import { ResponsiveContainer } from '@/styles';
 
 const Home: React.FC = () => {
   const { data: userInfo } = useUserData();
-  const { recentNotices } = useGetRecentNotice();
+  const { data: recentNotices } = useRecentNotices();
 
   useCustomBack('/home');
 
