@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import usePostBoard from '@/hooks/mutation/usePostBoard';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
 import NoticeWrite from '@/components/Board/NoticeWrite';
 import Breadcrumb from '@/components/common/Breadcrumb';
