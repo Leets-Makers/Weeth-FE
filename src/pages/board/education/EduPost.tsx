@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import usePostBoard from '@/hooks/mutation/usePostBoard';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
 import { PostRequestType } from '@/types/PostRequestType';
 import EduWrite from '@/components/Board/EduWrite';
 import { PartTypes } from '@/types/part';
