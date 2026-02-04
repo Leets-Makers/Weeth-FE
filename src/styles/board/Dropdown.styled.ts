@@ -6,28 +6,26 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: relative;
   width: 100%;
-
-  height: 32px;
+  max-width: 792px;
+  height: 36px;
   box-sizing: border-box;
-  padding: 6px 10px;
-  border-radius: 10px;
-  background-color: ${theme.color.gray[18]};
+  padding: 8px ${units.padding['200']}px 8px ${units.padding['300']}px;
+  border-radius: ${units.radius.lg}px;
+  background-color: ${colors.semantic.container.neutral};
 `;
 
 export const Input = styled.input<{ $isNew?: boolean }>`
   width: 100%;
+  padding: 0;
   position: relative;
-  background-color: ${theme.color.gray[18]};
-  color: ${theme.color.gray[100]};
-  font-family: ${theme.font.regular};
-  color: ${({ $isNew }) =>
-    $isNew ? theme.color.gray[65] : theme.color.gray[100]};
-  font-size: 14px;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
+  ${typography.Body2};
   border: none;
   outline: none;
 
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 
   &:focus {
@@ -39,7 +37,7 @@ export const Input = styled.input<{ $isNew?: boolean }>`
 export const StudyDropdownList = styled.div`
   position: absolute;
   left: 0;
-  width: 144px;
+  width: 100%;
   max-height: 170px;
   box-sizing: border-box;
   background-color: ${theme.color.gray[18]};
@@ -88,17 +86,17 @@ export const HiddenText = styled.span`
   position: absolute;
   visibility: hidden;
   white-space: pre;
-  font-size: 14px;
-  font-family: ${theme.font.regular};
-  color: ${theme.color.gray[65]};
+  ${typography.Body2};
+  color: ${colors.semantic.text.alternative};
 `;
 
 export const DropdownContainer = styled.div`
   position: relative;
   display: flex;
-  width: 82px;
-  min-width: 82px;
-  height: 32px;
+  width: 93px;
+  min-width: 93px;
+  height: 36px;
+  border-radius: ${units.radius.lg}px;
   box-sizing: border-box;
 `;
 
@@ -114,7 +112,7 @@ export const DropdownButton = styled.div<{ $hasValue: boolean }>`
   color: ${colors.semantic.text.normal};
   ${typography.Button2};
   padding: 6px ${units.padding['200']}px 6px ${units.padding['300']}px;
-  border-radius: ${units.radius.md}px;
+  border-radius: ${units.radius.lg}px;
   cursor: pointer;
 `;
 
