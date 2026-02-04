@@ -3,7 +3,7 @@ import { useState } from 'react';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import EditGNB from '@/components/Navigation/EditGNB';
-import usePostBoard from '@/hooks/mutation/usePostBoard';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
 import { PostRequestType } from '@/types/PostRequestType';
 import { toastError } from '@/components/common/ToastMessage';
 import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
