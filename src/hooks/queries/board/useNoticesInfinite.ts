@@ -1,6 +1,7 @@
 import getNotices from '@/api/board/getNotices';
 import { BOARD_QUERY_KEYS } from '@/constants/queryKeys';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import BOARD_QUERY_CACHE from '@/constants/boardQueryCache';
 
 const useNoticesInfinite = () => {
   return useInfiniteQuery({
@@ -13,6 +14,7 @@ const useNoticesInfinite = () => {
       if (lastPage.last) return undefined;
       return lastPage.pageNumber + 1;
     },
+    ...BOARD_QUERY_CACHE,
   });
 };
 

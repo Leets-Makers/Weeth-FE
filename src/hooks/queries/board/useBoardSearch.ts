@@ -5,6 +5,7 @@ import {
 } from '@/api/board/getBoardSearch';
 import { BOARD_QUERY_KEYS } from '@/constants/queryKeys';
 import { useQuery } from '@tanstack/react-query';
+import BOARD_QUERY_CACHE from '@/constants/boardQueryCache';
 
 type SearchRequestType = 'part' | 'education' | 'notices';
 
@@ -14,6 +15,7 @@ const usePartSearch = (keyword: string) => {
     queryFn: () => getPartSearch(keyword, 0),
     enabled: !!keyword.trim(),
     retry: false,
+    ...BOARD_QUERY_CACHE,
   });
 };
 
@@ -23,6 +25,7 @@ const useEduSearch = (keyword: string) => {
     queryFn: () => getEduSearch(keyword, 0),
     enabled: !!keyword.trim(),
     retry: false,
+    ...BOARD_QUERY_CACHE,
   });
 };
 
@@ -32,6 +35,7 @@ const useNoticeSearch = (keyword: string) => {
     queryFn: () => getNoticeSearch(keyword, 0),
     enabled: !!keyword.trim(),
     retry: false,
+    ...BOARD_QUERY_CACHE,
   });
 };
 

@@ -2,6 +2,7 @@ import getPartBoard from '@/api/board/getPartBoard';
 import { BOARD_QUERY_KEYS } from '@/constants/queryKeys';
 import { PartBoardQuery } from '@/types/partBoard';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import BOARD_QUERY_CACHE from '@/constants/boardQueryCache';
 
 const usePartBoard = (query: PartBoardQuery) => {
   return useInfiniteQuery({
@@ -16,6 +17,7 @@ const usePartBoard = (query: PartBoardQuery) => {
       if (lastPage.last) return undefined;
       return lastPage.pageable.pageNumber + 1;
     },
+    ...BOARD_QUERY_CACHE,
   });
 };
 
