@@ -84,9 +84,6 @@ const NoticesDetailMain = ({ info }: PostDetailMainProps) => {
       }, 500);
       closeSelectModal();
     },
-    onError: (message) => {
-      toastError(message ?? '게시글 삭제에 실패했습니다.');
-    },
   });
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
