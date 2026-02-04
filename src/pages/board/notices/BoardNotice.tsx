@@ -5,13 +5,11 @@ import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useGetBoardInfo from '@/api/useGetBoardInfo';
+import useNoticesInfinite from '@/hooks/queries/board/useNoticesInfinite';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useCustomBack from '@/hooks/useCustomBack';
-import useSmartLoading, {
-  useSmartCombinedLoading,
-} from '@/hooks/useSmartLoading';
+import { useSmartCombinedLoading } from '@/hooks/useSmartLoading';
 import { BoardContent } from '@/types/board';
 import { BreadcrumbPadding } from '@/styles/breadCrum';
 import useUserData from '@/hooks/queries/useUserData';
@@ -25,43 +23,30 @@ const BoardNotice = () => {
   const navigate = useNavigate();
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const [posts, setPosts] = useState<BoardContent[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [pageNumber, setPageNumber] = useState(0);
-  const [observerLoading, setObserverLoading] = useState(false);
-  const [loading, setLoading] = useState(true);
-
   const [searchMode, setSearchMode] = useState(false);
   const [searchResults, setSearchResults] = useState<BoardContent[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
 
-  const path = 'notices';
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: loading,
+  } = useNoticesInfinite();
 
-  const fetchData = async () => {
-    if (!observerLoading && hasMore) {
-      setObserverLoading(true);
-      await useGetBoardInfo(
-        path,
-        pageNumber,
-        setPosts,
-        setHasMore,
-        setObserverLoading,
-      );
-      setPageNumber((prevPage) => prevPage + 1);
-      setObserverLoading(false);
-      if (loading) setLoading(false);
-    }
-  };
+  const posts = data?.pages.flatMap((page) => page.content) ?? [];
+
+  const combinedSmartLoading = useSmartCombinedLoading(
+    searchLoading,
+    isFetchingNextPage,
+  );
 
   useEffect(() => {
-    // 초기 데이터 로드드
-    fetchData();
     const observer = new IntersectionObserver(
       (entries) => {
-        const firstEntry = entries[0];
-        if (firstEntry.isIntersecting) {
-          // 추가 데이터 로드
-          fetchData();
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
         }
       },
       { root: null, rootMargin: '0px', threshold: 0.1 },
@@ -76,20 +61,9 @@ const BoardNotice = () => {
         observer.unobserve(observerRef.current);
       }
     };
-  }, [hasMore, observerLoading, pageNumber]);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const { loading: smartInitialLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!loading) resolve();
-    }),
-  );
-
-  const combinedSmartLoading = useSmartCombinedLoading(
-    searchLoading,
-    observerLoading,
-  );
-
-  if (smartInitialLoading && loading) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -146,13 +120,13 @@ const BoardNotice = () => {
               <S.Line />
             </React.Fragment>
           ))}
-          {hasMore && (
+          {hasNextPage && (
             <div
               ref={observerRef}
               style={{ height: '20px', backgroundColor: 'transparent' }}
             />
           )}
-          {!hasMore && posts.length > 10 && (
+          {!hasNextPage && posts.length > 10 && (
             <S.Text>마지막 게시물입니다.</S.Text>
           )}
         </S.PostContainer>
