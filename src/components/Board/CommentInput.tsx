@@ -1,7 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
 import styled from 'styled-components';
 import CommentSend from '@/assets/images/ic_comment_send.svg';
-import usePostComment from '@/hooks/mutation/usePostComment';
+import usePostComment from '@/hooks/mutation/board/usePostComment';
 import { toastError } from '@/components/common/ToastMessage';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
