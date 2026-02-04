@@ -14,7 +14,7 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
-import useDeletePost from '@/hooks/mutation/useDeletePost';
+import useDeletePost from '@/hooks/mutation/board/useDeletePost';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   useCloseSelectModal,
