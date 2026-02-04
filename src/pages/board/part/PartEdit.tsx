@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import usePostBoard from '@/hooks/mutation/usePostBoard';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
 import useBoardDetail from '@/hooks/queries/board/useBoardDetail';
 import {
   toastError,
@@ -60,8 +60,8 @@ const PartEdit = () => {
       toastError(
         message ??
           (path === 'board'
-            ? '게시글 작성 중 문제가 발생했습니다.'
-            : '공지사항 작성 중 문제가 발생했습니다.'),
+            ? '게시글 수정 중 문제가 발생했습니다.'
+            : '공지사항 수정 중 문제가 발생했습니다.'),
       );
     },
   });
