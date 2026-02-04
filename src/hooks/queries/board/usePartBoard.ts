@@ -7,7 +7,7 @@ import BOARD_QUERY_CACHE from '@/constants/boardQueryCache';
 const usePartBoard = (query: PartBoardQuery) => {
   return useInfiniteQuery({
     queryKey: BOARD_QUERY_KEYS.partBoard(query),
-    initialPageParam: 0,
+    initialPageParam: query.pageNumber,
     queryFn: ({ pageParam = 0 }) =>
       getPartBoard({
         ...query,
