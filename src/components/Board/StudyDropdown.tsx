@@ -3,7 +3,6 @@ import * as S from '@/styles/board/Dropdown.styled';
 import Remove from '@/assets/images/ic_remove_study.svg?react';
 import { RealPart } from '@/types/part';
 import useStudyList from '@/hooks/queries/board/useStudyList';
-import { toastError } from '../common/ToastMessage';
 
 interface Props {
   origStudy: string | null;
@@ -20,14 +19,8 @@ const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
   const prevPartRef = useRef<RealPart | null>(null);
   const [localAddedStudies, setLocalAddedStudies] = useState<string[]>([]);
 
-  const { data: studyList = [], error } = useStudyList(selectedPart);
+  const { data: studyList = [] } = useStudyList(selectedPart);
   const combinedStudyList = [...studyList, ...localAddedStudies];
-
-  useEffect(() => {
-    if (error) {
-      toastError('스터디 목록을 불러오지 못했습니다.');
-    }
-  }, [error]);
 
   useEffect(() => {
     const prevPart = prevPartRef.current;
