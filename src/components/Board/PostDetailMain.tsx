@@ -92,8 +92,8 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
       }, 500);
       closeSelectModal();
     },
-    onError: () => {
-      toastError();
+    onError: (message) => {
+      toastError(message ?? '게시글 삭제에 실패했습니다.');
     },
   });
 
