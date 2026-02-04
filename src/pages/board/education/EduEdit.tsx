@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useBoardDetail from '@/hooks/queries/board/useBoardDetail';
-import usePostBoard from '@/hooks/mutation/usePostBoard';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
 import EduWrite from '@/components/Board/EduWrite';
 import { RealPart } from '@/types/part';
 import { originFile } from '@/pages/board/part/PartEdit';
