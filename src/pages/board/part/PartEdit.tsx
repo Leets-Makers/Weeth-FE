@@ -40,7 +40,11 @@ const PartEdit = () => {
   const numericPostId = postId ? parseInt(postId, 10) : 0;
 
   const type = path === 'notices' ? 'notices' : 'board';
-  const { data: boardDetailInfo } = useBoardDetail(type, numericPostId);
+  const { data: boardDetailInfo } = useBoardDetail(
+    type,
+    numericPostId,
+    Boolean(postId),
+  );
 
   useEffect(() => {
     setTitle(boardDetailInfo?.title ?? '');

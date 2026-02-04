@@ -9,7 +9,7 @@ interface PostCommentParams {
   content?: string;
   parentCommentId?: number;
   files?: File[];
-  boardPath: string;
+  boardPath: 'notices' | 'board';
 }
 
 const usePostComment = (callbacks?: useMutationCallback) => {
@@ -23,13 +23,7 @@ const usePostComment = (callbacks?: useMutationCallback) => {
       files = [],
       boardPath,
     }: PostCommentParams) =>
-      createComment(
-        postId,
-        boardPath as 'notices' | 'board',
-        content,
-        parentCommentId,
-        files,
-      ),
+      createComment(postId, boardPath, content, parentCommentId, files),
     onMutate: () => {
       callbacks?.onMutate?.();
     },

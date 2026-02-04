@@ -18,19 +18,19 @@ const Button = styled.button`
   justify-content: space-between;
   margin-bottom: 15px;
   padding: 15px 12px;
-  border: 1px solid ${colors.semantic.line};
-  background-color: ${colors.semantic.container.neutral};
+  border: 1px solid ${({ theme }) => theme.semantic.line};
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: ${colors.semantic.brand.primary};
+    border-color: ${({ theme }) => theme.semantic.brand.primary};
     box-shadow: 0 0 10px rgba(0, 221, 168, 0.7);
   }
 
   &:active {
-    border-color: ${colors.semantic.brand.primary};
+    border-color: ${({ theme }) => theme.semantic.brand.primary};
     box-shadow: 0 0 10px rgba(0, 221, 168, 0.8);
   }
 `;

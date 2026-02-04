@@ -92,9 +92,6 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
       }, 500);
       closeSelectModal();
     },
-    onError: () => {
-      toastError();
-    },
   });
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {

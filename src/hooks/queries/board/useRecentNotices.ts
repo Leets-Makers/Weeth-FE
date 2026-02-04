@@ -2,6 +2,7 @@ import getNotices from '@/api/board/getNotices';
 import { BoardContent } from '@/types/board';
 import { BOARD_QUERY_KEYS } from '@/constants/queryKeys';
 import { useQuery } from '@tanstack/react-query';
+import BOARD_QUERY_CACHE from '@/constants/boardQueryCache';
 
 const useRecentNotices = () => {
   return useQuery<BoardContent[]>({
@@ -10,7 +11,7 @@ const useRecentNotices = () => {
       const result = await getNotices(0, 10);
       return result.content;
     },
-    staleTime: 1000 * 60,
+    ...BOARD_QUERY_CACHE,
   });
 };
 

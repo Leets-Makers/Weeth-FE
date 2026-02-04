@@ -30,6 +30,9 @@ const useDeletePost = (callbacks?: useMutationCallback) => {
         await queryClient.invalidateQueries({
           queryKey: ['board', 'part'],
         });
+        await queryClient.invalidateQueries({
+          queryKey: ['board', 'education'],
+        });
       }
       callbacks?.onSuccess?.();
     },

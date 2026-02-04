@@ -5,7 +5,7 @@ export const PageWrapper = styled.div`
   width: 100vw;
   min-height: 100vh;
   color: #000000;
-  background-color: #f2f9f8;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   display: flex;
 `;
 

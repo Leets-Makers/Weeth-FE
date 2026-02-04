@@ -31,7 +31,11 @@ const NoticeEdit = () => {
   const isContentEmpty = content.trim() === '';
   const numericPostId = postId ? parseInt(postId, 10) : 0;
 
-  const { data: boardDetailInfo } = useBoardDetail(path, numericPostId);
+  const { data: boardDetailInfo } = useBoardDetail(
+    path,
+    numericPostId,
+    Boolean(postId),
+  );
 
   useEffect(() => {
     setTitle(boardDetailInfo?.title ?? '');
@@ -48,8 +52,8 @@ const NoticeEdit = () => {
       toastError(
         message ??
           (path === 'board'
-            ? '게시글 작성 중 문제가 발생했습니다.'
-            : '공지사항 작성 중 문제가 발생했습니다.'),
+            ? '게시글 수정 중 문제가 발생했습니다.'
+            : '공지사항 수정 중 문제가 발생했습니다.'),
       );
     },
   });

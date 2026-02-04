@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import theme from '@/styles/theme';
+import { units } from '@/theme/designTokens';
 
 // CommonCardinalModal.tsx
 export const StyledModalOverlay = styled.div<{ overlayColor?: string }>`
@@ -31,7 +32,7 @@ export const StyledModalContent = styled.div<{
   transform: translateX(-50%);
   transform: ${(props) =>
     props.top && props.left ? 'none' : 'translate(-50%, -50%)'};
-  background-color: ${theme.color.gray[100]};
+  background-color: ${({ theme }) => theme.semantic.backGround};
   padding: 0;
   overflow: visible;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -69,8 +70,6 @@ export const TitleContainer = styled.div<{ borderBottom?: boolean }>`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: ${(props) =>
-    props.borderBottom ? '1px solid #dedede' : 'none'};
 `;
 
 export const TitleText = styled.div`
@@ -86,8 +85,6 @@ export const MainContent = styled.div<{ borderBottom?: boolean }>`
   justify-content: center;
   padding: 15px;
   overflow: visible;
-  border-bottom: ${(props) =>
-    props.borderBottom ? '1px solid #dedede' : 'none'};
 `;
 
 export const Footer = styled.div`
@@ -129,7 +126,7 @@ export const FooterWrapper = styled.div`
 `;
 
 export const ErrorMessage = styled.div`
-  color: ${theme.color.negative};
+  color: ${({ theme }) => theme.semantic.state.caution};
   font-size: 14px;
 `;
 
@@ -137,8 +134,8 @@ export const StyledInput = styled.input<{ flex: number; maxWidth: string }>`
   flex: ${({ flex }) => flex};
   max-width: ${({ maxWidth }) => maxWidth};
   font-family: ${theme.font.semiBold};
-  border: 1px solid #dedede;
-  border-radius: 4px;
+  border-radius: ${units.radius.sm}px;
+  border: none;
   font-size: 16px;
   padding: 12px;
   &::placeholder {

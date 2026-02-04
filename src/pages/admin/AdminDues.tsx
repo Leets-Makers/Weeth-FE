@@ -9,6 +9,7 @@ import { useState } from 'react';
 import DuesRegister from '@/components/Admin/DuesRegister';
 import TotalCardinal from '@/components/Admin/CardinalWrapper';
 import AdminOnly from '@/components/common/AdminOnly';
+import { units } from '@/theme/designTokens';
 
 export const Container = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ export const DuesWrapper = styled.div`
   width: 45%;
   padding: 1% 3%;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: ${units.radius.lg}px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;

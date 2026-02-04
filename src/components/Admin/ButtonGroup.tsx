@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Button from '@/components/Button/Button';
+import { units } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
 
 interface ButtonItem {
   label: string;
@@ -59,16 +61,26 @@ const ButtonGroup: React.FC<ButtonGroupProps & { isHeader?: boolean }> = ({
   buttons,
   isHeader,
 }) => {
+  const theme = useTheme();
+
   return (
     <ButtonGroupContainer isHeader={isHeader}>
       {buttons.map(({ label, onClick, disabled, style }) => (
         <Button
           key={label}
-          color={style?.backgroundColor || '#fff'}
-          textcolor={style?.color || '#000'}
+          color={
+            disabled
+              ? theme.semantic.button.disabled
+              : style?.backgroundColor || theme.semantic.button.neutral
+          }
+          textcolor={
+            disabled
+              ? theme.semantic.text.disabled
+              : style?.color || theme.semantic.text.normal
+          }
           width="auto"
           height="45px"
-          borderRadius="4px"
+          borderRadius={`${units.radius.md}px`}
           onClick={onClick}
           disabled={disabled}
         >

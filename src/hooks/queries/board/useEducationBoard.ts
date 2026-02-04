@@ -2,6 +2,7 @@ import getEducationBoard from '@/api/board/getEducationBoard';
 import { BOARD_QUERY_KEYS } from '@/constants/queryKeys';
 import { PartEduBoardQuery } from '@/types/education';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import BOARD_QUERY_CACHE from '@/constants/boardQueryCache';
 
 const useEducationBoard = (query: PartEduBoardQuery) => {
   return useInfiniteQuery({
@@ -16,6 +17,7 @@ const useEducationBoard = (query: PartEduBoardQuery) => {
       if (lastPage.last) return undefined;
       return lastPage.pageable.pageNumber + 1;
     },
+    ...BOARD_QUERY_CACHE,
   });
 };
 

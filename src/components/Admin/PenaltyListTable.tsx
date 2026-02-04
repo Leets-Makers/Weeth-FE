@@ -6,7 +6,7 @@ import {
 } from '@/components/Admin/context/PenaltyReducer';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import { columns } from '@/constants/admin/penaltyColumns';
-import { statusColors } from '@/components/Admin/StatusIndicator';
+import { getStatusColor } from '@/components/Admin/StatusIndicator';
 import { StatusCell } from '@/components/Admin/MemberListTableRow';
 import usePenaltyData from '@/hooks/admin/usePenaltyData';
 import { getLatestPenaltyDate } from '@/utils/admin/getLatestPenaltyDate';
@@ -79,7 +79,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
           {/* 테이블 상단 헤더 */}
           <thead>
             <tr>
-              <StatusCell $statusColor={statusColors['승인 완료']} />
+              <StatusCell $statusColor={getStatusColor('승인 완료')} />
               {columns.map((column) => (
                 <S.HeaderCell key={column.key}>{column.header}</S.HeaderCell>
               ))}
@@ -101,7 +101,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                     isSelected={expandedRow === member.id}
                     onClick={() => handleRowClick(member.id)}
                   >
-                    <StatusCell $statusColor={statusColors[member.status]} />
+                    <StatusCell $statusColor={getStatusColor(member.status)} />
                     {renderColumns(member)}
                   </S.Row>
 
@@ -120,7 +120,7 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
           {/* 테이블 하단 헤더 */}
           {filteredMembers.length > 0 && (
             <>
-              <StatusCell $statusColor={statusColors['승인 완료']} />
+              <StatusCell $statusColor={getStatusColor('승인 완료')} />
               {columns.map((column) => (
                 <S.HeaderCell key={column.key}>{column.header}</S.HeaderCell>
               ))}

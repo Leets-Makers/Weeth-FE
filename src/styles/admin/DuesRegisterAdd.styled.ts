@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import DuesInput from '@/components/Admin/DuesInput';
+import { units } from '@/theme/designTokens';
 
 export const flexMixin = (flexValue: number) => css`
   flex: ${flexValue};
@@ -10,7 +11,7 @@ export const Wrapper = styled.div`
   margin-top: 50px;
   background-color: #fff;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: ${units.radius.lg}px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding-bottom: 30px;
   margin-bottom: 30px;

@@ -7,6 +7,7 @@ import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import { Title } from '@/components/Admin/TopBar';
 import ButtonGroup from '@/components/Admin/ButtonGroup';
 import CardinalEditModal from '@/components/Admin/Modal/CardinalEditModal';
+import { useTheme } from 'styled-components';
 
 const SelectedTopBarWrapper = styled.div`
   position: sticky;
@@ -15,7 +16,7 @@ const SelectedTopBarWrapper = styled.div`
   right: 0;
   width: 100%;
   min-width: 1500px;
-  background-color: ${theme.color.main};
+  background-color: ${({ theme }) => theme.semantic.container.primary};
   color: ${theme.color.gray[100]};
   display: flex;
   justify-content: space-between;
@@ -42,6 +43,7 @@ const SelectedTopBar: React.FC = () => {
   const { selectedMembers, setSelectedMembers, members } = useMemberContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
+  const theme = useTheme();
 
   const { handleAction } = useAdminActions();
 
@@ -106,9 +108,8 @@ const SelectedTopBar: React.FC = () => {
       disabled: false,
       style: {
         backgroundColor: isModalOpen
-          ? theme.color.gray[18]
-          : theme.color.gray[100],
-        color: isModalOpen ? theme.color.gray[100] : '#000',
+          ? theme.semantic.button['neutral-interaction']
+          : theme.semantic.button.neutral,
       },
     },
   ];

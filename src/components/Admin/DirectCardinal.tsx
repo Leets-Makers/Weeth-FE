@@ -9,11 +9,13 @@ import {
   DropdownMenu,
 } from '@/components/Admin/Cardinal';
 import useCardinalData from '@/hooks/queries/useCardinalData';
+import { units } from '@/theme/designTokens';
 
 export const StyledCardinal = styled.div`
   width: 35%;
   position: relative;
   z-index: 1000;
+  border-radius: ${units.radius.md}px;
 `;
 
 const DirectCardinalDropdown: React.FC<DirectCardinalProps> = ({

@@ -15,6 +15,7 @@ const StyledLogo = styled.img`
   height: auto;
   padding-left: 10px;
 `;
+
 const StyledTitle = styled.div`
   font-weight: 500;
   font-size: 16px;
