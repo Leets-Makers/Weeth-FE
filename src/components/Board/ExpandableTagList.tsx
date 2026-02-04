@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import open from '@/assets/images/ic_study_open.svg';
 import close from '@/assets/images/ic_study_close.svg';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
 import useStudyList from '@/hooks/queries/board/useStudyList';
 import type { RealPart } from '@/api/board/getStudyList';
 import { RealPart as RealPartType } from '@/types/part';
 import { useParams } from 'react-router-dom';
-import { toastError } from '@/components/common/ToastMessage';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
@@ -75,15 +74,7 @@ const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
   const { part } = useParams<{ part: RealPartType }>();
-  const { data: studyList = [], error } = useStudyList(
-    (part as RealPart) ?? 'ALL',
-  );
-
-  useEffect(() => {
-    if (error) {
-      toastError('스터디 목록을 불러오지 못했습니다.');
-    }
-  }, [error]);
+  const { data: studyList = [] } = useStudyList((part as RealPart) ?? 'ALL');
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
