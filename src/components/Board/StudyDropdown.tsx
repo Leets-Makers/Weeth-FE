@@ -99,9 +99,16 @@ const StudyDropdown = ({ origStudy, editStudy, selectedPart }: Props) => {
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               const newStudy = inputValue.trim();
-              if (newStudy && !combinedStudyList.includes(newStudy)) {
+              if (
+                newStudy &&
+                !combinedStudyList.some(
+                  (s) => s.toLowerCase() === newStudy.toLowerCase(),
+                )
+              ) {
                 setLocalAddedStudies((prev) =>
-                  prev.includes(newStudy) ? prev : [...prev, newStudy],
+                  prev.some((s) => s.toLowerCase() === newStudy.toLowerCase())
+                    ? prev
+                    : [...prev, newStudy],
                 );
                 handleSelect(newStudy);
               }
