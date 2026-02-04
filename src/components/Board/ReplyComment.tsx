@@ -2,7 +2,7 @@ import parse from 'html-react-parser';
 import ReplyArrowImage from '@/assets/images/ic_reply.svg?react';
 import MenuImage from '@/assets/images/ic_comment_delete.svg?react';
 import * as S from '@/styles/board/Comment.styled';
-import deleteComment from '@/api/deleteComment';
+import useDeleteComment from '@/hooks/mutation/useDeleteComment';
 import formatDateTime from '@/hooks/formatDateTime';
 import setPositionIcon from '@/hooks/setPositionIcon';
 import { useCallback } from 'react';
@@ -49,14 +49,15 @@ const ReplyComment = ({
   const openSelectModal = useOpenSelectModal();
   const closeSelectModal = useCloseSelectModal();
 
-  const handleDeleteComment = async () => {
-    try {
-      await deleteComment(path, postId, commentId);
+  const deleteCommentMutation = useDeleteComment({
+    onSuccess: () => {
       onDelete();
       closeSelectModal();
-    } catch (error) {
-      console.error('Failed to delete comment:', error);
-    }
+    },
+  });
+
+  const handleDeleteComment = () => {
+    deleteCommentMutation.mutate({ path, postId, commentId });
   };
 
   const onClickMenu = () => {
