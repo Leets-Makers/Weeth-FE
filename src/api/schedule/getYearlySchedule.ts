@@ -1,6 +1,7 @@
 import api from '@/api/api';
+import type { ScheduleEvent } from '@/types/schedule';
 
-export type YearlyScheduleData = Record<number, any[]>;
+export type YearlyScheduleData = Record<number, ScheduleEvent[]>;
 
 const getYearlySchedule = async (
   year: number,
