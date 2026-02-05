@@ -3,6 +3,7 @@ import { deleteEvent } from '@/api/EventAdminAPI';
 import { EventDetailData } from '@/pages/EventDetail';
 import * as S from '@/styles/calendar/EventDetailTitle.styled';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import Tag from '@/components/Event/Tag';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
@@ -18,6 +19,7 @@ const EventTitle = ({
   isAdmin: boolean;
 }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { id, type } = useParams();
   const url = new URL(window.location.href);
   const pathArray = url.pathname.split('/');
@@ -31,6 +33,7 @@ const EventTitle = ({
   const handleDelete = async () => {
     try {
       await deleteEvent(data.id, path);
+      await queryClient.invalidateQueries({ queryKey: ['schedule'] });
       toastSuccess('삭제가 완료되었습니다.');
       navigate('/calendar');
     } catch (err) {
