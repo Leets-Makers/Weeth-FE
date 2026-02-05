@@ -6,7 +6,8 @@ import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/event/EventEditor.styled';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetEventInfo from '@/api/getEventInfo';
+import { useQueryClient } from '@tanstack/react-query';
+import useEventInfo from '@/hooks/queries/event/useEventInfo';
 import replaceNewLines from '@/hooks/newLine';
 import CardinalDropdown from '@/components/common/CardinalDropdown';
 import Modal from '@/components/Modal/Modal';
@@ -58,9 +59,15 @@ const EventEditor = () => {
 
   const { id } = useParams();
   const { currentCardinal } = useCardinalData();
-  const { data: eventDetailData, loading, error } = useGetEventInfo(type, id);
+  const {
+    data: eventDetailData,
+    isLoading,
+    isError,
+    error,
+  } = useEventInfo(type, id);
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [isStartDateModalOpen, setIsStartDateModalOpen] = useState(false);
@@ -88,7 +95,10 @@ const EventEditor = () => {
 
   useEffect(() => {
     if (eventDetailData) {
-      setEventRequest(eventDetailData);
+      setEventRequest({
+        ...eventDetailData,
+        type: eventDetailData.type ?? 'EVENT',
+      });
     }
   }, [eventDetailData]);
 
@@ -196,6 +206,7 @@ const EventEditor = () => {
         if (isEditMode) await editEvent(eventRequest, Number(id));
         else await createEvent(eventRequest);
 
+        await queryClient.invalidateQueries({ queryKey: ['schedule'] });
         toastSuccess('저장이 완료되었습니다.');
         navigate('/calendar');
       } catch (err: any) {
@@ -226,11 +237,18 @@ const EventEditor = () => {
 
   const { loading: smartLoading } = useSmartLoading(
     new Promise<void>((resolve) => {
-      if (!loading) resolve();
+      if (!isLoading) resolve();
     }),
   );
   if (smartLoading) return <Loading />;
-  if (error) return <S.Error>{error}</S.Error>;
+  if (isError)
+    return (
+      <S.Error>
+        {error instanceof Error
+          ? error.message
+          : '데이터를 불러오지 못했습니다.'}
+      </S.Error>
+    );
 
   return (
     <>
