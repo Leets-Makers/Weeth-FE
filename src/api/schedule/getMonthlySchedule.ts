@@ -1,12 +1,5 @@
 import api from '@/api/api';
-
-export interface ScheduleEvent {
-  id: number;
-  title: string;
-  start: string;
-  end: string;
-  isMeeting?: boolean;
-}
+import type { ScheduleEvent } from '@/types/schedule';
 
 const getMonthlySchedule = async (
   start: string,
