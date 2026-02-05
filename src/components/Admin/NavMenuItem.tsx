@@ -18,8 +18,12 @@ export const MenuItemWrapper = styled.div<{ $active?: boolean }>`
       : 'transparent'};
   cursor: pointer;
 
+  
   svg {
-    fill: currentColor;
+    fill: ${({ $active, theme }) =>
+      $active
+        ? theme.semantic.brand.primary
+        : theme.semantic.icon.disabled};
     width: 24px;
     height: 24px;
   }

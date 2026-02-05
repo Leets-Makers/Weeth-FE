@@ -25,7 +25,7 @@ export const Wrapper = styled.div<{
 }>`
   width: ${({ isCardinalBox }) => (isCardinalBox ? 'none' : '234px')};
   min-width: ${({ isCardinalBox }) => (isCardinalBox ? '234px' : 'none')};
-  height: 164px;
+  min-height: 132px;
   background-color: ${({ isIncomplete, isSelected, color }) => {
     if (isIncomplete) return 'transparent';
     if (isSelected) return theme.color.gray[18];
@@ -40,6 +40,7 @@ export const Wrapper = styled.div<{
   box-sizing: border-box;
   border-radius: ${units.radius.sm}px;
   cursor: ${({ isClick }) => (isClick ? 'pointer' : 'auto')};
+  box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
 
   ${({ isClick, isSelected, isIncomplete }) =>
     isClick &&
@@ -49,8 +50,9 @@ export const Wrapper = styled.div<{
     &:hover {
       background-color: ${theme.color.gray[18]};
     }
-  `}
+  `};
 `;
+
 
 export const Title = styled.div<{
   isHidden?: boolean;

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-
-const logo = '/logo/original.svg';
+import WeethIcon from '@/assets/images/ic_admin_header_logo.svg?react';
 
 const StyledHeader = styled.div`
   display: flex;
@@ -8,12 +7,6 @@ const StyledHeader = styled.div`
   justify-content: flex-start;
   padding: 20px 15px;
   gap: 5px;
-`;
-
-const StyledLogo = styled.img`
-  width: 40px;
-  height: auto;
-  padding-left: 10px;
 `;
 
 const StyledTitle = styled.div`
@@ -25,7 +18,7 @@ const StyledTitle = styled.div`
 const NavHeader: React.FC = () => {
   return (
     <StyledHeader>
-      <StyledLogo src={logo} alt="weeth로고" />
+      <WeethIcon style={{ width: 28, height: 'auto', paddingLeft: 10 }} />
       <StyledTitle>WEETH ADMIN</StyledTitle>
     </StyledHeader>
   );

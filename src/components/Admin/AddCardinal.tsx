@@ -7,7 +7,7 @@ import { colors, units } from '@/theme/designTokens';
 
 export const AddCardinalWrapper = styled.div`
   min-width: 80px;
-  height: 164px;
+  height: 132px;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.semantic.container.neutral};
   display: flex;
@@ -16,6 +16,7 @@ export const AddCardinalWrapper = styled.div`
   align-items: center;
   cursor: pointer;
   border-radius: ${units.radius.lg}px;
+  box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
 `;
 
 const AddCardinal: React.FC = () => {

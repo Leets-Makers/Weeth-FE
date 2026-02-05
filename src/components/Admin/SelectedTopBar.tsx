@@ -1,5 +1,5 @@
 import theme from '@/styles/theme';
-import backarrow from '@/assets/images/ic_admin_backarrow.svg';
+import backarrow from '@/assets/images/ic_admin_back_arrow.svg';
 import { useState } from 'react';
 import useAdminActions from '@/hooks/admin/useAdminActions';
 import styled from 'styled-components';
