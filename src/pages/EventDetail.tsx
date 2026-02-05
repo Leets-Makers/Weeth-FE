@@ -8,7 +8,7 @@ import { CURRENT_MONTH, CURRENT_YEAR } from '@/constants/dateConstants';
 import useUserData from '@/hooks/queries/useUserData';
 import Loading from '@/components/common/Loading';
 
-export type { EventDetailData } from '@/api/event/getEventInfo';
+export type { EventDetailData } from '@/types/event';
 
 const EventDetail = () => {
   const location = useLocation();
