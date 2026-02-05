@@ -1,4 +1,4 @@
-import useGetEventInfo from '@/api/getEventInfo';
+import useEventInfo from '@/hooks/queries/event/useEventInfo';
 import * as S from '@/styles/event/EventDetail.styled';
 import EventTitle from '@/components/Event/EventTitle';
 import EventContent from '@/components/Event/EventContent';
@@ -7,19 +7,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { CURRENT_MONTH, CURRENT_YEAR } from '@/constants/dateConstants';
 import useUserData from '@/hooks/queries/useUserData';
 
-export interface EventDetailData {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
-  location: string;
-  cardinal: number;
-  code?: number;
-  name: string;
-  requiredItem: string;
-  start: string;
-  end: string;
-}
+export type { EventDetailData } from '@/api/event/getEventInfo';
 
 const EventDetail = () => {
   const location = useLocation();
@@ -31,9 +19,14 @@ const EventDetail = () => {
   const { id, type } = useParams();
   const { data: userInfo } = useUserData();
   const isAdmin = userInfo?.role === 'ADMIN';
-  const { data: eventDetailData, error } = useGetEventInfo(type, id);
+  const { data: eventDetailData, error } = useEventInfo(type, id);
 
-  if (error || !eventDetailData) return <S.Error>{error}</S.Error>;
+  if (!eventDetailData)
+    return (
+      <S.Error>
+        {error ? error.message : '데이터를 불러오지 못했습니다.'}
+      </S.Error>
+    );
 
   return (
     <S.EventDetailWrapper>
