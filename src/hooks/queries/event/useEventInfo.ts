@@ -1,4 +1,5 @@
-import getEventInfo, { type EventDetailData } from '@/api/event/getEventInfo';
+import getEventInfo from '@/api/event/getEventInfo';
+import type { EventDetailData } from '@/types/event';
 import { EVENT_QUERY_KEYS } from '@/constants/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
