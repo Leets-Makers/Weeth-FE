@@ -1,6 +1,5 @@
-import getMonthlySchedule, {
-  type ScheduleEvent,
-} from '@/api/schedule/getMonthlySchedule';
+import getMonthlySchedule from '@/api/schedule/getMonthlySchedule';
+import type { ScheduleEvent } from '@/types/schedule';
 import { SCHEDULE_QUERY_KEYS } from '@/constants/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
