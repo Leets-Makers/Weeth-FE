@@ -10,16 +10,17 @@ body {
   color: white;
   font-family:
     'Pretendard',
+    'Pretendard Variable',
     -apple-system,
     BlinkMacSystemFont,
+    system-ui,
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
     'Segoe UI',
     Roboto,
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Fira Sans',
-    'Droid Sans',
     'Helvetica Neue',
+    Arial,
     sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
