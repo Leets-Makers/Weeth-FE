@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
 import { deleteEvent } from '@/api/EventAdminAPI';
-import { EventDetailData } from '@/pages/EventDetail';
+import type { EventDetailData } from '@/types/event';
 import * as S from '@/styles/calendar/EventDetailTitle.styled';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { EVENT_QUERY_KEYS } from '@/constants/queryKeys';
 import Tag from '@/components/Event/Tag';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
@@ -34,6 +35,12 @@ const EventTitle = ({
     try {
       await deleteEvent(data.id, path);
       await queryClient.invalidateQueries({ queryKey: ['schedule'] });
+      if (type && id) {
+        await queryClient.invalidateQueries({
+          queryKey: EVENT_QUERY_KEYS.detail(type, id),
+          refetchType: 'none',
+        });
+      }
       toastSuccess('삭제가 완료되었습니다.');
       navigate('/calendar');
     } catch (err) {
