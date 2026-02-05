@@ -8,7 +8,7 @@ const useYearlySchedule = (year: number, semester: number) => {
   return useQuery<YearlyScheduleData>({
     queryKey: SCHEDULE_QUERY_KEYS.yearly(year, semester),
     queryFn: () => getYearlySchedule(year, semester),
-    enabled: !!year,
+    enabled: !!year && !!semester,
     retry: 1,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
