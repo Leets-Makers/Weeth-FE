@@ -7,6 +7,7 @@ import * as S from '@/styles/event/EventEditor.styled';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { EVENT_QUERY_KEYS } from '@/constants/queryKeys';
 import useEventInfo from '@/hooks/queries/event/useEventInfo';
 import replaceNewLines from '@/hooks/newLine';
 import CardinalDropdown from '@/components/common/CardinalDropdown';
@@ -26,7 +27,6 @@ import {
   toastSuccess,
 } from '@/components/common/ToastMessage';
 
-import useSmartLoading from '@/hooks/useSmartLoading';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { colors } from '@/theme/designTokens';
 import useCardinalData from '@/hooks/queries/useCardinalData';
@@ -205,8 +205,13 @@ const EventEditor = () => {
       try {
         if (isEditMode) await editEvent(eventRequest, Number(id));
         else await createEvent(eventRequest);
-
         await queryClient.invalidateQueries({ queryKey: ['schedule'] });
+        if (isEditMode && type && id) {
+          await queryClient.invalidateQueries({
+            queryKey: EVENT_QUERY_KEYS.detail(type, id),
+            refetchType: 'none',
+          });
+        }
         toastSuccess('저장이 완료되었습니다.');
         navigate('/calendar');
       } catch (err: any) {
@@ -235,12 +240,7 @@ const EventEditor = () => {
     }
   };
 
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!isLoading) resolve();
-    }),
-  );
-  if (smartLoading) return <Loading />;
+  if (isLoading) return <Loading />;
   if (isError)
     return (
       <S.Error>
