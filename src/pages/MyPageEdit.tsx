@@ -5,7 +5,6 @@ import DropdownMenu from '@/components/Button/DropdownMenu';
 import InfoInput from '@/components/MyPage/InfoInput';
 import useCustomBack from '@/hooks/useCustomBack';
 import { toastInfo, toastSuccess } from '@/components/common/ToastMessage';
-
 import EditGNB from '@/components/Navigation/EditGNB';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { PageHeader, ResponsiveContainer } from '@/styles';
@@ -13,6 +12,7 @@ import typography from '@/theme/typography';
 import { colors } from '@/theme/designTokens';
 import useUserData from '@/hooks/queries/useUserData';
 import usePatchMyInfo from '@/hooks/mutation/usePatchMyInfo';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 const InfoWrapper = styled.div`
   display: flex;
@@ -129,6 +129,7 @@ const MyPageEdit = () => {
   return (
     <ResponsiveContainer>
       <EditGNB
+        save
         onClickButton={() => {
           if (validateUserData(userData)) {
             openSelectModal({
@@ -141,6 +142,7 @@ const MyPageEdit = () => {
           }
         }}
       />
+      <Breadcrumb items={[{ label: 'My', path: '/mypage' }]} hasTitle />
       <PageHeader>My</PageHeader>
 
       {userInfo ? (
