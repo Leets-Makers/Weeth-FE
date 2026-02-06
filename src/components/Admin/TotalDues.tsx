@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import theme from '@/styles/theme';
 import {
   TotalDuesWrapper,
@@ -45,6 +45,7 @@ const formatDate = (time: unknown): string => {
 };
 
 const TotalDues: React.FC<TotalDuesProps> = ({ cardinal }) => {
+  const theme = useTheme();
   const [title, setTitle] = useState('');
   const [boxData, setBoxData] = useState([
     {
@@ -52,21 +53,24 @@ const TotalDues: React.FC<TotalDuesProps> = ({ cardinal }) => {
       title: '원금',
       description: '0원',
       last: '-',
-      color: '#00DDA8',
+      color: theme.semantic.container.primary,
+      lastColor: undefined,
     },
     {
       id: 'box2',
       title: '현재',
       description: '0원',
       last: '-',
-      color: '#2f2f2f',
+      color: theme.semantic.container['neutral-interaction'],
+      lastColor: theme.semantic.text.alternative,
     },
     {
       id: 'box3',
       title: '사용',
       description: '0원',
       last: '-',
-      color: '#2f2f2f',
+      color: theme.semantic.container['neutral-interaction'],
+      lastColor: theme.semantic.text.alternative,
     },
   ]);
 
@@ -86,21 +90,24 @@ const TotalDues: React.FC<TotalDuesProps> = ({ cardinal }) => {
               title: '원금',
               description: `${Number(totalAmount).toLocaleString()}원`,
               last: formatDate(time),
-              color: '#00DDA8',
+              color: theme.semantic.container.primary,
+              lastColor: undefined,
             },
             {
               id: 'box2',
               title: '현재',
               description: `${Number(currentAmount).toLocaleString()}원`,
               last: formatDate(time),
-              color: '#2f2f2f',
+              color: theme.semantic.container['neutral-interaction'],
+              lastColor: theme.semantic.text.alternative,
             },
             {
               id: 'box3',
               title: '사용',
               description: `${Number(totalAmount - currentAmount).toLocaleString()}원`,
               last: formatDate(time),
-              color: '#2f2f2f',
+              color: theme.semantic.container['neutral-interaction'],
+              lastColor: theme.semantic.text.alternative,
             },
           ]);
         }
@@ -113,21 +120,24 @@ const TotalDues: React.FC<TotalDuesProps> = ({ cardinal }) => {
             title: '원금',
             description: '0원',
             last: '0000.00.00 00:00',
-            color: '#00DDA8',
+            color: theme.semantic.container.primary,
+            lastColor: undefined,
           },
           {
             id: 'box2',
             title: '현재',
             description: '0원',
             last: '0000.00.00 00:00',
-            color: '#2f2f2f',
+            color: theme.semantic.container['neutral-interaction'],
+            lastColor: theme.semantic.text.alternative,
           },
           {
             id: 'box3',
             title: '사용',
             description: '0원',
             last: '0000.00.00 00:00',
-            color: '#2f2f2f',
+            color: theme.semantic.container['neutral-interaction'],
+            lastColor: theme.semantic.text.alternative,
           },
         ]);
       }
@@ -151,6 +161,7 @@ const TotalDues: React.FC<TotalDuesProps> = ({ cardinal }) => {
               description={box.description}
               last={box.last}
               color={box.color}
+              lastColor={box.lastColor}
             />
           ))}
         </BoxWrapper>

@@ -9,6 +9,8 @@ import {
   Master,
   ExpenditureMaster,
   ModifyButton,
+  DeleteButton,
+  ReceiptButton,
 } from '@/styles/admin/ExpenditureRecord.styled';
 import { useState, useEffect } from 'react';
 import fetchAccountData from '@/api/admin/dues/getAccount';
@@ -18,6 +20,10 @@ import deleteReceipt from '@/api/admin/dues/deleteReceipt';
 import Button from '@/components/Admin/Button';
 import DuesModifyModal from '@/components/Admin/Modal/DuesModifyModal';
 import ReceiptModal from '@/components/Admin/Modal/ReceiptModal';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+import { useTheme } from 'styled-components';
+import { units } from '@/theme/designTokens';
 
 export interface ExpenditureRecordProps {
   date: string;
@@ -33,6 +39,7 @@ export interface ExpenditureRecordProps {
 const ExpenditureRecord: React.FC<{ cardinal: number | null }> = ({
   cardinal,
 }) => {
+  const theme = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [records, setRecords] = useState<ExpenditureRecordProps[]>([]);
   const [selectedFileUrls, setSelectedFileUrls] = useState<FileObject[] | null>(
@@ -42,6 +49,13 @@ const ExpenditureRecord: React.FC<{ cardinal: number | null }> = ({
     useState<ExpenditureRecordProps | null>(null);
 
   const closeImageModal = () => setSelectedFileUrls(null);
+
+  const formatDate = (dateString: string): string => {
+    dayjs.locale('ko');
+    const date = dayjs(dateString);
+    const dayOfWeek = date.format('dddd');
+    return `${date.format('YYYY.MM.DD')}.${dayOfWeek}`;
+  };
 
   useEffect(() => {
     if (cardinal === null) return;
@@ -109,16 +123,26 @@ const ExpenditureRecord: React.FC<{ cardinal: number | null }> = ({
       {records.map((item) => (
         <Wrapper key={item.id}>
           <DateWrapper>
-            <Date>{item.date}</Date>
+            <Date>{formatDate(item.date)}</Date>
             <ButtonWrapper>
               <ModifyButton onClick={() => openModal(item)}>
-                <Button description="수정" color="#323232" width="64px" />
+                <Button
+                  description="수정"
+                  color={theme.semantic.button.neutral}
+                  textColor={theme.semantic.text.strong}
+                  width="55px"
+                />
               </ModifyButton>
-              <ModifyButton
+              <DeleteButton
                 onClick={() => item.id !== undefined && handleDelete(item.id)}
               >
-                <Button description="삭제" color="#ff5858" width="64px" />
-              </ModifyButton>
+                <Button
+                  description="삭제"
+                  color={theme.semantic.state.error}
+                  textColor={theme.semantic.text.inverse}
+                  width="55px"
+                />
+              </DeleteButton>
             </ButtonWrapper>
           </DateWrapper>
           <ExpenditureWrapper>
@@ -128,7 +152,7 @@ const ExpenditureRecord: React.FC<{ cardinal: number | null }> = ({
             </div>
             <ExpenditureMaster>
               <Master>{item.source}</Master>
-              <button
+              <ReceiptButton
                 type="button"
                 onClick={() => {
                   setSelectedFileUrls(
@@ -140,15 +164,9 @@ const ExpenditureRecord: React.FC<{ cardinal: number | null }> = ({
                     setSelectedFileUrls(item.files ?? null);
                   }
                 }}
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                }}
               >
                 <img src={Receipt} alt="영수증 보기" />
-              </button>
+              </ReceiptButton>
             </ExpenditureMaster>
           </ExpenditureWrapper>
         </Wrapper>

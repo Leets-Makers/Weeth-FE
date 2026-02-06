@@ -5,29 +5,37 @@ import { units } from '@/theme/designTokens';
 interface DuesActionButtonsProps {
   onReset?: () => void;
   onSubmit?: () => void;
+  resetText?: string;
+  submitText?: string;
+  resetWidth?: string;
+  submitWidth?: string;
 }
 
 const DuesActionButtons: React.FC<DuesActionButtonsProps> = ({
   onReset,
   onSubmit,
+  resetText = '초기화',
+  submitText = '추가',
+  resetWidth = '74px',
+  submitWidth = '60px',
 }) => {
   const theme = useTheme();
 
   return (
     <>
       <Button
-        description="초기화"
+        description={resetText}
         color={theme.semantic.button.neutral}
         textColor={theme.semantic.text.strong}
-        width="74px"
+        width={resetWidth}
         borderRadius={`${units.radius.md}px`}
         onClick={onReset}
       />
       <Button
-        description="추가"
+        description={submitText}
         color={theme.semantic.button.primary}
         textColor={theme.semantic.text.inverse}
-        width="60px"
+        width={submitWidth}
         borderRadius={`${units.radius.md}px`}
         onClick={onSubmit}
       />

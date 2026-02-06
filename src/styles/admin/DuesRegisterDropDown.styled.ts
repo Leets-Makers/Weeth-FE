@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 30px;
   box-sizing: border-box;
-  border-top: 1px solid #dedede;
+  border-top: 1px solid ${({ theme }) => theme.semantic.line};
   margin-top: -1px;
 `;
 

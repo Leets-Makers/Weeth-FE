@@ -181,6 +181,7 @@ const DuesRegisterAdd: React.FC = () => {
                   width="90%"
                   placeholder="선택된 파일 없음"
                   readOnly
+                  $hasFile={false}
                 />
                 <S.StyledCloseButton disabled>
                   <RemoveIcon />
@@ -193,6 +194,7 @@ const DuesRegisterAdd: React.FC = () => {
                     width="90%"
                     placeholder={file.fileName}
                     readOnly
+                    $hasFile={true}
                   />
                   <S.StyledCloseButton
                     onClick={() => handleRemoveFile(file.fileName)}

@@ -2,6 +2,7 @@ import theme from '@/styles/theme';
 import closeIcon from '@/assets/images/ic_admin_close.svg';
 import Modal from 'react-modal';
 import { styled } from 'styled-components';
+import { units } from '@/theme/designTokens';
 
 interface CommonModalProps {
   isOpen: boolean;
@@ -88,7 +89,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
           top,
           left: '50%',
           transform: 'translate(-50%,-50%)',
-          borderRadius: '8px',
+          borderRadius: units.radius.lg,
           width: '50%',
           height,
           maxWidth: '830px',

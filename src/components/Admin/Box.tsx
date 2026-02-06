@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
 
 export interface BoxProps {
   title?: string;
@@ -56,26 +57,44 @@ export const Wrapper = styled.div<{
 export const Title = styled.div<{
   isHidden?: boolean;
   isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
 }>`
   font-size: 18px;
   min-height: 24px;
-  color: ${({ isIncomplete, theme }) =>
-    isIncomplete ? theme.semantic.text.disabled : theme.semantic.text.strong};
+  color: ${({ isIncomplete, $isPrimaryBg, theme }) => {
+    if (isIncomplete) return theme.semantic.text.disabled;
+    if ($isPrimaryBg) return theme.semantic.text.inverse;
+    return theme.semantic.text.normal;
+  }};
 `;
 
-export const Description = styled.div<{ isIncomplete?: boolean }>`
+export const Description = styled.div<{
+  isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
+}>`
   font-size: 24px;
   font-family: ${theme.font.semiBold};
-  color: ${({ isIncomplete, theme }) =>
-    isIncomplete ? theme.semantic.text.disabled : theme.semantic.text.strong};
+  color: ${({ isIncomplete, $isPrimaryBg, theme }) => {
+    if (isIncomplete) return theme.semantic.text.disabled;
+    if ($isPrimaryBg) return theme.semantic.text.inverse;
+    return theme.semantic.text.normal;
+  }};
   margin-top: 20px;
   white-space: nowrap;
 `;
 
-export const Last = styled.div<{ lastColor?: string; isIncomplete?: boolean }>`
+export const Last = styled.div<{
+  lastColor?: string;
+  isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
+}>`
   font-size: 18px;
-  color: ${({ isIncomplete, lastColor }) =>
-    isIncomplete ? '#909393' : lastColor || 'rgba(255, 255, 255, 0.5)'};
+  color: ${({ isIncomplete, lastColor, $isPrimaryBg, theme }) => {
+    if (isIncomplete) return '#909393';
+    if (lastColor) return lastColor;
+    if ($isPrimaryBg) return theme.semantic.text.inverse;
+    return theme.semantic.text.normal;
+  }};
 `;
 
 const Box: React.FC<BoxProps> = ({
@@ -90,6 +109,9 @@ const Box: React.FC<BoxProps> = ({
   isSelected = false,
   isIncomplete = false,
 }) => {
+  const currentTheme = useTheme();
+  const isPrimaryBg = color === currentTheme.semantic.container.primary;
+
   return (
     <Wrapper
       onClick={onClick}
@@ -99,9 +121,19 @@ const Box: React.FC<BoxProps> = ({
       isSelected={isSelected}
       isIncomplete={isIncomplete}
     >
-      {title && <Title isIncomplete={isIncomplete}>{title}</Title>}
-      <Description isIncomplete={isIncomplete}>{description}</Description>
-      <Last lastColor={lastColor} isIncomplete={isIncomplete}>
+      {title && (
+        <Title isIncomplete={isIncomplete} $isPrimaryBg={isPrimaryBg}>
+          {title}
+        </Title>
+      )}
+      <Description isIncomplete={isIncomplete} $isPrimaryBg={isPrimaryBg}>
+        {description}
+      </Description>
+      <Last
+        lastColor={lastColor}
+        isIncomplete={isIncomplete}
+        $isPrimaryBg={isPrimaryBg}
+      >
         {last}
       </Last>
     </Wrapper>

@@ -9,6 +9,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   readOnly?: boolean;
+  variant?: 'neutral-interaction' | 'neutral';
 }
 
 const Input = styled.input<InputProps>`
@@ -20,8 +21,10 @@ const Input = styled.input<InputProps>`
   padding-left: 10px;
   font-size: 18px;
   cursor: ${(props) => (props.readOnly ? 'not-allowed' : 'text')};
-  background-color: ${({ theme }) =>
-    theme.semantic.container['neutral-interaction']};
+  background-color: ${({ theme, variant }) =>
+    variant === 'neutral'
+      ? theme.semantic.container.neutral
+      : theme.semantic.container['neutral-interaction']};
 
   &::placeholder {
     font-size: 18px;
@@ -36,7 +39,7 @@ const Input = styled.input<InputProps>`
 `;
 
 const DuesInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ width, placeholder, value, onChange, onBlur, readOnly }, ref) => {
+  ({ width, placeholder, value, onChange, onBlur, readOnly, variant }, ref) => {
     return (
       <Input
         ref={ref}
@@ -46,6 +49,7 @@ const DuesInput = forwardRef<HTMLInputElement, InputProps>(
         onChange={onChange}
         onBlur={onBlur}
         readOnly={readOnly}
+        variant={variant}
       />
     );
   },
