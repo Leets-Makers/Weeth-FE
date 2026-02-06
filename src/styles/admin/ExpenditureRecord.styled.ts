@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import theme from '../theme';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Container = styled.div`
   width: 95%;
@@ -58,8 +59,12 @@ export const ExpenditureWrapper = styled.div`
 `;
 
 export const ExpenditureTitle = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 24px;
+  ${typography.admin.Sub1};
+  margin-bottom: 20px;
+`;
+
+export const ExpenditureWon = styled.div`
+  ${typography.admin.H2}
   margin-bottom: 20px;
 `;
 

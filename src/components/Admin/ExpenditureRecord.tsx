@@ -6,6 +6,7 @@ import {
   ButtonWrapper,
   ExpenditureWrapper,
   ExpenditureTitle,
+  ExpenditureWon,
   Master,
   ExpenditureMaster,
   ModifyButton,
@@ -148,7 +149,7 @@ const ExpenditureRecord: React.FC<{ cardinal: number | null }> = ({
           <ExpenditureWrapper>
             <div>
               <ExpenditureTitle>{item.title}</ExpenditureTitle>
-              <ExpenditureTitle>{item.amount}원</ExpenditureTitle>
+              <ExpenditureWon>{item.amount?.toLocaleString()}원</ExpenditureWon>
             </div>
             <ExpenditureMaster>
               <Master>{item.source}</Master>
