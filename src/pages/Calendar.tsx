@@ -48,7 +48,7 @@ const Calendar = () => {
   return (
     <S.CalendarWrapper>
       <S.CalendarHeader>
-        <Breadcrumb items={[{ label: '동아리 일정', path: '/calendar' }]} />
+        <Breadcrumb items={[{ label: '캘린더', path: '/calendar' }]} />
         <S.CalendarToggleContainer>
           <S.DateWrapper>
             <S.ImgButton

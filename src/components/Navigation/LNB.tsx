@@ -19,7 +19,7 @@ const LNB = ({ onClose }: { onClose: () => void }) => {
 
   const menus = [
     {
-      name: '동아리 일정',
+      name: '캘린더',
       icon: <ICCalender width={24} height={24} />,
       path: '/calendar',
     },

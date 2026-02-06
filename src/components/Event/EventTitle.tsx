@@ -74,7 +74,7 @@ const EventTitle = ({
     <S.EventTitleWrapper>
       <Breadcrumb
         items={[
-          { label: '동아리 일정', path: '/calendar' },
+          { label: '캘린더', path: '/calendar' },
           { label: '일정 상세', path: `/${type}/${id}` },
         ]}
         hasTitle

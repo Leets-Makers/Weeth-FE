@@ -15,7 +15,7 @@ const DesktopGNB = () => {
   const { openFromHeaderButton } = useBoardWriteMenu();
 
   const menus = [
-    { name: '동아리일정', path: '/calendar' },
+    { name: '캘린더', path: '/calendar' },
     { name: '게시판', path: '/board' },
     { name: '출석', path: '/attendance' },
     { name: '멤버', path: '/member' },
