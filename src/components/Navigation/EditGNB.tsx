@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 12px 15px;
   background-color: ${colors.dark.neutral[200]};
   box-sizing: border-box;
 `;
