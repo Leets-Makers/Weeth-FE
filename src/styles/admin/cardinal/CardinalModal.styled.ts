@@ -216,8 +216,7 @@ export const Unit = styled.span`
 `;
 
 export const Title = styled.div`
-  font-weight: 700;
-  font-size: 24px;
+  ${typography.admin.H3}
   margin-top: -30px;
   padding-bottom: 10px;
 `;

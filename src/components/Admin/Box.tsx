@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
 import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 export interface BoxProps {
   title?: string;
@@ -72,8 +73,7 @@ export const Description = styled.div<{
   isIncomplete?: boolean;
   $isPrimaryBg?: boolean;
 }>`
-  font-size: 24px;
-  font-family: ${theme.font.semiBold};
+  ${typography.admin.H3}
   color: ${({ isIncomplete, $isPrimaryBg, theme }) => {
     if (isIncomplete) return theme.semantic.text.disabled;
     if ($isPrimaryBg) return theme.semantic.text.inverse;
