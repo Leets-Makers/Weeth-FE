@@ -20,7 +20,6 @@ import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import PickerModal from '@/components/Event/PickerModal';
 import TimePicker from '@/components/Event/TimePicker';
-import Loading from '@/components/common/Loading';
 import {
   toastError,
   toastInfo,
@@ -32,6 +31,7 @@ import { colors } from '@/theme/designTokens';
 import useCardinalData from '@/hooks/queries/useCardinalData';
 import EditGNB from '../Navigation/EditGNB';
 import Breadcrumb from '../common/Breadcrumb';
+import Loading from '../common/Loading';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -59,7 +59,7 @@ const EventEditor = () => {
 
   const { id } = useParams();
   const { currentCardinal } = useCardinalData();
-  const { data: eventDetailData, isLoading, isError } = useEventInfo(type, id);
+  const { data: eventDetailData, isError, isLoading } = useEventInfo(type, id);
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -91,11 +91,21 @@ const EventEditor = () => {
   useEffect(() => {
     if (eventDetailData) {
       setEventRequest({
-        ...eventDetailData,
+        title: eventDetailData.title,
+        content: eventDetailData.content,
+        location: eventDetailData.location,
+        requiredItem: eventDetailData.requiredItem,
         type: eventDetailData.type ?? 'EVENT',
+        cardinal: eventDetailData.cardinal,
+        start: eventDetailData.start,
+        end: eventDetailData.end,
       });
     }
   }, [eventDetailData]);
+
+  useEffect(() => {
+    if (isError) navigate('/calendar');
+  }, [isError, navigate]);
 
   const editEventInfo = (key: keyof EventRequestType, value: any) => {
     setEventRequest((prevInfo) => ({
@@ -236,10 +246,7 @@ const EventEditor = () => {
   };
 
   if (isLoading) return <Loading />;
-  if (isError) {
-    navigate('/calendar');
-    return null;
-  }
+  if (isError) return null;
 
   return (
     <>
