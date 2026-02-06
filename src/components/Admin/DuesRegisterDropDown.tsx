@@ -88,6 +88,8 @@ const DuesRegisterDropDown: React.FC = () => {
             selectedCardinal={selectedCardinal}
             setSelectedCardinal={handleSelectCardinal}
             isForDues
+            variant="button"
+            placeholder="기수"
           />
         </div>
         <DuesInputWrapper>

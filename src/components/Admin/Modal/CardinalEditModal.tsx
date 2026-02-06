@@ -155,6 +155,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
           <DirectCardinalDropdown
             selectedCardinal={selectedCardinal}
             setSelectedCardinal={handleSelectCardinal}
+            variant="button"
           />
         </S.InputGroup>
         <S.ErrorMessage>

@@ -63,16 +63,24 @@ export const Title = styled.div`
   height: 72px;
   padding: 0 30px;
   box-sizing: border-box;
-  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   display: flex;
   align-items: center;
   font-size: 24px;
 `;
 
-export const SubTitle = styled.div`
+export const SubTitle = styled.div<{ $required?: boolean }>`
   font-size: 16px;
   padding: 20px 30px;
   color: black;
+
+  ${({ $required, theme }) =>
+    $required &&
+    `
+    &::after {
+      content: ' *';
+      color: ${theme.semantic.state.error};
+    }
+  `}
 `;
 
 export const CardinalWrapper = styled.div`

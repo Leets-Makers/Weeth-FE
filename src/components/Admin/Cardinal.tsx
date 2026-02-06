@@ -5,10 +5,14 @@ import { CardinalProps } from '@/types/adminCardinal';
 import useCardinalData from '@/hooks/queries/useCardinalData';
 import { units } from '@/theme/designTokens';
 
-export const CardinalButton = styled.div`
+export const CardinalButton = styled.div<{ $variant?: 'button' | 'container' }>`
   width: 118px;
   height: 48px;
-  background-color: ${({ theme }) => theme.semantic.button.neutral};
+  background-color: ${({ theme, $variant }) =>
+    $variant === 'button'
+      ? theme.semantic.button.neutral
+      : theme.semantic.container.neutral};
+  border: 1px solid ${({ theme }) => theme.semantic.line};
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -26,8 +30,7 @@ export const DropdownMenu = styled.div.attrs<{ itemCount: number }>(
   }),
 )`
   width: 118px;
-  background-color: #ffffff;
-  border: 1px solid #dedede;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   border-radius: ${units.radius.md}px;
   box-shadow: 0 5px 20px 0 rgba(17, 33, 49, 0.2);
   color: black;
@@ -38,7 +41,7 @@ export const DropdownMenu = styled.div.attrs<{ itemCount: number }>(
 export const DropdownItem = styled.div`
   width: 100%;
   height: 48px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,16 +64,22 @@ export const ArrowIcon = styled.img`
   }
 `;
 
+export const CardinalWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
 const CardinalDropdown: React.FC<CardinalProps> = ({
   selectedCardinal,
   setSelectedCardinal,
+  variant,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: allCardinals } = useCardinalData();
 
   const sortedCardinals = allCardinals
     ?.filter((item) => item.cardinalNumber !== 0)
-    .reverse();
+    .sort((a, b) => b.cardinalNumber - a.cardinalNumber);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -80,8 +89,8 @@ const CardinalDropdown: React.FC<CardinalProps> = ({
   };
 
   return (
-    <>
-      <CardinalButton onClick={toggleDropdown}>
+    <CardinalWrapper>
+      <CardinalButton onClick={toggleDropdown} $variant={variant}>
         <div>
           {selectedCardinal === 0 || selectedCardinal === null
             ? '기수'
@@ -108,7 +117,7 @@ const CardinalDropdown: React.FC<CardinalProps> = ({
           ))}
         </DropdownMenu>
       )}
-    </>
+    </CardinalWrapper>
   );
 };
 

@@ -20,7 +20,7 @@ const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  z-index: 1000;
+  z-index: 1100;
 `;
 
 const Title = styled.div`
@@ -83,7 +83,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
       style={{
         overlay: {
           backgroundColor: 'rgba(0,0,0,0.5)',
-          zIndex: 900,
+          zIndex: 1100,
         },
         content: {
           top,
@@ -95,6 +95,7 @@ const CommonModal: React.FC<CommonModalProps> = ({
           maxWidth: '830px',
           padding: 0,
           overflow: 'hidden',
+          zIndex: 1100,
         },
       }}
     >

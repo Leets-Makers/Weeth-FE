@@ -4,7 +4,7 @@ export const PageWrapper = styled.div`
   display: flex;
   width: 100vw;
   min-height: 100vh;
-  color: #000000;
+  color: ${({ theme }) => theme.semantic.text.normal};
   background-color: ${({ theme }) => theme.semantic.backGround};
   display: flex;
 `;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import * as S from '@/styles/admin/DuesRegisterAdd.styled';
 import adminReceipts from '@/api/admin/dues/adminReceipts';
 import inputFields from '@/constants/admin/duesRegisterAddConstants';
@@ -7,7 +7,7 @@ import useDuesFileUpload from '@/hooks/admin/handleFileChange';
 import { ExpenditureRecordProps } from '@/components/Admin/ExpenditureRecord';
 import DuesInput from '@/components/Admin/DuesInput';
 import Button from '@/components/Admin/Button';
-import CardinalDropdown from '@/components/Admin/Cardinal';
+import DirectCardinalDropdown from '@/components/Admin/DirectCardinal';
 import { useTheme } from 'styled-components';
 import { units } from '@/theme/designTokens';
 import DuesActionButtons from '@/components/Admin/DuesActionButtons';
@@ -19,8 +19,10 @@ const DuesRegisterAdd: React.FC = () => {
   const [source, setSource] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
+  const [isCustomInput, setIsCustomInput] = useState(false);
 
   const theme = useTheme();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     uploadedFiles,
@@ -28,6 +30,25 @@ const DuesRegisterAdd: React.FC = () => {
     handleFileChange,
     handleRemoveFile,
   } = useDuesFileUpload();
+
+  const handleSelectCardinal = (value: number, isCustom: boolean) => {
+    setSelectedCardinal(value);
+    setIsCustomInput(isCustom);
+
+    if (isCustom) {
+      setCustomCardinal('');
+      setTimeout(() => inputRef.current?.focus(), 0);
+    } else {
+      setCustomCardinal(`${value}기`);
+    }
+  };
+
+  const handleCustomCardinalBlur = () => {
+    const cardinalNumber = Number(customCardinal.trim().replace('기', ''));
+    if (!Number.isNaN(cardinalNumber) && cardinalNumber > 0) {
+      setCustomCardinal(`${cardinalNumber}기`);
+    }
+  };
 
   const handleRegister = async () => {
     const validateInputs = () => {
@@ -122,17 +143,31 @@ const DuesRegisterAdd: React.FC = () => {
   return (
     <S.Wrapper>
       <S.Title>회비 사용 내역 추가</S.Title>
-      <S.SubTitle>기수</S.SubTitle>
+      <S.SubTitle $required>기수</S.SubTitle>
       <S.CardinalWrapper>
         <div>
-          <CardinalDropdown
+          <DirectCardinalDropdown
             selectedCardinal={selectedCardinal}
-            setSelectedCardinal={(value) => {
-              setSelectedCardinal(value);
-              setCustomCardinal(`${value}기`);
-            }}
+            setSelectedCardinal={handleSelectCardinal}
+            variant="button"
+            placeholder="기수"
           />
         </div>
+        <S.DuesInputWrapper>
+          <DuesInput
+            width="95%"
+            placeholder={
+              isCustomInput
+                ? '직접 입력'
+                : customCardinal || '기수를 선택하세요'
+            }
+            value={isCustomInput ? customCardinal : ''}
+            onChange={(e) => setCustomCardinal(e.target.value)}
+            onBlur={handleCustomCardinalBlur}
+            readOnly={!isCustomInput}
+            ref={inputRef}
+          />
+        </S.DuesInputWrapper>
       </S.CardinalWrapper>
 
       {inputFields.map((field) => (

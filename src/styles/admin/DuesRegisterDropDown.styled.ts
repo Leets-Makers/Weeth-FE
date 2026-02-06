@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { flexMixin } from './DuesRegisterAdd.styled';
+import { units } from '@/theme/designTokens';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -9,6 +10,7 @@ export const Wrapper = styled.div`
   box-sizing: border-box;
   border-top: 1px solid ${({ theme }) => theme.semantic.line};
   margin-top: -1px;
+  border-radius: 0 0 ${units.radius.lg}px ${units.radius.lg}px;
 `;
 
 export const Title = styled.div`
