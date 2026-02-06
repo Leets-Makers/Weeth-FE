@@ -233,6 +233,10 @@ export const SvgText = styled.div`
   gap: 10px;
 `;
 
+export const Label = styled.div`
+  ${typography.admin.Sub2}
+`;
+
 // MemberDetailModal.tsx
 export interface FontStyleProps {
   fontSize?: string;

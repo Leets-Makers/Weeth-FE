@@ -116,7 +116,7 @@ const CardinalModal: React.FC<CardinalModalProps> = ({
     >
       <ModalContentWrapper>
         <S.Title>{isEditing ? '학기 정보 추가' : '새로운 기수 추가'}</S.Title>
-        추가할 새로운 기수를 작성해주세요
+        <S.Label>추가할 새로운 기수를 작성해주세요</S.Label>
         <S.InputWrapper>
           <S.Input
             type="text"
@@ -128,7 +128,7 @@ const CardinalModal: React.FC<CardinalModalProps> = ({
           />
           <S.Unit>기</S.Unit>
         </S.InputWrapper>
-        활동 시기
+        <S.Label>활동 시기</S.Label>
         <S.FlexRow>
           <S.InputWrapper>
             <S.Input

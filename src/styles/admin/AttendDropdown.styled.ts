@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import theme from '../theme';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Wrapper = styled.div`
   width: 94.7%;
@@ -118,6 +119,7 @@ export const InfoWrapper = styled.div`
 `;
 
 export const InfoBox = styled.div`
+  ${typography.admin.Sub2}
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   width: 79px;
@@ -128,21 +130,19 @@ export const InfoBox = styled.div`
 `;
 
 export const User = styled.div`
+  ${typography.admin.Sub2}
   flex: 1;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
   display: flex;
   align-items: center;
   padding: 15px 0 15px 16px;
 `;
 
 export const Attend = styled.div`
+  ${typography.admin.Sub2}
   width: 162px;
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,8 +171,7 @@ export const Member = styled.div`
 `;
 
 export const UserName = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
+  ${typography.admin.Sub2}
 `;
 
 export const UserInfo = styled.div`

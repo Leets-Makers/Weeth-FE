@@ -1,6 +1,7 @@
 import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
 import { styled } from 'styled-components';
+import typography from '@/theme/typography';
 
 // penaltyListTable.tsx
 export const TableWrapper = styled.div<{ hasData: boolean }>`
@@ -48,10 +49,10 @@ export const Cell = styled.td`
 `;
 
 export const HeaderCell = styled.th`
+  ${typography.admin.Sub2}
   text-align: left;
   padding: 15px 25px;
   border-bottom: 1px solid #dedede;
-  font-weight: bold;
   white-space: nowrap;
 `;
 

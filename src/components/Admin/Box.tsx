@@ -60,7 +60,7 @@ export const Title = styled.div<{
   isIncomplete?: boolean;
   $isPrimaryBg?: boolean;
 }>`
-  font-size: 18px;
+  ${typography.admin.Sub2}
   min-height: 24px;
   color: ${({ isIncomplete, $isPrimaryBg, theme }) => {
     if (isIncomplete) return theme.semantic.text.disabled;
