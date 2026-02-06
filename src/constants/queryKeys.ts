@@ -57,6 +57,22 @@ export const BOARD_QUERY_KEYS = {
   studyList: (part: string) => ['board', 'studyList', part],
 };
 
-export const EVENT_QUERY_KEYS = {};
+export const SCHEDULE_QUERY_KEYS = {
+  monthly: (start: string, end: string) => ['schedule', 'monthly', start, end],
+  yearly: (year: number, semester: number) => [
+    'schedule',
+    'yearly',
+    year,
+    semester,
+  ],
+};
+
+export const EVENT_QUERY_KEYS = {
+  detail: (type: string | undefined, id: string | undefined) => [
+    'event',
+    type,
+    id,
+  ],
+};
 
 export const ADMIN_QUERY_KEYS = {};

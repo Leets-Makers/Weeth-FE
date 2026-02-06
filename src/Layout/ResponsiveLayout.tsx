@@ -35,7 +35,6 @@ const ResponsiveLayout = () => {
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
         <Wrapper>
           {isMobile ? <MobileGNB /> : <DesktopGNB />}
-
           <Content>
             <Outlet />
           </Content>

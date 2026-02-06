@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import parse from 'html-react-parser';
 import icCalendar from '@/assets/images/ic_date.svg';
 import { WEEK_DAYS } from '@/constants/dateConstants';
-import { EventDetailData } from '@/pages/EventDetail';
+import type { EventDetailData } from '@/types/event';
 import * as S from '@/styles/event/EventContent.styled';
 import convertLinksInText from '@/hooks/convertLinksInText';
 
