@@ -4,6 +4,7 @@ import Button from '@/components/Button/Button';
 import useLogout from '@/hooks/useLogout';
 import { colors, units } from '@/theme/designTokens';
 import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 export const TopBarWrapper = styled.div`
   position: sticky;
@@ -24,14 +25,12 @@ export const TopBarWrapper = styled.div`
 `;
 
 export const Title = styled.p`
-  font-weight: 700;
-  font-size: 24px;
+  ${typography.admin.Sub1}
 `;
 
 export const Description = styled.p`
+  ${typography.admin.Sub2}
   padding-left: 20px;
-  font-size: 18px;
-  font-weight: 400;
   color: ${({ theme }) => theme.semantic.text.alternative};
 `;
 

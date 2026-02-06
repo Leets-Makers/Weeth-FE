@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import SearchIcon from '@/assets/images/ic_search.svg';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const SearchWrapper = styled.div`
   position: relative;
@@ -8,13 +9,13 @@ const SearchWrapper = styled.div`
   max-width: 492px;
 
   input {
+    ${typography.admin.Body1}
     width: 100%;
     height: 48px;
     padding: 0 40px 0 52px;
     border: none;
     outline: none;
     border-radius: ${units.radius.sm}px;
-    font-size: 18px;
     box-sizing: border-box;
     display: flex;
     align-items: center;

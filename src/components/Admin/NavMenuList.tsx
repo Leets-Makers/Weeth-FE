@@ -8,15 +8,15 @@ import ManualIcon from '@/assets/images/ic_admin_manual.svg?react';
 import styled from 'styled-components';
 import NavMenuItem from '@/components/Admin/NavMenuItem';
 import { useEffect, useState } from 'react';
+import typography from '@/theme/typography';
 
 const MenuListWrapper = styled.div`
   padding: 20px 0;
 `;
 
 const SectionHeader = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-  color: #000;
+  ${typography.admin.Caption1}
+  color: ${({ theme }) => theme.semantic.text.alternative};
   padding: 0 20px;
   margin: 20px 0;
 `;

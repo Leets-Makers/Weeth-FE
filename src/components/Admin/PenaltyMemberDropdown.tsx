@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import theme from '@/styles/theme';
 import positionMapper from '@/utils/admin/positionMapper';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const DropdownContainer = styled.div`
   position: absolute;
@@ -16,6 +17,7 @@ export const DropdownContainer = styled.div`
 `;
 
 const NoResult = styled.span`
+  ${typography.admin.Body1}
   color: ${theme.color.gray[65]};
   text-align: center;
   height: 10px;
@@ -49,6 +51,7 @@ const DropdownItem = styled.div<{ noResult?: boolean }>`
 `;
 
 const DropdownText = styled.span`
+  ${typography.admin.Body1}
   min-width: 100px;
 `;
 

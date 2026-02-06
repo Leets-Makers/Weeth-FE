@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { forwardRef } from 'react';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 interface InputProps {
   width: string;
@@ -13,13 +14,13 @@ interface InputProps {
 }
 
 const Input = styled.input<InputProps>`
+  ${typography.admin.Body1}
   width: ${(props) => props.width};
   gap: 5%;
   height: 48px;
   border-radius: ${units.radius.sm}px;
   border: none;
   padding-left: 10px;
-  font-size: 18px;
   cursor: ${(props) => (props.readOnly ? 'not-allowed' : 'text')};
   background-color: ${({ theme, variant }) =>
     variant === 'neutral'
@@ -27,7 +28,6 @@ const Input = styled.input<InputProps>`
       : theme.semantic.container['neutral-interaction']};
 
   &::placeholder {
-    font-size: 18px;
     color: ${({ theme }) => theme.semantic.text.alternative};
     margin-left: 5px;
   }

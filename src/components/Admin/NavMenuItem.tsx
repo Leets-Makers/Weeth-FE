@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import typography from '@/theme/typography';
 
 interface MenuItemsProps {
   icon: React.ReactNode;
@@ -18,7 +19,7 @@ export const MenuItemWrapper = styled.div<{ $active?: boolean }>`
       : 'transparent'};
   cursor: pointer;
 
-  
+
   svg {
     fill: ${({ $active, theme }) =>
       $active
@@ -30,8 +31,9 @@ export const MenuItemWrapper = styled.div<{ $active?: boolean }>`
 `;
 
 export const Label = styled.div`
+  ${typography.admin.Sub2}
   padding-left: 12px;
-  font-weight: 500;
+  color: ${({ theme }) => theme.semantic.text.normal};
 `;
 
 const NavMenuItem: React.FC<MenuItemsProps> = ({

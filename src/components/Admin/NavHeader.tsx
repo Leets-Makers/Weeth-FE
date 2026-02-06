@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import WeethIcon from '@/assets/images/ic_admin_header_logo.svg?react';
+import typography from '@/theme/typography';
 
 const StyledHeader = styled.div`
   display: flex;
@@ -10,9 +11,9 @@ const StyledHeader = styled.div`
 `;
 
 const StyledTitle = styled.div`
-  font-weight: 500;
-  font-size: 16px;
+  ${typography.admin.Sub2}
   padding: 10px 10px 10px 20px;
+  color: ${({ theme }) => theme.semantic.text.alternative};
 `;
 
 const NavHeader: React.FC = () => {

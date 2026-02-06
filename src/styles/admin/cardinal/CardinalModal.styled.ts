@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 // CommonCardinalModal.tsx
 export const StyledModalOverlay = styled.div<{ overlayColor?: string }>`
@@ -139,12 +140,11 @@ export const ErrorMessage = styled.div`
 `;
 
 export const StyledInput = styled.input<{ flex: number; maxWidth: string }>`
+  ${typography.admin.Body1}
   flex: ${({ flex }) => flex};
   max-width: ${({ maxWidth }) => maxWidth};
-  font-family: ${theme.font.semiBold};
   border-radius: ${units.radius.sm}px;
   border: none;
-  font-size: 16px;
   padding: 12px;
   &::placeholder {
     color: ${theme.color.gray[65]};
@@ -191,8 +191,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input<{ readOnly?: boolean }>`
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
+  ${typography.admin.Body1}
   flex-grow: 1;
   width: 100%;
   border: none;
@@ -243,8 +242,9 @@ export interface FontStyleProps {
 }
 
 export const FontStyle = styled.div<FontStyleProps>`
-  font-size: ${({ fontSize }) => fontSize || '18px'};
-  font-weight: ${({ fontWeight }) => fontWeight || '500'};
+  ${typography.admin.Body1}
+  font-size: ${({ fontSize }) => fontSize || typography.admin.Body1.fontSize};
+  font-weight: ${({ fontWeight }) => fontWeight || typography.admin.Body1.fontWeight};
   color: ${({ color }) => color};
 `;
 
