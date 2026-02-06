@@ -59,12 +59,7 @@ const EventEditor = () => {
 
   const { id } = useParams();
   const { currentCardinal } = useCardinalData();
-  const {
-    data: eventDetailData,
-    isLoading,
-    isError,
-    error,
-  } = useEventInfo(type, id);
+  const { data: eventDetailData, isLoading, isError } = useEventInfo(type, id);
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -241,14 +236,10 @@ const EventEditor = () => {
   };
 
   if (isLoading) return <Loading />;
-  if (isError)
-    return (
-      <S.Error>
-        {error instanceof Error
-          ? error.message
-          : '데이터를 불러오지 못했습니다.'}
-      </S.Error>
-    );
+  if (isError) {
+    navigate('/calendar');
+    return null;
+  }
 
   return (
     <>
