@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from '@/styles/navigation/Navigation.styled';
 import useUserData from '@/hooks/queries/useUserData';
 import FloatingWritingIcon from '@/assets/images/ic_header_floating_writing.svg?react';
+import CalendarPostingIcon from '@/assets/images/ic_calendar_posting.svg?react';
 import { useRef } from 'react';
 import { useBoardWriteMenu } from '@/components/Board/useBoardWriteMenu';
 
@@ -34,6 +35,8 @@ const DesktopGNB = () => {
 
     return !isDetailPage;
   })();
+  const isCalendarPage = location.pathname.startsWith('/calendar');
+  const isAdmin = userInfo?.role === 'ADMIN';
   const writeButtonRef = useRef<HTMLButtonElement>(null);
 
   const handlePosting = () => {
@@ -63,6 +66,12 @@ const DesktopGNB = () => {
           <S.WriteButton ref={writeButtonRef} onClick={handlePosting}>
             <FloatingWritingIcon width={20} height={20} />
             글쓰기
+          </S.WriteButton>
+        )}
+        {isCalendarPage && isAdmin && (
+          <S.WriteButton onClick={() => navigate('/events/create')}>
+            <CalendarPostingIcon width={20} height={20} />
+            일정추가
           </S.WriteButton>
         )}
         <S.Profile
