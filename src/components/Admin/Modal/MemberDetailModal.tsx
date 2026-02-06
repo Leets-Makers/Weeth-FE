@@ -9,6 +9,7 @@ import getHighestCardinal from '@/utils/admin/getHighestCardinal';
 import CardinalEditModal from '@/components/Admin/Modal/CardinalEditModal';
 import Button from '@/components/Button/Button';
 import { useTheme } from 'styled-components';
+import { units } from '@/theme/designTokens';
 
 interface MemberDetailModalProps {
   data: MemberData;
@@ -85,7 +86,7 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
       <CommonModal
         isOpen
         onClose={onClose}
-        title="멤버 관리 버튼"
+        title="멤버 관리 상세"
         top="40%"
         height="60%"
         footer={
@@ -93,11 +94,11 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
             <ButtonGroup buttons={buttons} />
             <Button
               onClick={onClose}
-              color="#fff"
-              textcolor="#000"
+              color={theme.semantic.button.primary}
+              textcolor={theme.semantic.text.inverse}
               width="55px"
               height="45px"
-              borderRadius="4px"
+              borderRadius={`${units.radius.md}px`}
             >
               완료
             </Button>
@@ -109,13 +110,13 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
             <S.FontStyle fontSize="12px" color="#000">
               회원정보
             </S.FontStyle>
-            <S.FlexWrapper>
+            <S.NameStatusWrapper>
               <S.FontStyle fontSize="24px" fontWeight="700" color="#000">
                 {data.name} &nbsp;
                 {getHighestCardinal(data.cardinals)}
               </S.FontStyle>
               <StatusIndicator status={data.status} />
-            </S.FlexWrapper>
+            </S.NameStatusWrapper>
             <S.FlexWrapper>
               <S.LabelFlex>
                 {memberInfo.map((info) => (
@@ -126,7 +127,11 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
                 {memberInfo.map((info) => (
                   <S.FontStyle
                     key={info.label}
-                    color={info.label === '페널티' ? '#ff5858' : undefined}
+                    color={
+                      info.label === '페널티'
+                        ? theme.semantic.state.error
+                        : undefined
+                    }
                   >
                     {info.value}
                   </S.FontStyle>
@@ -148,7 +153,11 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
                 {activityInfo.map((info) => (
                   <S.FontStyle
                     key={info.label}
-                    color={info.label === '페널티' ? '#ff5858' : undefined}
+                    color={
+                      info.label === '페널티'
+                        ? theme.semantic.state.error
+                        : undefined
+                    }
                   >
                     {info.value}
                   </S.FontStyle>

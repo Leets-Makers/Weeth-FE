@@ -33,14 +33,24 @@ export const StyledDuesInput = styled(DuesInput)`
   padding-right: 50px;
 `;
 
-export const StyledCloseButton = styled.button`
+export const StyledCloseButton = styled.button<{ disabled?: boolean }>`
   position: absolute;
   right: 50px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.semantic.icon.disabled : theme.semantic.text.normal};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const Title = styled.div`

@@ -2,12 +2,15 @@ import { useState } from 'react';
 import * as S from '@/styles/admin/DuesRegisterAdd.styled';
 import adminReceipts from '@/api/admin/dues/adminReceipts';
 import inputFields from '@/constants/admin/duesRegisterAddConstants';
-import Close from '@/assets/images/ic_admin_close.svg';
+import RemoveIcon from '@/assets/images/ic_admin_input_remove.svg?react';
 import useDuesFileUpload from '@/hooks/admin/handleFileChange';
 import { ExpenditureRecordProps } from '@/components/Admin/ExpenditureRecord';
 import DuesInput from '@/components/Admin/DuesInput';
 import Button from '@/components/Admin/Button';
 import CardinalDropdown from '@/components/Admin/Cardinal';
+import { useTheme } from 'styled-components';
+import { units } from '@/theme/designTokens';
+import DuesActionButtons from '@/components/Admin/DuesActionButtons';
 
 const DuesRegisterAdd: React.FC = () => {
   const [selectedCardinal, setSelectedCardinal] = useState<null | number>(null);
@@ -16,6 +19,8 @@ const DuesRegisterAdd: React.FC = () => {
   const [source, setSource] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
+
+  const theme = useTheme();
 
   const {
     uploadedFiles,
@@ -161,8 +166,9 @@ const DuesRegisterAdd: React.FC = () => {
             <S.DuesWrapper>
               <Button
                 description="파일 선택"
-                color="#00dda8"
-                width="99px"
+                color={theme.semantic.button.primary}
+                borderRadius={`${units.radius.md}px`}
+                width="91px"
                 onClick={() => document.getElementById('file-upload')?.click()}
               />
             </S.DuesWrapper>
@@ -170,7 +176,16 @@ const DuesRegisterAdd: React.FC = () => {
 
           <S.InputWrapper>
             {uploadedFiles.length === 0 ? (
-              <DuesInput width="90%" placeholder="선택된 파일 없음" readOnly />
+              <S.InputContainer>
+                <S.StyledDuesInput
+                  width="90%"
+                  placeholder="선택된 파일 없음"
+                  readOnly
+                />
+                <S.StyledCloseButton disabled>
+                  <RemoveIcon />
+                </S.StyledCloseButton>
+              </S.InputContainer>
             ) : (
               uploadedFiles.map((file) => (
                 <S.InputContainer key={file.fileId || file.fileName}>
@@ -182,7 +197,7 @@ const DuesRegisterAdd: React.FC = () => {
                   <S.StyledCloseButton
                     onClick={() => handleRemoveFile(file.fileName)}
                   >
-                    <img src={Close} alt="삭제" width="20px" />
+                    <RemoveIcon />
                   </S.StyledCloseButton>
                 </S.InputContainer>
               ))
@@ -192,13 +207,7 @@ const DuesRegisterAdd: React.FC = () => {
       </S.DescriptionWrapper>
 
       <S.SaveButton>
-        <Button description="Cancel" color="#323232" width="89px" />
-        <Button
-          description="추가"
-          color="#323232"
-          width="64px"
-          onClick={handleRegister}
-        />
+        <DuesActionButtons onSubmit={handleRegister} />
       </S.SaveButton>
     </S.Wrapper>
   );

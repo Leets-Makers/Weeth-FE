@@ -4,7 +4,7 @@ import { StatusCell } from '@/components/Admin/MemberListTableRow';
 import { getStatusColor } from '@/components/Admin/StatusIndicator';
 
 export const SubHeaderRow = styled.tr`
-  background-color: #e6fcf7;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   border-bottom: 1px solid #dedede;
   font-weight: 600;
 `;

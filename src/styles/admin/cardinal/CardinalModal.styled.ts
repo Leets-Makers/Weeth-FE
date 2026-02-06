@@ -99,6 +99,14 @@ export const Footer = styled.div`
   border-bottom-right-radius: 10px;
 `;
 
+export const BottomRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+`;
+
 // CardinalEditModal.tsx
 export const ModalContentWrapper = styled.div`
   padding: 20px;
@@ -165,14 +173,20 @@ export const InputWrapper = styled.div`
   align-items: center;
   width: 100%;
   max-width: 100%;
-  padding: 10px;
+  padding: 12px 16px;
   box-sizing: border-box;
-  border: 1px solid #dedede;
   font-size: 16px;
   outline: none;
+  position: relative;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
+  border-radius: ${units.radius.sm}px;
 
-  :focus::placeholder {
+  :focus-within::placeholder {
     color: transparent;
+  }
+
+  &:focus-within {
+    outline: 2px solid #2f2f2f;
   }
 `;
 
@@ -180,11 +194,12 @@ export const Input = styled.input<{ readOnly?: boolean }>`
   font-family: ${theme.font.semiBold};
   font-size: 18px;
   flex-grow: 1;
-  width: 50%;
+  width: 100%;
   border: none;
   outline: none;
   text-align: right;
-  padding: 5px;
+  padding: 0 30px 0 0;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
 
   ${({ readOnly }) =>
     readOnly &&
@@ -194,10 +209,11 @@ export const Input = styled.input<{ readOnly?: boolean }>`
   `}
 `;
 
-export const Unit = styled.div`
-  font-size: 18px;
-  color: ${theme.color.gray[65]};
-  white-space: nowrap;
+export const Unit = styled.span`
+  position: absolute;
+  right: 16px;
+  color: ${({ theme }) => theme.semantic.text.disabled};
+  font-size: 14px;
 `;
 
 export const Title = styled.div`
@@ -237,7 +253,7 @@ export const ContentWrapper = styled.div`
   flex-wrap: wrap;
   height: calc(100% - 96px - 96px);
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
   padding: 5px;
   white-space: nowrap;
@@ -245,7 +261,7 @@ export const ContentWrapper = styled.div`
 
 export const ModalContent = styled.div`
   background-color: white;
-  border-radius: 4px;
+  border-radius: ${units.radius.md}px;
   width: 100%;
   box-shadow: 0px 3px 8px 0px rgba(133, 141, 138, 0.2);
   display: flex;
@@ -257,13 +273,18 @@ export const ModalContent = styled.div`
 
 export const ActivityContent = styled(ModalContent)`
   flex: 1;
-  margin-bottom: 6%;
 `;
 
 export const FlexWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   gap: 40px;
+`;
+
+export const NameStatusWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 export const LabelFlex = styled.div`

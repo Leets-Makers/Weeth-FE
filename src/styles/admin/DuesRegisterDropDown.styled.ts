@@ -8,12 +8,14 @@ export const Wrapper = styled.div`
   padding: 30px;
   box-sizing: border-box;
   border-top: 1px solid #dedede;
+  margin-top: -1px;
 `;
 
 export const Title = styled.div`
   font-size: 16px;
   margin-left: 10px;
   margin-bottom: 10px;
+  color: ${({ theme }) => theme.semantic.text.normal};
 `;
 
 export const CardinalWrapper = styled.div`
@@ -31,9 +33,8 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const Description = styled.div`
-  color: red;
+  color: ${({ theme }) => theme.semantic.state.caution};
   font-size: 18px;
-  margin-left: 100px;
   margin-top: 15px;
 `;
 

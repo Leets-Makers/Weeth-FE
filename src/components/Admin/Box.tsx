@@ -25,7 +25,7 @@ export const Wrapper = styled.div<{
 }>`
   width: ${({ isCardinalBox }) => (isCardinalBox ? 'none' : '234px')};
   min-width: ${({ isCardinalBox }) => (isCardinalBox ? '234px' : 'none')};
-  min-height: 132px;
+  min-height: 164px;
   background-color: ${({ isIncomplete, isSelected, color }) => {
     if (isIncomplete) return 'transparent';
     if (isSelected) return theme.color.gray[18];
@@ -52,7 +52,6 @@ export const Wrapper = styled.div<{
     }
   `};
 `;
-
 
 export const Title = styled.div<{
   isHidden?: boolean;

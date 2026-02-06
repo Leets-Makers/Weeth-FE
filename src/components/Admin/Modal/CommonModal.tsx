@@ -30,7 +30,7 @@ const Title = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  background-color: #f2f9f8;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   width: 100%;
   height: 96px;
   display: flex;
@@ -40,6 +40,7 @@ const TitleContainer = styled.div`
 `;
 
 const MainContent = styled.div`
+  background-color: ${({ theme }) => theme.semantic.backGround};
   flex: 1;
   padding: 20px;
   overflow-y: auto;
@@ -49,9 +50,9 @@ const MainContent = styled.div`
 `;
 
 const Footer = styled.div`
-  background-color: ${theme.color.main};
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   width: 100%;
-  height: 96px;
+  height: 84px;
   display: flex;
   align-items: center;
   padding-left: 20px;

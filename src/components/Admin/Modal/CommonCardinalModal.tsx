@@ -68,7 +68,7 @@ const CommonCardinalModal: React.FC<CommonCardinalModalProps> = ({
             <S.MainContent borderBottom={borderBottom}>
               {children}
             </S.MainContent>
-            <S.Footer>{footer}</S.Footer>
+            {footer && <S.Footer>{footer}</S.Footer>}
           </S.ModalContainer>
         </S.StyledModalContent>
       </S.StyledModalOverlay>

@@ -7,7 +7,7 @@ import { colors, units } from '@/theme/designTokens';
 
 export const AddCardinalWrapper = styled.div`
   min-width: 80px;
-  height: 132px;
+  height: 164px;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.semantic.container.neutral};
   display: flex;

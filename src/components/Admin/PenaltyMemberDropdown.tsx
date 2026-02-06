@@ -32,18 +32,18 @@ const DropdownItem = styled.div<{ noResult?: boolean }>`
   grid-template-columns: 1fr 1fr 70px 1fr;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
-  ${({ noResult }) =>
+  ${({ noResult, theme }) =>
     noResult
       ? `
-    cursor: default; 
+    cursor: default;
     &:hover {
-      background-color: #f5faf9; 
+      background-color: ${theme.semantic.container['neutral-interaction']};
     }
   `
       : `
-  cursor: pointer; 
+  cursor: pointer;
   &:hover {
-    background-color: #ebf5f3; 
+    background-color: ${theme.semantic.container['neutral-interaction']};
   }
 `}
 `;
