@@ -46,7 +46,7 @@ export const GridItem = styled.div`
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${colors.semantic.brand.primary};
+    background-color: ${colors.semantic.container['neutral-interaction']};
     color: ${colors.semantic.text.inverse};
   }
 `;
