@@ -16,6 +16,7 @@ import Button from '@/components/Button/Button';
 import ToggleButton from '@/components/common/ToggleButton';
 import EventInput, { EventInputBlock } from '@/components/Event/EventInput';
 import dayjs from 'dayjs';
+import { parseToTime12h } from '@/hooks/formatDate';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import PickerModal from '@/components/Event/PickerModal';
@@ -100,6 +101,15 @@ const EventEditor = () => {
         start: eventDetailData.start,
         end: eventDetailData.end,
       });
+
+      if (eventDetailData.start) {
+        setStartDate(dayjs(eventDetailData.start).toDate());
+        setStartTime(parseToTime12h(eventDetailData.start));
+      }
+      if (eventDetailData.end) {
+        setEndDate(dayjs(eventDetailData.end).toDate());
+        setEndTime(parseToTime12h(eventDetailData.end));
+      }
     }
   }, [eventDetailData]);
 
