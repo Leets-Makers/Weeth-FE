@@ -1,27 +1,27 @@
 import { FALL_SEMESTER, SPRING_SEMESTER } from '@/constants/dateConstants';
 import * as S from '@/styles/calendar/YearCalendar.styled';
-import useGetYearlySchedule from '@/api/useGetYearlySchedule';
+import useYearlySchedule from '@/hooks/queries/schedule/useYearlySchedule';
 import { useEffect, useState } from 'react';
 import YearlyCard from './YearlyCard';
 import Loading from '../common/Loading';
 
 const YearCalendar = ({ year, term }: { year: number; term: number }) => {
-  const { data: yearlySchedule, loading } = useGetYearlySchedule({
+  const { data: yearlySchedule = {}, isLoading } = useYearlySchedule(
     year,
-    semester: term,
-  });
+    term,
+  );
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
-    if (loading) {
+    if (isLoading) {
       setShowLoading(true);
       return undefined;
     }
     const timer = setTimeout(() => setShowLoading(false), 1000);
     return () => clearTimeout(timer);
-  }, [loading]);
+  }, [isLoading]);
 
-  if (showLoading && loading) {
+  if (showLoading && isLoading) {
     return <Loading />;
   }
 
