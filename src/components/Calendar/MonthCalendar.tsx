@@ -21,11 +21,7 @@ const MonthCalendar = () => {
   const [searchParams] = useSearchParams();
   const year = Number(searchParams.get('year')) || CURRENT_YEAR;
   const month = Number(searchParams.get('month')) || CURRENT_MONTH;
-
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const eventListRef = useRef<HTMLDivElement | null>(null);
-
   const startDate = `${year}-${String(month).padStart(2, '0')}-01T00:00:00.000Z`;
   const endDate =
     month === 12
@@ -48,15 +44,6 @@ const MonthCalendar = () => {
     allDay: true,
     end: dayjs(event.end).add(1, 'day').format('YYYY-MM-DD'),
   }));
-
-  useEffect(() => {
-    if (selectedEventList.length > 0 && eventListRef.current) {
-      eventListRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-  }, [selectedEventList]);
 
   const renderDayCell = (arg: any) => {
     const formatted = formatDate(arg.date);
@@ -130,7 +117,7 @@ const MonthCalendar = () => {
       </S.SelectedDate>
 
       {selectedEventList.length > 0 ? (
-        <S.ScheduleList ref={eventListRef}>
+        <S.ScheduleList>
           {selectedEventList.map((item) => (
             <ScheduleItem
               key={item.id}
