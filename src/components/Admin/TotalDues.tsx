@@ -10,6 +10,7 @@ import { AccountResponse } from '@/types/account';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Box from '@/components/Admin/Box';
+import typography from '@/theme/typography';
 
 interface TotalDuesProps {
   cardinal: number | null;
@@ -23,6 +24,7 @@ export const BoxWrapper = styled.div`
 `;
 
 const CardinalWrapper = styled.div`
+  ${typography.admin.H1}
   margin-left: 20px;
 `;
 
