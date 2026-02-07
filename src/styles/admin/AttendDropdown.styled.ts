@@ -125,7 +125,7 @@ export const InfoBox = styled.div`
   color: ${({ theme }) => theme.semantic.text.alternative};
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
-  width: 79px;
+  flex: 1;
   height: 100%;
   display: flex;
   justify-content: center;

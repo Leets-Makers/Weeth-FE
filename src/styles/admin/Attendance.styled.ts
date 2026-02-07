@@ -33,6 +33,7 @@ export const Wrapper = styled.div`
 export const DateInfoWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
 `;
 
 export const DateText = styled.span<{ $isOpen?: boolean }>`
@@ -41,7 +42,6 @@ export const DateText = styled.span<{ $isOpen?: boolean }>`
     $isOpen === true
       ? theme.semantic.text.inverse
       : theme.semantic.text.normal};
-  margin-right: 15px;
   transition: color 0.2s ease;
 `;
 
