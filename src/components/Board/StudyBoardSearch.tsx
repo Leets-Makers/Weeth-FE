@@ -2,20 +2,14 @@ import styled from 'styled-components';
 import DividerLine from '@/assets/images/ic_search_divider.svg';
 import Delete from '@/assets/images/ic_circle_close.svg';
 import search from '@/assets/images/ic_search.svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  useGetPartSearch,
-  useGetEduSearch,
-  useGetNoticeSearch,
-} from '@/api/useGetBoardSearch';
+  usePartSearch,
+  useEduSearch,
+  useNoticeSearch,
+} from '@/hooks/queries/board/useBoardSearch';
 import { toastError } from '@/components/common/ToastMessage';
-import {
-  EduSearchContent,
-  PartSearchContent,
-  NoticeSearchContent,
-  SearchRequestType,
-  SearchContent,
-} from '@/types/search';
+import { SearchRequestType, SearchContent } from '@/types/search';
 import {
   mapEduToBoard,
   mapNoticeToBoard,
@@ -35,14 +29,14 @@ const Container = styled.div`
   ${pcResponsive}
 `;
 
-const Search = styled.div<{ isFocused: boolean }>`
+const Search = styled.div<{ $isFocused: boolean }>`
   display: flex;
   align-items: center;
   height: 40px;
   justify-content: space-between;
   border-radius: ${units.radius.sm}px;
   border: ${(props) =>
-    props.isFocused
+    props.$isFocused
       ? `1px solid ${colors.semantic.brand.secondary}`
       : '1px solid transparent'};
   padding: ${units.padding['200']}px ${units.padding['200']}px
@@ -98,53 +92,63 @@ const StudyBoardSearch = ({
   onLoading,
 }: SearchProps) => {
   const [keyword, setKeyword] = useState('');
+  const [submittedKeyword, setSubmittedKeyword] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
-  const fetchData = async () => {
-    const q = keyword.trim();
-    if (!q) return;
+  const partSearch = usePartSearch(submittedKeyword);
+  const eduSearch = useEduSearch(submittedKeyword);
+  const noticeSearch = useNoticeSearch(submittedKeyword);
 
-    onLoading?.(true);
-    try {
-      if (requestType === 'part') {
-        await useGetPartSearch(q, 0, (rows) => {
-          const normalized = (rows as PartSearchContent[]).map(mapPartToBoard);
-          onSearchDone(normalized);
-        });
-      } else if (requestType === 'education') {
-        await useGetEduSearch(q, 0, (rows) => {
-          const normalized = (rows as EduSearchContent[]).map(mapEduToBoard);
-          onSearchDone(normalized);
-        });
-      } else {
-        await useGetNoticeSearch(q, 0, (rows) => {
-          const normalized = (rows as NoticeSearchContent[]).map(
-            mapNoticeToBoard,
-          );
-          onSearchDone(normalized);
-        });
-      }
-    } catch (error) {
-      toastError('데이터를 불러오지 못했습니다.');
-      console.error(error);
-    } finally {
-      onLoading?.(false);
-    }
+  const getSearchQuery = () => {
+    if (requestType === 'part') return partSearch;
+    if (requestType === 'education') return eduSearch;
+    return noticeSearch;
   };
+  const searchQuery = getSearchQuery();
+
+  useEffect(() => {
+    if (!submittedKeyword) return;
+    onLoading?.(searchQuery.isLoading);
+  }, [submittedKeyword, searchQuery.isLoading, onLoading]);
+
+  useEffect(() => {
+    if (!submittedKeyword || searchQuery.isLoading) return;
+    if (searchQuery.error) {
+      toastError('데이터를 불러오지 못했습니다.');
+      onSearchDone([]);
+      return;
+    }
+    if (requestType === 'part' && partSearch.data) {
+      onSearchDone(partSearch.data.map(mapPartToBoard));
+    } else if (requestType === 'education' && eduSearch.data) {
+      onSearchDone(eduSearch.data.map(mapEduToBoard));
+    } else if (noticeSearch.data) {
+      onSearchDone(noticeSearch.data.map(mapNoticeToBoard));
+    }
+  }, [
+    submittedKeyword,
+    requestType,
+    onSearchDone,
+    searchQuery.data,
+    searchQuery.isLoading,
+    searchQuery.error,
+  ]);
 
   const handleSearch = () => {
-    if (!keyword.trim()) return;
-    fetchData();
+    const q = keyword.trim();
+    if (!q) return;
+    setSubmittedKeyword(q);
   };
 
   const handleDelete = () => {
     setKeyword('');
+    setSubmittedKeyword('');
     onClear();
   };
 
   return (
     <Container>
-      <Search isFocused={isFocused}>
+      <Search $isFocused={isFocused}>
         <SearchInput
           placeholder="제목, 내용 검색"
           value={keyword}

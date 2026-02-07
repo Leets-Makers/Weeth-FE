@@ -3,26 +3,18 @@ import HomeFooter from '@/components/home/HomeFooter';
 import useCustomBack from '@/hooks/useCustomBack';
 import HomeNotice from '@/components/home/HomeNotice';
 import HomeInfo from '@/components/home/HomeInfo';
-import { useGetRecentNotice } from '@/api/useGetBoardInfo';
-import styled from 'styled-components';
+import useRecentNotices from '@/hooks/queries/board/useRecentNotices';
 import useUserData from '@/hooks/queries/useUserData';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 370px;
-  max-width: 370px;
-  margin-bottom: 50px;
-`;
+import { ResponsiveContainer } from '@/styles';
 
 const Home: React.FC = () => {
   const { data: userInfo } = useUserData();
-  const { recentNotices } = useGetRecentNotice();
+  const { data: recentNotices } = useRecentNotices();
 
   useCustomBack('/home');
 
   return (
-    <Container>
+    <ResponsiveContainer>
       <HomeNotice
         title={recentNotices?.[0]?.title || ''}
         content={recentNotices?.[0]?.content || ''}
@@ -31,14 +23,13 @@ const Home: React.FC = () => {
 
       <HomeInfo
         position={userInfo?.position || 'FE'}
-        cardinal={userInfo?.cardinals[0] || 0}
         name={userInfo?.name || '...'}
         isAdmin={userInfo?.role === 'ADMIN' || false}
       />
 
       <HomeMain />
       <HomeFooter />
-    </Container>
+    </ResponsiveContainer>
   );
 };
 

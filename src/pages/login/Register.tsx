@@ -39,6 +39,7 @@ const Title = styled.div`
 const ButtonWrapper = styled.div`
   position: absolute;
   bottom: 64px;
+
   left: 0;
   display: flex;
   flex-direction: column;
@@ -52,7 +53,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const LoginButton = styled.button<{ $isKakao: boolean }>`
-  width: 100%;
+  width: 94%;
   height: 48px;
   border-radius: ${units.radius.md}px;
   align-items: center;
@@ -122,7 +123,7 @@ const Register: React.FC = () => {
   return (
     <Container>
       <div style={{ marginLeft: -15 }}>
-        <Header RightButtonType="none" isAccessible />
+        <Header />
       </div>
 
       <TitleWrapper>

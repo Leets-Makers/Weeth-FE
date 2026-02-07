@@ -8,14 +8,14 @@ import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import useGetPartBoard from '@/api/useGetPartBoard';
-import FloatingWritingIcon from '@/assets/images/ic_floating_writing.svg?react';
+import usePartBoard from '@/hooks/queries/board/usePartBoard';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
 import useCustomBack from '@/hooks/useCustomBack';
 import { BoardContent } from '@/types/board';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { BreadcrumbPadding } from '@/styles/breadCrum';
+import BoardWriteFloatingButton from '@/components/Board/BoardWriteFloatingButton';
 
 type CatEnum = 'StudyLog' | 'Article';
 type CatSlug = 'study' | 'article';
@@ -89,8 +89,8 @@ const PartBoard = () => {
     });
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useGetPartBoard({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePartBoard(
+    {
       part: part as Part,
       category: activeCategory === 'StudyLog' ? 'StudyLog' : 'Article',
       cardinalNumber: selectedCardinal || undefined,
@@ -98,7 +98,8 @@ const PartBoard = () => {
       studyName: selectedTag || undefined,
       pageSize: 10,
       pageNumber: 0,
-    });
+    },
+  );
 
   const posts = data?.pages.flatMap((page) => page.content) ?? [];
   const handleSearchDone = (result: SearchContent[]) => {
@@ -136,11 +137,6 @@ const PartBoard = () => {
       if (observerRef.current) observer.unobserve(observerRef.current);
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  const handleWriting = () => {
-    const slug = enumToSlug(activeCategory);
-    navigate(`/board/${slug}/${part}/post`);
-  };
 
   const handleDetail = (id: number) => {
     const categoryPrefix = activeCategory === 'StudyLog' ? 'study' : 'article';
@@ -223,9 +219,7 @@ const PartBoard = () => {
           )}
         </S.PostContainer>
       )}
-      <S.FloatingButton>
-        <FloatingWritingIcon onClick={handleWriting} />
-      </S.FloatingButton>
+      <BoardWriteFloatingButton />
     </S.Container>
   );
 };

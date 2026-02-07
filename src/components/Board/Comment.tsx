@@ -2,7 +2,7 @@ import parse from 'html-react-parser';
 import ReplyImage from '@/assets/images/ic_reply_comment.svg';
 import MenuImage from '@/assets/images/ic_comment_delete.svg';
 import * as S from '@/styles/board/Comment.styled';
-import deleteComment from '@/api/deleteComment';
+import useDeleteComment from '@/hooks/mutation/board/useDeleteComment';
 import { useCallback } from 'react';
 import formatDateTime from '@/hooks/formatDateTime';
 import setPositionIcon from '@/hooks/setPositionIcon';
@@ -44,19 +44,17 @@ const Comment = ({
 }: CommentProps) => {
   const { data: userInfo } = useUserData();
 
+  const deleteCommentMutation = useDeleteComment({
+    onSuccess: () => onDelete(),
+  });
+
   const onClickReply = () => {
     onReply(commentId);
   };
   const openSelectModal = useOpenSelectModal();
 
-  const handleDeleteComment = async () => {
-    try {
-      await deleteComment(path, postId, commentId);
-      onDelete();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to delete comment:', error);
-    }
+  const handleDeleteComment = () => {
+    deleteCommentMutation.mutate({ path, postId, commentId });
   };
   const onClickMenu = () => {
     openSelectModal({

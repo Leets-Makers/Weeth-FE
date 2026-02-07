@@ -9,6 +9,7 @@ import { useState } from 'react';
 import DuesRegister from '@/components/Admin/DuesRegister';
 import TotalCardinal from '@/components/Admin/CardinalWrapper';
 import AdminOnly from '@/components/common/AdminOnly';
+import { units } from '@/theme/designTokens';
 
 export const Container = styled.div`
   width: 100%;
@@ -20,16 +21,37 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
+export const ColumnsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: flex-start;
+`;
+
+export const LeftColumn = styled.div`
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
+
+export const RightColumn = styled.div`
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
+
 export const CardinalWrapper = styled.div`
-  padding: 1% 0 1.5% 1%;
-  flex-shrink: 0;
+  width: 100%;
 `;
 
 export const DuesWrapper = styled.div`
-  width: 45%;
+  width: 100%;
   padding: 1% 3%;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: ${units.radius.lg}px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -37,15 +59,7 @@ export const DuesWrapper = styled.div`
 `;
 
 export const DuesRegisterWrapper = styled.div`
-  width: 45%;
-`;
-
-export const DuesTotalWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  gap: 10px;
+  width: 100%;
 `;
 
 const AdminDues: React.FC = () => {
@@ -61,23 +75,29 @@ const AdminDues: React.FC = () => {
           description="기수 시작시 이월된 회비와 해당 기수 회비를 종합해 회비를 등록해주시기 바랍니다. 회비 등록은 기수당 한 번만 가능합니다."
         />
         <Container>
-          <CardinalWrapper>
-            <TotalCardinal
-              selectedCardinal={selectedCardinal}
-              setSelectedCardinal={setSelectedCardinal}
-              autoSelectLatest
-            />
-          </CardinalWrapper>
-          <DuesTotalWrapper>
-            <DuesWrapper>
-              <TotalDues cardinal={selectedCardinal} />
-              <Expenditure cardinal={selectedCardinal} />
-            </DuesWrapper>
-            <DuesRegisterWrapper>
-              <DuesRegister />
-              <DuesRegisterAdd />
-            </DuesRegisterWrapper>
-          </DuesTotalWrapper>
+          <ColumnsWrapper>
+            <LeftColumn>
+              <CardinalWrapper>
+                <TotalCardinal
+                  selectedCardinal={selectedCardinal}
+                  setSelectedCardinal={setSelectedCardinal}
+                  autoSelectLatest
+                />
+              </CardinalWrapper>
+              <DuesWrapper>
+                <TotalDues cardinal={selectedCardinal} />
+                <Expenditure cardinal={selectedCardinal} />
+              </DuesWrapper>
+            </LeftColumn>
+            <RightColumn>
+              <DuesRegisterWrapper>
+                <DuesRegister />
+              </DuesRegisterWrapper>
+              <DuesRegisterWrapper>
+                <DuesRegisterAdd />
+              </DuesRegisterWrapper>
+            </RightColumn>
+          </ColumnsWrapper>
         </Container>
       </ContentWrapper>
     </PageWrapper>

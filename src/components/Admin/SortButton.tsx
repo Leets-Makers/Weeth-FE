@@ -6,7 +6,7 @@ import { useMemberContext } from '@/components/Admin/context/MemberContext';
 const SortButtonWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #ecf9f6;
+  background-color: ${({ theme }) => theme.semantic.button.neutral};
   gap: 10px;
   padding: 7px;
   border-radius: 4px;

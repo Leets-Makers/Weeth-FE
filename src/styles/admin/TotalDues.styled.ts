@@ -1,10 +1,11 @@
+import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const TotalDuesWrapper = styled.div`
   width: 100%;
   background-color: #fff;
-  border-radius: 5px;
-  border: 1px solid #dedede;
+  border-radius: ${units.radius.md}px;
+  border: 1px solid ${({ theme }) => theme.semantic.line};
   margin-top: 20px;
 
   &:last-child {
@@ -15,7 +16,7 @@ export const TotalDuesWrapper = styled.div`
 export const TopDues = styled.div`
   width: 100%;
   height: 72px;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   font-size: 24px;
   display: flex;
   align-items: center;

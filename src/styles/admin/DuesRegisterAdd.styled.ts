@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import DuesInput from '@/components/Admin/DuesInput';
+import { units } from '@/theme/designTokens';
 
 export const flexMixin = (flexValue: number) => css`
   flex: ${flexValue};
@@ -10,7 +11,7 @@ export const Wrapper = styled.div`
   margin-top: 50px;
   background-color: #fff;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: ${units.radius.lg}px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding-bottom: 30px;
   margin-bottom: 30px;
@@ -27,19 +28,34 @@ export const InputContainer = styled.div`
   width: 100%;
 `;
 
-export const StyledDuesInput = styled(DuesInput)`
+export const StyledDuesInput = styled(DuesInput)<{ $hasFile?: boolean }>`
   width: 100%;
   padding-right: 50px;
+
+  &::placeholder {
+    color: ${({ theme, $hasFile }) =>
+      $hasFile ? theme.semantic.text.strong : theme.semantic.text.alternative};
+  }
 `;
 
-export const StyledCloseButton = styled.button`
+export const StyledCloseButton = styled.button<{ disabled?: boolean }>`
   position: absolute;
   right: 50px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.semantic.icon.disabled : theme.semantic.text.normal};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const Title = styled.div`
@@ -47,16 +63,24 @@ export const Title = styled.div`
   height: 72px;
   padding: 0 30px;
   box-sizing: border-box;
-  border-bottom: 1px solid #dedede;
   display: flex;
   align-items: center;
   font-size: 24px;
 `;
 
-export const SubTitle = styled.div`
+export const SubTitle = styled.div<{ $required?: boolean }>`
   font-size: 16px;
   padding: 20px 30px;
   color: black;
+
+  ${({ $required, theme }) =>
+    $required &&
+    `
+    &::after {
+      content: ' *';
+      color: ${theme.semantic.state.error};
+    }
+  `}
 `;
 
 export const CardinalWrapper = styled.div`
@@ -85,12 +109,17 @@ export const ButtonWrapper = styled.div``;
 
 export const SaveAddButton = styled.div`
   display: flex;
-  gap: 5px;
-  margin-left: 70%;
+  gap: 10px;
+  justify-content: flex-end;
+  width: 100%;
+  padding-right: 30px;
 `;
 
 export const InputWrapper = styled.div`
   ${flexMixin(7)};
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
 export const SaveButton = styled.div`

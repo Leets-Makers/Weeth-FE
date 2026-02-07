@@ -61,10 +61,10 @@ const AdminPenalty = lazy(() => import('@/pages/admin/AdminPenalty'));
 
 const router = createBrowserRouter([
   // 0. 비로그인 페이지 (NoHeaderLayout)
+  { path: '/', element: <Landing /> },
   {
     element: <NoHeaderLayout />,
     children: [
-      { path: '/', element: <Landing /> },
       { path: '/login', element: <Login /> },
       { path: '/profile', element: <Profile /> },
       { path: '/accountcheck', element: <AccountCheck /> },
@@ -79,10 +79,7 @@ const router = createBrowserRouter([
   // 1. FixedLayout (로그인 필요)
   {
     element: <PrivateRoute element={<FixedLayout />} />,
-    children: [
-      { path: '/home', element: <Home /> },
-      { path: '/member/:userId', element: <MemberDetail /> },
-    ],
+    children: [{ path: '/member/:userId', element: <MemberDetail /> }],
   },
 
   // 2. ResponsiveLayout (로그인 필요)
@@ -98,6 +95,7 @@ const router = createBrowserRouter([
       { path: '/member', element: <Member /> },
       { path: '/calendar', element: <Calendar /> },
       { path: '/:type/:id', element: <EventDetail /> },
+      { path: '/home', element: <Home /> },
 
       // board layout
       {
@@ -121,8 +119,8 @@ const router = createBrowserRouter([
       {
         path: '/board',
         children: [
-          { path: 'education/:part/post', element: <EduPost /> },
-          { path: ':category/:part/post', element: <PartPost /> },
+          { path: 'education/post', element: <EduPost /> },
+          { path: ':category/post', element: <PartPost /> },
           { path: 'notices/post', element: <NoticePost /> },
           { path: 'notices/:postId/edit', element: <NoticeEdit /> },
           { path: ':category/:part/:postId/edit', element: <PartEdit /> },

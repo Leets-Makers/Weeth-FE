@@ -20,6 +20,7 @@ export const Bar = styled.div<{ $isMeeting: boolean }>`
 export const EventContentContainer = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const EventContent = styled.div`
@@ -27,10 +28,12 @@ export const EventContent = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  cursor: pointer;
 `;
 
 export const Calendar = styled.div`
   margin-bottom: 5px;
+  padding: 0 ${units.padding['450']}px;
 
   div {
     text-overflow: clip !important;
@@ -107,6 +110,7 @@ export const Calendar = styled.div`
     background-color: rgba(255, 255, 255, 0.03) !important;
     border: none;
     border-radius: 1px;
+    cursor: pointer;
     ${typography.Caption1};
   }
 
@@ -130,6 +134,7 @@ export const Calendar = styled.div`
 
   .fc-event-main {
     overflow: hidden;
+    cursor: pointer;
   }
 
   // 각 날짜 셀 스타일링

@@ -7,7 +7,7 @@ import {
   ContentText,
   DropdownButton,
 } from '@/styles/admin/Attendance.styled';
-import DropDown from '@/assets/images/ic_admin_cardinal.svg';
+import DropDown from '@/assets/images/ic_admin_cardinal.svg?react';
 import fetchAttendancesByCardinal from '@/api/admin/attendance/fetchAttendancesByCardinal';
 import dayjs from 'dayjs';
 import AttendDropdown from '@/components/Admin/AttendDropdown';
@@ -55,21 +55,24 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
     <>
       {data.map((item) => (
         <div key={item.id}>
-          <AttendanceTable onClick={() => toggleDropdown(item.id)}>
+          <AttendanceTable
+            onClick={() => toggleDropdown(item.id)}
+            $isOpen={openDropdownId === item.id}
+          >
             <Wrapper>
               <div>
                 <DateInfoWrapper>
-                  <DateText>{formatDate(item.start)}</DateText>
-                  <ContentText>
+                  <DateText $isOpen={openDropdownId === item.id}>
+                    {formatDate(item.start)}
+                  </DateText>
+                  <ContentText $isOpen={openDropdownId === item.id}>
                     {item.content} {item.title}
                   </ContentText>
                 </DateInfoWrapper>
               </div>
-              <DropdownButton
-                src={DropDown}
-                alt="dropdown"
-                isOpen={openDropdownId === item.id}
-              />
+              <DropdownButton $isOpen={openDropdownId === item.id}>
+                <DropDown />
+              </DropdownButton>
             </Wrapper>
           </AttendanceTable>
           {openDropdownId === item.id && <AttendDropdown meetingId={item.id} />}

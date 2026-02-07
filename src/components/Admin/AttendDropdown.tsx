@@ -8,6 +8,7 @@ import department from '@/constants/departmentConstants';
 import useUserData from '@/hooks/queries/useUserData';
 import RadioButton from './RadioButton';
 import SearchInput from './SearchInput';
+import { colors } from '@/theme/designTokens';
 
 interface AttendDropdownItem {
   id: number;
@@ -118,8 +119,8 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
   };
 
   const statusOptions = [
-    { value: '출석', label: '출석', color: '#508FFF' },
-    { value: '결석', label: '결석', color: '#FF5858' },
+    { value: '출석', label: '출석', color: `${colors.semantic.state.success}` },
+    { value: '결석', label: '결석', color: `${colors.semantic.state.error}` },
   ];
 
   const filteredData = data.filter((item) =>
@@ -189,12 +190,23 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
                     src={item.status === '출석' ? CheckBox : Absence}
                     alt={item.status === '출석' ? '출석 이미지' : '결석 이미지'}
                   />
-                  {item.status}
+                  <S.StatusText status={item.status}>{item.status}</S.StatusText>
                 </S.CheckGap>
               )}
             </S.Check>
           </S.MemberWrapper>
         ))}
+        <S.Info>
+          <S.User>사용자 정보</S.User>
+          {isEditMode ? (
+            <S.InfoWrapper>
+              <S.InfoBox>출석</S.InfoBox>
+              <S.InfoBox>결석</S.InfoBox>
+            </S.InfoWrapper>
+          ) : (
+            <S.Attend>출석 정보</S.Attend>
+          )}
+        </S.Info>
       </S.UserWrapper>
     </S.Wrapper>
   );

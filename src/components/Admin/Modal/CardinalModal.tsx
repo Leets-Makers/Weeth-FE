@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Button from '@/components/Button/Button';
 import CheckBox from '@/assets/images/ic_admin_checkbox.svg';
-import UnCheckBox from '@/assets/images/ic_admin_uncheckbox.svg';
+import UnCheckBox from '@/assets/images/ic_admin_uncheckbox.svg?react';
 import * as S from '@/styles/admin/cardinal/CardinalModal.styled';
 import CommonCardinalModal from '@/components/Admin/Modal/CommonCardinalModal';
 import {
@@ -13,6 +13,7 @@ import {
   handleNumericInput,
   preventNonNumeric,
 } from '@/utils/admin/handleNumericInput';
+import { units } from '@/theme/designTokens';
 
 interface CardinalModalProps {
   isOpen: boolean;
@@ -34,11 +35,18 @@ export const ModalContentWrapper = styled.div`
   box-sizing: border-box;
 `;
 
+const StyledUnCheckBox = styled(UnCheckBox)`
+  color: ${({ theme }) => theme.semantic.icon.alternative};
+  width: 18px;
+  height: 18px;
+`;
+
 const CardinalModal: React.FC<CardinalModalProps> = ({
   isOpen,
   onClose,
   initialCardinal,
 }) => {
+  const theme = useTheme();
   const isEditing = Boolean(initialCardinal);
 
   const [formState, setFormState] = useState({
@@ -105,21 +113,10 @@ const CardinalModal: React.FC<CardinalModalProps> = ({
       position="absolute"
       overlayColor="rgba(0,0,0,0.5)"
       showCloseButton
-      footer={
-        <Button
-          width="60px"
-          height="48px"
-          color="#323232"
-          borderRadius="4px"
-          onClick={handleClick}
-        >
-          저장
-        </Button>
-      }
     >
       <ModalContentWrapper>
         <S.Title>{isEditing ? '학기 정보 추가' : '새로운 기수 추가'}</S.Title>
-        <li>추가할 새로운 기수를 작성해주세요</li>
+        <S.Label>추가할 새로운 기수를 작성해주세요</S.Label>
         <S.InputWrapper>
           <S.Input
             type="text"
@@ -131,7 +128,7 @@ const CardinalModal: React.FC<CardinalModalProps> = ({
           />
           <S.Unit>기</S.Unit>
         </S.InputWrapper>
-        <li>활동 시기</li>
+        <S.Label>활동 시기</S.Label>
         <S.FlexRow>
           <S.InputWrapper>
             <S.Input
@@ -156,13 +153,27 @@ const CardinalModal: React.FC<CardinalModalProps> = ({
             <S.Unit>학기</S.Unit>
           </S.InputWrapper>
         </S.FlexRow>
-        <S.SvgText onClick={handleCheckBoxClick}>
-          <img
-            src={formState.isChecked ? CheckBox : UnCheckBox}
-            alt={formState.isChecked ? 'checked' : 'unchecked'}
-          />
-          <div> 현재 진행 중 </div>
-        </S.SvgText>
+        <S.BottomRow>
+          <S.SvgText onClick={handleCheckBoxClick}>
+            {formState.isChecked ? (
+              <img src={CheckBox} alt="checked" />
+            ) : (
+              <StyledUnCheckBox />
+            )}
+            <div>현재 진행 중</div>
+          </S.SvgText>
+
+          <Button
+            width="64px"
+            height="48px"
+            color={theme.semantic.button.neutral}
+            textcolor={theme.semantic.text.strong}
+            borderRadius={`${units.radius.md}px`}
+            onClick={handleClick}
+          >
+            저장
+          </Button>
+        </S.BottomRow>
       </ModalContentWrapper>
     </CommonCardinalModal>
   );

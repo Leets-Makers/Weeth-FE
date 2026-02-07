@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import typography from '@/theme/typography';
 
 interface MenuItemsProps {
   icon: React.ReactNode;
@@ -12,21 +13,27 @@ export const MenuItemWrapper = styled.div<{ $active?: boolean }>`
   align-items: center;
   padding: 10px 20px;
   height: 36px;
-  background-color: ${({ $active }) =>
-    $active ? `${theme.color.main}` : 'transparent'};
-  color: ${({ $active }) => ($active ? '#fff' : '#000')};
+  background-color: ${({ $active, theme }) =>
+    $active
+      ? `${theme.semantic.container['neutral-interaction']}`
+      : 'transparent'};
   cursor: pointer;
 
+
   svg {
-    fill: currentColor;
+    fill: ${({ $active, theme }) =>
+      $active
+        ? theme.semantic.brand.primary
+        : theme.semantic.icon.disabled};
     width: 24px;
     height: 24px;
   }
 `;
 
 export const Label = styled.div`
+  ${typography.admin.Sub2}
   padding-left: 12px;
-  font-weight: 500;
+  color: ${({ theme }) => theme.semantic.text.normal};
 `;
 
 const NavMenuItem: React.FC<MenuItemsProps> = ({

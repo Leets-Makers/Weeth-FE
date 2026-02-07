@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import open from '@/assets/images/ic_study_open.svg';
 import close from '@/assets/images/ic_study_close.svg';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDraggable } from '@/hooks/useDraggable';
-import getStudyLists from '@/api/useGetStudyList';
-import { RealPart } from '@/types/part';
+import useStudyList from '@/hooks/queries/board/useStudyList';
+import type { RealPart } from '@/api/board/getStudyList';
+import { RealPart as RealPartType } from '@/types/part';
 import { useParams } from 'react-router-dom';
-import { toastError } from '@/components/common/ToastMessage';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
@@ -34,10 +34,13 @@ export const StudyTag = styled.div<{ $selected?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${colors.semantic.line};
+  border: 1px solid
+    ${({ $selected }) =>
+      $selected ? colors.semantic.brand.primary : colors.semantic.line};
   border-radius: 24px;
   padding: ${units.padding['200']}px ${units.padding['400']}px;
-  color: ${colors.semantic.text.normal};
+  color: ${({ $selected }) =>
+    $selected ? colors.semantic.text.inverse : colors.semantic.text.normal};
   ${typography.Button2};
   white-space: nowrap;
   flex: 0 0 auto;
@@ -66,30 +69,16 @@ interface StudyTagProps {
 }
 
 const ExpandableTagList = ({ selectedTag, onSelectTag }: StudyTagProps) => {
-  const [studyList, setStudyList] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const { onMouseDown, onMouseMove, onMouseUp, onMouseLeave } =
     useDraggable(scrollerRef);
-  const { part } = useParams<{ part: RealPart }>();
+  const { part } = useParams<{ part: RealPartType }>();
+  const { data: studyList = [] } = useStudyList((part as RealPart) ?? 'ALL');
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    if (!part) return;
-
-    (async () => {
-      try {
-        const names = await getStudyLists(part);
-        setStudyList(names);
-      } catch (e) {
-        toastError('스터디 목록을 불러오지 못했습니다.');
-        console.error(e);
-      }
-    })();
-  }, [part]);
 
   return (
     <Container>

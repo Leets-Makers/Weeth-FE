@@ -3,7 +3,7 @@ import CheckBox from '@/assets/images/ic_admin_checkbox.svg';
 import UnCheckBox from '@/assets/images/ic_admin_uncheckbox.svg';
 import MeatBallSvg from '@/assets/images/ic_admin_meatball.svg';
 import { useState } from 'react';
-import { statusColors } from '@/components/Admin/StatusIndicator';
+import { getStatusColor } from '@/components/Admin/StatusIndicator';
 import {
   MemberData,
   useMemberContext,
@@ -23,10 +23,10 @@ const Cell = styled.td`
   vertical-align: middle;
 `;
 
-export const StatusCell = styled.td<{ $statusColor: string }>`
+export const StatusCell = styled.td<{ $statusColor: any }>`
   width: 2px;
   min-width: 2px;
-  background-color: ${({ $statusColor }) => $statusColor};
+  background-color: ${(props) => props.$statusColor(props)};
 `;
 
 export const SvgWrapper = styled.td`
@@ -67,7 +67,7 @@ const MemberListTableRow: React.FC<TableRowProps> = ({ data, columns }) => {
   return (
     <>
       <Row>
-        <StatusCell $statusColor={statusColors[data.status]} />
+        <StatusCell $statusColor={getStatusColor(data.status)} />
 
         <SvgWrapper onClick={onClickToCheckBox}>
           <img

@@ -1,6 +1,4 @@
-import useGetMonthlySchedule, {
-  getMonthlySchedule,
-} from '@/api/useGetMonthSchedule';
+import useMonthlySchedule from '@/hooks/queries/schedule/useMonthlySchedule';
 import * as S from '@/styles/calendar/MonthCalendar.styled';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -15,7 +13,6 @@ import {
 import ScheduleItem from '@/components/Calendar/ScheduleItem';
 import Line from '@/components/common/Line';
 import dayjs from 'dayjs';
-import { toastError } from '../common/ToastMessage';
 
 const formatDate = (date: Date | string) => dayjs(date).format('YYYY-MM-DD');
 
@@ -24,19 +21,22 @@ const MonthCalendar = () => {
   const [searchParams] = useSearchParams();
   const year = Number(searchParams.get('year')) || CURRENT_YEAR;
   const month = Number(searchParams.get('month')) || CURRENT_MONTH;
-
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedEventList, setSelectedEventList] = useState<any[]>([]);
-
-  const eventListRef = useRef<HTMLDivElement | null>(null);
-
   const startDate = `${year}-${String(month).padStart(2, '0')}-01T00:00:00.000Z`;
   const endDate =
     month === 12
       ? new Date(year + 1, 1, 1, 23, 59, 59, 999).toISOString()
       : new Date(year, month + 1, 1, 23, 59, 59, 999).toISOString();
 
-  const { monthlySchedule } = useGetMonthlySchedule(startDate, endDate);
+  const selectedStr = dayjs(selectedDate).format('YYYY-MM-DD');
+  const selectedStart = `${selectedStr}T00:00:00.000Z`;
+  const selectedEnd = `${selectedStr}T23:59:59.999Z`;
+
+  const { data: monthlySchedule = [] } = useMonthlySchedule(startDate, endDate);
+  const { data: selectedEventList = [] } = useMonthlySchedule(
+    selectedStart,
+    selectedEnd,
+  );
 
   // 일정 end 날짜 보정 (마지막 날까지 표시되도록)
   const adjustedEvents = monthlySchedule.map((event: any) => ({
@@ -44,37 +44,6 @@ const MonthCalendar = () => {
     allDay: true,
     end: dayjs(event.end).add(1, 'day').format('YYYY-MM-DD'),
   }));
-
-  useEffect(() => {
-    if (selectedEventList.length > 0 && eventListRef.current) {
-      eventListRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-  }, [selectedEventList]);
-
-  useEffect(() => {
-    const selected = dayjs(selectedDate).format('YYYY-MM-DD');
-
-    const fetchData = async () => {
-      try {
-        const response = await getMonthlySchedule(
-          `${selected}T00:00:00.000Z`,
-          `${selected}T23:59:59.999Z`,
-        );
-        setSelectedEventList(
-          Array.isArray(response.data.data) ? response.data.data : [],
-        );
-      } catch (error) {
-        console.error(error);
-        toastError('데이터를 불러오지 못했습니다.');
-        setSelectedEventList([]);
-      }
-    };
-
-    fetchData();
-  }, [selectedDate]);
 
   const renderDayCell = (arg: any) => {
     const formatted = formatDate(arg.date);
@@ -148,7 +117,7 @@ const MonthCalendar = () => {
       </S.SelectedDate>
 
       {selectedEventList.length > 0 ? (
-        <S.ScheduleList ref={eventListRef}>
+        <S.ScheduleList>
           {selectedEventList.map((item) => (
             <ScheduleItem
               key={item.id}
@@ -156,7 +125,7 @@ const MonthCalendar = () => {
               title={item.title}
               start={item.start}
               end={item.end}
-              isMeeting={item.isMeeting}
+              isMeeting={item.isMeeting ?? false}
               year={year}
               month={month}
             />

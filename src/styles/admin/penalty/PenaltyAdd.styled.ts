@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
 import theme from '@/styles/theme';
 import { Wrapper } from '@/styles/admin/DuesRegisterDropDown.styled';
+import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const TitleWrapper = styled.div`
   padding: 20px 30px;
@@ -12,7 +14,7 @@ export const SubTitle = styled.div`
 `;
 
 export const PenaltyWrapper = styled(Wrapper)`
-  border-radius: 4px;
+  border-radius: ${units.radius.lg}px;
   width: 468px;
   // height: max-content;
   min-width: 468px;
@@ -29,15 +31,20 @@ export const InputWrapper = styled.div`
   margin-bottom: 8px;
 `;
 export const Input = styled.input`
+  ${typography.admin.Body1}
   width: 100%;
-  font-size: 18px;
-  font-weight: 500;
-  border: 1px solid #dedede;
-  border-radius: 4px;
+  border-radius: ${units.radius.sm}px;
   padding: 12px 16px;
   box-sizing: border-box;
+  background-color: ${({ theme }) =>
+    theme.semantic.container['neutral-interaction']};
+  border: none;
   &:focus {
     outline: 1.5px solid ${theme.color.gray[18]};
+  }
+
+  &::placeholder {
+    color: ${({ theme }) => theme.semantic.text.alternative};
   }
 `;
 

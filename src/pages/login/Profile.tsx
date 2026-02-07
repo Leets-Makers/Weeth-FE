@@ -66,6 +66,7 @@ const ProfileButton = styled.button<{ disabled: boolean }>`
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 0 25px;
   gap: 24px;
 `;
 
@@ -223,7 +224,7 @@ const Profile: React.FC = () => {
 
   return (
     <ProfileContainer>
-      <Header isAccessible isComplete={isNextEnabled} RightButtonType="none" />
+      <Header />
 
       <ProfileTitle>회원 정보 입력하기</ProfileTitle>
       <ProfileSubTitle>신규 회원님의 정보를 입력해주세요.</ProfileSubTitle>

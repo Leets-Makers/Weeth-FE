@@ -80,6 +80,86 @@ const typography = {
     lineHeight: '20px',
     letterSpacing: '-0.02em',
   },
+
+  admin: {
+    H1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 700,
+      fontSize: '36px',
+      lineHeight: '44px',
+      letterSpacing: '-0.005em',
+    },
+    H2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 700,
+      fontSize: '28px',
+      lineHeight: '36px',
+      letterSpacing: '-0.005em',
+    },
+    H3: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '22px',
+      lineHeight: '28px',
+      letterSpacing: '-0.005em',
+    },
+    Sub1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '16px',
+      lineHeight: '20px',
+      letterSpacing: '-0.005em',
+    },
+    Sub2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '14px',
+      lineHeight: '18px',
+      letterSpacing: '-0.005em',
+    },
+    Body1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: '22px',
+      letterSpacing: '-0.005em',
+    },
+    Body2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 500,
+      fontSize: '13px',
+      lineHeight: '18px',
+      letterSpacing: '-0.005em',
+    },
+    Caption1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '12px',
+      lineHeight: '16px',
+      letterSpacing: '-0.005em',
+    },
+    Caption2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 500,
+      fontSize: '12px',
+      lineHeight: '16px',
+      letterSpacing: '-0.005em',
+    },
+    Button1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '14px',
+      lineHeight: '24px',
+      letterSpacing: '-0.005em',
+    },
+    Button2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '13px',
+      lineHeight: '16px',
+      letterSpacing: '-0.005em',
+    },
+  },
 };
 
 export default typography;

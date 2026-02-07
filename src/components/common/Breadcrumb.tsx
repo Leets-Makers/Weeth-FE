@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import BreadcrumArrowRightIcon from '@/assets/images/ic_breadcrum_arrow_right.svg?react';
 import {
   BreadCrumContainer,
@@ -38,9 +39,12 @@ const Breadcrumb = ({ items, hasTitle = false }: BreadcrumbProps) => {
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
         const isClickable = !isLast && (item.path || item.onClick);
+        const key = item.path
+          ? `${item.label}-${item.path}`
+          : `${item.label}-${index}`;
 
         return (
-          <>
+          <React.Fragment key={key}>
             <BreadcrumArrowRightIcon />
             {isClickable ? (
               <CrumbButton onClick={() => handleItemClick(item)}>
@@ -49,7 +53,7 @@ const Breadcrumb = ({ items, hasTitle = false }: BreadcrumbProps) => {
             ) : (
               <span>{item.label}</span>
             )}
-          </>
+          </React.Fragment>
         );
       })}
     </BreadCrumContainer>

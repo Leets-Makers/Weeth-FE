@@ -6,7 +6,9 @@ import useCustomBack from '@/hooks/useCustomBack';
 import * as S from '@/styles/event/EventEditor.styled';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetEventInfo from '@/api/getEventInfo';
+import { useQueryClient } from '@tanstack/react-query';
+import { EVENT_QUERY_KEYS } from '@/constants/queryKeys';
+import useEventInfo from '@/hooks/queries/event/useEventInfo';
 import replaceNewLines from '@/hooks/newLine';
 import CardinalDropdown from '@/components/common/CardinalDropdown';
 import Modal from '@/components/Modal/Modal';
@@ -14,23 +16,23 @@ import Button from '@/components/Button/Button';
 import ToggleButton from '@/components/common/ToggleButton';
 import EventInput, { EventInputBlock } from '@/components/Event/EventInput';
 import dayjs from 'dayjs';
+import { parseToTime12h } from '@/hooks/formatDate';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import PickerModal from '@/components/Event/PickerModal';
 import TimePicker from '@/components/Event/TimePicker';
-import Loading from '@/components/common/Loading';
 import {
   toastError,
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
 
-import useSmartLoading from '@/hooks/useSmartLoading';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { colors } from '@/theme/designTokens';
 import useCardinalData from '@/hooks/queries/useCardinalData';
 import EditGNB from '../Navigation/EditGNB';
 import Breadcrumb from '../common/Breadcrumb';
+import Loading from '../common/Loading';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -58,9 +60,10 @@ const EventEditor = () => {
 
   const { id } = useParams();
   const { currentCardinal } = useCardinalData();
-  const { data: eventDetailData, loading, error } = useGetEventInfo(type, id);
+  const { data: eventDetailData, isError, isLoading } = useEventInfo(type, id);
   const isEditMode = Boolean(id);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [isStartDateModalOpen, setIsStartDateModalOpen] = useState(false);
@@ -88,9 +91,31 @@ const EventEditor = () => {
 
   useEffect(() => {
     if (eventDetailData) {
-      setEventRequest(eventDetailData);
+      setEventRequest({
+        title: eventDetailData.title,
+        content: eventDetailData.content,
+        location: eventDetailData.location,
+        requiredItem: eventDetailData.requiredItem,
+        type: eventDetailData.type ?? 'EVENT',
+        cardinal: eventDetailData.cardinal,
+        start: eventDetailData.start,
+        end: eventDetailData.end,
+      });
+
+      if (eventDetailData.start) {
+        setStartDate(dayjs(eventDetailData.start).toDate());
+        setStartTime(parseToTime12h(eventDetailData.start));
+      }
+      if (eventDetailData.end) {
+        setEndDate(dayjs(eventDetailData.end).toDate());
+        setEndTime(parseToTime12h(eventDetailData.end));
+      }
     }
   }, [eventDetailData]);
+
+  useEffect(() => {
+    if (isError) navigate('/calendar');
+  }, [isError, navigate]);
 
   const editEventInfo = (key: keyof EventRequestType, value: any) => {
     setEventRequest((prevInfo) => ({
@@ -195,7 +220,13 @@ const EventEditor = () => {
       try {
         if (isEditMode) await editEvent(eventRequest, Number(id));
         else await createEvent(eventRequest);
-
+        await queryClient.invalidateQueries({ queryKey: ['schedule'] });
+        if (isEditMode && type && id) {
+          await queryClient.invalidateQueries({
+            queryKey: EVENT_QUERY_KEYS.detail(type, id),
+            refetchType: 'none',
+          });
+        }
         toastSuccess('저장이 완료되었습니다.');
         navigate('/calendar');
       } catch (err: any) {
@@ -224,13 +255,8 @@ const EventEditor = () => {
     }
   };
 
-  const { loading: smartLoading } = useSmartLoading(
-    new Promise<void>((resolve) => {
-      if (!loading) resolve();
-    }),
-  );
-  if (smartLoading) return <Loading />;
-  if (error) return <S.Error>{error}</S.Error>;
+  if (isLoading) return <Loading />;
+  if (isError) return null;
 
   return (
     <>
@@ -301,7 +327,7 @@ const EventEditor = () => {
       <S.EventEditorWrapper>
         <Breadcrumb
           items={[
-            { label: '동아리 일정', path: '/calendar' },
+            { label: '캘린더', path: '/calendar' },
             {
               label: isEditMode ? '일정 수정' : '일정 추가',
               path: isEditMode ? `/events/${id}/edit` : '/events/create',

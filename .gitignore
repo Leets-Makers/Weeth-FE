@@ -25,5 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .mcp.json
+<<<<<<< HEAD
 .CLAUDE.md
 /.claude
+=======
+>>>>>>> 67bb1eb222ad9d237d5ad7d2acee9af22336f4fd
