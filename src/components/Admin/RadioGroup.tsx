@@ -75,7 +75,7 @@ const SegmentGroup = styled.div<{ $count: number; $disabled: boolean }>`
 const SegmentItem = styled.button<{ $selected: boolean }>`
   position: relative;
   height: 48px;
-  padding: 16 8px;
+  padding: 16px 8px;
   box-sizing: border-box;
 
   font-weight: 700;

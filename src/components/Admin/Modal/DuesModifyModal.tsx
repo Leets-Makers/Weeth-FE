@@ -172,7 +172,7 @@ const DuesModifyModal: React.FC<DuesModifyModalProps> = ({
               <input
                 id="modal-file-upload"
                 type="file"
-                accept="image/jpeg, image/png, image/heic, application/pdf"
+                accept="image/*, application/pdf"
                 style={{ display: 'none' }}
                 multiple
                 onChange={(e) => {

@@ -25,8 +25,8 @@ export const Wrapper = styled.div<{
   isSelected?: boolean;
   isIncomplete?: boolean;
 }>`
-  width: ${({ isCardinalBox }) => (isCardinalBox ? 'none' : '234px')};
-  min-width: ${({ isCardinalBox }) => (isCardinalBox ? '234px' : 'none')};
+  width: ${({ isCardinalBox }) => (isCardinalBox ? 'auto' : '234px')};
+  min-width: ${({ isCardinalBox }) => (isCardinalBox ? '234px' : 'auto')};
   min-height: 164px;
   background-color: ${({ isIncomplete, isSelected, color }) => {
     if (isIncomplete) return 'transparent';
@@ -90,7 +90,7 @@ export const Last = styled.div<{
 }>`
   font-size: 18px;
   color: ${({ isIncomplete, lastColor, $isPrimaryBg, theme }) => {
-    if (isIncomplete) return '#909393';
+    if (isIncomplete) return theme.semantic.text.disabled;
     if (lastColor) return lastColor;
     if ($isPrimaryBg) return theme.semantic.text.inverse;
     return theme.semantic.text.normal;

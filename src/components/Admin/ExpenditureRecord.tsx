@@ -24,7 +24,6 @@ import ReceiptModal from '@/components/Admin/Modal/ReceiptModal';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { useTheme } from 'styled-components';
-import { units } from '@/theme/designTokens';
 
 export interface ExpenditureRecordProps {
   date: string;

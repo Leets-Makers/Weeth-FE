@@ -181,7 +181,7 @@ export const InputWrapper = styled.div`
   background-color: ${({ theme }) => theme.semantic.container.neutral};
   border-radius: ${units.radius.sm}px;
 
-  :focus-within::placeholder {
+  &:focus-within input::placeholder {
     color: transparent;
   }
 
@@ -247,7 +247,8 @@ export interface FontStyleProps {
 export const FontStyle = styled.div<FontStyleProps>`
   ${typography.admin.Body1}
   font-size: ${({ fontSize }) => fontSize || typography.admin.Body1.fontSize};
-  font-weight: ${({ fontWeight }) => fontWeight || typography.admin.Body1.fontWeight};
+  font-weight: ${({ fontWeight }) =>
+    fontWeight || typography.admin.Body1.fontWeight};
   color: ${({ color }) => color};
 `;
 

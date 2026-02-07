@@ -91,10 +91,18 @@ export const ReceiptButton = styled.button`
   justify-content: center;
 `;
 
-export const ModifyButton = styled.div`
+export const ModifyButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
   height: 48px;
 `;
 
-export const DeleteButton = styled.div`
+export const DeleteButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
   height: 48px;
 `;

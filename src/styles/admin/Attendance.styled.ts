@@ -53,13 +53,13 @@ export const ContentText = styled.span<{ $isOpen?: boolean }>`
   transition: color 0.2s ease;
 `;
 
-export const DropdownButton = styled.div<{ isOpen: boolean }>`
+export const DropdownButton = styled.div<{ $isOpen: boolean }>`
   transition:
     transform 0.3s ease-in-out,
     color 0.2s ease;
-  transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0)')};
-  color: ${({ isOpen, theme }) =>
-    isOpen ? theme.semantic.text.inverse : theme.semantic.text.normal};
+  transform: ${({ $isOpen }) => ($isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+  color: ${({ $isOpen, theme }) =>
+    $isOpen ? theme.semantic.text.inverse : theme.semantic.text.normal};
   display: flex;
   align-items: center;
   justify-content: center;

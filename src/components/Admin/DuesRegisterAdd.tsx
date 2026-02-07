@@ -31,22 +31,24 @@ const DuesRegisterAdd: React.FC = () => {
     handleRemoveFile,
   } = useDuesFileUpload();
 
-  const handleSelectCardinal = (value: number, isCustom: boolean) => {
-    setSelectedCardinal(value);
-    setIsCustomInput(isCustom);
-
+  const handleSelectCardinal = (value: number | null, isCustom: boolean) => {
     if (isCustom) {
+      setSelectedCardinal(null);
       setCustomCardinal('');
       setTimeout(() => inputRef.current?.focus(), 0);
     } else {
+      setSelectedCardinal(value);
       setCustomCardinal(`${value}기`);
     }
+    setIsCustomInput(isCustom);
   };
 
   const handleCustomCardinalBlur = () => {
     const cardinalNumber = Number(customCardinal.trim().replace('기', ''));
     if (!Number.isNaN(cardinalNumber) && cardinalNumber > 0) {
       setCustomCardinal(`${cardinalNumber}기`);
+    } else if (customCardinal.trim() !== '') {
+      setCustomCardinal('');
     }
   };
 

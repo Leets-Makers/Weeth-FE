@@ -70,7 +70,7 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
                   </ContentText>
                 </DateInfoWrapper>
               </div>
-              <DropdownButton isOpen={openDropdownId === item.id}>
+              <DropdownButton $isOpen={openDropdownId === item.id}>
                 <DropDown />
               </DropdownButton>
             </Wrapper>

@@ -52,7 +52,7 @@ const DuesRegister: React.FC = () => {
       <Wrapper $isOpen={isOpen}>
         <Title $isOpen={isOpen} onClick={toggleForm}>
           총 회비 최초 등록
-          <DropdownButton isOpen={isOpen}>
+          <DropdownButton $isOpen={isOpen}>
             <DownButton />
           </DropdownButton>
         </Title>
