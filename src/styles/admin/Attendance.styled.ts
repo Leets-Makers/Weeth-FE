@@ -1,5 +1,6 @@
 import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
+import typography from '@/theme/typography';
 
 export const AttendanceTable = styled.div<{ $isOpen?: boolean }>`
   width: 95%;
@@ -35,7 +36,7 @@ export const DateInfoWrapper = styled.div`
 `;
 
 export const DateText = styled.span<{ $isOpen?: boolean }>`
-  font-size: 20px;
+  ${typography.admin.Sub1}
   color: ${({ theme, $isOpen }) =>
     $isOpen === true
       ? theme.semantic.text.inverse
@@ -45,7 +46,7 @@ export const DateText = styled.span<{ $isOpen?: boolean }>`
 `;
 
 export const ContentText = styled.span<{ $isOpen?: boolean }>`
-  font-size: 20px;
+  ${typography.admin.Sub1}
   color: ${({ theme, $isOpen }) =>
     $isOpen === true
       ? theme.semantic.text.inverse

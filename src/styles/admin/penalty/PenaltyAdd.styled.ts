@@ -49,7 +49,7 @@ export const Input = styled.input`
 `;
 
 export const Title = styled.div`
-  font-size: 20px;
+  ${typography.admin.Sub1}
 `;
 
 export const Line = styled.div`

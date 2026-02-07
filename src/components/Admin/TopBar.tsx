@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/Button/Button';
 import useLogout from '@/hooks/useLogout';
-import { colors, units } from '@/theme/designTokens';
+import { units } from '@/theme/designTokens';
 import { useTheme } from 'styled-components';
 import typography from '@/theme/typography';
 
@@ -13,6 +13,7 @@ export const TopBarWrapper = styled.div`
   right: 0;
   width: 100%;
   min-width: 1500px;
+  min-height: 78px;
   background-color: ${({ theme }) => theme.semantic.backGround};
   padding: 0 20px;
   box-sizing: border-box;

@@ -74,8 +74,7 @@ export const TitleContainer = styled.div<{ borderBottom?: boolean }>`
 `;
 
 export const TitleText = styled.div`
-  font-size: 20px;
-  font-weight: 600;
+  ${typography.admin.Sub1};
   text-align: left;
 `;
 
