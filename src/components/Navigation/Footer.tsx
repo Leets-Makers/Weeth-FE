@@ -65,16 +65,10 @@ const Footer = ({ isMobile }: { isMobile: boolean }) => {
       <Wrapper $isMobile={isMobile}>
         <LeetsInfo>
           <InfoList>
-            <InfoTitle>Leets Makers</InfoTitle>
+            <InfoTitle>Weeth</InfoTitle>
             <LeetsLink href="/admin">Weeth Admin</LeetsLink>
             <LeetsLink
-              href="https://leets-makers.framer.website/"
-              target="_blank"
-            >
-              Leets Makers Site
-            </LeetsLink>
-            <LeetsLink
-              href="mailto:leets.makers@gmail.com?subject=[weeth]문의사항."
+              href="mailto:weeth.site@gmail.com?subject=[weeth]문의사항."
               target="_blank"
             >
               문의 메일
