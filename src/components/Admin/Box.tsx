@@ -24,13 +24,13 @@ export const Wrapper = styled.div<{
   isClick?: boolean;
   isSelected?: boolean;
   isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
 }>`
   width: ${({ isCardinalBox }) => (isCardinalBox ? 'auto' : '234px')};
   min-width: ${({ isCardinalBox }) => (isCardinalBox ? '234px' : 'auto')};
   min-height: 164px;
-  background-color: ${({ isIncomplete, isSelected, color }) => {
+  background-color: ${({ isIncomplete, color }) => {
     if (isIncomplete) return 'transparent';
-    if (isSelected) return theme.color.gray[18];
     return color;
   }};
   border: ${({ isIncomplete, theme }) =>
@@ -44,13 +44,17 @@ export const Wrapper = styled.div<{
   cursor: ${({ isClick }) => (isClick ? 'pointer' : 'auto')};
   box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
 
-  ${({ isClick, isSelected, isIncomplete }) =>
+  ${({ isClick, isSelected, isIncomplete, $isPrimaryBg, theme }) =>
     isClick &&
     !isSelected &&
     !isIncomplete &&
     `
     &:hover {
-      background-color: ${theme.color.gray[18]};
+      background-color: ${
+        $isPrimaryBg
+          ? theme.semantic.button['primary-interaction']
+          : theme.semantic.button.neutral
+      }
     }
   `};
 `;
@@ -88,7 +92,7 @@ export const Last = styled.div<{
   isIncomplete?: boolean;
   $isPrimaryBg?: boolean;
 }>`
-  font-size: 18px;
+  ${typography.admin.Caption2};
   color: ${({ isIncomplete, lastColor, $isPrimaryBg, theme }) => {
     if (isIncomplete) return theme.semantic.text.disabled;
     if (lastColor) return lastColor;
@@ -120,6 +124,7 @@ const Box: React.FC<BoxProps> = ({
       isClick={isClick}
       isSelected={isSelected}
       isIncomplete={isIncomplete}
+      $isPrimaryBg={isPrimaryBg}
     >
       {title && (
         <Title isIncomplete={isIncomplete} $isPrimaryBg={isPrimaryBg}>

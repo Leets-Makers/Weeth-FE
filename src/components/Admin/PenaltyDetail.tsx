@@ -8,6 +8,7 @@ import Button from '@/components/Admin/Button';
 import { ApiPenaltyType } from '@/types/adminPenalty';
 import { toastError, toastSuccess } from '../common/ToastMessage';
 import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 interface PenaltyDetailProps {
   penaltyData: {
@@ -129,35 +130,45 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
               description="취소"
               color={theme.semantic.button.neutral}
               textColor={theme.semantic.text.strong}
-              width="64px"
+              width="55px"
               onClick={handleCancel}
+              $typo={typography.admin.Button2}
             />
             <Button
               description="저장"
               color={theme.semantic.container.secondary}
               textColor={theme.semantic.text.inverse}
-              width="64px"
+              width="55px"
               onClick={handleEdit}
+              $typo={typography.admin.Button2}
             />
           </>
         ) : (
           <>
             <Button
               description="수정"
-              color={editDisabled ? '#a6a6a6' : theme.semantic.button.neutral}
-              textColor={
-                editDisabled ? '#ccc' : theme.semantic.text.strong
+              color={
+                editDisabled
+                  ? theme.semantic.button.disabled
+                  : theme.semantic.button.neutral
               }
-              width="64px"
+              textColor={
+                editDisabled
+                  ? theme.semantic.text.disabled
+                  : theme.semantic.text.strong
+              }
+              width="55px"
               disabled={editDisabled}
               onClick={handleEdit}
+              $typo={typography.admin.Button2}
             />
             <Button
               color={theme.semantic.state.error}
               textColor={theme.semantic.text.inverse}
               description="삭제"
-              width="64px"
+              width="55px"
               onClick={handleDelete}
+              $typo={typography.admin.Button2}
             />
           </>
         )}

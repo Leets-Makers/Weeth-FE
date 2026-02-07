@@ -16,6 +16,7 @@ export const StyledModalOverlay = styled.div<{ overlayColor?: string }>`
   justify-content: center;
   font-family: ${theme.font.semiBold};
   color: #000;
+  z-index: 1200;
 `;
 
 export const StyledModalContent = styled.div<{
@@ -134,8 +135,8 @@ export const FooterWrapper = styled.div`
 `;
 
 export const ErrorMessage = styled.div`
+  ${typography.admin.Caption1};
   color: ${({ theme }) => theme.semantic.state.caution};
-  font-size: 14px;
 `;
 
 export const StyledInput = styled.input<{ flex: number; maxWidth: string }>`
@@ -146,7 +147,7 @@ export const StyledInput = styled.input<{ flex: number; maxWidth: string }>`
   border: none;
   padding: 12px;
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${({ theme }) => theme.semantic.text.alternative};
   }
 
   // readOnly 일 때 색상 변경
@@ -208,10 +209,10 @@ export const Input = styled.input<{ readOnly?: boolean }>`
 `;
 
 export const Unit = styled.span`
+  ${typography.admin.Body2};
   position: absolute;
   right: 16px;
-  color: ${({ theme }) => theme.semantic.text.disabled};
-  font-size: 14px;
+  color: ${({ theme }) => theme.semantic.text.alternative};
 `;
 
 export const Title = styled.div`
@@ -238,17 +239,27 @@ export const Label = styled.div`
 
 // MemberDetailModal.tsx
 export interface FontStyleProps {
+  $typo?:
+    | typeof typography.admin.H3
+    | typeof typography.admin.Sub1
+    | typeof typography.admin.Sub2
+    | typeof typography.admin.Body1
+    | typeof typography.admin.Body2
+    | typeof typography.admin.Caption1
+    | typeof typography.admin.Caption2;
   fontSize?: string;
   fontWeight?: string | number;
   color?: string;
 }
 
 export const FontStyle = styled.div<FontStyleProps>`
-  ${typography.admin.Body1}
-  font-size: ${({ fontSize }) => fontSize || typography.admin.Body1.fontSize};
-  font-weight: ${({ fontWeight }) =>
-    fontWeight || typography.admin.Body1.fontWeight};
-  color: ${({ color }) => color};
+  ${({ $typo }) => $typo || typography.admin.Body1}
+  font-size: ${({ fontSize, $typo }) =>
+    fontSize || ($typo ? $typo.fontSize : typography.admin.Body1.fontSize)};
+  font-weight: ${({ fontWeight, $typo }) =>
+    fontWeight ||
+    ($typo ? $typo.fontWeight : typography.admin.Body1.fontWeight)};
+  color: ${({ color, theme }) => color || theme.semantic.text.normal};
 `;
 
 export const ContentWrapper = styled.div`
@@ -266,11 +277,10 @@ export const ModalContent = styled.div`
   background-color: white;
   border-radius: ${units.radius.md}px;
   width: 100%;
-  box-shadow: 0px 3px 8px 0px rgba(133, 141, 138, 0.2);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 16px 35px 16px;
   flex: 1.5;
 `;
 
@@ -295,7 +305,7 @@ export const LabelFlex = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  color: #a6a6a6;
+  color: ${({ theme }) => theme.semantic.text.alternative};
 `;
 
 export const DataFlex = styled.div`
@@ -303,7 +313,13 @@ export const DataFlex = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-  color: #000;
+  color: ${({ theme }) => theme.semantic.text.strong};
+`;
+
+export const ActivityInfoGroup = styled.div<{ $gap: string }>`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ $gap }) => $gap};
 `;
 
 export const FooterContainer = styled.div`

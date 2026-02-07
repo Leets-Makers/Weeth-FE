@@ -13,6 +13,11 @@ interface ButtonProps {
   borderRadius?: string;
   disabled?: boolean;
   isSemibold?: boolean;
+  $typo?:
+    | typeof typography.admin.Button1
+    | typeof typography.admin.Button2
+    | typeof typography.Button1
+    | typeof typography.Button2;
 }
 
 interface StyledButtonProps {
@@ -23,12 +28,17 @@ interface StyledButtonProps {
   $borderRadius?: string;
   disabled?: boolean;
   $isSemibold?: boolean;
+  $typo?:
+    | typeof typography.admin.Button1
+    | typeof typography.admin.Button2
+    | typeof typography.Button1
+    | typeof typography.Button2;
 }
 
 const BasicButton = styled.button<StyledButtonProps>`
   background-color: ${({ color }) => color || colors.semantic.button.neutral};
-  font-family: ${({ $isSemibold }) =>
-    $isSemibold ? typography.Button1 : typography.Button2};
+  ${({ $typo, $isSemibold }) =>
+    $typo ? $typo : $isSemibold ? typography.Button1 : typography.Button2}
   color: ${({ $textColor }) => $textColor || colors.semantic.text.normal};
   border: none;
   border-radius: ${({ $borderRadius }) => $borderRadius || '10px'};
@@ -54,6 +64,7 @@ const Button: FC<ButtonProps> = ({
   borderRadius,
   disabled,
   isSemibold = true,
+  $typo,
 }) => {
   return (
     <BasicButton
@@ -65,6 +76,7 @@ const Button: FC<ButtonProps> = ({
       $borderRadius={borderRadius}
       disabled={disabled}
       $isSemibold={isSemibold}
+      $typo={$typo}
     >
       {children}
     </BasicButton>

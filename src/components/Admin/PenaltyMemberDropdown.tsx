@@ -31,7 +31,7 @@ const DropdownItem = styled.div<{ noResult?: boolean }>`
   background-color: ${({ theme }) => theme.semantic.container.neutral};
   padding: 15px;
   display: grid;
-  grid-template-columns: 1fr 1fr 70px 1fr;
+  grid-template-columns: 1fr 1fr 70px 0.5fr;
   align-items: center;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   ${({ noResult, theme }) =>

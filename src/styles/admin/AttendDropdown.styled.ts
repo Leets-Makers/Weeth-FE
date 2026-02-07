@@ -43,17 +43,18 @@ export const SearchBar = styled.div`
 `;
 
 export const EditButton = styled.button`
+  ${typography.admin.Button1};
   background-color: transparent;
   border: none;
   font-size: 18px;
 `;
 
 export const Edit = styled.div`
+  ${typography.admin.Button1};
   width: 64px;
   height: 48px;
   background-color: ${({ theme }) => theme.semantic.button.neutral};
   color: ${({ theme }) => theme.semantic.text.strong};
-  font-size: 18px;
   border-radius: ${units.radius.md}px;
   display: flex;
   justify-content: center;
@@ -67,6 +68,7 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const CancelButton = styled.div`
+  ${typography.admin.Button1};
   width: 64px;
   height: 48px;
   background-color: ${({ theme }) => theme.semantic.button.neutral};
@@ -79,6 +81,7 @@ export const CancelButton = styled.div`
 `;
 
 export const SaveButton = styled.div`
+  ${typography.admin.Button1};
   width: 64px;
   height: 48px;
   background-color: ${({ theme }) => theme.semantic.button.primary};
@@ -88,7 +91,6 @@ export const SaveButton = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 18px;
 `;
 
 export const UserWrapper = styled.div`
@@ -119,7 +121,8 @@ export const InfoWrapper = styled.div`
 `;
 
 export const InfoBox = styled.div`
-  ${typography.admin.Sub2}
+  ${typography.admin.Sub2};
+  color: ${({ theme }) => theme.semantic.text.alternative};
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   width: 79px;
@@ -131,6 +134,7 @@ export const InfoBox = styled.div`
 
 export const User = styled.div`
   ${typography.admin.Sub2}
+  color:${({ theme }) => theme.semantic.text.alternative};
   flex: 1;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   display: flex;
@@ -139,7 +143,8 @@ export const User = styled.div`
 `;
 
 export const Attend = styled.div`
-  ${typography.admin.Sub2}
+  ${typography.admin.Sub2};
+  color: ${({ theme }) => theme.semantic.text.alternative};
   width: 162px;
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
@@ -175,7 +180,17 @@ export const UserName = styled.div`
 `;
 
 export const UserInfo = styled.div`
-  font-size: 14px;
+  ${typography.admin.Body2};
+  display: flex;
+  gap: 4px;
+`;
+
+export const Position = styled.span`
+  color: ${({ theme }) => theme.semantic.text.normal};
+`;
+
+export const DepartmentAndId = styled.span`
+  color: ${({ theme }) => theme.semantic.text.alternative};
 `;
 
 export const Check = styled.div`
@@ -197,6 +212,7 @@ export const CheckGap = styled.div`
 `;
 
 export const StatusText = styled.span<{ status: string }>`
+  ${typography.admin.Sub1};
   color: ${({ status, theme }) =>
     status === '출석'
       ? theme.semantic.state.success

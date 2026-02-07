@@ -1,6 +1,7 @@
 import Button from '@/components/Admin/Button';
 import { useTheme } from 'styled-components';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 interface DuesActionButtonsProps {
   onReset?: () => void;
@@ -30,6 +31,7 @@ const DuesActionButtons: React.FC<DuesActionButtonsProps> = ({
         width={resetWidth}
         borderRadius={`${units.radius.md}px`}
         onClick={onReset}
+        $typo={typography.admin.Button1}
       />
       <Button
         description={submitText}
@@ -38,6 +40,7 @@ const DuesActionButtons: React.FC<DuesActionButtonsProps> = ({
         width={submitWidth}
         borderRadius={`${units.radius.md}px`}
         onClick={onSubmit}
+        $typo={typography.admin.Button1}
       />
     </>
   );

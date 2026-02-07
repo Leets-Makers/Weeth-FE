@@ -162,7 +162,10 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
             <S.Member>
               <S.UserName>{item.name}</S.UserName>
               <S.UserInfo>
-                {item.position} {department[item.department]} {item.studentId}
+                <S.Position>{item.position}</S.Position>
+                <S.DepartmentAndId>
+                  {department[item.department]} {item.studentId}
+                </S.DepartmentAndId>
               </S.UserInfo>
             </S.Member>
             <S.Check>
@@ -190,7 +193,9 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
                     src={item.status === '출석' ? CheckBox : Absence}
                     alt={item.status === '출석' ? '출석 이미지' : '결석 이미지'}
                   />
-                  <S.StatusText status={item.status}>{item.status}</S.StatusText>
+                  <S.StatusText status={item.status}>
+                    {item.status}
+                  </S.StatusText>
                 </S.CheckGap>
               )}
             </S.Check>

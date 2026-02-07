@@ -36,8 +36,8 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const Description = styled.div`
+  ${typography.admin.Caption1};
   color: ${({ theme }) => theme.semantic.state.caution};
-  font-size: 18px;
   margin-top: 15px;
 `;
 

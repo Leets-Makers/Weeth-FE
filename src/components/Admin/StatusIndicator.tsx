@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 interface StatusIndicatorProps {
@@ -14,11 +15,11 @@ export const StatusDot = styled.span<{
 `;
 
 const StatusWrapper = styled.div`
+  ${typography.admin.Caption2};
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  color: #333;
+  color: ${({ theme }) => theme.semantic.text.strong};
 `;
 
 export const getStatusColor =
@@ -32,7 +33,7 @@ export const getStatusColor =
       case '추방':
         return theme.semantic.state.error;
       default:
-        return '#e6fcf7';
+        return theme.semantic.text.inverse;
     }
   };
 

@@ -14,6 +14,7 @@ import {
   preventNonNumeric,
 } from '@/utils/admin/handleNumericInput';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 interface CardinalModalProps {
   isOpen: boolean;
@@ -160,7 +161,12 @@ const CardinalModal: React.FC<CardinalModalProps> = ({
             ) : (
               <StyledUnCheckBox />
             )}
-            <div>현재 진행 중</div>
+            <S.FontStyle
+              $typo={typography.admin.Button2}
+              color={theme.semantic.text.normal}
+            >
+              현재 진행 중
+            </S.FontStyle>
           </S.SvgText>
 
           <Button

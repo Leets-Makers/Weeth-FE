@@ -3,6 +3,7 @@ import theme from '@/styles/theme';
 import icSearch from '@/assets/images/ic_search.svg';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const SearchBarWrapper = styled.div<{
   $isWrapped?: boolean;
@@ -23,9 +24,9 @@ export const SearchBarWrapper = styled.div<{
 `;
 
 export const StyledInput = styled.input`
+  ${typography.admin.Body1};
   width: 100%;
   height: 48px;
-  font-size: 18px;
   box-sizing: border-box;
   padding: 12px 12px 12px 40px;
   border: 1px solid ${({ theme }) => theme.semantic.line};
