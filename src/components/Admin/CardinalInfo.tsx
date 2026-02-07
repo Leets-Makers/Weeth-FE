@@ -8,8 +8,11 @@ import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import CardinalModal from '@/components/Admin/Modal/CardinalModal';
 import useCardinalData from '@/hooks/queries/useCardinalData';
 import { colors } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
 
 const CardinalInfo: React.FC = () => {
+  const theme = useTheme();
+
   const { selectedCardinal, setSelectedCardinal, setFilteredMembers } =
     useMemberContext();
   const { data: allCardinals } = useCardinalData();
@@ -96,7 +99,7 @@ const CardinalInfo: React.FC = () => {
               description={`${cardinal.cardinalNumber}기`}
               last={lastText}
               color={colors.light.neutral[300]}
-              lastColor="#808080"
+              lastColor={theme.semantic.text.alternative}
               isCardinalBox
               isClick
               isIncomplete={!cardinal.year || !cardinal.semester}

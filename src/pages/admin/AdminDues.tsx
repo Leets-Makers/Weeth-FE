@@ -25,7 +25,7 @@ export const ColumnsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 30px;
+  gap: 24px;
   align-items: flex-start;
 `;
 

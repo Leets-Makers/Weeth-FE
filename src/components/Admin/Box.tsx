@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
 import { useTheme } from 'styled-components';
 import typography from '@/theme/typography';
@@ -22,7 +21,7 @@ export const Wrapper = styled.div<{
   color: string;
   isCardinalBox: boolean;
   isClick?: boolean;
-  isSelected?: boolean;
+  $isSelected?: boolean;
   isIncomplete?: boolean;
   $isPrimaryBg?: boolean;
 }>`
@@ -44,9 +43,9 @@ export const Wrapper = styled.div<{
   cursor: ${({ isClick }) => (isClick ? 'pointer' : 'auto')};
   box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
 
-  ${({ isClick, isSelected, isIncomplete, $isPrimaryBg, theme }) =>
+  ${({ isClick, $isSelected, isIncomplete, $isPrimaryBg, theme }) =>
     isClick &&
-    !isSelected &&
+    !$isSelected &&
     !isIncomplete &&
     `
     &:hover {
@@ -122,7 +121,7 @@ const Box: React.FC<BoxProps> = ({
       color={color}
       isCardinalBox={isCardinalBox}
       isClick={isClick}
-      isSelected={isSelected}
+      $isSelected={isSelected}
       isIncomplete={isIncomplete}
       $isPrimaryBg={isPrimaryBg}
     >
