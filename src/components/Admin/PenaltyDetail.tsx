@@ -7,6 +7,7 @@ import * as S from '@/styles/admin/penalty/PenaltyListTable.styled';
 import Button from '@/components/Admin/Button';
 import { ApiPenaltyType } from '@/types/adminPenalty';
 import { toastError, toastSuccess } from '../common/ToastMessage';
+import { useTheme } from 'styled-components';
 
 interface PenaltyDetailProps {
   penaltyData: {
@@ -23,6 +24,7 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
   penaltyData,
   onRefresh,
 }) => {
+  const theme = useTheme();
   const [isEditing, setIsEditing] = useState(false);
   const [newDescription, setNewDescription] = useState(
     penaltyData.penaltyDescription,
@@ -41,6 +43,11 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
 
   const editDisabled = !!penaltyData.isAuto;
 
+  const handleCancel = () => {
+    setNewDescription(penaltyData.penaltyDescription);
+    setIsEditing(false);
+  };
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -49,7 +56,7 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
       ) {
-        setIsEditing(false);
+        handleCancel();
       }
     };
 
@@ -60,7 +67,7 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isEditing]);
+  }, [isEditing, penaltyData.penaltyDescription]);
 
   const handleDelete = async () => {
     if (!penaltyData.penaltyId) {
@@ -116,20 +123,44 @@ const PenaltyDetail: React.FC<PenaltyDetailProps> = ({
 
       <S.DetailText>{penaltyData.time}</S.DetailText>
       <S.ButtonWrapper ref={buttonRef}>
-        <Button
-          description={isEditing ? '저장' : '수정'}
-          color={editDisabled ? '#a6a6a6' : '#2f2f2f'}
-          textColor={editDisabled ? '#ccc' : '#ffffff'}
-          width="64px"
-          disabled={editDisabled}
-          onClick={handleEdit}
-        />
-        <Button
-          color="#ff5858"
-          description="삭제"
-          width="64px"
-          onClick={handleDelete}
-        />
+        {isEditing ? (
+          <>
+            <Button
+              description="취소"
+              color={theme.semantic.button.neutral}
+              textColor={theme.semantic.text.strong}
+              width="64px"
+              onClick={handleCancel}
+            />
+            <Button
+              description="저장"
+              color={theme.semantic.container.secondary}
+              textColor={theme.semantic.text.inverse}
+              width="64px"
+              onClick={handleEdit}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              description="수정"
+              color={editDisabled ? '#a6a6a6' : theme.semantic.button.neutral}
+              textColor={
+                editDisabled ? '#ccc' : theme.semantic.text.strong
+              }
+              width="64px"
+              disabled={editDisabled}
+              onClick={handleEdit}
+            />
+            <Button
+              color={theme.semantic.state.error}
+              textColor={theme.semantic.text.inverse}
+              description="삭제"
+              width="64px"
+              onClick={handleDelete}
+            />
+          </>
+        )}
       </S.ButtonWrapper>
     </S.DetailContainer>
   );

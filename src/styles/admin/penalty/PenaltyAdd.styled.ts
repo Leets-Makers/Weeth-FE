@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import theme from '@/styles/theme';
 import { Wrapper } from '@/styles/admin/DuesRegisterDropDown.styled';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const TitleWrapper = styled.div`
   padding: 20px 30px;
@@ -30,9 +31,8 @@ export const InputWrapper = styled.div`
   margin-bottom: 8px;
 `;
 export const Input = styled.input`
+  ${typography.admin.Body1}
   width: 100%;
-  font-size: 18px;
-  font-weight: 500;
   border-radius: ${units.radius.sm}px;
   padding: 12px 16px;
   box-sizing: border-box;

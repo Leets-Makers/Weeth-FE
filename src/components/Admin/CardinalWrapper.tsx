@@ -13,7 +13,7 @@ interface TotalCardinalProps {
 const CardinalWrapper = styled.div`
   width: 166px;
   height: 80px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   display: flex;
   flex-direction: column;
   justify-content: center;

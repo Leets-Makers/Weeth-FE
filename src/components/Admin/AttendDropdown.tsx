@@ -190,12 +190,23 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
                     src={item.status === '출석' ? CheckBox : Absence}
                     alt={item.status === '출석' ? '출석 이미지' : '결석 이미지'}
                   />
-                  {item.status}
+                  <S.StatusText status={item.status}>{item.status}</S.StatusText>
                 </S.CheckGap>
               )}
             </S.Check>
           </S.MemberWrapper>
         ))}
+        <S.Info>
+          <S.User>사용자 정보</S.User>
+          {isEditMode ? (
+            <S.InfoWrapper>
+              <S.InfoBox>출석</S.InfoBox>
+              <S.InfoBox>결석</S.InfoBox>
+            </S.InfoWrapper>
+          ) : (
+            <S.Attend>출석 정보</S.Attend>
+          )}
+        </S.Info>
       </S.UserWrapper>
     </S.Wrapper>
   );

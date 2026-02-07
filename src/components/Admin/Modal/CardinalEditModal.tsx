@@ -44,7 +44,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
     ? allCardinals.map((c) => c.cardinalNumber)
     : [];
 
-  const handleSelectCardinal = (value: number, isCustom: boolean) => {
+  const handleSelectCardinal = (value: number | null, isCustom: boolean) => {
     setIsCustomInput(isCustom);
     if (isCustom) {
       setCardinalNumber('');
@@ -155,6 +155,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
           <DirectCardinalDropdown
             selectedCardinal={selectedCardinal}
             setSelectedCardinal={handleSelectCardinal}
+            variant="button"
           />
         </S.InputGroup>
         <S.ErrorMessage>

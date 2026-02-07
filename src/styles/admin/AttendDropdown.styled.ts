@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import theme from '../theme';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Wrapper = styled.div`
   width: 94.7%;
@@ -20,9 +21,9 @@ export const Wrapper = styled.div`
 
 export const SearchWrapper = styled.div`
   width: 98%;
-  height: 48px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
   box-sizing: border-box;
   padding: 15px 15px;
@@ -42,7 +43,7 @@ export const SearchBar = styled.div`
 `;
 
 export const EditButton = styled.button`
-  background-color: white;
+  background-color: transparent;
   border: none;
   font-size: 18px;
 `;
@@ -50,8 +51,8 @@ export const EditButton = styled.button`
 export const Edit = styled.div`
   width: 64px;
   height: 48px;
-  background-color: ${({ theme }) => theme.semantic.backGround};
-  color: ${theme.color.gray[100]};
+  background-color: ${({ theme }) => theme.semantic.button.neutral};
+  color: ${({ theme }) => theme.semantic.text.strong};
   font-size: 18px;
   border-radius: ${units.radius.md}px;
   display: flex;
@@ -118,6 +119,7 @@ export const InfoWrapper = styled.div`
 `;
 
 export const InfoBox = styled.div`
+  ${typography.admin.Sub2}
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   width: 79px;
@@ -128,21 +130,19 @@ export const InfoBox = styled.div`
 `;
 
 export const User = styled.div`
-  width: 621px;
+  ${typography.admin.Sub2}
+  flex: 1;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
   display: flex;
   align-items: center;
   padding: 15px 0 15px 16px;
 `;
 
 export const Attend = styled.div`
-  width: 158px;
+  ${typography.admin.Sub2}
+  width: 162px;
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -160,19 +160,18 @@ export const MemberWrapper = styled.div`
 `;
 
 export const Member = styled.div`
-  width: 626px;
+  flex: 1;
   height: 74px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  padding-left: 10px;
+  padding-left: 16px;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
 `;
 
 export const UserName = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
+  ${typography.admin.Sub2}
 `;
 
 export const UserInfo = styled.div`
@@ -180,7 +179,7 @@ export const UserInfo = styled.div`
 `;
 
 export const Check = styled.div`
-  width: 160px;
+  width: 162px;
   height: 74px;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   border-left: 1px solid ${({ theme }) => theme.semantic.line};
@@ -197,9 +196,18 @@ export const CheckGap = styled.div`
   gap: 8px;
 `;
 
+export const StatusText = styled.span<{ status: string }>`
+  color: ${({ status, theme }) =>
+    status === '출석'
+      ? theme.semantic.state.success
+      : status === '결석'
+        ? theme.semantic.state.error
+        : 'inherit'};
+`;
+
 export const StatusWrapper = styled.div`
   display: flex;
-  width: 159px;
+  width: 100%;
   height: 100%;
 `;
 
@@ -212,7 +220,6 @@ export const StatusBox = styled.div`
   border-right: 1px solid ${({ theme }) => theme.semantic.line};
   &:last-child {
     border-right: none;
-    border-bottom: none;
   }
 `;
 

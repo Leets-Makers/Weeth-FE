@@ -1,6 +1,7 @@
 import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
 import { styled } from 'styled-components';
+import typography from '@/theme/typography';
 
 // penaltyListTable.tsx
 export const TableWrapper = styled.div<{ hasData: boolean }>`
@@ -35,8 +36,10 @@ export const TableContainer = styled.div`
 export const Row = styled.tr<{ isSelected: boolean }>`
   border-bottom: 1px solid #dedede;
   cursor: pointer;
-  background-color: ${(props) =>
-    props.isSelected ? '#e9e9e9' : 'transparent'};
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.semantic.container.primary : 'transparent'};
+  color: ${({ isSelected, theme }) =>
+    isSelected ? theme.semantic.text.inverse : 'inherit'};
 `;
 
 export const Cell = styled.td`
@@ -46,10 +49,10 @@ export const Cell = styled.td`
 `;
 
 export const HeaderCell = styled.th`
+  ${typography.admin.Sub2}
   text-align: left;
   padding: 15px 25px;
   border-bottom: 1px solid #dedede;
-  font-weight: bold;
   white-space: nowrap;
 `;
 
@@ -92,7 +95,7 @@ export const DetailContainer = styled.td`
   grid-template-areas: ' reason penalty warning penaltyDate actions';
   padding-left: 120px;
   border-bottom: 1px solid #dedede;
-  background-color: #f9f9f9;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   align-items: center;
   box-sizing: border-box;
 `;

@@ -2,6 +2,7 @@ import theme from '@/styles/theme';
 import closeIcon from '@/assets/images/ic_admin_close.svg';
 import Modal from 'react-modal';
 import { styled } from 'styled-components';
+import { units } from '@/theme/designTokens';
 
 interface CommonModalProps {
   isOpen: boolean;
@@ -19,7 +20,7 @@ const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  z-index: 1000;
+  z-index: 1100;
 `;
 
 const Title = styled.div`
@@ -30,7 +31,7 @@ const Title = styled.div`
 `;
 
 const TitleContainer = styled.div`
-  background-color: #f2f9f8;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   width: 100%;
   height: 96px;
   display: flex;
@@ -40,6 +41,7 @@ const TitleContainer = styled.div`
 `;
 
 const MainContent = styled.div`
+  background-color: ${({ theme }) => theme.semantic.backGround};
   flex: 1;
   padding: 20px;
   overflow-y: auto;
@@ -49,9 +51,9 @@ const MainContent = styled.div`
 `;
 
 const Footer = styled.div`
-  background-color: ${theme.color.main};
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   width: 100%;
-  height: 96px;
+  height: 84px;
   display: flex;
   align-items: center;
   padding-left: 20px;
@@ -81,18 +83,19 @@ const CommonModal: React.FC<CommonModalProps> = ({
       style={{
         overlay: {
           backgroundColor: 'rgba(0,0,0,0.5)',
-          zIndex: 900,
+          zIndex: 1100,
         },
         content: {
           top,
           left: '50%',
           transform: 'translate(-50%,-50%)',
-          borderRadius: '8px',
+          borderRadius: units.radius.lg,
           width: '50%',
           height,
           maxWidth: '830px',
           padding: 0,
           overflow: 'hidden',
+          zIndex: 1100,
         },
       }}
     >

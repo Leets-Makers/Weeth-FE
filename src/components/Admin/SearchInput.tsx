@@ -1,20 +1,24 @@
 import styled from 'styled-components';
-import SearchIcon from '@/assets/images/ic_admin_search.svg';
+import SearchIcon from '@/assets/images/ic_search.svg';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const SearchWrapper = styled.div`
   position: relative;
   width: 100%;
   max-width: 492px;
-  margin-top: 2%;
 
   input {
+    ${typography.admin.Body1}
     width: 100%;
-    padding: 13px 40px 13px 52px;
+    height: 48px;
+    padding: 0 40px 0 52px;
     border: none;
     outline: none;
     border-radius: ${units.radius.sm}px;
-    font-size: 18px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
 
     &::placeholder {
       color: ${({ theme }) => theme.semantic.text.alternative};
@@ -24,11 +28,11 @@ const SearchWrapper = styled.div`
 
 const SearchIconWrapper = styled.img`
   position: absolute;
-  left: 10px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
 `;
 
 const SearchInput: React.FC<{

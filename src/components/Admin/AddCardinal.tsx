@@ -16,6 +16,7 @@ export const AddCardinalWrapper = styled.div`
   align-items: center;
   cursor: pointer;
   border-radius: ${units.radius.lg}px;
+  box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
 `;
 
 const AddCardinal: React.FC = () => {
