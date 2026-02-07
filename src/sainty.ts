@@ -7,15 +7,14 @@ export const client = createClient({
   apiVersion: '2024-01-20',
 });
 
-// 팝업 데이터를 가져오는 함수
-export async function getActivePopup() {
-  const query = `*[_type == "popup" && isActive == true && now() >= startDate && now() <= endDate][0]{
+// 활성 팝업 목록을 가져오는 함수
+export async function getActivePopups() {
+  const query = `*[_type == "popup" && isActive == true && now() >= startDate && now() <= endDate] | order(startDate desc) {
     title,
     content,
-    "imageUrl": image.asset->url, 
+    "imageUrl": image.asset->url,
     linkUrl,
-    startDate,
-    endDate
+    useDefaultImage
   }`;
 
   return client.fetch(query);

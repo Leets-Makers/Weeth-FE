@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { getActivePopup } from '@/sainty'; // 경로 확인 필요
+import { getActivePopups } from '@/sainty';
+import defaultPopupImg from '@/assets/images/popup/popup_default_img_1.png';
 
-// 데이터 타입 정의 (content 추가됨)
 interface PopupData {
   title: string;
-  content?: string; // 👈 추가됨 (없을 수도 있으니 ? 붙임)
+  content?: string;
   imageUrl: string;
   linkUrl?: string;
+  useDefaultImage?: boolean;
 }
+
+const HIDE_KEY = 'popup_hide_until';
 
 const Overlay = styled.div`
   position: fixed;
@@ -18,90 +21,170 @@ const Overlay = styled.div`
   bottom: 0;
   z-index: 50;
   display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
+
+  /* Mobile: 상단 중앙 */
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+
+  /* PC: 우측 하단 */
+  @media (min-width: 697px) {
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 24px 24px 0;
+  }
 `;
 
 const PopupContainer = styled.div`
-  background-color: white;
-  border-radius: 16px; // 둥근 모서리 조금 더 키움
+  background-color: #1e2021;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  max-width: 20rem; // 텍스트가 들어가니 너비 조정 (320px 정도)
-  width: 90%; // 모바일 대응
-  margin: 0 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  width: 320px;
+  max-width: calc(100vw - 32px);
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
-const ImageLink = styled.a`
-  display: block;
-  width: 100%;
-  max-height: 300px; // 이미지가 너무 길어지는 것 방지
-  overflow: hidden;
+const CloseButton = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
 `;
 
 const PopupImage = styled.img`
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   display: block;
 `;
 
-// 👇 텍스트 영역 스타일 추가
 const TextContainer = styled.div`
-  padding: 20px 24px;
-  text-align: left; // 왼쪽 정렬 (중앙 정렬 원하면 center)
+  padding: 20px 20px 16px;
 `;
 
 const Title = styled.h3`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
-  color: #111;
+  color: #f8f8f8;
   margin: 0 0 8px 0;
   line-height: 1.3;
 `;
 
 const Message = styled.p`
-  font-size: 14px;
-  color: #666;
+  font-size: 13px;
+  color: #9fa3a6;
   margin: 0;
   line-height: 1.5;
-  white-space: pre-wrap; // 줄바꿈(\n)을 화면에 반영해줌
+  white-space: pre-wrap;
 `;
-// 👆 텍스트 영역 스타일 끝
 
-const ButtonGroup = styled.div`
+const PaginationWrapper = styled.div`
   display: flex;
-  border-top: 1px solid #f3f4f6;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 20px 12px;
 `;
 
-const ActionButton = styled.button<{ $isBold?: boolean }>`
-  flex: 1;
-  padding: 14px 0;
-  font-size: 14px;
-  background-color: transparent;
+const PaginationButton = styled.button`
+  background: none;
   border: none;
+  color: #9fa3a6;
+  font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.2s;
-  color: ${(props) => (props.$isBold ? '#1f2937' : '#6b7280')};
-  font-weight: ${(props) => (props.$isBold ? '600' : '400')};
-  border-left: ${(props) => (props.$isBold ? '1px solid #f3f4f6' : 'none')};
+  padding: 4px;
+  display: flex;
+  align-items: center;
 
   &:hover {
-    background-color: #f9fafb;
+    color: #f8f8f8;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+    &:hover {
+      color: #9fa3a6;
+    }
   }
 `;
 
+const PaginationText = styled.span`
+  font-size: 13px;
+  color: #9fa3a6;
+`;
+
+const CTAButton = styled.a`
+  display: block;
+  margin: 0 20px 16px;
+  padding: 12px 0;
+  background-color: #00dda8;
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #00c496;
+  }
+`;
+
+const DismissText = styled.button`
+  background: none;
+  border: none;
+  color: #6e7173;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0 0 16px;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: #9fa3a6;
+  }
+`;
+
+const getImageUrl = (popup: PopupData): string => {
+  if (popup.useDefaultImage || !popup.imageUrl) {
+    return defaultPopupImg;
+  }
+  return popup.imageUrl;
+};
+
 const NoticePopup = () => {
-  const [popup, setPopup] = useState<PopupData | null>(null);
+  const [popups, setPopups] = useState<PopupData[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const checkPopup = async () => {
-      const hideUntil = localStorage.getItem('popup_hide_until');
+      const hideUntil = localStorage.getItem(HIDE_KEY);
       if (hideUntil) {
         const now = new Date();
         const hideDate = new Date(hideUntil);
@@ -109,9 +192,9 @@ const NoticePopup = () => {
       }
 
       try {
-        const data = await getActivePopup();
-        if (data) {
-          setPopup(data);
+        const data = await getActivePopups();
+        if (data && data.length > 0) {
+          setPopups(data);
           setIsVisible(true);
         }
       } catch (error) {
@@ -126,46 +209,82 @@ const NoticePopup = () => {
     setIsVisible(false);
   };
 
-  const handleDontShowToday = () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    localStorage.setItem('popup_hide_until', tomorrow.toISOString());
+  const handleDismiss24h = () => {
+    const hideUntil = new Date();
+    hideUntil.setHours(hideUntil.getHours() + 24);
+    localStorage.setItem(HIDE_KEY, hideUntil.toISOString());
     setIsVisible(false);
   };
 
-  if (!isVisible || !popup) return null;
+  const handlePrev = () => {
+    setCurrentIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => Math.min(popups.length - 1, prev + 1));
+  };
+
+  if (!isVisible || popups.length === 0) return null;
+
+  const currentPopup = popups[currentIndex];
+  const showPagination = popups.length > 1;
 
   return (
-    <Overlay>
-      <PopupContainer>
-        {/* 1. 이미지 영역 */}
-        {popup.linkUrl ? (
-          <ImageLink
-            href={popup.linkUrl}
+    <Overlay onClick={handleClose}>
+      <PopupContainer onClick={(e) => e.stopPropagation()}>
+        <CloseButton onClick={handleClose} aria-label="닫기">
+          ✕
+        </CloseButton>
+
+        <PopupImage
+          src={getImageUrl(currentPopup)}
+          alt={currentPopup.title}
+        />
+
+        <TextContainer>
+          <Title>{currentPopup.title}</Title>
+          {currentPopup.content && <Message>{currentPopup.content}</Message>}
+        </TextContainer>
+
+        {showPagination && (
+          <PaginationWrapper>
+            <PaginationButton
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              aria-label="이전"
+            >
+              ‹
+            </PaginationButton>
+            <PaginationText>
+              {currentIndex + 1} / {popups.length}
+            </PaginationText>
+            <PaginationButton
+              onClick={handleNext}
+              disabled={currentIndex === popups.length - 1}
+              aria-label="다음"
+            >
+              ›
+            </PaginationButton>
+          </PaginationWrapper>
+        )}
+
+        {currentPopup.linkUrl ? (
+          <CTAButton
+            href={currentPopup.linkUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <PopupImage src={popup.imageUrl} alt={popup.title} />
-          </ImageLink>
+            지금 사용해보기
+          </CTAButton>
         ) : (
-          <PopupImage src={popup.imageUrl} alt={popup.title} />
+          <CTAButton as="button" onClick={handleClose}>
+            지금 사용해보기
+          </CTAButton>
         )}
 
-        {/* 2. 텍스트 영역 (제목 + 내용) */}
-        <TextContainer>
-          <Title>{popup.title}</Title>
-          {popup.content && <Message>{popup.content}</Message>}
-        </TextContainer>
-
-        {/* 3. 버튼 영역 */}
-        <ButtonGroup>
-          <ActionButton onClick={handleDontShowToday}>
-            오늘 그만 보기
-          </ActionButton>
-          <ActionButton onClick={handleClose} $isBold>
-            닫기
-          </ActionButton>
-        </ButtonGroup>
+        <DismissText onClick={handleDismiss24h}>
+          24시간동안 보이지 않기
+        </DismissText>
       </PopupContainer>
     </Overlay>
   );
