@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { flexMixin } from './DuesRegisterAdd.styled';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -14,7 +15,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 16px;
+  ${typography.admin.Sub2};
   margin-left: 10px;
   margin-bottom: 10px;
   color: ${({ theme }) => theme.semantic.text.normal};

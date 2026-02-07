@@ -70,9 +70,9 @@ export const Title = styled.div`
 `;
 
 export const SubTitle = styled.div<{ $required?: boolean }>`
-  font-size: 16px;
+  ${typography.admin.Sub2};
   padding: 20px 30px;
-  color: black;
+  color: ${({ theme }) => theme.semantic.text.normal};
 
   ${({ $required, theme }) =>
     $required &&
