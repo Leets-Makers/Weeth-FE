@@ -6,7 +6,7 @@ export interface CardinalProps {
 
 export interface DirectCardinalProps {
   selectedCardinal: number | null;
-  setSelectedCardinal: (value: number, isCustom: boolean) => void;
+  setSelectedCardinal: (value: number | null, isCustom: boolean) => void;
   isForDues?: boolean;
   variant?: 'button' | 'container';
   placeholder?: string;

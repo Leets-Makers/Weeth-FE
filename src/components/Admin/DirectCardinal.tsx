@@ -42,7 +42,7 @@ const DirectCardinalDropdown: React.FC<DirectCardinalProps> = ({
   };
 
   const handleCustomInput = () => {
-    setSelectedCardinal(undefined as unknown as number, true);
+    setSelectedCardinal(null, true);
     setIsCustomInput(true);
     setIsOpen(false);
   };

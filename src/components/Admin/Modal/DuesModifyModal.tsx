@@ -207,8 +207,8 @@ const DuesModifyModal: React.FC<DuesModifyModalProps> = ({
                   </S.StyledCloseButton>
                 </S.InputContainer>
               ) : (
-                uploadedFiles.map((file) => (
-                  <S.InputContainer key={file.fileId || file.fileName}>
+                uploadedFiles.map((file, index) => (
+                  <S.InputContainer key={`${file.fileId || file.fileName}-${index}`}>
                     <S.StyledDuesInput
                       width="90%"
                       placeholder={file.fileName}
