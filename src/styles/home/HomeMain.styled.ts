@@ -18,9 +18,9 @@ export const GridContainer = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   grid-template-areas:
-    'calendar penalty'
-    'board member'
-    'board dues';
+    'board penalty'
+    'calendar member'
+    'calendar dues';
 
   /* 태블릿/PC (새로운 레이아웃 - 3열) */
   @media screen and (min-width: 768px) {
@@ -46,7 +46,7 @@ export const GridItem = styled.div`
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${colors.semantic.brand.primary};
+    background-color: ${colors.semantic.container['neutral-interaction']};
     color: ${colors.semantic.text.inverse};
   }
 `;

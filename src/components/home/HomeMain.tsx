@@ -17,7 +17,7 @@ const HomeMain: React.FC = () => {
             navi(`/calendar?year=${CURRENT_YEAR}&month=${CURRENT_MONTH}`);
           }}
         >
-          동아리 일정
+          캘린더
           <S.PlaceholderImage src={calendar} alt="캘린더 이미지" />
         </S.CalendarItem>
         <S.PenaltyItem

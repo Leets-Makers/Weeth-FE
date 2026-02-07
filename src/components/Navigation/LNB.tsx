@@ -19,11 +19,6 @@ const LNB = ({ onClose }: { onClose: () => void }) => {
 
   const menus = [
     {
-      name: '동아리 일정',
-      icon: <ICCalender width={24} height={24} />,
-      path: '/calendar',
-    },
-    {
       name: '게시판',
       icon: <ICBoard width={24} height={24} />,
       path: '/board',
@@ -33,6 +28,12 @@ const LNB = ({ onClose }: { onClose: () => void }) => {
       icon: <ICAttend width={24} height={24} />,
       path: '/attendance',
     },
+    {
+      name: '캘린더',
+      icon: <ICCalender width={24} height={24} />,
+      path: '/calendar',
+    },
+
     { name: '멤버', path: '/member' },
     { name: '회비', path: '/dues' },
   ];

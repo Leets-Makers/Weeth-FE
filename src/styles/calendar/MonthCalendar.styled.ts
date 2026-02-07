@@ -33,6 +33,7 @@ export const EventContent = styled.div`
 
 export const Calendar = styled.div`
   margin-bottom: 5px;
+  padding: 0 ${units.padding['450']}px;
 
   div {
     text-overflow: clip !important;

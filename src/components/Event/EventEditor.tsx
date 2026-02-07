@@ -327,7 +327,7 @@ const EventEditor = () => {
       <S.EventEditorWrapper>
         <Breadcrumb
           items={[
-            { label: '동아리 일정', path: '/calendar' },
+            { label: '캘린더', path: '/calendar' },
             {
               label: isEditMode ? '일정 수정' : '일정 추가',
               path: isEditMode ? `/events/${id}/edit` : '/events/create',

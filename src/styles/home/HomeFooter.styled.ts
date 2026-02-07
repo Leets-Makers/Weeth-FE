@@ -49,7 +49,7 @@ export const GridItem = styled.a`
     margin-right: 0;
   }
   &:hover {
-    background-color: ${colors.semantic.brand.primary};
+    background-color: ${colors.semantic.container['neutral-interaction']};
     color: ${colors.semantic.text.inverse};
   }
 `;
