@@ -1,7 +1,7 @@
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useState, useTransition } from 'react';
 import { RealPart, REAL_PARTS } from '@/types/part';
 
 export const Switch = styled.label`
@@ -58,17 +58,19 @@ const PartToggle = ({
   selectedPart?: RealPart;
   onToggle: (part: RealPart) => void;
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  useEffect(() => {
-    if (!selectedPart) return;
+  const [selectedIndex, setSelectedIndex] = useState(() => {
+    if (!selectedPart) return 0;
     const idx = REAL_PARTS.indexOf(selectedPart);
-    if (idx >= 0) setSelectedIndex(idx);
-  }, [selectedPart]);
+    return idx >= 0 ? idx : 0;
+  });
+
+  const [, startTransition] = useTransition();
 
   const handlePartClick = (index: number) => {
     setSelectedIndex(index);
-    onToggle(REAL_PARTS[index]);
+    startTransition(() => {
+      onToggle(REAL_PARTS[index]);
+    });
   };
 
   return (
