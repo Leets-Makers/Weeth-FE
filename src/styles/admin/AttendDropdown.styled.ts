@@ -218,7 +218,7 @@ export const StatusText = styled.span<{ status: string }>`
       ? theme.semantic.state.success
       : status === '결석'
         ? theme.semantic.state.error
-        : 'inherit'};
+        : theme.semantic.icon.alternative};
 `;
 
 export const StatusWrapper = styled.div`

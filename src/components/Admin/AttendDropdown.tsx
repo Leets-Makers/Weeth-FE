@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import * as S from '@/styles/admin/AttendDropdown.styled';
 import CheckBox from '@/assets/images/ic_admin_check.svg';
 import Absence from '@/assets/images/ic_admin_absence.svg';
+import Clock from '@/assets/images/ic_admin_clock.svg';
 import updateAttendanceStatus from '@/api/admin/attendance/updateAttendanceStatus';
 import department from '@/constants/departmentConstants';
 import useUserData from '@/hooks/queries/useUserData';
@@ -198,8 +199,20 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
               ) : (
                 <S.CheckGap>
                   <img
-                    src={item.status === '출석' ? CheckBox : Absence}
-                    alt={item.status === '출석' ? '출석 이미지' : '결석 이미지'}
+                    src={
+                      item.status === '출석'
+                        ? CheckBox
+                        : item.status === '결석'
+                          ? Absence
+                          : Clock
+                    }
+                    alt={
+                      item.status === '출석'
+                        ? '출석 이미지'
+                        : item.status === '결석'
+                          ? '결석 이미지'
+                          : '미결 이미지'
+                    }
                   />
                   <S.StatusText status={item.status}>
                     {item.status}
