@@ -36,7 +36,9 @@ const Cardinal = ({ value, onChange }: Props) => {
   const { data: allCardinals } = useCardinalData();
 
   if (!allCardinals) return null;
-  const sortedCardinals = [...allCardinals]?.reverse();
+  const sortedCardinals = [...allCardinals]
+    ?.filter((cardinal) => cardinal.cardinalNumber !== 0)
+    .reverse();
 
   const handleSelect = (cardinalNumber: number) => {
     onChange(value === cardinalNumber ? null : cardinalNumber);
