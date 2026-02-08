@@ -12,6 +12,7 @@ import {
 import useCardinalData from '@/hooks/queries/useCardinalData';
 import { units } from '@/theme/designTokens';
 import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 interface CardinalChangeModalProps {
   isOpen: boolean;
@@ -44,7 +45,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
     ? allCardinals.map((c) => c.cardinalNumber)
     : [];
 
-  const handleSelectCardinal = (value: number, isCustom: boolean) => {
+  const handleSelectCardinal = (value: number | null, isCustom: boolean) => {
     setIsCustomInput(isCustom);
     if (isCustom) {
       setCardinalNumber('');
@@ -124,6 +125,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
             textcolor={`${theme.semantic.text.strong}`}
             color={`${theme.semantic.button.neutral}`}
             onClick={onClose}
+            $typo={typography.admin.Button1}
           >
             취소
           </Button>
@@ -133,6 +135,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
             color={`${theme.semantic.button.primary}`}
             borderRadius={`${units.radius.md}px`}
             onClick={handleSave}
+            $typo={typography.admin.Button1}
           >
             저장
           </Button>
@@ -155,6 +158,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
           <DirectCardinalDropdown
             selectedCardinal={selectedCardinal}
             setSelectedCardinal={handleSelectCardinal}
+            variant="button"
           />
         </S.InputGroup>
         <S.ErrorMessage>

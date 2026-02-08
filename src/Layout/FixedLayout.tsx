@@ -5,6 +5,7 @@ import DelayedFallback from '@/hooks/DelayedFallback';
 import { units } from '@/theme/designTokens';
 import Footer from '@/components/Navigation/Footer';
 import MobileGNB from '@/components/Navigation/MobileGNB';
+import NoticePopup from '@/components/Popup';
 
 const Wrapper = styled.div`
   width: 375px;
@@ -22,6 +23,7 @@ const FixedLayout = () => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Wrapper>
           <MobileGNB />
+          <NoticePopup />
           <Content>
             <Outlet />
           </Content>

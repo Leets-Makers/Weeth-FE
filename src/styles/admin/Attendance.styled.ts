@@ -1,5 +1,6 @@
-import { colors, units } from '@/theme/designTokens';
+import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
+import typography from '@/theme/typography';
 
 export const AttendanceTable = styled.div<{ $isOpen?: boolean }>`
   width: 95%;
@@ -32,20 +33,20 @@ export const Wrapper = styled.div`
 export const DateInfoWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
 `;
 
 export const DateText = styled.span<{ $isOpen?: boolean }>`
-  font-size: 20px;
+  ${typography.admin.Sub1}
   color: ${({ theme, $isOpen }) =>
     $isOpen === true
       ? theme.semantic.text.inverse
       : theme.semantic.text.normal};
-  margin-right: 15px;
   transition: color 0.2s ease;
 `;
 
 export const ContentText = styled.span<{ $isOpen?: boolean }>`
-  font-size: 20px;
+  ${typography.admin.Sub1}
   color: ${({ theme, $isOpen }) =>
     $isOpen === true
       ? theme.semantic.text.inverse
@@ -53,7 +54,14 @@ export const ContentText = styled.span<{ $isOpen?: boolean }>`
   transition: color 0.2s ease;
 `;
 
-export const DropdownButton = styled.img<{ isOpen: boolean }>`
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+export const DropdownButton = styled.div<{ $isOpen: boolean }>`
+  transition:
+    transform 0.3s ease-in-out,
+    color 0.2s ease;
+  transform: ${({ $isOpen }) => ($isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+  color: ${({ $isOpen, theme }) =>
+    $isOpen ? theme.semantic.text.inverse : theme.semantic.text.normal};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

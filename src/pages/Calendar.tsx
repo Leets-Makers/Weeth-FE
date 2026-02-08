@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import CalendarToggle from '@/components/Calendar/CalendarToggle';
 import { CURRENT_MONTH, CURRENT_YEAR } from '@/constants/dateConstants';
 import useCustomBack from '@/hooks/useCustomBack';
@@ -8,18 +8,14 @@ import icRightArrow from '@/assets/images/ic_rightArrow.svg';
 import { lazy, Suspense, useState } from 'react';
 import Loading from '@/components/common/Loading';
 import Breadcrumb from '@/components/common/Breadcrumb';
-import FloatingWritingIcon from '@/assets/images/ic_calendar_floating_button.svg?react';
-import useUserData from '@/hooks/queries/useUserData';
+import CalendarWriteFloatingButton from '@/components/Calendar/CalendarWriteFloatingButton';
 
 const MonthCalendar = lazy(() => import('@/components/Calendar/MonthCalendar'));
 const YearCalendar = lazy(() => import('@/components/Calendar/YearCalendar'));
 
 const Calendar = () => {
   useCustomBack('/home');
-  const navigate = useNavigate();
   const [isMonth, setIsMonth] = useState(true);
-  const { data: userInfo } = useUserData();
-  const isAdmin = userInfo?.role === 'ADMIN';
   const [searchParams, setSearchParams] = useSearchParams();
 
   const year = Number(searchParams.get('year')) || CURRENT_YEAR;
@@ -48,7 +44,7 @@ const Calendar = () => {
   return (
     <S.CalendarWrapper>
       <S.CalendarHeader>
-        <Breadcrumb items={[{ label: '동아리 일정', path: '/calendar' }]} />
+        <Breadcrumb items={[{ label: '캘린더', path: '/calendar' }]} />
         <S.CalendarToggleContainer>
           <S.DateWrapper>
             <S.ImgButton
@@ -116,9 +112,7 @@ const Calendar = () => {
           />
         )}
       </Suspense>
-      <S.FloatingButton onClick={() => isAdmin && navigate('/events/create')}>
-        <FloatingWritingIcon />
-      </S.FloatingButton>
+      <CalendarWriteFloatingButton />
     </S.CalendarWrapper>
   );
 };

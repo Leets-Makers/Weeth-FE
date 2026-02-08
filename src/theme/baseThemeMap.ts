@@ -1,6 +1,6 @@
 export const baseThemeMap = {
   backGround: 'neutral.200',
-  line:'neutral.400',
+  line: 'neutral.400',
 
   text: {
     normal: 'neutral.800',
@@ -26,7 +26,7 @@ export const baseThemeMap = {
     'neutral-interaction': 'neutral.500',
     primary: 'primary.500',
     'primary-interaction': 'primary.600',
-    disabled: 'neutral.500',
+    disabled: 'neutral.400',
   },
 
   icon: {

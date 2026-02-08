@@ -1,5 +1,5 @@
 import theme from '@/styles/theme';
-import backarrow from '@/assets/images/ic_admin_backarrow.svg';
+import backarrow from '@/assets/images/ic_admin_back_arrow.svg';
 import { useState } from 'react';
 import useAdminActions from '@/hooks/admin/useAdminActions';
 import styled from 'styled-components';
@@ -16,8 +16,9 @@ const SelectedTopBarWrapper = styled.div`
   right: 0;
   width: 100%;
   min-width: 1500px;
+  min-height: 78px;
   background-color: ${({ theme }) => theme.semantic.container.primary};
-  color: ${theme.color.gray[100]};
+  color: ${({ theme }) => theme.semantic.text.inverse};
   display: flex;
   justify-content: space-between;
   align-items: center;

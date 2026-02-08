@@ -1,18 +1,43 @@
+/* Pretendard Variable - 모든 weight를 하나의 파일로 지원 */
 @font-face {
   font-family: 'Pretendard';
-  src: url('./Pretendard-Regular.woff2') format('woff2');
-  font-weight: 500;
+  font-weight: 100 900;
+  font-style: normal;
   font-display: swap;
+  src:
+    local('Pretendard Variable'),
+    local('Pretendard'),
+    url('./PretendardVariable.woff2') format('woff2-variations'),
+    url('./PretendardVariable.woff2') format('woff2');
 }
-@font-face {
-  font-family: 'Pretendard';
-  src: url('./Pretendard-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Pretendard';
-  src: url('./Pretendard-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-display: swap;
+
+/* Safari 구버전 fallback - Variable 폰트 미지원 시 */
+@supports not (font-variation-settings: normal) {
+  @font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src:
+      local('Pretendard Regular'),
+      url('./Pretendard-Regular.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    src:
+      local('Pretendard SemiBold'),
+      url('./Pretendard-SemiBold.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Pretendard';
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src:
+      local('Pretendard Bold'),
+      url('./Pretendard-Bold.woff2') format('woff2');
+  }
 }

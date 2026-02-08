@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { flexMixin } from './DuesRegisterAdd.styled';
+import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -7,13 +9,16 @@ export const Wrapper = styled.div`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 30px;
   box-sizing: border-box;
-  border-top: 1px solid #dedede;
+  border-top: 1px solid ${({ theme }) => theme.semantic.line};
+  margin-top: -1px;
+  border-radius: 0 0 ${units.radius.lg}px ${units.radius.lg}px;
 `;
 
 export const Title = styled.div`
-  font-size: 16px;
+  ${typography.admin.Sub2};
   margin-left: 10px;
   margin-bottom: 10px;
+  color: ${({ theme }) => theme.semantic.text.normal};
 `;
 
 export const CardinalWrapper = styled.div`
@@ -31,9 +36,8 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const Description = styled.div`
-  color: red;
-  font-size: 18px;
-  margin-left: 100px;
+  ${typography.admin.Caption1};
+  color: ${({ theme }) => theme.semantic.state.caution};
   margin-top: 15px;
 `;
 

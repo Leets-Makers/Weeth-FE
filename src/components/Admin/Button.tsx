@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import typography from '@/theme/typography';
 
 interface ButtonProps {
   color: string;
@@ -9,6 +10,11 @@ interface ButtonProps {
   borderRadius?: string;
   disabled?: boolean; // 버튼 비활성화 여부
   textColor?: string; // 텍스트 색상
+  $typo?:
+    | typeof typography.admin.Button1
+    | typeof typography.admin.Button2
+    | typeof typography.Button1
+    | typeof typography.Button2;
 }
 
 const Wrapper = styled.div<{
@@ -26,8 +32,15 @@ const Wrapper = styled.div<{
   border-radius: ${({ borderRadius }) => borderRadius || '0px'};
 `;
 
-const Description = styled.div<{ $textColor?: string }>`
-  font-size: 18px;
+const Description = styled.div<{
+  $textColor?: string;
+  $typo?:
+    | typeof typography.admin.Button1
+    | typeof typography.admin.Button2
+    | typeof typography.Button1
+    | typeof typography.Button2;
+}>`
+  ${({ $typo }) => $typo || typography.admin.Button1};
   color: ${({ $textColor }) => $textColor ?? theme.color.gray[100]};
 `;
 
@@ -39,6 +52,7 @@ const Button: React.FC<ButtonProps> = ({
   borderRadius,
   disabled = false,
   textColor,
+  $typo,
 }) => {
   return (
     <Wrapper
@@ -50,7 +64,9 @@ const Button: React.FC<ButtonProps> = ({
         cursor: disabled ? 'not-allowed' : 'pointer',
       }}
     >
-      <Description $textColor={textColor}>{description}</Description>
+      <Description $textColor={textColor} $typo={$typo}>
+        {description}
+      </Description>
     </Wrapper>
   );
 };

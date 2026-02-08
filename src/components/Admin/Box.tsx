@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 export interface BoxProps {
   title?: string;
@@ -20,15 +21,15 @@ export const Wrapper = styled.div<{
   color: string;
   isCardinalBox: boolean;
   isClick?: boolean;
-  isSelected?: boolean;
+  $isSelected?: boolean;
   isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
 }>`
-  width: ${({ isCardinalBox }) => (isCardinalBox ? 'none' : '234px')};
-  min-width: ${({ isCardinalBox }) => (isCardinalBox ? '234px' : 'none')};
-  height: 164px;
-  background-color: ${({ isIncomplete, isSelected, color }) => {
+  width: ${({ isCardinalBox }) => (isCardinalBox ? 'auto' : '234px')};
+  min-width: ${({ isCardinalBox }) => (isCardinalBox ? '234px' : 'auto')};
+  min-height: 164px;
+  background-color: ${({ isIncomplete, color }) => {
     if (isIncomplete) return 'transparent';
-    if (isSelected) return theme.color.gray[18];
     return color;
   }};
   border: ${({ isIncomplete, theme }) =>
@@ -40,41 +41,63 @@ export const Wrapper = styled.div<{
   box-sizing: border-box;
   border-radius: ${units.radius.sm}px;
   cursor: ${({ isClick }) => (isClick ? 'pointer' : 'auto')};
+  box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
 
-  ${({ isClick, isSelected, isIncomplete }) =>
+  ${({ isClick, $isSelected, isIncomplete, $isPrimaryBg, theme }) =>
     isClick &&
-    !isSelected &&
+    !$isSelected &&
     !isIncomplete &&
     `
     &:hover {
-      background-color: ${theme.color.gray[18]};
+      background-color: ${
+        $isPrimaryBg
+          ? theme.semantic.button['primary-interaction']
+          : theme.semantic.button.neutral
+      }
     }
-  `}
+  `};
 `;
 
 export const Title = styled.div<{
   isHidden?: boolean;
   isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
 }>`
-  font-size: 18px;
+  ${typography.admin.Sub2}
   min-height: 24px;
-  color: ${({ isIncomplete, theme }) =>
-    isIncomplete ? theme.semantic.text.disabled : theme.semantic.text.strong};
+  color: ${({ isIncomplete, $isPrimaryBg, theme }) => {
+    if (isIncomplete) return theme.semantic.text.disabled;
+    if ($isPrimaryBg) return theme.semantic.text.inverse;
+    return theme.semantic.text.normal;
+  }};
 `;
 
-export const Description = styled.div<{ isIncomplete?: boolean }>`
-  font-size: 24px;
-  font-family: ${theme.font.semiBold};
-  color: ${({ isIncomplete, theme }) =>
-    isIncomplete ? theme.semantic.text.disabled : theme.semantic.text.strong};
+export const Description = styled.div<{
+  isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
+}>`
+  ${typography.admin.H3}
+  color: ${({ isIncomplete, $isPrimaryBg, theme }) => {
+    if (isIncomplete) return theme.semantic.text.disabled;
+    if ($isPrimaryBg) return theme.semantic.text.inverse;
+    return theme.semantic.text.normal;
+  }};
   margin-top: 20px;
   white-space: nowrap;
 `;
 
-export const Last = styled.div<{ lastColor?: string; isIncomplete?: boolean }>`
-  font-size: 18px;
-  color: ${({ isIncomplete, lastColor }) =>
-    isIncomplete ? '#909393' : lastColor || 'rgba(255, 255, 255, 0.5)'};
+export const Last = styled.div<{
+  lastColor?: string;
+  isIncomplete?: boolean;
+  $isPrimaryBg?: boolean;
+}>`
+  ${typography.admin.Caption2};
+  color: ${({ isIncomplete, lastColor, $isPrimaryBg, theme }) => {
+    if (isIncomplete) return theme.semantic.text.disabled;
+    if (lastColor) return lastColor;
+    if ($isPrimaryBg) return theme.semantic.text.inverse;
+    return theme.semantic.text.normal;
+  }};
 `;
 
 const Box: React.FC<BoxProps> = ({
@@ -89,18 +112,32 @@ const Box: React.FC<BoxProps> = ({
   isSelected = false,
   isIncomplete = false,
 }) => {
+  const currentTheme = useTheme();
+  const isPrimaryBg = color === currentTheme.semantic.container.primary;
+
   return (
     <Wrapper
       onClick={onClick}
       color={color}
       isCardinalBox={isCardinalBox}
       isClick={isClick}
-      isSelected={isSelected}
+      $isSelected={isSelected}
       isIncomplete={isIncomplete}
+      $isPrimaryBg={isPrimaryBg}
     >
-      {title && <Title isIncomplete={isIncomplete}>{title}</Title>}
-      <Description isIncomplete={isIncomplete}>{description}</Description>
-      <Last lastColor={lastColor} isIncomplete={isIncomplete}>
+      {title && (
+        <Title isIncomplete={isIncomplete} $isPrimaryBg={isPrimaryBg}>
+          {title}
+        </Title>
+      )}
+      <Description isIncomplete={isIncomplete} $isPrimaryBg={isPrimaryBg}>
+        {description}
+      </Description>
+      <Last
+        lastColor={lastColor}
+        isIncomplete={isIncomplete}
+        $isPrimaryBg={isPrimaryBg}
+      >
         {last}
       </Last>
     </Wrapper>

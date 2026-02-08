@@ -8,6 +8,7 @@ import {
 } from '@/components/Admin/context/MemberContext';
 import theme from '@/styles/theme';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export interface Column {
   key: keyof MemberData;
@@ -48,9 +49,9 @@ export const NoDataRow = styled.tr`
 `;
 
 export const NoDataCell = styled.td`
+  ${typography.admin.Sub2};
   padding: 20px;
   text-align: center;
-  font-size: 18px;
   letter-spacing: 1px;
   vertical-align: middle;
   color: ${theme.color.gray[65]};

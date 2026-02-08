@@ -10,6 +10,7 @@ import { pcResponsive } from '@/styles';
 import { Suspense } from 'react';
 import DelayedFallback from '@/hooks/DelayedFallback';
 import Footer from '@/components/Navigation/Footer';
+import NoticePopup from '@/components/Popup';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -35,6 +36,8 @@ const ResponsiveLayout = () => {
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
         <Wrapper>
           {isMobile ? <MobileGNB /> : <DesktopGNB />}
+          <NoticePopup />
+
           <Content>
             <Outlet />
           </Content>
