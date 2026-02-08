@@ -13,7 +13,7 @@ export const SubHeaderRow = styled.tr`
 
 export const HeaderCell = styled.th`
   ${typography.admin.Sub2}
-  padding: 12px 25px;
+  padding: 15px 25px;
   text-align: left;
   white-space: nowrap;
 `;

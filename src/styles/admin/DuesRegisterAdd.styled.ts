@@ -31,6 +31,7 @@ export const InputContainer = styled.div`
 
 export const StyledDuesInput = styled(DuesInput)<{ $hasFile?: boolean }>`
   width: 100%;
+  height: 48px;
   padding-right: 50px;
 
   &::placeholder {

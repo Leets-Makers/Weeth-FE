@@ -112,7 +112,7 @@ const DuesRegisterDropDown: React.FC = () => {
         <Title>회비 설명</Title>
         <DuesInput
           width="96%"
-          placeholder="ex. 4기 회비 (3월 이월금 + 4기 회비)"
+          placeholder="ex. 4기 회비 (3기 이월금 + 4기 회비)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />

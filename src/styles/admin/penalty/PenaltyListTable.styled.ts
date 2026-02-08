@@ -91,12 +91,12 @@ export const DetailContainer = styled.td`
   display: grid;
   height: 48px;
   grid-template-columns:
-    minmax(390px, auto) minmax(40px, 0.9fr) minmax(40px, 0.9fr) minmax(
+    minmax(340px, auto) minmax(30px, 0.9fr) minmax(30px, 0.9fr) minmax(
       70px,
       1fr
     )
-    minmax(60px, 1fr);
-  grid-template-areas: ' reason penalty warning penaltyDate actions';
+    minmax(60px, 2fr);
+  grid-template-areas: 'reason penalty warning penaltyDate actions';
   padding-left: 120px;
   border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   background-color: ${({ theme }) => theme.semantic.backGround};

@@ -51,6 +51,7 @@ const formatStatusForAPI = (status: string) => {
 
 const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
   const [data, setData] = useState<AttendDropdownItem[]>([]);
+  const [originalData, setOriginalData] = useState<AttendDropdownItem[]>([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [changedData, setChangedData] = useState<{
@@ -72,6 +73,7 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
           status: formatStatus(item.status),
         }));
         setData(formattedData);
+        setOriginalData(formattedData);
       }
     };
     if (meetingId) {
@@ -81,8 +83,11 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
 
   const toggleEditMode = () => setIsEditMode((prev) => !prev);
 
-  const handleCancel = () => {
-    setIsEditMode(true);
+  const handleCancel = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setData(originalData);
+    setChangedData({});
+    setIsEditMode(false);
   };
 
   const handleStatusChange = (id: number, newStatus: string) => {
@@ -97,7 +102,8 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
     }));
   };
 
-  const handleSave = async () => {
+  const handleSave = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!isAdmin) return;
 
     const updates = Object.entries(changedData).map(([id, status]) => ({
@@ -108,6 +114,8 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
     const res = await updateAttendanceStatus(updates);
 
     if (res.code === 200) {
+      setOriginalData(data);
+      setChangedData({});
       setIsEditMode(false);
     } else {
       alert('출석 상태 업데이트에 실패했습니다.');
