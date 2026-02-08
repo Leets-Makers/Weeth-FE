@@ -10,16 +10,18 @@ import {
 } from '@/components/Admin/context/MemberContext';
 import { Column } from '@/components/Admin/MemberListTable';
 import MemberDetailModal from '@/components/Admin/Modal/MemberDetailModal';
+import typography from '@/theme/typography';
 
 const Row = styled.tr`
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
 `;
 
 const Cell = styled.td`
+  ${typography.admin.Body1};
   padding: 15px 20px;
   text-align: left;
   white-space: nowrap;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   vertical-align: middle;
 `;
 
@@ -33,7 +35,7 @@ export const SvgWrapper = styled.td`
   padding: 10px;
   text-align: center;
   cursor: pointer;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
 
   img {
     height: auto;

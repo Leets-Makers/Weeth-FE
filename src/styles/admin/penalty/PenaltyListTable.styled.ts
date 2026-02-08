@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
 
 export const TableContainer = styled.div`
   min-width: 950px;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   border: 1px solid #f2f2f2;
   border-radius: ${units.radius.lg}px;
   box-shadow: 0px 3px 8px rgba(133, 141, 138, 0.2);
@@ -34,7 +34,8 @@ export const TableContainer = styled.div`
 `;
 
 export const Row = styled.tr<{ isSelected: boolean }>`
-  border-bottom: 1px solid #dedede;
+  ${typography.admin.Body1};
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   cursor: pointer;
   background-color: ${({ isSelected, theme }) =>
     isSelected ? theme.semantic.container.primary : 'transparent'};
@@ -49,10 +50,11 @@ export const Cell = styled.td`
 `;
 
 export const HeaderCell = styled.th`
-  ${typography.admin.Sub2}
+  ${typography.admin.Sub2};
+  color: ${({ theme }) => theme.semantic.text.alternative};
   text-align: left;
   padding: 15px 25px;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   white-space: nowrap;
 `;
 
@@ -61,18 +63,19 @@ export const EmptyCell = styled.td`
 `;
 
 export const NoDataCell = styled.div`
-  color: ${theme.color.gray[65]};
+  ${typography.admin.Body1};
+  color: ${({ theme }) => theme.semantic.text.disabled};
   padding: 20px;
   letter-spacing: 1px;
   text-align: center;
 `;
 
 export const Input = styled.input`
+  ${typography.admin.Body1};
   width: 100%;
   max-width: 300px;
   background-color: transparent;
   border: none;
-  font-size: 18px;
   outline: none;
   box-sizing: border-box;
 `;
@@ -86,20 +89,23 @@ export const ButtonWrapper = styled.div`
 // penaltyDetail.tsx
 export const DetailContainer = styled.td`
   display: grid;
+  height: 48px;
   grid-template-columns:
-    minmax(390px, auto) minmax(40px, 0.9fr) minmax(40px, 0.9fr) minmax(
+    minmax(340px, auto) minmax(30px, 0.9fr) minmax(30px, 0.9fr) minmax(
       70px,
       1fr
     )
-    minmax(60px, 1fr);
-  grid-template-areas: ' reason penalty warning penaltyDate actions';
+    minmax(60px, 2fr);
+  grid-template-areas: 'reason penalty warning penaltyDate actions';
   padding-left: 120px;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   background-color: ${({ theme }) => theme.semantic.backGround};
   align-items: center;
   box-sizing: border-box;
+  column-gap: 0;
 `;
 
 export const DetailText = styled.div`
-  font-size: 18px;
+  ${typography.admin.Body1};
+  color: ${({ theme }) => theme.semantic.text.strong};
 `;

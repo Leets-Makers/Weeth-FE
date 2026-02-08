@@ -4,6 +4,7 @@ import CardinalSVG from '@/assets/images/ic_admin_cardinal.svg';
 import { CardinalProps } from '@/types/adminCardinal';
 import useCardinalData from '@/hooks/queries/useCardinalData';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const CardinalButton = styled.div<{ $variant?: 'button' | 'container' }>`
   width: 118px;
@@ -19,6 +20,7 @@ export const CardinalButton = styled.div<{ $variant?: 'button' | 'container' }>`
   cursor: pointer;
   border-radius: ${units.radius.md}px;
   color: black;
+  ${typography.admin.Button1};
 `;
 
 export const DropdownMenu = styled.div.attrs<{ itemCount: number }>(
@@ -46,6 +48,7 @@ export const DropdownItem = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  ${typography.admin.Button1};
 
   &:first-child {
     border-top-left-radius: ${units.radius.md}px;

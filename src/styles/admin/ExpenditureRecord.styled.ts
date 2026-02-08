@@ -28,6 +28,7 @@ export const DateWrapper = styled.div`
 `;
 
 export const Date = styled.div`
+  ${typography.admin.Sub2};
   margin-left: 15px;
 `;
 

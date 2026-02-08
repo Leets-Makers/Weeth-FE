@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import DuesInput from '@/components/Admin/DuesInput';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const flexMixin = (flexValue: number) => css`
   flex: ${flexValue};
@@ -30,6 +31,7 @@ export const InputContainer = styled.div`
 
 export const StyledDuesInput = styled(DuesInput)<{ $hasFile?: boolean }>`
   width: 100%;
+  height: 48px;
   padding-right: 50px;
 
   &::placeholder {
@@ -59,19 +61,19 @@ export const StyledCloseButton = styled.button<{ disabled?: boolean }>`
 `;
 
 export const Title = styled.div`
+  ${typography.admin.Sub1};
   width: 100%;
   height: 72px;
   padding: 0 30px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  font-size: 24px;
 `;
 
 export const SubTitle = styled.div<{ $required?: boolean }>`
-  font-size: 16px;
+  ${typography.admin.Sub2};
   padding: 20px 30px;
-  color: black;
+  color: ${({ theme }) => theme.semantic.text.normal};
 
   ${({ $required, theme }) =>
     $required &&

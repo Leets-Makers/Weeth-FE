@@ -14,7 +14,7 @@ import { units } from '@/theme/designTokens';
 export const StyledCardinal = styled.div`
   width: 35%;
   position: relative;
-  z-index: 1000;
+  z-index: 201;
   border-radius: ${units.radius.md}px;
 `;
 
@@ -53,13 +53,19 @@ const DirectCardinalDropdown: React.FC<DirectCardinalProps> = ({
     return `${selectedCardinal}기`;
   };
 
+  const displayText = getDisplayText();
+
   return (
     <StyledCardinal>
       <CardinalButton onClick={toggleDropdown} $variant={variant}>
-        <div>{getDisplayText()}</div>
+        <div>{displayText}</div>
 
         <img
-          src={isCustomInput ? MeatballSVG : ArrowDownSVG}
+          src={
+            isCustomInput || displayText === '직접 입력'
+              ? MeatballSVG
+              : ArrowDownSVG
+          }
           alt="cardinal"
           className={isOpen ? 'open' : ''}
         />

@@ -12,12 +12,14 @@ import fetchAttendancesByCardinal from '@/api/admin/attendance/fetchAttendancesB
 import dayjs from 'dayjs';
 import AttendDropdown from '@/components/Admin/AttendDropdown';
 import useUserData from '@/hooks/queries/useUserData';
+import Badge from '@/components/Admin/Badge';
 
 interface AttendanceItem {
   id: number;
   title: string;
   content: string;
   start: string;
+  cardinal?: number;
 }
 
 interface AttendanceProps {
@@ -27,6 +29,7 @@ interface AttendanceProps {
 const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
   const [data, setData] = useState<AttendanceItem[]>([]);
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
+  const [thisWeekId, setThisWeekId] = useState<number | null>(null);
   const { data: userInfo } = useUserData();
   const isAdmin = userInfo?.role === 'ADMIN';
 
@@ -41,7 +44,24 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
       const res = await fetchAttendancesByCardinal(selectedCardinal);
 
       if (res.code === 200) {
-        setData(res.data.meetings);
+        const { thisWeek, meetings } = res.data;
+
+        // thisWeek이 있으면 해당 ID를 저장
+        if (thisWeek) {
+          setThisWeekId(thisWeek.id);
+
+          // thisWeek 항목을 맨 위로 정렬
+          const sortedMeetings = [...meetings].sort((a, b) => {
+            if (a.id === thisWeek.id) return -1;
+            if (b.id === thisWeek.id) return 1;
+            return 0;
+          });
+
+          setData(sortedMeetings);
+        } else {
+          setThisWeekId(null);
+          setData(meetings);
+        }
       }
     };
     fetchData();
@@ -68,6 +88,12 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
                   <ContentText $isOpen={openDropdownId === item.id}>
                     {item.content} {item.title}
                   </ContentText>
+                  {thisWeekId === item.id && (
+                    <Badge
+                      text="이번 주"
+                      isActive={openDropdownId === item.id}
+                    />
+                  )}
                 </DateInfoWrapper>
               </div>
               <DropdownButton $isOpen={openDropdownId === item.id}>

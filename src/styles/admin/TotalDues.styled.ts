@@ -1,4 +1,5 @@
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const TotalDuesWrapper = styled.div`
@@ -23,5 +24,6 @@ export const TopDues = styled.div`
 `;
 
 export const Title = styled.div`
+  ${typography.admin.Sub1};
   margin-left: 30px;
 `;

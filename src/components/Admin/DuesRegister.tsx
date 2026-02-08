@@ -4,6 +4,7 @@ import DownButton from '@/assets/images/ic_admin_cardinal.svg?react';
 import DuesRegisterDropDown from '@/components/Admin/DuesRegisterDropDown';
 import { units } from '@/theme/designTokens';
 import { DropdownButton } from '@/styles/admin/Attendance.styled';
+import typography from '@/theme/typography';
 
 export const Container = styled.div`
   position: relative;
@@ -28,12 +29,12 @@ export const Wrapper = styled.div<{ $isOpen: boolean }>`
 `;
 
 export const Title = styled.div<{ $isOpen: boolean }>`
+  ${typography.admin.Sub1};
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 24px;
   cursor: pointer;
   color: ${({ $isOpen, theme }) =>
     $isOpen ? theme.semantic.text.inverse : theme.semantic.text.strong};

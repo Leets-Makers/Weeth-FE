@@ -15,7 +15,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: 1400px;
   min-width: 1400px;
-  margin: 20px 30px 0 30px;
+  margin: 20px 30px 0 56px;
   padding-bottom: 30px;
   box-sizing: border-box;
   flex-direction: column;
@@ -25,22 +25,21 @@ export const ColumnsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 30px;
+  gap: 24px;
   align-items: flex-start;
 `;
 
 export const LeftColumn = styled.div`
-  width: 45%;
+  width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 24px;
 `;
 
 export const RightColumn = styled.div`
   width: 45%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
 `;
 
 export const CardinalWrapper = styled.div`
@@ -50,7 +49,7 @@ export const CardinalWrapper = styled.div`
 export const DuesWrapper = styled.div`
   width: 100%;
   padding: 1% 3%;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   border-radius: ${units.radius.lg}px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;

@@ -3,6 +3,7 @@ import closeIcon from '@/assets/images/ic_admin_close.svg';
 import Modal from 'react-modal';
 import { styled } from 'styled-components';
 import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 interface CommonModalProps {
   isOpen: boolean;
@@ -24,9 +25,8 @@ const ModalContainer = styled.div`
 `;
 
 const Title = styled.div`
-  color: #000;
-  font-weight: 700;
-  font-size: 24px;
+  ${typography.admin.H3};
+  color: ${({ theme }) => theme.semantic.text.normal};
   padding-left: 20px;
 `;
 
