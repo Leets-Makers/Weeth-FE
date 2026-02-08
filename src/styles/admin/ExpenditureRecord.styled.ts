@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import theme from '../theme';
 import { units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 

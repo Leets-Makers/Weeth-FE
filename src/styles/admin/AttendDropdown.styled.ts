@@ -46,7 +46,6 @@ export const EditButton = styled.button`
   ${typography.admin.Button1};
   background-color: transparent;
   border: none;
-  font-size: 18px;
 `;
 
 export const Edit = styled.div`
@@ -218,7 +217,7 @@ export const StatusText = styled.span<{ status: string }>`
       ? theme.semantic.state.success
       : status === '결석'
         ? theme.semantic.state.error
-        : theme.semantic.icon.alternative};
+        : theme.semantic.text.alternative};
 `;
 
 export const StatusWrapper = styled.div`
