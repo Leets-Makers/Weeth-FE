@@ -6,12 +6,24 @@ import styled from 'styled-components';
 const CardinalContainer = styled.div`
   display: flex;
   gap: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${colors.semantic.line};
+    border-radius: 4px;
+  }
 `;
 
 const CardinalBox = styled.div<{ $selected: boolean }>`
   height: 40px;
   box-sizing: border-box;
   min-width: 40px;
+  flex-shrink: 0;
   padding: 8px 15px;
   border: ${({ $selected }) =>
     $selected ? 'none' : `1px solid ${colors.semantic.line}`};
