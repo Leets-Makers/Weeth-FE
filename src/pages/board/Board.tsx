@@ -9,8 +9,10 @@ import { useEffect, useState } from 'react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import useCardinalData from '@/hooks/queries/useCardinalData';
 import BoardWriteFloatingButton from '@/components/Board/BoardWriteFloatingButton';
+import useCustomBack from '@/hooks/useCustomBack';
 
 const Board = () => {
+  useCustomBack('/home');
   const { currentCardinal } = useCardinalData();
 
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
