@@ -23,7 +23,7 @@
     "fullcalendar": "^6.1.15",
     "html-react-parser": "^5.2.2",
     "lottie-react": "^2.4.1",
-    "next-sanity": "^9.12.3",
+    "@sanity/client": "^6.28.1",
     "pdfjs-dist": "^4.10.38",
     "prop-types": "^15.8.1",
     "qs": "^6.13.1",

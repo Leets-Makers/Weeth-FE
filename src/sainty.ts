@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { createClient } from 'next-sanity';
+import { createClient } from '@sanity/client';
 
 export const client = createClient({
   projectId: 'tn0j01pf',

@@ -28,7 +28,7 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 50;
-  display: flex;
+
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
 
@@ -148,7 +148,6 @@ const PaginationButton = styled.button`
 const PaginationText = styled.span`
   ${typography.Caption1};
   color: ${colors.semantic.text.normal};
-  font-weight: 500;
 `;
 
 const CTAButton = styled.a`
@@ -157,7 +156,6 @@ const CTAButton = styled.a`
   background-color: ${colors.semantic.button.primary};
   color: ${colors.semantic.text.inverse};
   ${typography.Button1};
-  font-weight: bold;
   text-align: center;
   border-radius: 12px;
   text-decoration: none;
