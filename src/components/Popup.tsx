@@ -2,13 +2,21 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { getActivePopups } from '@/sainty';
 import defaultPopupImg from '@/assets/images/popup/popup_default_img_1.png';
+import CloseIcon from '@/assets/images/ic_close.svg?react';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
-interface PopupData {
+interface PopupPage {
   title: string;
   content?: string;
-  imageUrl: string;
+  imageUrl?: string;
   linkUrl?: string;
   useDefaultImage?: boolean;
+}
+
+interface PopupDocument {
+  headerLabel?: string;
+  pages: PopupPage[];
 }
 
 const HIDE_KEY = 'popup_hide_until';
@@ -24,9 +32,12 @@ const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
 
+  display: flex;
+  flex-direction: column;
+
   /* Mobile: 상단 중앙 */
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  justify-content: flex-start;
   padding-top: 60px;
 
   /* PC: 우측 하단 */
@@ -38,38 +49,44 @@ const Overlay = styled.div`
 `;
 
 const PopupContainer = styled.div`
-  background-color: #1e2021;
+  background-color: ${colors.semantic.backGround};
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   width: 320px;
   max-width: calc(100vw - 32px);
   display: flex;
   flex-direction: column;
   position: relative;
+  border: 1px ${colors.semantic.line} solid;
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  background-color: ${colors.semantic.backGround};
+`;
 const CloseButton = styled.button`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: ${units.radius.sm}px;
   border: none;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  font-size: 16px;
+  background-color: ${colors.semantic.button.neutral};
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: ${colors.semantic.button['neutral-interaction']};
   }
+`;
+
+const HeaderLabel = styled.span`
+  ${typography.Sub2};
+
+  color: ${colors.semantic.text.normal};
 `;
 
 const PopupImage = styled.img`
@@ -79,106 +96,109 @@ const PopupImage = styled.img`
   display: block;
 `;
 
-const TextContainer = styled.div`
-  padding: 20px 20px 16px;
-`;
-
 const Title = styled.h3`
-  font-size: 16px;
-  font-weight: 700;
-  color: #f8f8f8;
+  ${typography.Sub1};
+  color: ${colors.semantic.text.normal};
   margin: 0 0 8px 0;
-  line-height: 1.3;
 `;
 
 const Message = styled.p`
-  font-size: 13px;
-  color: #9fa3a6;
+  ${typography.Body2};
+  color: ${colors.semantic.text.alternative};
   margin: 0;
-  line-height: 1.5;
   white-space: pre-wrap;
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
 `;
 
 const PaginationWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 0 20px 12px;
+  gap: 12px;
+  margin: 16px 0 32px 0;
+`;
+
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 `;
 
 const PaginationButton = styled.button`
   background: none;
   border: none;
-  color: #9fa3a6;
-  font-size: 14px;
+  color: ${colors.semantic.text.normal};
+  font-size: 18px;
   cursor: pointer;
   padding: 4px;
   display: flex;
   align-items: center;
-
-  &:hover {
-    color: #f8f8f8;
-  }
+  transition: color 0.2s;
 
   &:disabled {
-    opacity: 0.3;
+    opacity: 0.2;
     cursor: default;
-    &:hover {
-      color: #9fa3a6;
-    }
   }
 `;
 
 const PaginationText = styled.span`
-  font-size: 13px;
-  color: #9fa3a6;
+  ${typography.Caption1};
+  color: ${colors.semantic.text.normal};
+  font-weight: 500;
 `;
 
 const CTAButton = styled.a`
-  display: block;
-  margin: 0 20px 16px;
-  padding: 12px 0;
-  background-color: #00dda8;
-  color: #000;
-  font-size: 14px;
-  font-weight: 600;
+  min-width: 120px;
+  padding: 12px 20px;
+  background-color: ${colors.semantic.button.primary};
+  color: ${colors.semantic.text.inverse};
+  ${typography.Button1};
+  font-weight: bold;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 12px;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.2s;
 
   &:hover {
-    background-color: #00c496;
+    filter: brightness(1.1);
   }
+`;
+
+const PopupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const DismissText = styled.button`
+  ${typography.Button2};
   background: none;
   border: none;
-  color: #6e7173;
-  font-size: 12px;
+  color: ${colors.semantic.text.alternative};
   cursor: pointer;
-  padding: 0 0 16px;
-  text-align: center;
+  padding: 8px 18px;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
+
+  align-self: flex-start;
 
   &:hover {
-    color: #9fa3a6;
+    color: ${colors.semantic.text.strong};
   }
 `;
 
-const getImageUrl = (popup: PopupData): string => {
-  if (popup.useDefaultImage || !popup.imageUrl) {
+const getImageUrl = (page: PopupPage): string => {
+  if (page.useDefaultImage || !page.imageUrl) {
     return defaultPopupImg;
   }
-  return popup.imageUrl;
+  return page.imageUrl;
 };
 
 const NoticePopup = () => {
-  const [popups, setPopups] = useState<PopupData[]>([]);
+  const [popup, setPopup] = useState<PopupDocument | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -193,8 +213,8 @@ const NoticePopup = () => {
 
       try {
         const data = await getActivePopups();
-        if (data && data.length > 0) {
-          setPopups(data);
+        if (data && data.pages && data.pages.length > 0) {
+          setPopup(data);
           setIsVisible(true);
         }
       } catch (error) {
@@ -221,71 +241,73 @@ const NoticePopup = () => {
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => Math.min(popups.length - 1, prev + 1));
+    if (!popup) return;
+    setCurrentIndex((prev) => Math.min(popup.pages.length - 1, prev + 1));
   };
 
-  if (!isVisible || popups.length === 0) return null;
+  if (!isVisible || !popup || popup.pages.length === 0) return null;
 
-  const currentPopup = popups[currentIndex];
-  const showPagination = popups.length > 1;
+  const currentPage = popup.pages[currentIndex];
+  const showPagination = popup.pages.length > 1;
+  const headerText = popup.headerLabel || 'Weeth의 새로운 기능';
 
   return (
     <Overlay onClick={handleClose}>
-      <PopupContainer onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={handleClose} aria-label="닫기">
-          ✕
-        </CloseButton>
+      <PopupWrapper onClick={(e) => e.stopPropagation()}>
+        <PopupContainer>
+          <HeaderWrapper>
+            <HeaderLabel>{headerText}</HeaderLabel>
+            <CloseButton onClick={handleClose} aria-label="닫기">
+              <CloseIcon height={10} width={10} />
+            </CloseButton>
+          </HeaderWrapper>
 
-        <PopupImage
-          src={getImageUrl(currentPopup)}
-          alt={currentPopup.title}
-        />
+          <PopupImage src={getImageUrl(currentPage)} alt={currentPage.title} />
 
-        <TextContainer>
-          <Title>{currentPopup.title}</Title>
-          {currentPopup.content && <Message>{currentPopup.content}</Message>}
-        </TextContainer>
+          <ContentContainer>
+            <Title>{currentPage.title}</Title>
+            {currentPage.content && <Message>{currentPage.content}</Message>}
+            {showPagination && (
+              <PaginationWrapper>
+                <PaginationButton
+                  onClick={handlePrev}
+                  disabled={currentIndex === 0}
+                >
+                  ‹
+                </PaginationButton>
+                <PaginationText>
+                  {currentIndex + 1} / {popup.pages.length}
+                </PaginationText>
+                <PaginationButton
+                  onClick={handleNext}
+                  disabled={currentIndex === popup.pages.length - 1}
+                >
+                  ›
+                </PaginationButton>
+              </PaginationWrapper>
+            )}
 
-        {showPagination && (
-          <PaginationWrapper>
-            <PaginationButton
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              aria-label="이전"
-            >
-              ‹
-            </PaginationButton>
-            <PaginationText>
-              {currentIndex + 1} / {popups.length}
-            </PaginationText>
-            <PaginationButton
-              onClick={handleNext}
-              disabled={currentIndex === popups.length - 1}
-              aria-label="다음"
-            >
-              ›
-            </PaginationButton>
-          </PaginationWrapper>
-        )}
-
-        {currentPopup.linkUrl ? (
-          <CTAButton
-            href={currentPopup.linkUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            지금 사용해보기
-          </CTAButton>
-        ) : (
-          <CTAButton as="button" onClick={handleClose}>
-            지금 사용해보기
-          </CTAButton>
-        )}
-
+            <ButtonRow>
+              {currentPage.linkUrl ? (
+                <CTAButton
+                  href={currentPage.linkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  지금 사용해보기
+                </CTAButton>
+              ) : (
+                <CTAButton as="button" onClick={handleClose}>
+                  확인
+                </CTAButton>
+              )}
+            </ButtonRow>
+          </ContentContainer>
+        </PopupContainer>
         <DismissText onClick={handleDismiss24h}>
           24시간동안 보이지 않기
         </DismissText>
-      </PopupContainer>
+      </PopupWrapper>
     </Overlay>
   );
 };
