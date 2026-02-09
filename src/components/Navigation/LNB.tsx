@@ -53,7 +53,10 @@ const LNB = ({ onClose }: { onClose: () => void }) => {
               width={80}
               height={40}
               style={{ cursor: 'pointer' }}
-              onClick={() => navigate('/home')}
+              onClick={() => {
+                navigate('/home');
+                onClose();
+              }}
             />
             <S.CloseButton onClick={onClose}>
               <Close height={24} />
