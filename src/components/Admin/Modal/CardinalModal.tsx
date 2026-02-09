@@ -72,6 +72,11 @@ const CardinalModal: React.FC<CardinalModalProps> = ({
       return;
     }
 
+    if (Number(cardinalNumber) === 0) {
+      alert('0기는 생성할 수 없습니다.');
+      return;
+    }
+
     try {
       if (isEditing && initialCardinal?.id) {
         // 기수 수정 api 호출
