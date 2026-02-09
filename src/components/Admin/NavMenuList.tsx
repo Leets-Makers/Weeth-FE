@@ -85,7 +85,7 @@ const NavMenuList: React.FC = () => {
   const handleExternalNavigation = (id: string, path: string) => {
     setActiveMenu(id);
     if (id === 'service') {
-      window.open(path, '_blank');
+      window.open(window.location.origin, '_blank');
     } else if (id === 'manual') {
       window.open(
         'https://weeth-develop-2.s3.ap-northeast-2.amazonaws.com/Weeth_관리자_메뉴얼_v3.pdf',
