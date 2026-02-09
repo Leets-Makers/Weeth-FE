@@ -71,9 +71,14 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
     setOpenDropdownId((prevId) => (prevId === id ? null : id));
   };
 
+  const filteredData =
+    selectedCardinal != null
+      ? data.filter((item) => item.cardinal === selectedCardinal)
+      : data;
+
   return (
     <>
-      {data.map((item) => (
+      {filteredData.map((item) => (
         <div key={item.id}>
           <AttendanceTable
             onClick={() => toggleDropdown(item.id)}
