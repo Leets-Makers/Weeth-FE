@@ -41,6 +41,8 @@ const Attendance: React.FC<AttendanceProps> = ({ selectedCardinal }) => {
     const fetchData = async () => {
       if (!isAdmin) return;
 
+      setData([]);
+
       const res = await fetchAttendancesByCardinal(selectedCardinal);
 
       if (res.code === 200) {
