@@ -286,7 +286,10 @@ const NoticePopup = () => {
             )}
 
             <ButtonRow>
-              {currentPage.linkUrl ? (
+              <CTAButton as="button" onClick={handleClose}>
+                확인
+              </CTAButton>
+              {/* {currentPage.linkUrl ? (
                 <CTAButton
                   href={currentPage.linkUrl}
                   target="_blank"
@@ -298,7 +301,7 @@ const NoticePopup = () => {
                 <CTAButton as="button" onClick={handleClose}>
                   확인
                 </CTAButton>
-              )}
+              )} */}
             </ButtonRow>
           </ContentContainer>
         </PopupContainer>
