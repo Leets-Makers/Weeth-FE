@@ -5,6 +5,7 @@ import defaultPopupImg from '@/assets/images/popup/popup_default_img_1.png';
 import CloseIcon from '@/assets/images/ic_close.svg?react';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
+import { useLocation } from 'react-router-dom';
 
 interface PopupPage {
   title: string;
@@ -28,9 +29,6 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   z-index: 50;
-
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
 
   display: flex;
   flex-direction: column;
@@ -58,6 +56,7 @@ const PopupContainer = styled.div`
   flex-direction: column;
   position: relative;
   border: 1px ${colors.semantic.line} solid;
+  box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.3);
 `;
 
 const HeaderWrapper = styled.div`
@@ -199,6 +198,7 @@ const NoticePopup = () => {
   const [popup, setPopup] = useState<PopupDocument | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const checkPopup = async () => {
@@ -243,6 +243,7 @@ const NoticePopup = () => {
     setCurrentIndex((prev) => Math.min(popup.pages.length - 1, prev + 1));
   };
 
+  if (location.pathname !== '/home') return null;
   if (!isVisible || !popup || popup.pages.length === 0) return null;
 
   const currentPage = popup.pages[currentIndex];
