@@ -30,8 +30,10 @@ const DirectCardinalDropdown: React.FC<DirectCardinalProps> = ({
   const [isCustomInput, setIsCustomInput] = useState(false);
 
   const sortedCardinals =
-    allCardinals?.slice().sort((a, b) => b.cardinalNumber - a.cardinalNumber) ??
-    [];
+    allCardinals
+      ?.slice()
+      .filter((cardinal) => cardinal.cardinalNumber !== 0)
+      .sort((a, b) => b.cardinalNumber - a.cardinalNumber) ?? [];
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 

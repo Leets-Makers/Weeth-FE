@@ -44,7 +44,7 @@ export default function useSmartLoading<T>(promise: Promise<T>) {
 }
 
 export function useSmartCombinedLoading(...loadings: boolean[]) {
-  const isLoading = loadings.some(Boolean);
+  const anyLoading = loadings.some(Boolean);
   const [hasMounted, setHasMounted] = useState(false);
   const [minDelay, setMinDelay] = useState(true);
 
@@ -57,12 +57,13 @@ export function useSmartCombinedLoading(...loadings: boolean[]) {
   const memoizedPromise = useMemo(
     () =>
       new Promise<void>((resolve) => {
-        if (!isLoading) resolve();
+        if (!anyLoading) resolve();
       }),
-    [isLoading],
+    [anyLoading],
   );
 
   const { loading: smartLoading } = useSmartLoading(memoizedPromise);
 
-  return !hasMounted || isLoading || smartLoading || minDelay;
+  if (!anyLoading) return false;
+  return !hasMounted || smartLoading || minDelay;
 }

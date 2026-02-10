@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
+import { pcResponsive } from '..';
 
 // LNB
 
@@ -158,7 +159,7 @@ export const UserInfo = styled.div`
 export const Container = styled.div`
   display: flex;
   width: 100%;
-  max-width: ${units.device.desktop};
+  ${pcResponsive};
   justify-content: space-between;
   align-items: center;
   padding: 12px 18px;

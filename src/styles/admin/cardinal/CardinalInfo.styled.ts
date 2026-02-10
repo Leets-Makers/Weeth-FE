@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 import { BoxWrapper } from '@/components/Admin/TotalDues';
 import Box, { Description } from '@/components/Admin/Box';
-import { colors, units } from '@/theme/designTokens';
 
 export const CardinalBoxWrapper = styled(BoxWrapper)`
   padding: 0 0 20px 0;
@@ -10,8 +9,6 @@ export const CardinalBoxWrapper = styled(BoxWrapper)`
 `;
 
 export const TotalBox = styled(Box)`
-  background-color: ${({ theme }) => theme.color.gray[18]};
-
   ${Description} {
     color: ${({ theme }) => theme.semantic.text.inverse};
   }
