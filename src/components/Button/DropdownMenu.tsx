@@ -109,7 +109,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     '의료산업경영학과',
   ].sort((a, b) => a.localeCompare(b, 'ko', { sensitivity: 'base' }));
 
-  const cardinalOptions = ['1', '2', '3', '4', '5'];
+  const cardinalOptions = ['1', '2', '3', '4', '5', '6', '7'];
   const options = isCardinal ? cardinalOptions : departmentOptions;
 
   const handleSelect = (value: string) => {
