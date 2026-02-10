@@ -1,17 +1,16 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { units } from '@/theme/designTokens';
+import { pcResponsive } from '..';
 
 export const EventDetailWrapper = styled.div`
-  width: 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
+  box-sizing: border-box;
   margin-bottom: 50px;
-`;
-
-export const Line = styled.div`
-  border: 1px solid;
-  color: ${theme.color.gray[30]};
-  margin: 15px;
-  transform: scaleY(0.2);
-  width: 88%;
 `;
 
 export const Error = styled.div`

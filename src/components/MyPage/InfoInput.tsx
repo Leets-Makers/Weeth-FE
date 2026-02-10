@@ -1,48 +1,45 @@
 import { useEffect, useState } from 'react';
-import theme from '@/styles/theme';
 import styled from 'styled-components';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 26px;
-  font-size: 16px;
+  ${typography.Body1};
+  width: 100%;
 `;
 
 const Label = styled.div<{ isProfile?: boolean }>`
-  width: 42px;
+  flex: 1;
   text-align: left;
   color: ${(props) =>
-    props.isProfile ? theme.color.gray[100] : theme.color.gray[65]};
+    props.isProfile
+      ? colors.semantic.text.normal
+      : colors.semantic.text.alternative};
 `;
 
 const Input = styled.input`
-  width: 257px;
+  flex: 7;
   height: 45px;
   box-sizing: border-box;
   padding-left: 10px;
-
   outline: none;
   border: none;
   border-radius: 4px;
-  background-color: ${theme.color.gray[18]};
-  color: #fff;
-
-  font-size: 16px;
-
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
+  ${typography.Body1};
 
   &::placeholder {
+    color: ${colors.semantic.container.neutral};
   }
 `;
 
 const NoEdit = styled(Input).attrs({ readOnly: true })`
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
 `;
 
 const InfoInput = ({
@@ -58,46 +55,22 @@ const InfoInput = ({
 }) => {
   const [value, setValue] = useState(origValue);
 
-  let inputType;
-  switch (text) {
-    case '핸드폰':
-    case '학번':
-      inputType = 'number';
-      break;
-    case '메일':
-      inputType = 'no-korean';
-      break;
-    case '이름':
-      inputType = 'korean-english';
-      break;
-    default:
-      inputType = 'text';
-  }
+  const inputType = 'text';
 
-  /*
-    아래 정규식은 사용자 입력을 제한하기 위함.
-    최소치는 저장 버튼을 눌렀을 시에 다시한번 유효성 검사를 진행
-  */
   const validateValue = (val: string): boolean => {
     if (val === '') return true;
     const numberRegex = /^[0-9]*$/;
     const koreanRegex = /^[ㄱ-ㅎ가-힣]*$/;
     const koreanEnglishRegex = /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z]*$/;
 
-    switch (inputType) {
-      case 'text':
-        return koreanRegex.test(val) && val.length <= 5;
-      case 'number':
-        if (text === '학번') {
-          return numberRegex.test(val) && val.length <= 9;
-        }
-        if (text === '핸드폰') {
-          return numberRegex.test(val) && val.length <= 11;
-        }
-        return numberRegex.test(val);
-      case 'korean-english':
+    switch (text) {
+      case '이름':
         return koreanEnglishRegex.test(val) && val.length <= 5;
-      case 'no-korean':
+      case '학번':
+        return numberRegex.test(val) && val.length <= 9;
+      case '핸드폰':
+        return numberRegex.test(val) && val.length <= 11;
+      case '메일':
         return !koreanRegex.test(val);
       default:
         return true;
@@ -105,7 +78,12 @@ const InfoInput = ({
   };
 
   const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
+    let val = e.target.value;
+
+    if (text === '핸드폰' || text === '학번') {
+      val = val.replace(/[^0-9]/g, ''); // 숫자 외 제거
+    }
+
     if (validateValue(val)) {
       setValue(val);
       editValue(val);
@@ -116,15 +94,13 @@ const InfoInput = ({
     setValue(origValue);
   }, [origValue]);
 
+  const isReadonly = text === '로그인' || text === '기수' || text === '역할';
+
   return (
     <Container>
       <Label isProfile={isProfile}>{text}</Label>
-      {text === '로그인' || text === '기수' || text === '역할' ? (
-        <NoEdit
-          value={value as string}
-          onChange={onChangeValue}
-          type={inputType}
-        />
+      {isReadonly ? (
+        <NoEdit value={value as string} type="text" />
       ) : (
         <Input
           value={value as string}

@@ -1,21 +1,27 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
+import typography from '@/theme/typography';
 
-export const Container = styled.div`
-  width: 370px;
-  padding-bottom: 50px;
-  font-size: 16px;
+export const MyInfoContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 19px;
 `;
-
-export const TextButton = styled.div<{ isSignOut?: boolean }>`
+export const TextButton = styled.div<{ $isSignOut?: boolean }>`
   width: calc(100% - 8px);
   box-sizing: border-box;
   padding: 12px 0 12px 16px;
   margin: 0 4px;
-  border-bottom: ${(props) =>
-    props.isSignOut ? 'none' : `1px solid ${theme.color.gray[30]}`};
-  color: ${(props) => (props.isSignOut ? theme.color.negative : 'white')};
+  border-bottom: ${({ $isSignOut }) =>
+    $isSignOut ? 'none' : `1px solid ${colors.semantic.line}`};
+  color: ${({ $isSignOut }) =>
+    $isSignOut ? colors.semantic.state.error : 'white'};
   cursor: pointer;
+  &:hover {
+    background-color: ${colors.semantic.button['neutral-interaction']};
+  }
 `;
 
 export const ImgButton = styled.div`
@@ -25,33 +31,25 @@ export const ImgButton = styled.div`
   cursor: pointer;
 `;
 
-export const Account = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 94px 25px 0px 25px;
+export const Section = styled.section`
+  width: 100%;
 `;
 
-export const LeaveButton = styled.button`
-  width: 96px;
-  height: 45px;
-  border: none;
-  border-radius: 10px;
-  color: ${theme.color.gray[65]};
-  background-color: ${theme.color.gray[18]};
-  margin-right: 5px;
+export const Title = styled.div`
+  ${typography.Sub1};
+  color: ${colors.semantic.text.alternative};
+  margin: 18px 0 12px 0;
 `;
 
-export const LogoutButton = styled.button`
+export const Box = styled.div`
+  width: 100%;
+  background-color: ${colors.semantic.container.neutral};
+  border: 1px solid ${colors.semantic.line};
+  border-radius: 14px;
+`;
+
+export const Error = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  width: 219px;
-  height: 45px;
-  margin-left: 5px;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  background-color: ${theme.color.gray[30]};
-  cursor: pointer;
+  ${typography.Body1};
 `;

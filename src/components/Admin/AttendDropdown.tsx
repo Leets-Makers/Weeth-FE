@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import * as S from '@/styles/admin/AttendDropdown.styled';
 import CheckBox from '@/assets/images/ic_admin_check.svg';
 import Absence from '@/assets/images/ic_admin_absence.svg';
+import Clock from '@/assets/images/ic_admin_clock.svg';
 import updateAttendanceStatus from '@/api/admin/attendance/updateAttendanceStatus';
-import useGetGlobaluserInfo from '@/api/useGetGlobaluserInfo';
 import department from '@/constants/departmentConstants';
+import useUserData from '@/hooks/queries/useUserData';
 import RadioButton from './RadioButton';
 import SearchInput from './SearchInput';
+import { colors } from '@/theme/designTokens';
 
 interface AttendDropdownItem {
   id: number;
@@ -50,20 +52,21 @@ const formatStatusForAPI = (status: string) => {
 
 const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
   const [data, setData] = useState<AttendDropdownItem[]>([]);
+  const [originalData, setOriginalData] = useState<AttendDropdownItem[]>([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [changedData, setChangedData] = useState<{
     [id: number]: string;
   }>({});
 
-  const { isAdmin } = useGetGlobaluserInfo();
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
 
   useEffect(() => {
     const loadAttendances = async () => {
       if (!isAdmin) return;
 
       const res = await fetchAttendances(meetingId);
-      console.log(res);
 
       if (res.code === 200) {
         const formattedData = res.data.map((item: any) => ({
@@ -71,6 +74,7 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
           status: formatStatus(item.status),
         }));
         setData(formattedData);
+        setOriginalData(formattedData);
       }
     };
     if (meetingId) {
@@ -80,8 +84,11 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
 
   const toggleEditMode = () => setIsEditMode((prev) => !prev);
 
-  const handleCancel = () => {
-    setIsEditMode(true);
+  const handleCancel = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setData(originalData);
+    setChangedData({});
+    setIsEditMode(false);
   };
 
   const handleStatusChange = (id: number, newStatus: string) => {
@@ -96,7 +103,8 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
     }));
   };
 
-  const handleSave = async () => {
+  const handleSave = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!isAdmin) return;
 
     const updates = Object.entries(changedData).map(([id, status]) => ({
@@ -107,6 +115,8 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
     const res = await updateAttendanceStatus(updates);
 
     if (res.code === 200) {
+      setOriginalData(data);
+      setChangedData({});
       setIsEditMode(false);
     } else {
       alert('출석 상태 업데이트에 실패했습니다.');
@@ -118,8 +128,8 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
   };
 
   const statusOptions = [
-    { value: '출석', label: '출석', color: '#508FFF' },
-    { value: '결석', label: '결석', color: '#FF5858' },
+    { value: '출석', label: '출석', color: `${colors.semantic.state.success}` },
+    { value: '결석', label: '결석', color: `${colors.semantic.state.error}` },
   ];
 
   const filteredData = data.filter((item) =>
@@ -161,7 +171,10 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
             <S.Member>
               <S.UserName>{item.name}</S.UserName>
               <S.UserInfo>
-                {item.position} {department[item.department]} {item.studentId}
+                <S.Position>{item.position}</S.Position>
+                <S.DepartmentAndId>
+                  {department[item.department]} {item.studentId}
+                </S.DepartmentAndId>
               </S.UserInfo>
             </S.Member>
             <S.Check>
@@ -186,15 +199,40 @@ const AttendDropdown: React.FC<AttendDropdownProps> = ({ meetingId }) => {
               ) : (
                 <S.CheckGap>
                   <img
-                    src={item.status === '출석' ? CheckBox : Absence}
-                    alt={item.status === '출석' ? '출석 이미지' : '결석 이미지'}
+                    src={
+                      item.status === '출석'
+                        ? CheckBox
+                        : item.status === '결석'
+                          ? Absence
+                          : Clock
+                    }
+                    alt={
+                      item.status === '출석'
+                        ? '출석 이미지'
+                        : item.status === '결석'
+                          ? '결석 이미지'
+                          : '미결 이미지'
+                    }
                   />
-                  {item.status}
+                  <S.StatusText status={item.status}>
+                    {item.status}
+                  </S.StatusText>
                 </S.CheckGap>
               )}
             </S.Check>
           </S.MemberWrapper>
         ))}
+        <S.Info>
+          <S.User>사용자 정보</S.User>
+          {isEditMode ? (
+            <S.InfoWrapper>
+              <S.InfoBox>출석</S.InfoBox>
+              <S.InfoBox>결석</S.InfoBox>
+            </S.InfoWrapper>
+          ) : (
+            <S.Attend>출석 정보</S.Attend>
+          )}
+        </S.Info>
       </S.UserWrapper>
     </S.Wrapper>
   );

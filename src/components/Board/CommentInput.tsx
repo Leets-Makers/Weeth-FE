@@ -1,27 +1,29 @@
 import { useState, useEffect, Dispatch, SetStateAction, useRef } from 'react';
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 import CommentSend from '@/assets/images/ic_comment_send.svg';
-import createComment from '@/api/postComment';
+import usePostComment from '@/hooks/mutation/board/usePostComment';
 import { toastError } from '@/components/common/ToastMessage';
 import PostFile from '@/components/Board/PostFile';
 import FileUploader from '@/components/Board/FileUploader';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
+
   ${pcResponsive}
 `;
 
-const FileContainer = styled.div`
+const FileListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 15px;
   gap: 10px;
-  background-color: ${theme.color.gray[18]}50;
+  padding: 10px 15px;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const CommentContainer = styled.div`
@@ -30,49 +32,47 @@ const CommentContainer = styled.div`
   align-items: flex-end;
   padding: 10px 10px 22px 10px;
   gap: 10px;
-  background-color: ${theme.color.gray[18]};
+  background-color: ${colors.dark.neutral[100]};
   color: white;
   box-sizing: border-box;
 `;
 
 const Input = styled.textarea`
   flex: 1;
-  width: 271px;
-  min-height: 33px;
+  width: 255px;
   box-sizing: border-box;
   resize: none;
   border: none;
   outline: none;
-  border-radius: 20px;
-  padding: 7px 15px;
-  gap: 10px;
-  background-color: ${theme.color.gray[30]};
-  color: white;
-  font-size: 16px;
-  font-family: ${theme.font.medium};
+  border-radius: ${units.radius.sm}px;
+  padding: ${units.padding['200']}px 15px;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
+  ${typography.Body1};
   white-space: pre-wrap;
   word-break: break-word;
 
   &::placeholder {
-    color: white;
-    font-family: ${theme.font.medium};
+    ${typography.Body1};
   }
 `;
 
 const SendButton = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
 `;
 
 const CommentInput = ({
   postId,
+  boardPath,
   initialParentCommentId = null,
   onCommentSuccess,
   files,
   setFiles,
 }: {
   postId: number;
+  boardPath: 'board' | 'notices';
   initialParentCommentId?: number | null;
   onCommentSuccess?: () => void;
   files: File[];
@@ -80,7 +80,22 @@ const CommentInput = ({
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
-  const [sending, setSending] = useState(false);
+  const submittingRef = useRef(false);
+
+  const postCommentMutation = usePostComment({
+    onSuccess: () => {
+      setInputValue('');
+      setFiles([]);
+      setParentCommentId(null);
+      onCommentSuccess?.();
+    },
+    onError: (message) => {
+      toastError(message);
+    },
+    onSettled: () => {
+      submittingRef.current = false;
+    },
+  });
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -107,57 +122,48 @@ const CommentInput = ({
     autoResize(e.currentTarget);
   };
 
-  const onClickSend = async () => {
-    if (sending) return;
+  const onClickSend = () => {
+    if (submittingRef.current || postCommentMutation.isPending) return;
     if (inputValue.trim() === '') {
       toastError('댓글을 입력하세요.');
       return;
     }
 
-    setSending(true);
-    try {
-      await createComment(
-        postId,
-        inputValue,
-        parentCommentId ?? undefined,
-        files,
-      );
-      setInputValue('');
-      setFiles([]);
-      if (onCommentSuccess) onCommentSuccess();
-    } catch (error: any) {
-      console.error(
-        '댓글 작성 중 에러:',
-        error.response?.data?.message || error.message,
-      );
-      toastError('댓글 작성에 실패했습니다.');
-    }
+    submittingRef.current = true;
+    postCommentMutation.mutate({
+      postId,
+      content: inputValue,
+      parentCommentId: parentCommentId ?? undefined,
+      files,
+      boardPath,
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
+      e.stopPropagation();
       onClickSend();
     }
   };
 
-  const handleDeleteFile = (fileName: string) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  const handleDeleteFile = (targetFile: File) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file !== targetFile));
   };
 
   return (
     <Container>
       {files.length > 0 && (
-        <FileContainer>
+        <FileListContainer>
           {files.map((file) => (
             <PostFile
-              key={file.name}
+              key={`${file.name}-${file.lastModified}`}
               fileName={file.name}
               isDownload={false}
-              onClick={() => handleDeleteFile(file.name)}
+              onClick={() => handleDeleteFile(file)}
             />
           ))}
-        </FileContainer>
+        </FileListContainer>
       )}
 
       <CommentContainer>

@@ -1,17 +1,21 @@
-import theme from '@/styles/theme';
 import Box from '@/components/Admin/Box';
 import * as S from '@/styles/admin/cardinal/CardinalInfo.styled';
 import AddCardinal from '@/components/Admin/AddCardinal';
-import useGetAllCardinals from '@/api/useGetCardinals';
+
 import { useEffect, useState } from 'react';
 import { useGetAdminUsers } from '@/api/admin/member/getAdminUser';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import CardinalModal from '@/components/Admin/Modal/CardinalModal';
+import useCardinalData from '@/hooks/queries/useCardinalData';
+import { colors } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
 
 const CardinalInfo: React.FC = () => {
+  const theme = useTheme();
+
   const { selectedCardinal, setSelectedCardinal, setFilteredMembers } =
     useMemberContext();
-  const { allCardinals } = useGetAllCardinals();
+  const { data: allCardinals } = useCardinalData();
   const { allUsers } = useGetAdminUsers();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentEditingCardinal, setCurrentEditingCardinal] = useState<{
@@ -29,7 +33,8 @@ const CardinalInfo: React.FC = () => {
   >([]);
 
   useEffect(() => {
-    const sortedCardinals = [...allCardinals].sort(
+    if (!allCardinals || allCardinals.length === 0) return;
+    const sortedCardinals = allCardinals.sort(
       (a, b) => b.cardinalNumber - a.cardinalNumber,
     );
     setCardinalList(sortedCardinals);
@@ -68,8 +73,8 @@ const CardinalInfo: React.FC = () => {
           title=" "
           description="전체"
           last={`총 ${totalMembers}명`}
-          color={theme.color.gray[18]}
-          lastColor="#D3D3D3"
+          color={colors.light.primary[500]}
+          lastColor={colors.light.neutral[300]}
           isCardinalBox
           isClick
           onClick={() => setSelectedCardinal(null)}
@@ -93,8 +98,8 @@ const CardinalInfo: React.FC = () => {
               }
               description={`${cardinal.cardinalNumber}기`}
               last={lastText}
-              color={theme.color.gray[65]}
-              lastColor="#D3D3D3"
+              color={colors.light.neutral[300]}
+              lastColor={theme.semantic.text.alternative}
               isCardinalBox
               isClick
               isIncomplete={!cardinal.year || !cardinal.semester}

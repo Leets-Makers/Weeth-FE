@@ -1,18 +1,14 @@
 import { useState } from 'react';
-import useGetBoardDetail from '@/api/useGetBoardDetail';
+import useBoardDetail from '@/hooks/queries/board/useBoardDetail';
 import CommentInput from '@/components/Board/CommentInput';
 import PostCommentList from '@/components/Board/PostCommentList';
 import PostDetailMain from '@/components/Board/PostDetailMain';
-import Header from '@/components/Header/Header';
-import { useNavigate, useParams } from 'react-router-dom';
-import useGetUserName from '@/hooks/useGetUserName';
-import MenuModal from '@/components/common/MenuModal';
-import deletePost from '@/api/deletePost';
-import { toastError, toastInfo } from '@/components/common/ToastMessage';
-import SelectModal from '@/components/Modal/SelectModal';
+import { useParams } from 'react-router-dom';
 import Loading from '@/components/common/Loading';
-import getHeaderTitle from '@/utils/getHeaderTitle';
 import * as S from '@/styles/board/BoardDetail.styled';
+import useSmartLoading from '@/hooks/useSmartLoading';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 const PartDetail = () => {
   const { category, part, postId } = useParams<{
@@ -33,58 +29,27 @@ const PartDetail = () => {
     return <div>잘못된 게시물 ID입니다.</div>;
   }
 
-  const [refreshKey, setRefreshKey] = useState(0);
   const [parentCommentId, setParentCommentId] = useState<number | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
 
   const [files, setFiles] = useState<File[]>([]);
 
-  const { boardDetailInfo, error, loading } = useGetBoardDetail(
-    type,
-    numericPostId,
-    refreshKey,
-  );
+  const {
+    data: boardDetailInfo,
+    error,
+    isLoading: loading,
+  } = useBoardDetail(type, numericPostId);
 
   const [selectedComment, setSelectedComment] = useState<
     Record<number, boolean>
   >({});
 
-  const navigate = useNavigate();
-
-  const openSelectModal = () => {
-    setIsSelectModalOpen(true);
-  };
-
-  const closeSelectModal = () => {
-    setIsSelectModalOpen(false);
-  };
-
-  const confirmDelete = async () => {
-    try {
-      await deletePost(numericPostId, type);
-      navigate(`/board/${category}/${part}`, { replace: true });
-      setTimeout(() => {
-        toastInfo('게시물이 삭제되었습니다');
-      }, 500);
-    } catch (err) {
-      toastError();
-      console.error(err);
-    }
-    closeSelectModal();
-  };
-
-  const handleRefresh = () => {
-    setRefreshKey((prev) => prev + 1);
+  const handleCommentDelete = () => {
     setParentCommentId(null);
   };
 
   const handleCommentSuccess = () => {
-    setTimeout(() => {
-      setParentCommentId(null);
-      setSelectedComment({});
-    }, 200);
-    handleRefresh();
+    setParentCommentId(null);
+    setSelectedComment({});
   };
 
   const handleReply = (commentId: number) => {
@@ -95,10 +60,14 @@ const PartDetail = () => {
     }));
   };
 
-  const isMyPost = boardDetailInfo?.name === useGetUserName();
+  const { loading: smartLoading } = useSmartLoading(
+    new Promise<void>((resolve) => {
+      if (!loading) resolve();
+    }),
+  );
 
-  if (error) return <div>오류: {error}</div>;
-  if (loading) return <Loading />;
+  if (error) return <div>오류: {error.message}</div>;
+  if (smartLoading) return <Loading />;
 
   if (!category || !part || !postId) {
     return <div>잘못된 경로입니다.</div>;
@@ -106,44 +75,20 @@ const PartDetail = () => {
 
   return (
     <>
-      {isModalOpen && (
-        <MenuModal
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        >
-          <S.TextButton
-            onClick={() =>
-              navigate(`/board/${category}/${part}/${postId}/edit`)
-            }
-          >
-            수정
-          </S.TextButton>
-          <S.TextButton $isLast onClick={openSelectModal}>
-            삭제
-          </S.TextButton>
-        </MenuModal>
-      )}
-      {isSelectModalOpen && (
-        <SelectModal
-          title="게시물 삭제"
-          content="이 게시물을 정말 삭제하시겠습니까?"
-          onClose={closeSelectModal}
-          onDelete={confirmDelete}
-        />
-      )}
-
       <S.Container>
-        <Header
-          RightButtonType="MENU"
-          isAccessible={isMyPost}
-          onClickRightButton={() => {
-            setIsModalOpen(true);
-          }}
-        >
-          {getHeaderTitle(category, part)}
-        </Header>
-
+        <BreadcrumbPadding>
+          <Breadcrumb
+            items={[
+              { label: '게시판', path: '/board' },
+              {
+                label: `${part} 파트게시판`,
+                path: `/board/${category}/${part}`,
+              },
+              { label: '게시판상세' },
+            ]}
+            hasTitle
+          />
+        </BreadcrumbPadding>
         {boardDetailInfo && (
           <>
             <PostDetailMain info={boardDetailInfo} />
@@ -151,7 +96,7 @@ const PartDetail = () => {
               comments={boardDetailInfo.comments}
               postId={boardDetailInfo.id}
               path={commentType}
-              onCommentDelete={handleRefresh}
+              onCommentDelete={handleCommentDelete}
               onReply={handleReply}
               selectedComment={selectedComment}
             />
@@ -162,6 +107,7 @@ const PartDetail = () => {
         {boardDetailInfo && (
           <CommentInput
             postId={boardDetailInfo.id}
+            boardPath={commentType as 'board' | 'notices'}
             initialParentCommentId={parentCommentId}
             onCommentSuccess={handleCommentSuccess}
             files={files}

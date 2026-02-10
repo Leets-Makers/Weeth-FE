@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
-import theme from '@/styles/theme';
 import { BoxWrapper } from '@/components/Admin/TotalDues';
-import Box from '@/components/Admin/Box';
+import Box, { Description } from '@/components/Admin/Box';
 
 export const CardinalBoxWrapper = styled(BoxWrapper)`
   padding: 0 0 20px 0;
@@ -10,7 +9,9 @@ export const CardinalBoxWrapper = styled(BoxWrapper)`
 `;
 
 export const TotalBox = styled(Box)`
-  background-color: ${theme.color.gray[18]};
+  ${Description} {
+    color: ${({ theme }) => theme.semantic.text.inverse};
+  }
 `;
 
 export const ScrollContainer = styled.div`

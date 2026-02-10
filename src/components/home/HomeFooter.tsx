@@ -40,7 +40,7 @@ const HomeFooter: React.FC = () => {
       >
         <S.GridItem href="https://www.leets.land/" target="_blank">
           <S.ImgContainer>
-            <img src={leets} alt="leets" />
+            <img src={leets} alt="leets" loading="lazy" />
           </S.ImgContainer>
           홈페이지
         </S.GridItem>
@@ -49,7 +49,7 @@ const HomeFooter: React.FC = () => {
           target="_blank"
         >
           <S.ImgContainer>
-            <img src={insta} alt="instagram" />
+            <img src={insta} alt="instagram" loading="lazy" />
           </S.ImgContainer>
           Instagram
         </S.GridItem>
@@ -58,19 +58,19 @@ const HomeFooter: React.FC = () => {
           target="_blank"
         >
           <S.ImgContainer>
-            <img src={leetsmakers} alt="leetsmakers" />
+            <img src={leetsmakers} alt="leetsmakers" loading="lazy" />
           </S.ImgContainer>
           Makers
         </S.GridItem>
         <S.GridItem href="https://discord.gg/XvZqeAca4K" target="_blank">
           <S.ImgContainer>
-            <img src={discord} alt="discord" />
+            <img src={discord} alt="discord" loading="lazy" />
           </S.ImgContainer>
           Discord
         </S.GridItem>
         <S.GridItem href="https://github.com/Leets-Official" target="_blank">
           <S.ImgContainer>
-            <img src={github} alt="github" />
+            <img src={github} alt="github" loading="lazy" />
           </S.ImgContainer>
           Github
         </S.GridItem>

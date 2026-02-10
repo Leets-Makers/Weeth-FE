@@ -2,14 +2,17 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import SortIcon from '@/assets/images/ic_admin_change.svg';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
+import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const SortButtonWrapper = styled.div`
+  ${typography.admin.Button2};
   display: flex;
   align-items: center;
-  background-color: #ecf9f6;
+  background-color: ${({ theme }) => theme.semantic.button.neutral};
   gap: 10px;
   padding: 7px;
-  border-radius: 4px;
+  border-radius: ${units.radius.sm}px;
   cursor: pointer;
 `;
 const SortButton: React.FC = () => {

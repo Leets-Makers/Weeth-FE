@@ -1,16 +1,18 @@
 import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  font-size: 16px;
   z-index: 2;
 `;
 
-export const Bar = styled.div<{ isMeeting: boolean }>`
+export const Bar = styled.div<{ $isMeeting: boolean }>`
   width: 1.5px;
   height: 10px;
-  background-color: ${(props) => (props.isMeeting ? theme.color.main : '#fff')};
+  background-color: ${({ $isMeeting }) =>
+    $isMeeting ? colors.semantic.brand.primary : colors.semantic.icon.normal};
   border-radius: 20px;
   margin: 0 2px;
 `;
@@ -18,6 +20,7 @@ export const Bar = styled.div<{ isMeeting: boolean }>`
 export const EventContentContainer = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const EventContent = styled.div`
@@ -25,10 +28,12 @@ export const EventContent = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  cursor: pointer;
 `;
 
 export const Calendar = styled.div`
   margin-bottom: 5px;
+  padding: 0 ${units.padding['450']}px;
 
   div {
     text-overflow: clip !important;
@@ -51,13 +56,13 @@ export const Calendar = styled.div`
 
   // 월화수목금토일 표시 스타일링
   .fc-col-header-cell {
-    background-color: ${theme.color.gray[12]};
+    background-color: ${colors.semantic.backGround};
     padding-bottom: 8px;
     border: none;
   }
 
   .fc-col-header {
-    background-color: ${theme.color.gray[12]};
+    background-color: ${colors.semantic.backGround};
     border: 1.5px solid ${theme.color.gray[20]};
   }
 
@@ -85,15 +90,15 @@ export const Calendar = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
-    font-family: ${theme.font.semiBold};
+    ${typography.Caption1};
   }
 
   // 주말 색상 변경
   .fc-day-sun a {
-    color: ${theme.color.negative};
+    color: #ff5858;
   }
   .fc-day-sat a {
-    color: ${theme.color.positive};
+    color: ${colors.dark.secondary[500]};
   }
 
   // 기본 일정 표시 스타일링
@@ -102,10 +107,11 @@ export const Calendar = styled.div`
     padding-right: 2px;
     display: flex;
     height: 16px;
-    background-color: rgba(255, 255, 255, 0.03); !important;
+    background-color: rgba(255, 255, 255, 0.03) !important;
     border: none;
     border-radius: 1px;
-    font-family: ${theme.font.semiBold};
+    cursor: pointer;
+    ${typography.Caption1};
   }
 
   // 2일 이상 일정 표시 스타일링
@@ -121,12 +127,14 @@ export const Calendar = styled.div`
     display: none !important;
   }
 
-  .fc-event-selected, .fc-event:focus {
+  .fc-event-selected,
+  .fc-event:focus {
     box-shadow: none;
-}
+  }
 
   .fc-event-main {
     overflow: hidden;
+    cursor: pointer;
   }
 
   // 각 날짜 셀 스타일링
@@ -152,10 +160,10 @@ export const SelectedDateOnCalendar = styled.div`
   position: absolute;
   top: 2px;
   right: 0.5px;
-  background: ${theme.color.mainMiddle};
+  background-color: ${colors.semantic.container['primary-alternative']};
   border-radius: 10px;
   padding-top: 2px;
-  width: 52px;
+  width: 100%;
   height: 66px;
   z-index: 10;
   color: white !important;
@@ -167,10 +175,10 @@ export const Today = styled.div`
   position: absolute;
   top: 2px;
   right: 0.5px;
-  background: ${theme.color.gray[9]};
+  background-color: ${colors.dark.neutral[100]};
   border-radius: 10px;
   padding-top: 2px;
-  width: 52px;
+  width: 100%;
   height: 66px;
 `;
 
@@ -179,22 +187,23 @@ export const ScheduleList = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  padding: 0 ${units.padding['450']}px;
 `;
 
 export const SelectedDate = styled.div`
-  font-weight: 600;
-  font-size: 18px;
-  margin: 20px 0 15px 25px;
+  ${typography.Sub1};
+  color: ${colors.semantic.text.normal};
+  margin: 18px 0 15px 18px;
 `;
 
 export const NoEvent = styled.div`
-  width: 345px;
+  width: 100%;
   height: 63px;
-  background-color: ${theme.color.gray[18]};
-  border-radius: 5px;
+  background-color: ${colors.semantic.container.neutral};
+  border-radius: ${units.radius.md}px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
   font-weight: 500;
 `;

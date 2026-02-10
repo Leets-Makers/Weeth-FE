@@ -1,36 +1,38 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import icSearch from '@/assets/images/ic_admin_search.svg';
+import icSearch from '@/assets/images/ic_search.svg';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
+import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const SearchBarWrapper = styled.div<{
-  isWrapped?: boolean;
-  isPenaltyPage?: boolean;
+  $isWrapped?: boolean;
+  $isPenaltyPage?: boolean;
 }>`
   position: relative;
   background-color: #ffffff;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  width: ${({ isPenaltyPage }) => (isPenaltyPage ? '63%' : '100%')};
-  min-width: ${({ isPenaltyPage }) => (isPenaltyPage ? '950px' : '1400px')};
+  width: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '63%' : '100%')};
+  min-width: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '950px' : '1400px')};
   padding: 15px 20px;
-  border-radius: 4px;
-  margin: ${({ isPenaltyPage }) => (isPenaltyPage ? '0px' : '30px 0 10px')};
+  border-radius: ${units.radius.lg}px;
+  margin: ${({ $isPenaltyPage }) => ($isPenaltyPage ? '0px' : '30px 0 10px')};
   box-shadow: 0px 3px 8px 0px rgba(133, 141, 138, 0.2);
   gap: 15px;
 `;
 
 export const StyledInput = styled.input`
+  ${typography.admin.Body1};
   width: 100%;
   height: 48px;
-  font-size: 18px;
   box-sizing: border-box;
   padding: 12px 12px 12px 40px;
-  border: 1px solid #dedede;
-  border-radius: 4px;
+  border: 1px solid ${({ theme }) => theme.semantic.line};
+  border-radius: ${units.radius.sm}px;
   &::placeholder {
-    color: ${theme.color.gray[20]};
+    color: ${({ theme }) => theme.semantic.text.alternative};
   }
   &:focus {
     border: none;
@@ -38,9 +40,9 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const SearchBarIcon = styled.img<{ isWrapped?: boolean }>`
+export const SearchBarIcon = styled.img<{ $isWrapped?: boolean }>`
   position: absolute;
-  left: ${({ isWrapped }) => (isWrapped ? '32px' : '165px')};
+  left: ${({ $isWrapped }) => ($isWrapped ? '32px' : '165px')};
   top: 50%;
   width: 20px;
   height: 20px;
@@ -81,7 +83,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   const content = (
     <>
-      <SearchBarIcon src={icSearch} alt="search" isWrapped={isWrapped} />
+      <SearchBarIcon src={icSearch} alt="search" $isWrapped={isWrapped} />
       <StyledInput
         placeholder="Search for name"
         value={searchName}
@@ -91,7 +93,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   );
 
   return isWrapped ? (
-    <SearchBarWrapper isPenaltyPage={isPenaltyPage}>{content}</SearchBarWrapper>
+    <SearchBarWrapper $isPenaltyPage={isPenaltyPage}>
+      {content}
+    </SearchBarWrapper>
   ) : (
     content
   );

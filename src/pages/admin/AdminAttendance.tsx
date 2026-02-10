@@ -6,13 +6,15 @@ import { PageWrapper, ContentWrapper } from '@/styles/admin/AdminLayout.styled';
 import { useState } from 'react';
 import TotalCardinal from '@/components/Admin/CardinalWrapper';
 import AdminOnly from '@/components/common/AdminOnly';
+import { units } from '@/theme/designTokens';
 
 const AttendanceWrapper = styled.div`
   width: 100%;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
+  border-radius: ${units.radius.lg}px;
 `;
 
 const Wrapper = styled.div`

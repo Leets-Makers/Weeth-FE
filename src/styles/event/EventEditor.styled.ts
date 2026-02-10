@@ -1,14 +1,30 @@
 import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
+import { pcResponsive } from '..';
 
 export const EventEditorWrapper = styled.div`
+  width: 100%;
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
+  ${pcResponsive}
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 370px;
-  gap: 23px;
+  padding: 0 ${units.padding['450']}px;
   padding-bottom: 40px;
+`;
+
+export const EventEditorContent = styled.div`
+  width: 100%;
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
+  ${pcResponsive}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${units.margin['300']}px;
 `;
 
 export const Bold = styled.div`
@@ -25,22 +41,23 @@ export const Description = styled.div`
 
 export const Align = styled.div`
   display: flex;
-  gap: 12px;
+  gap: 11px;
 `;
 
 export const Help = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background-color: ${theme.color.gray[30]};
+  background-color: ${colors.semantic.icon.alternative};
   cursor: pointer;
 `;
 
 export const DefaultStyle = styled.div`
   height: 50px;
+  width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -49,20 +66,34 @@ export const DefaultStyle = styled.div`
 `;
 
 export const Meeting = styled(DefaultStyle)`
-  width: 360px;
-  padding: 0 20px 0 14px;
-  border-bottom: 1px solid ${theme.color.gray[30]};
+  padding: 13px ${units.padding['400']}px;
+`;
+
+export const CardinalWrapper = styled(DefaultStyle)`
+  padding: 10px 13px;
 `;
 
 export const DateTime = styled(DefaultStyle)`
-  width: 100%;
-  padding: 0 12px 0 14px;
+  padding: 5px ${units.padding['400']}px;
+  ${typography.Body1};
+  gap: 10px;
+  height: auto;
+  min-height: 50px;
+  align-items: center;
 `;
 
 export const Time = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 4px;
+`;
+
+export const CardinalTagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   gap: 5px;
+  width: 100%;
+  row-gap: 5px;
 `;
 
 export const Cardinal = styled.div`
@@ -81,41 +112,47 @@ export const CardinalList = styled.div`
 `;
 
 export const TimeBlock = styled.div`
-  background-color: ${theme.color.gray[12]};
+  background-color: ${colors.semantic.backGround};
   height: 40px;
-  padding: 0 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  ${typography.Body1};
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: ${units.radius.sm}px;
   cursor: pointer;
 `;
 
 export const Line = styled.div`
-  width: 360px;
+  width: 100%;
   border-bottom: 1px solid ${theme.color.gray[30]};
 `;
 
 export const TextAreaWrapper = styled.div`
-  width: 360px;
+  width: 100%;
   background-color: ${theme.color.gray[18]};
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px;
 `;
 
 export const TextArea = styled.textarea`
-  height: 200px;
-  width: 325px;
-  margin: 15px 10px;
-  padding-right: 10px;
+  height: 229px;
+  width: 100%;
+  padding: ${units.padding['300']}px ${units.padding['200']}px
+    ${units.padding['300']}px ${units.padding['400']}px;
+  border-radius: ${units.radius.lg}px;
   resize: none;
   border: none;
   outline: none;
-  background-color: ${theme.color.gray[18]};
-  color: white;
-  font-size: 16px;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.strong};
+  ${typography.Body1};
 
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 
   &::-webkit-scrollbar {

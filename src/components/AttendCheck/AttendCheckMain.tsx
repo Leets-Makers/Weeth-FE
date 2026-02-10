@@ -1,59 +1,33 @@
 import * as S from '@/styles/attendCheck/AttendCheck.styled';
-import useGetAttendCheck from '@/api/useGetAttendCheck';
-import useGetUserName from '@/hooks/useGetUserName';
 import { formatMeetingDates } from '@/hooks/formatDate';
-import Loading from '@/components/common/Loading';
 import AttendCheckItem from '@/components/AttendCheck/AttendCheckItem';
-import AttendCheckInfoBox from './AttendCheckInfoBox';
-
-interface MeetingProps {
-  id: number;
-  title: string;
-  start: string;
-  end: string;
-  status: 'ATTEND' | 'PENDING' | 'ABSENT';
-  location: string;
-}
+import { MeetingProps } from '@/types/attend';
+import AttendCheckInfoBox from '@/components/AttendCheck/AttendCheckInfoBox';
+import useAttendCheckData from '@/hooks/queries/attend/useAttendCheckData';
 
 const AttendCheckMain: React.FC = () => {
-  const { attendCheckInfo, error } = useGetAttendCheck();
-  const userName = useGetUserName();
-
-  if (error) {
-    return <S.SemiBold>error</S.SemiBold>;
-  }
-
-  if (!attendCheckInfo) {
-    return <Loading />;
-  }
+  const { data: attendCheckInfo } = useAttendCheckData();
 
   return (
     <S.Container>
-      <S.Header>
-        <S.SemiTitle>
-          <S.SemiBold>{userName}</S.SemiBold>
-          &nbsp;님의 출석횟수
-        </S.SemiTitle>
-        <S.AttendCount>{attendCheckInfo.attendanceCount}회</S.AttendCount>
-      </S.Header>
+      <S.Header>출석 조회</S.Header>
       <S.StyledBox>
         <S.SmallStyledBoxContainer>
           <AttendCheckInfoBox
             title="정기 모임"
-            num={`${attendCheckInfo.total}회`}
+            num={`${attendCheckInfo?.total}회`}
           />
           <AttendCheckInfoBox
             title="출석"
-            num={`${attendCheckInfo.attendanceCount}회`}
+            num={`${attendCheckInfo?.attendanceCount}회`}
           />
           <AttendCheckInfoBox
             title="결석"
-            num={`${attendCheckInfo.absenceCount}회`}
+            num={`${attendCheckInfo?.absenceCount}회`}
           />
         </S.SmallStyledBoxContainer>
-        <S.Line />
-        {attendCheckInfo.attendances.length > 0 ? (
-          attendCheckInfo.attendances.map((meeting: MeetingProps) => {
+        {attendCheckInfo && attendCheckInfo?.attendances.length > 0 ? (
+          attendCheckInfo?.attendances.map((meeting: MeetingProps) => {
             return (
               <AttendCheckItem
                 key={meeting.id}

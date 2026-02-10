@@ -22,9 +22,13 @@ const DuesInfo: React.FC<DuseInfoProps> = ({
       <S.StyledDuesBox>
         <S.StyledCaptionBox>
           {category === '회비' ? (
-            <Caption color={theme.color.positive}>회비</Caption>
+            <Caption isMargin color={theme.color.positive}>
+              회비
+            </Caption>
           ) : (
-            <Caption color={theme.color.negative}>지출</Caption>
+            <Caption isMargin color={theme.color.negative}>
+              지출
+            </Caption>
           )}
           <S.StyledTextBox>
             <S.Text>{memo}</S.Text>
@@ -33,7 +37,7 @@ const DuesInfo: React.FC<DuseInfoProps> = ({
         </S.StyledCaptionBox>
         <S.StyledMemoBox>
           <S.Text>{dues.toLocaleString()}원</S.Text>
-          <S.SmallTextMemo>{source}</S.SmallTextMemo>
+          <S.SmallText>{source}</S.SmallText>
         </S.StyledMemoBox>
       </S.StyledDuesBox>
     </S.DuesWrapper>

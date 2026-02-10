@@ -3,17 +3,20 @@ import styled from 'styled-components';
 import plusIcon from '@/assets/images/ic_admin_plus.svg';
 import { useState } from 'react';
 import CardinalModal from '@/components/Admin/Modal/CardinalModal';
+import { colors, units } from '@/theme/designTokens';
 
 export const AddCardinalWrapper = styled.div`
   min-width: 80px;
   height: 164px;
   box-sizing: border-box;
-  background-color: ${theme.color.gray[100]};
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;
   cursor: pointer;
+  border-radius: ${units.radius.lg}px;
+  box-shadow: 0px 1px 5px 0px rgba(17, 33, 49, 0.15);
 `;
 
 const AddCardinal: React.FC = () => {

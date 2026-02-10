@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import arrow from '@/assets/images/ic_account_arrow.svg';
+import { colors } from '@/theme/designTokens';
 
 const Container = styled.div`
   display: flex;
@@ -17,19 +18,19 @@ const Button = styled.button`
   justify-content: space-between;
   margin-bottom: 15px;
   padding: 15px 12px;
-  border: 1px solid #a6a6a6;
-  background-color: #2f2f2f;
+  border: 1px solid ${({ theme }) => theme.semantic.line};
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: #00dda8;
+    border-color: ${({ theme }) => theme.semantic.brand.primary};
     box-shadow: 0 0 10px rgba(0, 221, 168, 0.7);
   }
 
   &:active {
-    border-color: #00dda8;
+    border-color: ${({ theme }) => theme.semantic.brand.primary};
     box-shadow: 0 0 10px rgba(0, 221, 168, 0.8);
   }
 `;

@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import * as S from '@/styles/admin/penalty/Penalty.styled';
+import React, { useState } from 'react';
+import * as S from '@/styles/admin/penalty/PenaltyListTable.styled';
 import {
   PenaltyAction,
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
-import { getPenaltyApi } from '@/api/admin/penalty/penalty.api';
-import {
-  MemberData,
-  useMemberContext,
-} from '@/components/Admin/context/MemberContext';
-import PenaltyDetail from '@/components/Admin/PenaltyDetail';
-import { statusColors } from '@/components/Admin/StatusIndicator';
+import { useMemberContext } from '@/components/Admin/context/MemberContext';
+import { columns } from '@/constants/admin/penaltyColumns';
+import { getStatusColor } from '@/components/Admin/StatusIndicator';
 import { StatusCell } from '@/components/Admin/MemberListTableRow';
-import formatDate from '@/utils/admin/dateUtils';
-import dayjs from 'dayjs';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
-import PenaltySubHeaderRow from '@/components/Admin/PenaltySubHeaderRow';
-
-const columns = [
-  { key: 'name', header: '이름' },
-  { key: 'position', header: '역할' },
-  { key: 'department', header: '학과' },
-  { key: 'studentId', header: '학번' },
-  { key: 'penaltyCount', header: '페널티' },
-  { key: 'warningCount', header: '경고' },
-  { key: 'LatestPenalty', header: '최근 페널티' },
-  { key: 'empty', header: '' },
-];
+import usePenaltyData from '@/hooks/admin/usePenaltyData';
+import { getLatestPenaltyDate } from '@/utils/admin/getLatestPenaltyDate';
+import { useFilteredMembers } from '@/hooks/admin/usePenaltyFilteredMembers';
+import ExpandedPenaltyRow from '@/components/Admin/ExpandedPenaltyRow';
+import useUserData from '@/hooks/queries/useUserData';
 
 interface PenaltyListTableProps {
   selectedCardinal: number | null;
@@ -42,136 +28,33 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
   dispatch,
 }) => {
   const { members } = useMemberContext();
-  const [filteredMembers, setFilteredMembers] = useState<MemberData[]>([]);
+  const { data: userInfo } = useUserData();
+  const isAdmin = userInfo?.role === 'ADMIN';
+
+  // 페널티 데이터 가져오기 훅
+  const { fetchPenaltyData } = usePenaltyData({
+    selectedCardinal,
+    isAdmin,
+    dispatch,
+  });
+
+  // 필터링된 멤버 목록 가져오기 훅
+  const filteredMembers = useFilteredMembers(
+    penaltyData,
+    members,
+    selectedCardinal,
+    searchName,
+  );
+
+  // 확장된 행 상태 관리
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
-  const { isAdmin, loading } = useGetUserInfo();
 
-  const getLatestPenaltyDate = (penalties: { time: string }[] | undefined) => {
-    if (!penalties || penalties.length === 0) return '없음';
-
-    return penalties
-      .map((penalty) => dayjs(penalty.time).tz('Asia/Seoul'))
-      .sort((a, b) => b.valueOf() - a.valueOf())[0]
-      .format('YYYY.MM.DD');
-  };
-
-  const fetchPenaltyData = async () => {
-    try {
-      if (loading || isAdmin === undefined || !isAdmin) return;
-
-      const resp = await getPenaltyApi(selectedCardinal ?? 0);
-
-      if (resp.code === 200 || resp.code === 0) {
-        const data = resp.data;
-
-        const groups = Array.isArray(data) ? data : data ? [data] : [];
-
-        const users = groups.flatMap((g: any) => g?.responses ?? []);
-
-        const penalties = users.reduce((acc: PenaltyState, u: any) => {
-          const list = Array.isArray(u?.Penalties) ? u.Penalties : [];
-          acc[u.userId] = list.map((p: any) => {
-            const isAuto = p.penaltyType === 'AUTO_PENALTY';
-            return {
-              penaltyId: p.penaltyId,
-              penaltyType: isAuto ? 'PENALTY' : p.penaltyType,
-              penaltyDescription: p.penaltyDescription,
-              time: p.time,
-              isAuto,
-            };
-          });
-          return acc;
-        }, {} as PenaltyState);
-
-        dispatch({ type: 'SET_PENALTY', payload: penalties });
-      }
-    } catch (e: any) {
-      console.error('패널티 조회 오류:', e.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchPenaltyData();
-  }, [isAdmin, loading, selectedCardinal]);
-
-  useEffect(() => {
-    if (!penaltyData || !members.length) return;
-
-    let penalizedMembers = Object.keys(penaltyData)
-      .map((userId) => {
-        const numericUserId = Number(userId);
-
-        const matchedMember = members.find(
-          (member) => member.id === numericUserId,
-        );
-
-        if (!matchedMember) return null;
-
-        const list = penaltyData[numericUserId] ?? [];
-
-        const { penalty, warning } = list.reduce(
-          (acc, p) => {
-            const t = (p as any).penaltyType;
-            if (t === 'WARNING') acc.warning += 1;
-            else acc.penalty += 1;
-            return acc;
-          },
-          { penalty: 0, warning: 0 },
-        );
-        return {
-          ...matchedMember,
-          penaltyCount: penalty,
-          warningCount: warning,
-          LatestPenalty: getLatestPenaltyDate(list),
-        };
-      })
-      .filter(Boolean) as MemberData[];
-
-    if (selectedCardinal) {
-      penalizedMembers = penalizedMembers.filter((member) => {
-        let cardinalNumbers: number[] = [];
-        if (typeof member.cardinals === 'string') {
-          cardinalNumbers = (member.cardinals as string).split('.').map(Number);
-        } else if (Array.isArray(member.cardinals)) {
-          cardinalNumbers = member.cardinals;
-        }
-        return cardinalNumbers.includes(selectedCardinal);
-      });
-    }
-
-    if (searchName.trim()) {
-      penalizedMembers = penalizedMembers.filter((member) =>
-        member.name.toLowerCase().includes(searchName.toLowerCase()),
-      );
-    }
-
-    setFilteredMembers(penalizedMembers);
-  }, [penaltyData, members, selectedCardinal, searchName, isAdmin, loading]);
-
+  // 행 클릭 시 확장 토글
   const handleRowClick = (userId: number) => {
     setExpandedRow((prev) => (prev === userId ? null : userId));
   };
 
-  const handleEditPenalty = (
-    userId: number,
-    index: number,
-    updatedDescription: string,
-  ) => {
-    dispatch({
-      type: 'EDIT_PENALTY',
-      userId,
-      index,
-      payload: {
-        ...penaltyData[userId][index],
-        penaltyDescription: updatedDescription,
-      },
-    });
-  };
-
-  const handleDeletePenalty = (userId: number, index: number) => {
-    dispatch({ type: 'DELETE_PENALTY', userId, index });
-  };
-
+  // 멤버의 각 컬럼 렌더링
   const renderColumns = (member: Record<string, any>) =>
     columns.map((column) => {
       if (column.key === 'empty') {
@@ -193,15 +76,18 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
     <S.TableContainer>
       <S.TableWrapper hasData={filteredMembers.length > 0}>
         <table>
+          {/* 테이블 상단 헤더 */}
           <thead>
             <tr>
-              <StatusCell statusColor={statusColors['승인 완료']} />
+              <StatusCell $statusColor={getStatusColor('승인 완료')} />
               {columns.map((column) => (
                 <S.HeaderCell key={column.key}>{column.header}</S.HeaderCell>
               ))}
             </tr>
           </thead>
+
           <tbody>
+            {/* 검색된 멤버가 없을 경우 */}
             {filteredMembers.length === 0 ? (
               <tr>
                 <td colSpan={columns.length}>
@@ -215,50 +101,26 @@ const PenaltyListTable: React.FC<PenaltyListTableProps> = ({
                     isSelected={expandedRow === member.id}
                     onClick={() => handleRowClick(member.id)}
                   >
-                    <StatusCell statusColor={statusColors[member.status]} />
+                    <StatusCell $statusColor={getStatusColor(member.status)} />
                     {renderColumns(member)}
                   </S.Row>
 
                   {expandedRow === member.id && (
-                    <>
-                      <PenaltySubHeaderRow />
-
-                      {penaltyData[member.id]?.map((penalty, index) => (
-                        <tr key={`${member.id}-${penalty.penaltyId}`}>
-                          <td colSpan={columns.length + 2}>
-                            <PenaltyDetail
-                              penaltyData={{
-                                penaltyId: penalty.penaltyId,
-                                penaltyType: penalty.penaltyType,
-                                isAuto: penalty.isAuto,
-                                penaltyDescription: penalty.penaltyDescription,
-                                time: formatDate(penalty.time),
-                              }}
-                              // onEdit={(penaltyId, updatedDescription) =>
-                              //   handleEditPenalty(
-                              //     member.id,
-                              //     index,
-                              //     updatedDescription,
-                              //   )
-                              // }
-                              // onDelete={() =>
-                              //   handleDeletePenalty(member.id, index)
-                              // }
-                              onRefresh={fetchPenaltyData}
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </>
+                    <ExpandedPenaltyRow
+                      memberId={member.id}
+                      penaltyData={penaltyData}
+                      onRefresh={fetchPenaltyData}
+                    />
                   )}
                 </React.Fragment>
               ))
             )}
           </tbody>
 
+          {/* 테이블 하단 헤더 */}
           {filteredMembers.length > 0 && (
             <>
-              <StatusCell statusColor={statusColors['승인 완료']} />
+              <StatusCell $statusColor={getStatusColor('승인 완료')} />
               {columns.map((column) => (
                 <S.HeaderCell key={column.key}>{column.header}</S.HeaderCell>
               ))}

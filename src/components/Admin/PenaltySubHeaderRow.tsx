@@ -1,41 +1,31 @@
 import { styled } from 'styled-components';
+import { subColumns } from '@/constants/admin/penaltyColumns';
+import { StatusCell } from '@/components/Admin/MemberListTableRow';
+import { getStatusColor } from '@/components/Admin/StatusIndicator';
+import typography from '@/theme/typography';
 
-export const SubHeaderRow = styled.td`
-  display: grid;
-  grid-template-columns:
-    minmax(390px, auto) minmax(40px, 0.7fr) minmax(40px, 0.7fr) minmax(
-      70px,
-      1fr
-    )
-    minmax(90px, auto);
-  grid-template-areas: 'reason penalty warning penaltyDate empty';
-  border-bottom: 1px solid #dedede;
-  padding: 5px;
-  padding-left: 120px;
-  background-color: #e6fcf7;
-  font-weight: bold;
-  align-items: center;
+export const SubHeaderRow = styled.tr`
+  ${typography.admin.Sub2};
+  color: ${({ theme }) => theme.semantic.text.alternative};
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
 `;
 
-export const GridCell = styled.th<{ area: string }>`
-  grid-area: ${(props) => props.area};
-  padding: 5px;
+export const HeaderCell = styled.th`
+  ${typography.admin.Sub2}
+  padding: 15px 25px;
   text-align: left;
   white-space: nowrap;
 `;
 
 const PenaltySubHeaderRow: React.FC = () => {
   return (
-    <tr>
-      <td colSpan={9} style={{ padding: 0, margin: 0 }}>
-        <SubHeaderRow>
-          <GridCell area="reason">사유</GridCell>
-          <GridCell area="penalty">페널티</GridCell>
-          <GridCell area="warning">경고</GridCell>
-          <GridCell area="penaltyDate">페널티 일자</GridCell>
-        </SubHeaderRow>
-      </td>
-    </tr>
+    <SubHeaderRow>
+      <StatusCell $statusColor={getStatusColor('상태 없음')} />
+      {subColumns.map((column, idx) => (
+        <HeaderCell key={idx}>{column.header || ''}</HeaderCell>
+      ))}
+    </SubHeaderRow>
   );
 };
 

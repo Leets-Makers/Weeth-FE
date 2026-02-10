@@ -1,32 +1,40 @@
-import theme from '@/styles/theme';
+import { pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
+  box-sizing: border-box;
 `;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${theme.color.gray[18]};
-  border-radius: 10px;
+  background-color: ${colors.semantic.container.neutral};
+  border-radius: ${units.radius.lg}px;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const StyledInput = styled.input`
-  width: 350px;
-  height: 45px;
+  width: 100%;
+  box-sizing: border-box;
   outline: none;
   border: none;
   background-color: transparent;
-  color: #fff;
-  font-size: 16px;
-  padding: 3px 0 3px 10px;
+  color: ${colors.semantic.text.strong};
+  ${typography.Body1};
+  padding: ${units.padding['300']}px ${units.padding['400']}px;
 
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 `;
 

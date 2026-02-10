@@ -1,26 +1,27 @@
-import Header from '@/components/Header/Header';
-import ReceiptMain from '@/components/Receipt/ReceiptMain';
+import ReceiptList from '@/components/Receipt/ReceiptList';
 import useCustomBack from '@/hooks/useCustomBack';
-import styled from 'styled-components';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 370px;
-  max-width: 370px;
-  margin-bottom: 50px;
-`;
+import { StyledDues } from '@/styles/dues/Dues.styled';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import { HeaderContainer, PageHeader } from '@/styles';
 
 const Receipt: React.FC = () => {
   useCustomBack('/dues');
 
   return (
-    <Container>
-      <Header RightButtonType="none" isAccessible>
-        영수증
-      </Header>
-      <ReceiptMain />
-    </Container>
+    <StyledDues>
+      <HeaderContainer>
+        <Breadcrumb
+          items={[
+            { label: '회비', path: '/dues' },
+            { label: '영수증', path: '/receipt' },
+          ]}
+          hasTitle
+        />
+        <PageHeader>영수증</PageHeader>
+      </HeaderContainer>
+      <ReceiptList />
+    </StyledDues>
   );
 };
 

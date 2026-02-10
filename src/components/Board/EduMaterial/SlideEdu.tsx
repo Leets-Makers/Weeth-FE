@@ -43,18 +43,19 @@ const SlideEdu = ({ recentEdu }: SlideEduProps) => {
             key={edu.id}
             onClick={(e) => handleEducationCard(e, parts[0], edu.id)}
           >
-            <S.EduPart>
-              {parts.map((p) => (
-                <Part key={p} part={p} />
-              ))}
-            </S.EduPart>
-
-            <S.EduCardTitle>{edu.title}</S.EduCardTitle>
+            <S.NoticeTopRow>
+              <S.EduPart>
+                {parts.map((p) => (
+                  <Part key={p} part={p} />
+                ))}
+              </S.EduPart>
+              <S.EduCardTitle>{edu.title}</S.EduCardTitle>
+            </S.NoticeTopRow>
 
             <S.NoticeBottomRow>
               <S.EduDateContainer>
                 {formatMMDD(edu.time)}
-                {edu.hasFile && ' | '}
+                {edu.hasFile && <S.Divider />}
                 {edu.hasFile && <FileIcon />}
               </S.EduDateContainer>
 

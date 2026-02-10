@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/Button/Button';
 import useLogout from '@/hooks/useLogout';
+import { units } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 export const TopBarWrapper = styled.div`
   position: sticky;
@@ -10,8 +13,8 @@ export const TopBarWrapper = styled.div`
   right: 0;
   width: 100%;
   min-width: 1500px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #dedede;
+  min-height: 78px;
+  background-color: ${({ theme }) => theme.semantic.backGround};
   padding: 0 20px;
   box-sizing: border-box;
   display: flex;
@@ -23,26 +26,27 @@ export const TopBarWrapper = styled.div`
 `;
 
 export const Title = styled.p`
-  font-weight: 700;
-  font-size: 24px;
+  ${typography.admin.Sub1}
 `;
 
 export const Description = styled.p`
+  ${typography.admin.Sub2}
   padding-left: 20px;
-  font-size: 18px;
-  font-weight: 400;
+  color: ${({ theme }) => theme.semantic.text.alternative};
 `;
 
 export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
 `;
+
 interface TopBarProps {
   title: string;
   description: string;
 }
 
 const TopBar: React.FC<TopBarProps> = ({ title, description }) => {
+  const theme = useTheme();
   const logout = useLogout();
 
   return (
@@ -52,11 +56,11 @@ const TopBar: React.FC<TopBarProps> = ({ title, description }) => {
         <Description>{description}</Description>
       </TitleContainer>
       <Button
-        color="#2f2f2f"
-        textcolor="#fff"
+        color={theme.semantic.button.neutral}
+        textcolor={theme.semantic.text.strong}
         height="45px"
         width="85px"
-        borderRadius="4px"
+        borderRadius={`${units.radius.md}px`}
         isSemibold={false}
         onClick={logout}
       >

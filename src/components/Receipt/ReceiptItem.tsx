@@ -1,0 +1,35 @@
+import React from 'react';
+import Caption from '@/components/Button/Caption';
+import * as S from '@/styles/receipt/ReceiptItemstyled';
+import theme from '@/styles/theme';
+
+interface ReceiptItemProps {
+  money: number;
+  date: string;
+  memo: string;
+}
+
+const ReceiptItem: React.FC<ReceiptItemProps> = ({ money, date, memo }) => {
+  return (
+    <S.Container>
+      <S.Box>
+        <S.LeftSection>
+          <Caption isMargin color={theme.color.negative}>
+            지출
+          </Caption>
+          <S.TextBox>
+            <S.MemoText $isTruncated={memo.length >= 10}>{memo}</S.MemoText>
+            <S.SubText>{date}</S.SubText>
+          </S.TextBox>
+        </S.LeftSection>
+
+        <S.RightSection>
+          <S.Amount>{money.toLocaleString()}원</S.Amount>
+          <S.SubText>&nbsp;</S.SubText>
+        </S.RightSection>
+      </S.Box>
+    </S.Container>
+  );
+};
+
+export default ReceiptItem;

@@ -1,5 +1,3 @@
-import Header from '@/components/Header/Header';
-import useGetMemberDetail from '@/api/useGetMemberDetail';
 import FE from '@/assets/images/ic_char_FE.svg';
 import BE from '@/assets/images/ic_char_BE.svg';
 import D from '@/assets/images/ic_char_DE.svg';
@@ -10,174 +8,105 @@ import clipBE from '@/assets/images/ic_BE_clip.svg';
 import clipDE from '@/assets/images/ic_DE_clip.svg';
 import clipPM from '@/assets/images/ic_PM_clip.svg';
 
-import theme from '@/styles/theme';
-import styled from 'styled-components';
 import CardinalTag from '@/components/common/CardinalTag';
-import Loading from '@/components/common/Loading';
+import { useMemo } from 'react';
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 370px;
-`;
-
-const PostionCharicter = styled.img`
-  margin-top: 52px;
-  width: 14.313rem;
-`;
-
-const ClipContainer = styled.div`
-  width: 370px;
-  position: absolute;
-  top: 55px;
-  left: 50%;
-  transform: translate(-50%);
-`;
-
-const Clip = styled.img`
-  position: fixed;
-  top: 288px;
-  left: 34px;
-`;
-
-const ContentTop = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: ${theme.color.gray[18]};
-  gap: 20px;
-  width: 350px;
-  height: 136px;
-  margin-top: 35px;
-  box-sizing: border-box;
-
-  border-radius: 19px 19px 0 0;
-  padding-left: 16px;
-`;
-
-const ContentBottom = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 350px;
-  box-sizing: border-box;
-  border: 1px solid ${theme.color.gray[18]};
-  border-radius: 0 0 19px 19px;
-  padding: 17px 14px 34px;
-`;
-
-const CardinalList = styled.div`
-  display: flex;
-  gap: 3px;
-`;
-
-const MoreInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const Position = styled.div<{ color: string }>`
-  color: ${(props) => props.color};
-  font-family: ${theme.font.semiBold};
-`;
-
-const Title = styled.div`
-  display: flex;
-  gap: 5px;
-  font-size: 32px;
-  font-family: ${theme.font.semiBold};
-  padding-top: 42px;
-`;
-
-const Department = styled.div`
-  display: flex;
-  gap: 16px;
-`;
-
-const Gray = styled.div`
-  color: ${theme.color.gray[65]};
-`;
+import * as S from '@/styles/member/MemberDetail.styled';
+import { colors } from '@/theme/designTokens';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import useMemberDetailData from '@/hooks/queries/useMemberDetailData';
+import { useParams } from 'react-router-dom';
 
 const MemberDetail = () => {
-  const { memberDetail, error, loading } = useGetMemberDetail();
+  const { userId } = useParams();
 
-  const positionMap = {
-    FE: {
-      char: FE,
-      clip: clipFE,
-      name: '프론트엔드 파트',
-      color: theme.color.negative,
-    },
-    BE: {
-      char: BE,
-      clip: clipBE,
-      name: '백엔드 파트',
-      color: theme.color.positive,
-    },
-    D: {
-      char: D,
-      clip: clipDE,
-      name: '디자인 파트',
-      color: theme.color.pointPink,
-    },
-    PM: {
-      char: PM,
-      clip: clipPM,
-      name: 'PM 파트',
-      color: theme.color.pointPurple,
-    },
-  };
+  const { data: memberDetail } = useMemberDetailData(Number(userId));
 
-  if (loading) {
-    return <Loading />;
-  }
+  const positionMap = useMemo(
+    () => ({
+      FE: {
+        char: FE,
+        clip: clipFE,
+        name: '프론트엔드 파트',
+        color: colors.semantic.state.error,
+      },
+      BE: {
+        char: BE,
+        clip: clipBE,
+        name: '백엔드 파트',
+        color: colors.semantic.state.success,
+      },
+      D: {
+        char: D,
+        clip: clipDE,
+        name: '디자인 파트',
+        color: colors.semantic.brand.pink,
+      },
+      PM: {
+        char: PM,
+        clip: clipPM,
+        name: 'PM 파트',
+        color: colors.semantic.brand.purple,
+      },
+    }),
+    [],
+  );
 
-  if (error) {
-    return <Wrapper>에러 발생: {error}</Wrapper>;
-  }
-
-  const position = memberDetail?.position;
-  const positionData = position
-    ? positionMap[position as keyof typeof positionMap]
-    : undefined;
+  const positionData =
+    positionMap[memberDetail?.position as keyof typeof positionMap];
 
   return (
-    <Wrapper>
-      <Header RightButtonType="none" isAccessible>
-        멤버
-      </Header>
-      {positionData && (
-        <PostionCharicter src={positionData.char} alt={position} />
-      )}
-      <ClipContainer>
-        <Clip src={positionData?.clip} alt="clip" />
-      </ClipContainer>
-      <ContentTop>
-        <Title>
-          <span>{memberDetail?.name}</span>
-          {memberDetail?.role === 'ADMIN' && <img src={Master} alt="Master" />}
-        </Title>
-        <CardinalList>
-          {memberDetail?.cardinals?.map((cardinal) => (
-            <CardinalTag type="member" cardinal={cardinal} key={cardinal} />
-          ))}
-        </CardinalList>
-      </ContentTop>
-      <ContentBottom>
-        <MoreInfo>
-          {positionData && (
-            <Position color={positionData.color}>{positionData.name}</Position>
-          )}
-          <Department>
-            <div>{memberDetail?.department}</div>
-            <Gray>|</Gray>
-            <Gray>{memberDetail?.studentId}</Gray>
-          </Department>
-          <div>{memberDetail?.email}</div>
-        </MoreInfo>
-      </ContentBottom>
-    </Wrapper>
+    <>
+      <Breadcrumb
+        items={[
+          { label: '멤버', path: '/member' },
+          { label: '멤버 상세', path: `/member/${memberDetail?.id}` },
+        ]}
+      />
+      <S.Wrapper>
+        {positionData && (
+          <>
+            <S.PositionCharacter
+              src={positionData.char}
+              alt={memberDetail?.position}
+            />
+            <S.ClipContainer>
+              <S.Clip src={positionData.clip} alt="clip" />
+            </S.ClipContainer>
+          </>
+        )}
+
+        <S.ContentTop>
+          <S.Title>
+            <span>{memberDetail?.name}</span>
+            {memberDetail?.role === 'ADMIN' && (
+              <img src={Master} alt="관리자 아이콘" />
+            )}
+          </S.Title>
+          <S.CardinalList>
+            {memberDetail?.cardinals?.map((c) => (
+              <CardinalTag key={c} type="member" cardinal={c} />
+            ))}
+          </S.CardinalList>
+        </S.ContentTop>
+
+        <S.ContentBottom>
+          <S.InfoSection>
+            {positionData && (
+              <S.Position color={positionData.color}>
+                {positionData.name}
+              </S.Position>
+            )}
+            <S.Department>
+              <div>{memberDetail?.department}</div>
+              <S.Gray>|</S.Gray>
+              <S.Gray>{memberDetail?.studentId}</S.Gray>
+            </S.Department>
+            <div>{memberDetail?.email}</div>
+          </S.InfoSection>
+        </S.ContentBottom>
+      </S.Wrapper>
+    </>
   );
 };
 

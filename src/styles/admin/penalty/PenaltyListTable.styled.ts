@@ -1,0 +1,111 @@
+import theme from '@/styles/theme';
+import { units } from '@/theme/designTokens';
+import { styled } from 'styled-components';
+import typography from '@/theme/typography';
+
+// penaltyListTable.tsx
+export const TableWrapper = styled.div<{ hasData: boolean }>`
+  font-size: 18px;
+  border-collapse: collapse;
+
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: ${(props) => (props.hasData ? 'auto' : '100%')};
+  }
+
+  margin: 0;
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+export const TableContainer = styled.div`
+  min-width: 950px;
+  background-color: ${({ theme }) => theme.semantic.container.neutral};
+  border: 1px solid #f2f2f2;
+  border-radius: ${units.radius.lg}px;
+  box-shadow: 0px 3px 8px rgba(133, 141, 138, 0.2);
+  padding-top: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+`;
+
+export const Row = styled.tr<{ isSelected: boolean }>`
+  ${typography.admin.Body1};
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
+  cursor: pointer;
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.semantic.container.primary : 'transparent'};
+  color: ${({ isSelected, theme }) =>
+    isSelected ? theme.semantic.text.inverse : 'inherit'};
+`;
+
+export const Cell = styled.td`
+  padding: 15px 25px;
+  text-align: left;
+  white-space: nowrap;
+`;
+
+export const HeaderCell = styled.th`
+  ${typography.admin.Sub2};
+  color: ${({ theme }) => theme.semantic.text.alternative};
+  text-align: left;
+  padding: 15px 25px;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
+  white-space: nowrap;
+`;
+
+export const EmptyCell = styled.td`
+  width: 150px;
+`;
+
+export const NoDataCell = styled.div`
+  ${typography.admin.Body1};
+  color: ${({ theme }) => theme.semantic.text.disabled};
+  padding: 20px;
+  letter-spacing: 1px;
+  text-align: center;
+`;
+
+export const Input = styled.input`
+  ${typography.admin.Body1};
+  width: 100%;
+  max-width: 300px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+`;
+
+export const ButtonWrapper = styled.div`
+  grid-area: actions;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+// penaltyDetail.tsx
+export const DetailContainer = styled.td`
+  display: grid;
+  height: 48px;
+  grid-template-columns:
+    minmax(340px, auto) minmax(30px, 0.9fr) minmax(30px, 0.9fr) minmax(
+      70px,
+      1fr
+    )
+    minmax(60px, 2fr);
+  grid-template-areas: 'reason penalty warning penaltyDate actions';
+  padding-left: 120px;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
+  background-color: ${({ theme }) => theme.semantic.backGround};
+  align-items: center;
+  box-sizing: border-box;
+  column-gap: 0;
+`;
+
+export const DetailText = styled.div`
+  ${typography.admin.Body1};
+  color: ${({ theme }) => theme.semantic.text.strong};
+`;

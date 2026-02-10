@@ -1,6 +1,8 @@
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/Modal/Modal';
 import styled from 'styled-components';
 import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
+import { useSelectModalStore } from '@/stores/selectModalStore';
 
 const Container = styled.div`
   display: flex;
@@ -8,6 +10,7 @@ const Container = styled.div`
   align-self: start;
   margin-left: 4px;
 `;
+
 const Title = styled.div`
   font-size: 16px;
   font-weight: 600;
@@ -16,7 +19,7 @@ const Title = styled.div`
 
 const Description = styled.div`
   font-size: 14px;
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.alternative};
   font-weight: 500;
   margin-top: 15px;
 `;
@@ -43,7 +46,7 @@ const ModalButton = styled.button`
 `;
 
 const CancelButton = styled(ModalButton)`
-  background: ${theme.color.gray[30]};
+  background: ${colors.semantic.button.neutral};
   &:hover {
     opacity: 0.7;
   }
@@ -51,47 +54,58 @@ const CancelButton = styled(ModalButton)`
 
 const ActionButton = styled(ModalButton)<{
   type: 'positive' | 'negative';
-  visible: boolean;
+  $visible: boolean;
 }>`
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
+  display: ${(props) => (props.$visible ? 'flex' : 'none')};
+
+  color: ${(props) =>
+    props.type === 'positive'
+      ? colors.semantic.text.inverse
+      : colors.semantic.text.normal};
+
   background: ${(props) =>
-    props.type === 'positive' ? theme.color.main : theme.color.negative};
+    props.type === 'positive'
+      ? colors.semantic.brand.primary
+      : colors.semantic.state.error};
+
   &:hover {
     background: ${(props) =>
-      props.type === 'positive'
-        ? theme.color.mainDark
-        : theme.color.negativeDark};
-    color: ${theme.color.gray[30]};
+      props.type === 'positive' ? colors.dark.primary[200] : '#BF4242'};
   }
 `;
-const SelectModal = ({
-  title,
-  content,
-  buttonContent = '삭제',
-  onClose,
-  onDelete,
-  type = 'negative',
-  visibility = true,
-  cancleText = '취소',
-}: {
-  title: string;
-  content: string;
-  buttonContent?: string;
-  onClose: () => void;
-  onDelete?: () => void;
-  type?: 'positive' | 'negative';
-  visibility?: boolean;
-  cancleText?: string;
-}) => {
+
+const SelectModal = () => {
+  const { isOpen, modalProps, close } = useSelectModalStore();
+
+  if (!isOpen || !modalProps) return null;
+
+  const {
+    title,
+    content,
+    buttonContent,
+    type,
+    visibility,
+    cancelText,
+    onDelete,
+  } = modalProps;
+
   return (
-    <Modal isDelete hasCloseButton={false} onClose={onClose}>
+    <Modal isDelete hasCloseButton={false} onClose={close}>
       <Container>
         <Title>{title}</Title>
         <Description>{content}</Description>
       </Container>
+
       <ButtonContainer>
-        <CancelButton onClick={onClose}>{cancleText}</CancelButton>
-        <ActionButton onClick={onDelete} type={type} visible={visibility}>
+        <CancelButton onClick={close}>{cancelText}</CancelButton>
+        <ActionButton
+          type={type ?? 'negative'}
+          $visible={visibility ?? true}
+          onClick={() => {
+            onDelete?.();
+            close();
+          }}
+        >
           {buttonContent}
         </ActionButton>
       </ButtonContainer>

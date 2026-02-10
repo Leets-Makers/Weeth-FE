@@ -1,4 +1,5 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const StyledHomeMain = styled.div`
@@ -10,22 +11,31 @@ export const StyledHomeMain = styled.div`
 
 export const GridContainer = styled.div`
   display: grid;
-  width: 94%;
-  margin: 15px 3% 0px 3%;
+  width: 100%;
+  gap: 10px;
+
+  /* 모바일 (기존 레이아웃 - 2열) */
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   grid-template-areas:
-    'calendar penalty'
-    'board member'
-    'board fee';
-  gap: 10px;
+    'board penalty'
+    'calendar member'
+    'calendar dues';
+
+  /* 태블릿/PC (새로운 레이아웃 - 3열) */
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 180px 180px;
+    grid-template-areas:
+      'board board penalty'
+      'calendar member dues';
+  }
 `;
 
 export const GridItem = styled.div`
-  background-color: ${theme.color.gray[18]};
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
-  color: #fff;
+  background-color: ${colors.semantic.container.neutral};
+
+  ${typography.Sub1};
   border-radius: 10px;
   display: flex;
   padding: 20px 10px 10px 15px;
@@ -33,6 +43,12 @@ export const GridItem = styled.div`
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${colors.semantic.container['neutral-interaction']};
+    color: ${colors.semantic.text.inverse};
+  }
 `;
 
 export const CalendarItem = styled(GridItem)`
@@ -54,18 +70,15 @@ export const MemberItem = styled(GridItem)`
   justify-content: start;
 `;
 
-export const FeeItem = styled(GridItem)`
-  grid-area: fee;
+export const DuesItem = styled(GridItem)`
+  grid-area: dues;
   display: flex;
   flex-direction: column;
   justify-content: start;
 `;
 
-export const PlaceholderImage = styled.div`
+export const PlaceholderImage = styled.img`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${theme.color.gray[18]};
   align-self: flex-end;
   justify-self: flex-start;
 `;

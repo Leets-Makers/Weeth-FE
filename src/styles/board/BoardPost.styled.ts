@@ -1,20 +1,30 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
+import { units } from '@/theme/designTokens';
 
 export const PostWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  max-width: ${MOBILE};
-  padding-bottom: 1.25rem;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
+  box-sizing: border-box;
+  margin-bottom: 50px;
 
   ul {
     margin: 0;
   }
+`;
 
-  ${pcResponsive}
+export const PostContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: ${units.device.mobile}px;
+  box-sizing: border-box;
+  padding: 0 ${units.padding['450']}px ${units.padding['450']}px
+    ${units.padding['450']}px;
 `;
 
 export const TitleInput = styled.input`

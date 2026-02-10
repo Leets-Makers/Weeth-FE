@@ -6,7 +6,6 @@ import { useMemberContext } from '@/components/Admin/context/MemberContext';
 import PenaltyMemberDropdown from '@/components/Admin/PenaltyMemberDropdown';
 import { getPenaltyApi, postPenaltyApi } from '@/api/admin/penalty/penalty.api';
 import {
-  Penalty,
   PenaltyAction,
   PenaltyState,
 } from '@/components/Admin/context/PenaltyReducer';
@@ -15,6 +14,8 @@ import PenaltyRadioGroup, { PenaltyType } from './PenaltyRadioGroup';
 import { ApiPenaltyType } from '@/types/adminPenalty';
 
 import { toastError, toastSuccess } from '@/components/common/ToastMessage';
+import { useTheme } from 'styled-components';
+import { units } from '@/theme/designTokens';
 
 interface PenaltyAddProps {
   dispatch: React.Dispatch<PenaltyAction>;
@@ -27,6 +28,8 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
   const [selectedMember, setSelectedMember] = useState<string>('');
   const [penaltyDescription, setPenaltyDescription] = useState<string>('');
   const [type, setType] = useState<PenaltyType>('penalty'); // 탭 상태 (페널티/경고)
+
+  const theme = useTheme();
 
   const filteredMembers = members.filter((member) =>
     member.name.includes(searchTerm),
@@ -98,21 +101,6 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
           }
         }, 700);
 
-        const penaltyTime = res.data?.time
-          ? formatDate(res.data.time)
-          : formatDate(new Date().toISOString());
-
-        // dispatch({
-        //   type: 'ADD_PENALTY',
-        //   userId: member.id,
-        //   payload: {
-        //     penaltyId: res.data?.penaltyId ?? Date.now(),
-        //     penaltyType: apiType,
-        //     penaltyDescription,
-        //     time: penaltyTime,
-        //   },
-        // });
-
         if (selectedCardinal != null) {
           const response = await getPenaltyApi(selectedCardinal);
           if (response.code === 200 || response.code === 0) {
@@ -136,7 +124,6 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
       <S.TitleWrapper>
         <S.Title>{label} 추가</S.Title>
       </S.TitleWrapper>
-      <S.Line />
       <S.ItemWrapper>
         <PenaltyRadioGroup value={type} onChange={setType} />
         <S.InputWrapper>
@@ -169,16 +156,18 @@ const PenaltyAdd: React.FC<PenaltyAddProps> = ({ dispatch }) => {
         <ButtonWrapper>
           <Button
             description="초기화"
-            color="#323232"
+            color={theme.semantic.button.neutral}
+            textColor={theme.semantic.text.strong}
             width="75px"
-            borderRadius="4px"
+            borderRadius={`${units.radius.md}px`}
             onClick={handleReset}
           />
           <Button
             description="추가"
-            color="#ff5858"
+            color={theme.semantic.button.neutral}
+            textColor={theme.semantic.text.strong}
             width="62px"
-            borderRadius="4px"
+            borderRadius={`${units.radius.md}px`}
             onClick={handleAddPenalty}
           />
         </ButtonWrapper>

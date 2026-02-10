@@ -7,8 +7,10 @@ import useAdminActions from '@/hooks/admin/useAdminActions';
 import { useState } from 'react';
 import getHighestCardinal from '@/utils/admin/getHighestCardinal';
 import CardinalEditModal from '@/components/Admin/Modal/CardinalEditModal';
-import theme from '@/styles/theme';
 import Button from '@/components/Button/Button';
+import { useTheme } from 'styled-components';
+import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 interface MemberDetailModalProps {
   data: MemberData;
@@ -21,6 +23,7 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
 }) => {
   const { handleAction } = useAdminActions();
   const [isCardinalModalOpen, setIsCardinalModalOpen] = useState(false);
+  const theme = useTheme();
 
   const isApproved = data.status === '승인 완료';
 
@@ -55,9 +58,8 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
       onClick: () => setIsCardinalModalOpen(true),
       style: {
         backgroundColor: isCardinalModalOpen
-          ? theme.color.gray[18]
-          : theme.color.gray[100],
-        color: isCardinalModalOpen ? theme.color.gray[100] : '#000',
+          ? theme.semantic.button['neutral-interaction']
+          : theme.semantic.button.neutral,
       },
     },
   ];
@@ -71,10 +73,13 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
     { label: '이메일', value: data.email },
   ];
 
-  const activityInfo = [
+  const activityInfoGroup1 = [
     { label: '활동기수', value: data.cardinals },
     { label: '상태', value: data.membershipType },
     { label: '가입일', value: data.createdAt },
+  ];
+
+  const activityInfoGroup2 = [
     { label: '출석', value: data.attendanceCount },
     { label: '결석', value: data.absenceCount },
     { label: '페널티', value: data.penaltyCount },
@@ -85,7 +90,7 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
       <CommonModal
         isOpen
         onClose={onClose}
-        title="멤버 관리 버튼"
+        title="멤버 관리 상세"
         top="40%"
         height="60%"
         footer={
@@ -93,11 +98,12 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
             <ButtonGroup buttons={buttons} />
             <Button
               onClick={onClose}
-              color="#fff"
-              textcolor="#000"
+              color={theme.semantic.button.primary}
+              textcolor={theme.semantic.text.inverse}
               width="55px"
               height="45px"
-              borderRadius="4px"
+              borderRadius={`${units.radius.md}px`}
+              $typo={typography.admin.Button1}
             >
               완료
             </Button>
@@ -106,27 +112,44 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
       >
         <S.ContentWrapper>
           <S.ModalContent>
-            <S.FontStyle fontSize="12px" color="#000">
+            <S.FontStyle
+              $typo={typography.admin.Caption1}
+              color={theme.semantic.text.alternative}
+            >
               회원정보
             </S.FontStyle>
-            <S.FlexWrapper>
-              <S.FontStyle fontSize="24px" fontWeight="700" color="#000">
+            <S.NameStatusWrapper>
+              <S.FontStyle
+                $typo={typography.admin.H3}
+                color={theme.semantic.text.strong}
+              >
                 {data.name} &nbsp;
                 {getHighestCardinal(data.cardinals)}
               </S.FontStyle>
               <StatusIndicator status={data.status} />
-            </S.FlexWrapper>
+            </S.NameStatusWrapper>
             <S.FlexWrapper>
               <S.LabelFlex>
                 {memberInfo.map((info) => (
-                  <S.FontStyle key={info.label}>{info.label}</S.FontStyle>
+                  <S.FontStyle
+                    key={info.label}
+                    $typo={typography.admin.Body1}
+                    color={theme.semantic.text.alternative}
+                  >
+                    {info.label}
+                  </S.FontStyle>
                 ))}
               </S.LabelFlex>
               <S.DataFlex>
                 {memberInfo.map((info) => (
                   <S.FontStyle
                     key={info.label}
-                    color={info.label === '페널티' ? '#ff5858' : undefined}
+                    $typo={typography.admin.Body1}
+                    color={
+                      info.label === '페널티'
+                        ? theme.semantic.state.error
+                        : undefined
+                    }
                   >
                     {info.value}
                   </S.FontStyle>
@@ -135,24 +158,63 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
             </S.FlexWrapper>
           </S.ModalContent>
           <S.ActivityContent>
-            <S.FontStyle fontSize="12px" color="#000">
+            <S.FontStyle
+              $typo={typography.admin.Caption1}
+              color={theme.semantic.text.alternative}
+            >
               활동정보
             </S.FontStyle>
             <S.FlexWrapper>
               <S.LabelFlex>
-                {activityInfo.map((info) => (
-                  <S.FontStyle key={info.label}>{info.label}</S.FontStyle>
-                ))}
+                <S.ActivityInfoGroup $gap="26px">
+                  {activityInfoGroup1.map((info) => (
+                    <S.FontStyle
+                      key={info.label}
+                      $typo={typography.admin.Body1}
+                      color={theme.semantic.text.alternative}
+                    >
+                      {info.label}
+                    </S.FontStyle>
+                  ))}
+                </S.ActivityInfoGroup>
+                <S.ActivityInfoGroup $gap="8px">
+                  {activityInfoGroup2.map((info) => (
+                    <S.FontStyle
+                      key={info.label}
+                      $typo={typography.admin.Body1}
+                      color={theme.semantic.text.alternative}
+                    >
+                      {info.label}
+                    </S.FontStyle>
+                  ))}
+                </S.ActivityInfoGroup>
               </S.LabelFlex>
               <S.DataFlex>
-                {activityInfo.map((info) => (
-                  <S.FontStyle
-                    key={info.label}
-                    color={info.label === '페널티' ? '#ff5858' : undefined}
-                  >
-                    {info.value}
-                  </S.FontStyle>
-                ))}
+                <S.ActivityInfoGroup $gap="26px">
+                  {activityInfoGroup1.map((info) => (
+                    <S.FontStyle
+                      key={info.label}
+                      $typo={typography.admin.Body1}
+                    >
+                      {info.value}
+                    </S.FontStyle>
+                  ))}
+                </S.ActivityInfoGroup>
+                <S.ActivityInfoGroup $gap="8px">
+                  {activityInfoGroup2.map((info) => (
+                    <S.FontStyle
+                      key={info.label}
+                      $typo={typography.admin.Body1}
+                      color={
+                        info.label === '페널티'
+                          ? theme.semantic.state.error
+                          : undefined
+                      }
+                    >
+                      {info.value}
+                    </S.FontStyle>
+                  ))}
+                </S.ActivityInfoGroup>
               </S.DataFlex>
             </S.FlexWrapper>
           </S.ActivityContent>
@@ -163,8 +225,8 @@ const MemberDetailModal: React.FC<MemberDetailModalProps> = ({
           isOpen={isCardinalModalOpen}
           onClose={() => setIsCardinalModalOpen(false)}
           selectedUserIds={[data.id]}
-          top="31%"
-          left="39%"
+          top="35%"
+          left="35%"
         />
       )}
     </>

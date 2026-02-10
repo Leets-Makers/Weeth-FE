@@ -12,7 +12,7 @@ import { useRef, useState } from 'react';
 import { registerDues } from '@/api/admin/dues/postRegisterDues';
 import DirectCardinalDropdown from '@/components/Admin/DirectCardinal';
 import DuesInput from '@/components/Admin/DuesInput';
-import Button from '@/components/Admin/Button';
+import DuesActionButtons from '@/components/Admin/DuesActionButtons';
 
 const DuesRegisterDropDown: React.FC = () => {
   const [selectedCardinal, setSelectedCardinal] = useState<null | number>(null);
@@ -88,6 +88,8 @@ const DuesRegisterDropDown: React.FC = () => {
             selectedCardinal={selectedCardinal}
             setSelectedCardinal={handleSelectCardinal}
             isForDues
+            variant="button"
+            placeholder="기수"
           />
         </div>
         <DuesInputWrapper>
@@ -110,7 +112,7 @@ const DuesRegisterDropDown: React.FC = () => {
         <Title>회비 설명</Title>
         <DuesInput
           width="96%"
-          placeholder="ex. 4기 회비 (3월 이월금 + 4기 회비)"
+          placeholder="ex. 4기 회비 (3기 이월금 + 4기 회비)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -127,13 +129,7 @@ const DuesRegisterDropDown: React.FC = () => {
       <ButtonWrapperWithDescription>
         <Description>*회비 등록은 기수당 한 번만 가능합니다.</Description>
         <ButtonWrapper>
-          <Button description="Cancel" color="#323232" width="89px" />
-          <Button
-            description="추가"
-            color="#ff5858"
-            width="64px"
-            onClick={handleRegister}
-          />
+          <DuesActionButtons onSubmit={handleRegister} />
         </ButtonWrapper>
       </ButtonWrapperWithDescription>
     </Wrapper>

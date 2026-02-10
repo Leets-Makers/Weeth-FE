@@ -1,24 +1,27 @@
-import Header from '@/components/Header/Header';
 import CardinalDropdown from '@/components/Board/CardinalDropdown';
 import StudyBoardSearch from '@/components/Board/StudyBoardSearch';
 import StudyLogListItem from '@/components/Board/StudyLogListItem';
 import formatDate from '@/hooks/formatDate';
 import * as S from '@/styles/board/PartBoard.styled';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import EduPartTap from '@/components/Board/EduPartTap';
-import useGetEducationBoard from '@/api/useGetEducationBoard';
+import useEducationBoard from '@/hooks/queries/board/useEducationBoard';
 import Loading from '@/components/common/Loading';
 import { SearchContent } from '@/types/search';
-import useGetUserInfo from '@/api/useGetGlobaluserInfo';
 import useCustomBack from '@/hooks/useCustomBack';
-
-type Part = 'FE' | 'BE' | 'D' | 'PM' | 'ALL';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
+import useUserData from '@/hooks/queries/useUserData';
+import useCardinalData from '@/hooks/queries/useCardinalData';
+import BoardWriteFloatingButton from '@/components/Board/BoardWriteFloatingButton';
+import type { Part } from '@/types/part';
 
 const EducationBoard = () => {
   useCustomBack('/board');
 
-  const { isAdmin } = useGetUserInfo();
+  const { data: userInfo } = useUserData();
+  const { currentCardinal } = useCardinalData();
 
   const [searchLoading, setSearchLoading] = useState(false);
 
@@ -35,8 +38,12 @@ const EducationBoard = () => {
 
   useEffect(() => {
     const c = searchParams.get('cardinal');
-    setSelectedCardinal(c ? Number(c) : null);
-  }, []);
+    if (c) {
+      setSelectedCardinal(Number(c));
+    } else if (currentCardinal !== null) {
+      setSelectedCardinal(currentCardinal);
+    }
+  }, [currentCardinal, searchParams]);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -55,7 +62,7 @@ const EducationBoard = () => {
   };
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useGetEducationBoard({
+    useEducationBoard({
       part: part as Part,
       cardinalNumber: selectedCardinal || undefined,
       pageSize: 10,
@@ -97,32 +104,27 @@ const EducationBoard = () => {
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleRightButton = () => {
-    navigate(`/board/education/${part}/post`);
-  };
-
   const handleDetail = (id: number) => {
     navigate(`/education/${part}/${id}?${searchParams.toString()}`);
   };
 
   return (
     <S.Container>
-      <Header
-        isAccessible={isAdmin}
-        RightButtonType="WRITING"
-        onClickRightButton={handleRightButton}
-      >
-        교육자료
-      </Header>
+      <BreadcrumbPadding>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 교육자료` },
+          ]}
+        />
+      </BreadcrumbPadding>
       <EduPartTap activePart={part} onPartChange={handleTabChange} />
       <S.InformationContainer>
-        <S.DropdownContainer>
-          <CardinalDropdown
-            origValue={selectedCardinal}
-            editValue={setSelectedCardinal}
-            isMember
-          />
-        </S.DropdownContainer>
+        <CardinalDropdown
+          origValue={selectedCardinal}
+          editValue={setSelectedCardinal}
+          isMember
+        />
       </S.InformationContainer>
       <StudyBoardSearch
         requestType="education"
@@ -134,13 +136,8 @@ const EducationBoard = () => {
         <Loading />
       ) : (
         <S.PostContainer>
-          <S.TotalPostNumber>
-            {searchMode
-              ? `검색 결과 ${list.length}개`
-              : `게시글 ${posts.length}개`}
-          </S.TotalPostNumber>
           {list.map((post) => (
-            <>
+            <React.Fragment key={post.id}>
               <S.PostListItemContainer key={post.id}>
                 <StudyLogListItem
                   name={post.name}
@@ -159,7 +156,7 @@ const EducationBoard = () => {
                 />
               </S.PostListItemContainer>
               <S.Line />
-            </>
+            </React.Fragment>
           ))}
           {hasNextPage && (
             <div
@@ -172,6 +169,7 @@ const EducationBoard = () => {
           )}
         </S.PostContainer>
       )}
+      {userInfo?.role === 'ADMIN' && <BoardWriteFloatingButton />}
     </S.Container>
   );
 };

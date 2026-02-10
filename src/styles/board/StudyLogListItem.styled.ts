@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 15px;
-  gap: 15px;
+  padding: ${units.padding['400']}px ${units.padding['450']}px;
+  gap: ${units.margin['300']}px;
   cursor: pointer;
   width: 100%;
-  max-width: ${MOBILE};
   box-sizing: border-box;
 
   ${pcResponsive}
@@ -24,7 +25,7 @@ export const PostTopSection = styled.div`
 export const PostContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 `;
 
 export const StudyTagContainer = styled.div`
@@ -44,8 +45,8 @@ export const CommentContainer = styled.div`
 `;
 
 export const TitleText = styled.div`
-  font-family: ${theme.font.semiBold};
-  font-size: 16px;
+  ${typography.Sub2};
+  color: ${colors.semantic.text.strong};
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -61,26 +62,24 @@ export const Divider = styled.span`
 `;
 
 export const ContentText = styled.div`
-  color: ${theme.color.gray[65]};
-  font-size: 12px;
-  line-height: 1.27;
+  color: ${colors.semantic.text.alternative};
+  ${typography.Caption2};
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
   margin-bottom: 2px;
 `;
 
 export const LightText = styled.div`
-  color: ${theme.color.gray[65]};
-  font-size: 12px;
+  color: ${colors.semantic.text.alternative};
+  ${typography.Caption2};
 `;
 
 export const CommentsText = styled(LightText)`
   width: 8px;
   height: 14px;
-  margin-left: 3px;
+  margin-left: 2px;
 `;
 
 export const NameText = styled(LightText)`

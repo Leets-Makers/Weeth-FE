@@ -1,4 +1,4 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ const PositionContainer = styled.div`
 const PositionLabel = styled.div`
   width: 42px;
   text-align: left;
-  color: ${theme.color.gray[65]};
+  color: ${colors.semantic.text.normal};
 `;
 
 const Positions = styled.div`
@@ -31,7 +31,13 @@ const PositionName = styled.div`
   margin-right: 6px;
   font-size: 16px;
   line-height: 19.09px;
-  color: #ffffff;
+  color: ${colors.semantic.text.normal};
+`;
+
+const PositionBoxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
 `;
 
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
@@ -41,7 +47,7 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 const StyledCheckbox = styled.div<{ checked: boolean }>`
   width: 18px;
   height: 18px;
-  background-color: #2f2f2f;
+  background-color: ${colors.semantic.button.neutral};
   border-radius: 1px;
   display: flex;
   align-items: center;
@@ -50,7 +56,7 @@ const StyledCheckbox = styled.div<{ checked: boolean }>`
   position: relative;
 
   ${HiddenCheckbox}:checked + & {
-    background-color: #2f2f2f;
+    background-color: ${colors.semantic.button.neutral};
   }
 
   &::after {
@@ -58,7 +64,8 @@ const StyledCheckbox = styled.div<{ checked: boolean }>`
     position: absolute;
     width: 14px; /* Internal square size */
     height: 14px; /* Internal square size */
-    background-color: ${({ checked }) => (checked ? '#00DDA8' : '#2F2F2F')};
+    background-color: ${({ checked }) =>
+      checked ? colors.semantic.brand.primary : colors.semantic.button.neutral};
     border-radius: 1px;
     top: 2px;
     left: 2px;
@@ -101,20 +108,13 @@ const PositionSector: React.FC<PositionSectorProps> = ({
       <PositionLabel>{labelName}</PositionLabel>
       <Positions>
         {positions.map((position) => (
-          <div
-            key={position}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginLeft: '10px',
-            }}
-          >
+          <PositionBoxContainer key={position}>
             <PositionCheckbox
               checked={value === position}
               onChange={() => onChange(position)}
             />
             <PositionName>{position}</PositionName>
-          </div>
+          </PositionBoxContainer>
         ))}
       </Positions>
     </PositionContainer>

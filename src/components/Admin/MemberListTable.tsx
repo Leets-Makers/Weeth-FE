@@ -7,6 +7,8 @@ import {
   useMemberContext,
 } from '@/components/Admin/context/MemberContext';
 import theme from '@/styles/theme';
+import { units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export interface Column {
   key: keyof MemberData;
@@ -30,7 +32,7 @@ export const TableContainer = styled.div`
   width: 100%;
   min-width: 1400px;
   border: 1px solid #f2f2f2;
-  border-radius: 8px;
+  border-radius: ${units.radius.lg}px;
   box-shadow: 0px 3px 8px rgba(133, 141, 138, 0.2);
   padding: 20px;
   box-sizing: border-box;
@@ -47,9 +49,9 @@ export const NoDataRow = styled.tr`
 `;
 
 export const NoDataCell = styled.td`
+  ${typography.admin.Sub2};
   padding: 20px;
   text-align: center;
-  font-size: 18px;
   letter-spacing: 1px;
   vertical-align: middle;
   color: ${theme.color.gray[65]};

@@ -20,7 +20,7 @@ const CloseBtn = ({ onClick }: { onClick: () => void }) => (
 
 const ModalPenalty: React.FC<ModalPenaltyProps> = ({ open, close }) => {
   return (
-    <StyledModal open={open}>
+    <StyledModal $open={open}>
       <ModalContent>
         <ModalHeader>
           <IcInfo aria-label="info" />

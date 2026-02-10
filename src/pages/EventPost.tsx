@@ -1,6 +1,9 @@
+import { lazy, Suspense } from 'react';
 import AdminOnly from '@/components/common/AdminOnly';
-import EventEditor from '@/components/Event/EventEditor';
 import useCustomBack from '@/hooks/useCustomBack';
+import Loading from '@/components/common/Loading';
+
+const EventEditor = lazy(() => import('@/components/Event/EventEditor'));
 
 const EventPost = () => {
   useCustomBack('/calendar');
@@ -8,7 +11,9 @@ const EventPost = () => {
   return (
     <>
       <AdminOnly />
-      <EventEditor />
+      <Suspense fallback={<Loading />}>
+        <EventEditor />
+      </Suspense>
     </>
   );
 };

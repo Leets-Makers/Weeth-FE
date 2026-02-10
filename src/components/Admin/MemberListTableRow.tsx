@@ -3,37 +3,39 @@ import CheckBox from '@/assets/images/ic_admin_checkbox.svg';
 import UnCheckBox from '@/assets/images/ic_admin_uncheckbox.svg';
 import MeatBallSvg from '@/assets/images/ic_admin_meatball.svg';
 import { useState } from 'react';
-import { statusColors } from '@/components/Admin/StatusIndicator';
+import { getStatusColor } from '@/components/Admin/StatusIndicator';
 import {
   MemberData,
   useMemberContext,
 } from '@/components/Admin/context/MemberContext';
 import { Column } from '@/components/Admin/MemberListTable';
 import MemberDetailModal from '@/components/Admin/Modal/MemberDetailModal';
+import typography from '@/theme/typography';
 
 const Row = styled.tr`
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
 `;
 
 const Cell = styled.td`
+  ${typography.admin.Body1};
   padding: 15px 20px;
   text-align: left;
   white-space: nowrap;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   vertical-align: middle;
 `;
 
-export const StatusCell = styled.td<{ statusColor: string }>`
+export const StatusCell = styled.td<{ $statusColor: any }>`
   width: 2px;
   min-width: 2px;
-  background-color: ${({ statusColor }) => statusColor};
+  background-color: ${(props) => props.$statusColor(props)};
 `;
 
 export const SvgWrapper = styled.td`
   padding: 10px;
   text-align: center;
   cursor: pointer;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
 
   img {
     height: auto;
@@ -67,7 +69,7 @@ const MemberListTableRow: React.FC<TableRowProps> = ({ data, columns }) => {
   return (
     <>
       <Row>
-        <StatusCell statusColor={statusColors[data.status]} />
+        <StatusCell $statusColor={getStatusColor(data.status)} />
 
         <SvgWrapper onClick={onClickToCheckBox}>
           <img

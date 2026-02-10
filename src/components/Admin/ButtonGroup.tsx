@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import Button from '@/components/Button/Button';
+import { units } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 interface ButtonItem {
   label: string;
@@ -44,12 +47,12 @@ const ButtonContent = styled.div`
   white-space: nowrap;
 
   @media (max-width: 1300px) {
-    font-size: 14px;
+    ${typography.admin.Button1};
     width: fit-content;
   }
 
   @media (max-width: 1000px) {
-    font-size: 12px;
+    ${typography.admin.Caption1};
     padding: 1px;
     width: fit-content;
   }
@@ -59,16 +62,22 @@ const ButtonGroup: React.FC<ButtonGroupProps & { isHeader?: boolean }> = ({
   buttons,
   isHeader,
 }) => {
+  const theme = useTheme();
+
   return (
     <ButtonGroupContainer isHeader={isHeader}>
       {buttons.map(({ label, onClick, disabled, style }) => (
         <Button
           key={label}
-          color={style?.backgroundColor || '#fff'}
-          textcolor={style?.color || '#000'}
+          color={theme.semantic.button.neutral}
+          textcolor={
+            disabled
+              ? theme.semantic.text.disabled
+              : style?.color || theme.semantic.text.normal
+          }
           width="auto"
-          height="45px"
-          borderRadius="4px"
+          height="40px"
+          borderRadius={`${units.radius.md}px`}
           onClick={onClick}
           disabled={disabled}
         >

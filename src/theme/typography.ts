@@ -1,0 +1,165 @@
+const typography = {
+  H1: {
+    fontFamily: 'Pretendard',
+    fontWeight: 700,
+    fontSize: '40px',
+    lineHeight: '48px',
+    letterSpacing: '-0.02em',
+  },
+  H2: {
+    fontFamily: 'Pretendard',
+    fontWeight: 700,
+    fontSize: '32px',
+    lineHeight: '40px',
+    letterSpacing: '-0.02em',
+  },
+  H3: {
+    fontFamily: 'Pretendard',
+    fontWeight: 600,
+    fontSize: '24px',
+    lineHeight: '30px',
+    letterSpacing: '-0.02em',
+  },
+
+  Sub1: {
+    fontFamily: 'Pretendard',
+    fontWeight: 600,
+    fontSize: '18px',
+    lineHeight: '22px',
+    letterSpacing: '-0.02em',
+  },
+  Sub2: {
+    fontFamily: 'Pretendard',
+    fontWeight: 600,
+    fontSize: '16px',
+    lineHeight: '20px',
+    letterSpacing: '-0.02em',
+  },
+
+  Body1: {
+    fontFamily: 'Pretendard',
+    fontWeight: 500,
+    fontSize: '16px',
+    lineHeight: '24px',
+    letterSpacing: '-0.02em',
+  },
+  Body2: {
+    fontFamily: 'Pretendard',
+    fontWeight: 500,
+    fontSize: '14px',
+    lineHeight: '20px',
+    letterSpacing: '-0.02em',
+  },
+
+  Caption1: {
+    fontFamily: 'Pretendard',
+    fontWeight: 600,
+    fontSize: '12px',
+    lineHeight: '16px',
+    letterSpacing: '-0.02em',
+  },
+  Caption2: {
+    fontFamily: 'Pretendard',
+    fontWeight: 500,
+    fontSize: '12px',
+    lineHeight: '16px',
+    letterSpacing: '-0.02em',
+  },
+
+  Button1: {
+    fontFamily: 'Pretendard',
+    fontWeight: 600,
+    fontSize: '16px',
+    lineHeight: '24px',
+    letterSpacing: '-0.02em',
+  },
+  Button2: {
+    fontFamily: 'Pretendard',
+    fontWeight: 600,
+    fontSize: '14px',
+    lineHeight: '20px',
+    letterSpacing: '-0.02em',
+  },
+
+  admin: {
+    H1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 700,
+      fontSize: '36px',
+      lineHeight: '44px',
+      letterSpacing: '-0.005em',
+    },
+    H2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 700,
+      fontSize: '28px',
+      lineHeight: '36px',
+      letterSpacing: '-0.005em',
+    },
+    H3: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '22px',
+      lineHeight: '28px',
+      letterSpacing: '-0.005em',
+    },
+    Sub1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '16px',
+      lineHeight: '20px',
+      letterSpacing: '-0.005em',
+    },
+    Sub2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '14px',
+      lineHeight: '18px',
+      letterSpacing: '-0.005em',
+    },
+    Body1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: '22px',
+      letterSpacing: '-0.005em',
+    },
+    Body2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 500,
+      fontSize: '13px',
+      lineHeight: '18px',
+      letterSpacing: '-0.005em',
+    },
+    Caption1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '12px',
+      lineHeight: '16px',
+      letterSpacing: '-0.005em',
+    },
+    Caption2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 500,
+      fontSize: '12px',
+      lineHeight: '16px',
+      letterSpacing: '-0.005em',
+    },
+    Button1: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '14px',
+      lineHeight: '24px',
+      letterSpacing: '-0.005em',
+    },
+    Button2: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '13px',
+      lineHeight: '16px',
+      letterSpacing: '-0.005em',
+    },
+  },
+};
+
+export default typography;

@@ -1,17 +1,20 @@
 import parse from 'html-react-parser';
-import ReplyArrowImage from '@/assets/images/ic_reply.svg';
-import MenuImage from '@/assets/images/ic_comment_delete.svg';
+import ReplyArrowImage from '@/assets/images/ic_reply.svg?react';
+import MenuImage from '@/assets/images/ic_comment_delete.svg?react';
 import * as S from '@/styles/board/Comment.styled';
-import deleteComment from '@/api/deleteComment';
+import useDeleteComment from '@/hooks/mutation/board/useDeleteComment';
 import formatDateTime from '@/hooks/formatDateTime';
-import useGetUserName from '@/hooks/useGetUserName';
 import setPositionIcon from '@/hooks/setPositionIcon';
-import { useCallback, useState } from 'react';
-import SelectModal from '@/components/Modal/SelectModal';
+import { useCallback } from 'react';
 import convertLinksInText from '@/hooks/convertLinksInText';
 import { originFile } from '@/pages/board/part/PartEdit';
 import PostFile from '@/components/Board/PostFile';
 import { toastError, toastSuccess } from '@/components/common/ToastMessage';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
+import useUserData from '@/hooks/queries/useUserData';
 
 interface ReplyCommentProps {
   name: string;
@@ -39,25 +42,30 @@ const ReplyComment = ({
   onDelete,
 }: ReplyCommentProps) => {
   const formattedTime = formatDateTime(time);
-  const isMyComment = name === useGetUserName();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const { data: userInfo } = useUserData();
+  const isMyComment = name === userInfo?.name;
+
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
+
+  const deleteCommentMutation = useDeleteComment({
+    onSuccess: () => {
+      onDelete();
+      closeSelectModal();
+    },
+  });
+
+  const handleDeleteComment = () => {
+    deleteCommentMutation.mutate({ path, postId, commentId });
   };
 
   const onClickMenu = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleDeleteComment = async () => {
-    try {
-      await deleteComment(path, postId, commentId);
-      onDelete();
-      handleCloseModal();
-    } catch (error) {
-      console.error('Failed to delete comment:', error);
-    }
+    openSelectModal({
+      title: '댓글 삭제',
+      content: '댓글을 정말 삭제하시겠습니까?',
+      onDelete: handleDeleteComment,
+    });
   };
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
@@ -84,7 +92,7 @@ const ReplyComment = ({
 
   return (
     <S.ReplyCommentContainer>
-      <S.ReplyArrow src={ReplyArrowImage} alt="답댓글 화살표" />
+      <ReplyArrowImage />
       <S.ReplyContentContainer>
         <S.ReplyHeaderContainer>
           <S.NameText>
@@ -96,7 +104,7 @@ const ReplyComment = ({
           </S.NameText>
           {isMyComment && (
             <S.ReplyImageButton onClick={onClickMenu}>
-              <img src={MenuImage} alt="메뉴 버튼" />
+              <MenuImage />
             </S.ReplyImageButton>
           )}
         </S.ReplyHeaderContainer>
@@ -119,14 +127,6 @@ const ReplyComment = ({
         </S.ContentContainer>
         <S.DateText>{formattedTime}</S.DateText>
       </S.ReplyContentContainer>
-      {isModalOpen && (
-        <SelectModal
-          title="댓글 삭제"
-          content="댓글을 정말 삭제하시겠습니까?"
-          onClose={handleCloseModal}
-          onDelete={handleDeleteComment}
-        />
-      )}
     </S.ReplyCommentContainer>
   );
 };

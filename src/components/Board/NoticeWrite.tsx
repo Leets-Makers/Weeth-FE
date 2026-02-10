@@ -1,24 +1,23 @@
 import styled from 'styled-components';
 import { Dispatch, SetStateAction } from 'react';
-import Header from '@/components/Header/Header';
 import Markdown from '@/components/Board/Markdown';
 import StudyPostTitle from '@/components/Board/StudyPostTitle';
 import { originFile } from '@/pages/board/part/PartEdit';
+import { units } from '@/theme/designTokens';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: ${units.margin['300']}px;
 `;
 
 const MarkdownContainer = styled.div`
   display: flex;
-  padding: 10px 15px;
 `;
 
 interface StudyWriteTemplateProps {
   title: string;
   setTitle: Dispatch<SetStateAction<string>>;
-  onSave: () => void;
   content: string;
   setContent: Dispatch<SetStateAction<string>>;
   files: File[];
@@ -36,13 +35,9 @@ const NoticeWrite = ({
   setFiles,
   originFiles,
   setOriginFiles,
-  onSave,
 }: StudyWriteTemplateProps) => {
   return (
     <Container>
-      <Header isAccessible RightButtonType="POST" onClickRightButton={onSave}>
-        공지사항
-      </Header>
       <StudyPostTitle title={title} setTitle={setTitle} />
       <MarkdownContainer>
         <Markdown

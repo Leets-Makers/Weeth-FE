@@ -1,17 +1,19 @@
-import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 const Label = styled.div`
-  width: 65px;
-  height: 24px;
+  width: 70px;
+  height: 20px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 12px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Caption1};
   background-color: rgba(0, 221, 168, 0.1);
-  color: ${theme.color.main};
+  color: ${colors.semantic.container.primary};
+  padding: ${units.padding['100']}px ${units.padding['200']}px;
+  box-sizing: border-box;
 `;
 
 const Tag = () => {

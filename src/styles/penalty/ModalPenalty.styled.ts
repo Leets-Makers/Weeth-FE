@@ -1,11 +1,11 @@
-import theme from '@/styles/theme';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Title = styled.h3`
   margin-top: 10px;
-  font-family: ${theme.font.semiBold};
-  font-size: 18px;
-  color: ${theme.color.gray[100]};
+  color: ${colors.semantic.text.normal};
+  ${typography.Sub1}
 `;
 
 export const Divider = styled.hr`
@@ -24,17 +24,15 @@ export const Section = styled.section`
 
 export const P = styled.p`
   margin: 0 0 8px;
-  color: #ffffff66;
-  font-size: 14px;
-  line-height: 1.6;
+  color: ${colors.semantic.text.alternative};
+  ${typography.Body2};
 `;
 
 export const OL = styled.ol`
   margin: 0;
   padding-left: 15px;
-  color: #ffffff66;
-  font-size: 14px;
-  line-height: 2;
+  color: ${colors.semantic.text.alternative};
+  ${typography.Body2};
 `;
 
 export const ImgButton = styled.div`

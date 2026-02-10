@@ -1,55 +1,54 @@
-import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
 import styled from 'styled-components';
+import { pcResponsive } from '@/styles';
+import typography from '@/theme/typography';
 
 export const StyledDues = styled.div`
-  width: 370px;
-`;
-
-export const CategoryWrapper = styled.div`
-  margin: 0 30px;
+  width: 100%;
+  display: flex;
+  margin-bottom: 50px;
+  flex-direction: column;
+  min-width: ${units.device.mobile}px;
+  ${pcResponsive}
+  box-sizing: border-box;
+  padding: 0 ${units.padding['450']}px;
 `;
 
 export const DuesListBox = styled.div`
-  width: 92%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: center;
   border-radius: 14px;
-  margin: 0 4% 50px 4%;
-  padding-bottom: 15px;
-  background-color: ${theme.color.gray[18]};
+
+  padding: 15px;
+  background-color: ${colors.semantic.container.neutral};
+  box-sizing: border-box;
 `;
 
 export const DuesList = styled.div`
-  width: 92%;
-  margin: 0px 10px 0 10px;
-`;
-
-export const Line = styled.div`
-  border: 1px solid;
-  color: #4d4d4d;
-  width: 325px;
-  margin-top: 20px;
-  transform: scaleY(0.2);
-`;
-
-export const MoneyBoxContainer = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 35px;
+  margin: 0 10px;
+
+  &::before {
+    content: '';
+    display: block;
+    background-color: ${colors.semantic.line};
+    width: 100%;
+    height: 1px;
+    margin-top: 20px;
+  }
 `;
 
-export const MoneyBox = styled.div`
-  font-size: 25px;
-  font-family: ${theme.font.semiBold};
-  margin-left: 15px;
-  align-items: start;
+export const TotalMoney = styled.div`
+  ${typography.H2};
+  margin-top: 9px;
+  align-self: start;
 `;
 
 export const NullText = styled.div`
-  font-size: 25px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Sub2};
   margin-top: 20px;
   justify-content: center;
   text-align: center;

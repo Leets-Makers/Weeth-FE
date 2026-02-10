@@ -1,53 +1,57 @@
 import styled from 'styled-components';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 export const DuesWrapper = styled.div`
-  width; 100%;
-  padding: 20px 0px 0px 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 export const StyledDuesBox = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 0;
 `;
 
 export const StyledCaptionBox = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
 `;
 
 export const StyledTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
-  margin-top: -2px;
+  flex: 1;
+  min-width: 0;
+
+  max-width: 60%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 `;
 
 export const StyledMemoBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  text-align: end;
-  margin-left: 10px;
+  text-align: right;
+  width: 30%;
 `;
 
-export const Text = styled.div`
-  font-size: 16px;
-  word-break: break-word;
-  white-space: pre-wrap;
-  max-width: 180px;
+export const Text = styled.p`
+  ${typography.Sub2};
+  color: ${colors.semantic.text.strong};
+  margin: 0;
 `;
 
-export const SmallText = styled.div`
-  margin-top: 7px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-`;
-
-export const SmallTextMemo = styled.div`
-  width: 100px;
-  margin-top: 7px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+export const SmallText = styled.span`
+  ${typography.Caption2};
+  color: ${colors.semantic.text.alternative};
+  margin-top: 2px;
 `;

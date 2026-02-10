@@ -1,26 +1,5 @@
-import { useEffect, useState } from 'react';
-
-import check from '@/assets/images/ic_check.svg';
-import warning from '@/assets/images/ic_warning.svg';
-
-import * as S from '@/styles/attend/AttendMain.styled';
-import { AttendProject } from '@/styles/attend/AttendInfo.styled';
-import {
-  PenaltyContainer,
-  NoPenaltyInfo,
-} from '@/styles/attend/PenaltyInfo.styled';
-
-import useGetAttend from '@/api/useGetAttend';
-import useGetPenalty from '@/api/useGetPenalty';
-
-import { AttendInfo, NoAttnedInfo } from '@/components/Attendance/AttendInfo';
-import AttendRate from '@/components/Attendance/AttendRate';
-import {
-  MyPenaltyInfo,
-  PenaltyInfo,
-} from '@/components/Attendance/PenaltyInfo';
-import Loading from '@/components/common/Loading';
-import ModalAttend from '@/components/Attendance/ModalAttend';
+/* eslint-disable no-nested-ternary */
+import { useState } from 'react';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
@@ -29,123 +8,138 @@ import timezone from 'dayjs/plugin/timezone';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import isBetween from 'dayjs/plugin/isBetween';
 
+import * as S from '@/styles/attend/AttendMain.styled';
+
+import AttendRate from '@/components/Attendance/AttendRate';
+import { AttendInfo, NoAttnedInfo } from '@/components/Attendance/AttendInfo';
+import {
+  MyPenaltyInfo,
+  PenaltyInfo,
+} from '@/components/Attendance/PenaltyInfo';
+import ModalAttend from '@/components/Attendance/ModalAttend';
+
+import AttendanceCodeModal from '@/components/Modal/AttendanceCodeModal';
+import AttendSection from '@/components/Attendance/AttendSection';
+import useAttendData from '@/hooks/queries/attend/useAttendData';
+import usePenaltyData from '@/hooks/queries/attend/usePenaltyData';
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(relativeTime);
-dayjs.locale('ko');
 dayjs.extend(isBetween);
+dayjs.locale('ko');
+
+// 일정 시간 처리 함수
+const getAttendTimeInfo = (attendInfo?: any) => {
+  if (!attendInfo) {
+    return {
+      title: 'No title',
+      location: 'No location',
+      startDateTime: '',
+      endDateTime: '',
+      isWithinTimeRange: false,
+    };
+  }
+
+  const startDate = dayjs(attendInfo.start);
+  const endDate = dayjs(attendInfo.end);
+  const startDateTime = startDate.format('YYYY년 MMMM D일');
+  const startTime = startDate.locale('en').format('h:mm A');
+  const endTime = endDate.locale('en').format('h:mm A');
+  const endDateTime = `(${startTime} ~ ${endTime})`;
+
+  const current = dayjs();
+  const isWithinTimeRange = current.isBetween(
+    startDate.subtract(10, 'minute'),
+    endDate,
+    'minute',
+    '[]',
+  );
+
+  return {
+    title: attendInfo.title,
+    location: attendInfo.location,
+    startDateTime,
+    endDateTime,
+    isWithinTimeRange,
+  };
+};
 
 const AttendMain: React.FC = () => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [hasPenalty, setHasPenalty] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [codeModalOpen, setCodeModalOpen] = useState(false);
 
-  const { penaltyInfo, isLoading: penaltyLoading } = useGetPenalty();
-  const [isAttend, setIsAttend] = useState(false);
-  const {
-    attendInfo,
-    hasSchedule,
-    isLoading: attendLoading,
-  } = useGetAttend(isAttend);
+  const { data: penaltyInfo } = usePenaltyData();
+  const { data: attendInfo } = useAttendData();
 
-  useEffect(() => {
-    const has =
-      (penaltyInfo?.penaltyCount ?? 0) > 0 ||
-      (penaltyInfo?.warningCount ?? 0) > 0;
-    setHasPenalty(has);
-  }, [penaltyInfo?.penaltyCount, penaltyInfo?.warningCount]);
+  const hasSchedule = attendInfo?.title !== null;
 
-  useEffect(() => {
-    if (attendInfo?.status === 'ATTEND') {
-      setIsAttend(true);
-    }
-  }, [attendInfo?.status]);
+  const isAttend = attendInfo?.status === 'ATTEND' || false;
 
-  if (attendLoading || penaltyLoading) {
-    return <Loading />;
-  }
+  const hasPenalty =
+    (penaltyInfo?.penaltyCount ?? 0) > 0 ||
+    (penaltyInfo?.warningCount ?? 0) > 0;
 
-  let title = 'Loading...';
-  let location = 'Loading...';
-  let startDateTime = 'Loading...';
-  let endDateTime = 'Loading...';
-  let isWithinTimeRange = false;
-
-  if (attendInfo) {
-    title = attendInfo.title || 'No title';
-    location = attendInfo.location || 'No location';
-
-    const startDate = attendInfo.start ? dayjs(attendInfo.start) : dayjs();
-    const endDate = attendInfo.end ? dayjs(attendInfo.end) : dayjs();
-
-    startDateTime = startDate.format('YYYY년 MMMM D일');
-    const startTime = startDate.locale('en').format('h:mm A');
-    const endTime = endDate.locale('en').format('h:mm A');
-
-    endDateTime = `(${startTime} ~ ${endTime})`;
-
-    const current = dayjs();
-    const adjustedStart = startDate.subtract(10, 'minute');
-    isWithinTimeRange = current.isBetween(
-      adjustedStart,
-      endDate,
-      'minute',
-      '[]',
-    );
-  }
+  const { title, location, startDateTime, endDateTime, isWithinTimeRange } =
+    getAttendTimeInfo(attendInfo);
 
   const handleOpenModal = () => {
-    if (isWithinTimeRange) {
-      setModalOpen(true);
-    }
+    if (isWithinTimeRange) setModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
+  const handleCloseModal = () => setModalOpen(false);
 
   return (
     <S.StyledAttend>
-      <AttendRate attendRate={attendInfo?.attendanceRate} />
-      <S.StyledBox>
-        <img src={check} alt="v" />
-        {hasSchedule && attendInfo ? (
-          <AttendInfo
-            title={title}
-            location={location}
-            startDateTime={startDateTime}
-            endDateTime={endDateTime}
-            isWithinTimeRange={isWithinTimeRange}
-            handleOpenModal={handleOpenModal}
-            isAttend={isAttend}
-          />
+      <AttendanceCodeModal
+        code={attendInfo?.code?.toString() || '0000'}
+        open={codeModalOpen}
+        onClose={() => setCodeModalOpen(false)}
+      />
+      <AttendRate attendRate={attendInfo?.attendanceRate ?? 0} />
+
+      {/* 오늘의 출석 */}
+      <AttendSection isAttend={false} title="오늘의 출석" link="/attendCheck">
+        {hasSchedule ? (
+          <div style={{ width: '100%' }}>
+            <AttendInfo
+              title={title}
+              location={location}
+              startDateTime={startDateTime}
+              endDateTime={endDateTime}
+              isWithinTimeRange={isWithinTimeRange}
+              handleOpenModal={handleOpenModal}
+              handleOpenCodeModal={() => setCodeModalOpen(true)}
+              isAttend={isAttend}
+              isAdmin={attendInfo?.code !== null}
+            />
+          </div>
         ) : (
           <NoAttnedInfo />
         )}
-      </S.StyledBox>
-      <S.StyledBox>
-        <img src={warning} alt="!" />
-        {penaltyInfo?.penaltyCount === null ? (
-          <S.SemiBold>
-            <AttendProject>등록된 데이터가 없습니다.</AttendProject>
-          </S.SemiBold>
+      </AttendSection>
+
+      {/* 출석 기록 */}
+      <AttendSection title="출석" link="/attendCheck">
+        <S.TitleText>출석 기록</S.TitleText>
+      </AttendSection>
+
+      {/* 페널티 */}
+      <AttendSection title="페널티" link="/penalty">
+        {penaltyInfo?.penaltyCount == null ? (
+          <S.TitleText>등록된 데이터가 없습니다.</S.TitleText>
+        ) : hasPenalty ? (
+          <MyPenaltyInfo
+            penaltyCount={penaltyInfo?.penaltyCount || 0}
+            warningCount={penaltyInfo?.warningCount || 0}
+          />
         ) : (
-          <>
-            {hasPenalty ? (
-              <MyPenaltyInfo
-                penaltyCount={penaltyInfo?.penaltyCount || 0}
-                warningCount={penaltyInfo?.warningCount || 0}
-              />
-            ) : (
-              <PenaltyContainer>
-                <NoPenaltyInfo>
-                  <S.SemiBold>페널티를 받은 이력이 없네요!</S.SemiBold>
-                </NoPenaltyInfo>
-              </PenaltyContainer>
-            )}
-            <PenaltyInfo />
-          </>
+          <S.TitleText>페널티를 받은 이력이 없네요!</S.TitleText>
         )}
-      </S.StyledBox>
+        <PenaltyInfo />
+      </AttendSection>
+
+      {/* 출석 모달 */}
       <ModalAttend
         title={title}
         location={location}
@@ -153,7 +147,6 @@ const AttendMain: React.FC = () => {
         endDateTime={endDateTime}
         open={modalOpen}
         close={handleCloseModal}
-        handleAttend={setIsAttend}
       />
     </S.StyledAttend>
   );

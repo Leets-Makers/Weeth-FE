@@ -4,8 +4,8 @@ export const UserInfo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 94%;
-  margin: 15px 0 0 5%;
+  width: 100%;
+  margin-top: 24px;
 `;
 
 export const UserContainer = styled.div`
@@ -28,23 +28,6 @@ export const NickNameContainer = styled.div`
   margin-left: 8px;
   align-self: flex-end;
   padding-bottom: 5px;
-`;
-
-export const RightButtonContainer = styled.div`
-  display: flex;
-  padding-bottom: 5px;
-  align-items: center;
-  align-self: flex-end;
-  margin-right: 10px;
-`;
-
-export const UserCharacter = styled.img`
-  width: 153px;
-  transition: transform 0.5s ease;
-  &:hover {
-    transform: scale(1.08);
-  }
-  cursor: pointer;
 `;
 
 export const Admin = styled.img`

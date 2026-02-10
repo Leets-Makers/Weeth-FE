@@ -1,3 +1,6 @@
+// 폰트 설정 후 삭제할 파일
+import { colors } from '@/theme/designTokens';
+
 const theme = {
   color: {
     main: '#00DDA8',
@@ -30,6 +33,8 @@ const theme = {
     regular: 'Pretendard Regular',
     medium: 'Pretendard Medium',
   },
+
+  semantic: colors.semantic,
 };
 
 export default theme;

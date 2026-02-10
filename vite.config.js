@@ -17,7 +17,7 @@ problematicEnvVars.forEach((varName) => {
 });
 
 export default defineConfig({
-  plugins: [react(), svgr(), EnvironmentPlugin('all')],
+  plugins: [react(), svgr()],
   server: {
     port: 3000,
   },
@@ -27,6 +27,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '/fonts': path.resolve(__dirname, './public/fonts'),
     },
   },
 });

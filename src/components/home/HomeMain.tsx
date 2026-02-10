@@ -17,10 +17,8 @@ const HomeMain: React.FC = () => {
             navi(`/calendar?year=${CURRENT_YEAR}&month=${CURRENT_MONTH}`);
           }}
         >
-          동아리 일정
-          <S.PlaceholderImage>
-            <img src={calendar} alt="캘린더 이미지" />
-          </S.PlaceholderImage>
+          캘린더
+          <S.PlaceholderImage src={calendar} alt="캘린더 이미지" />
         </S.CalendarItem>
         <S.PenaltyItem
           onClick={() => {
@@ -28,9 +26,7 @@ const HomeMain: React.FC = () => {
           }}
         >
           출석
-          <S.PlaceholderImage>
-            <img src={attend} alt="출석 이미지" />
-          </S.PlaceholderImage>
+          <S.PlaceholderImage src={attend} alt="출석 이미지" />
         </S.PenaltyItem>
         <S.BoardItem
           onClick={() => {
@@ -38,9 +34,7 @@ const HomeMain: React.FC = () => {
           }}
         >
           게시판
-          <S.PlaceholderImage>
-            <img src={board} alt="게시판 이미지" />
-          </S.PlaceholderImage>
+          <S.PlaceholderImage src={board} alt="게시판 이미지" />
         </S.BoardItem>
         <S.MemberItem
           onClick={() => {
@@ -48,16 +42,14 @@ const HomeMain: React.FC = () => {
           }}
         >
           멤버
-          <S.PlaceholderImage />
         </S.MemberItem>
-        <S.FeeItem
+        <S.DuesItem
           onClick={() => {
             navi(`/dues`);
           }}
         >
           회비
-          <S.PlaceholderImage />
-        </S.FeeItem>
+        </S.DuesItem>
       </S.GridContainer>
     </S.StyledHomeMain>
   );

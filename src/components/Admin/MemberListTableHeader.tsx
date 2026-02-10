@@ -3,7 +3,8 @@ import CheckBox from '@/assets/images/ic_admin_checkbox.svg';
 import UnCheckBox from '@/assets/images/ic_admin_uncheckbox.svg';
 import { StatusCell, SvgWrapper } from '@/components/Admin/MemberListTableRow';
 import { useMemberContext } from '@/components/Admin/context/MemberContext';
-import { statusColors } from './StatusIndicator';
+import { getStatusColor } from './StatusIndicator';
+import typography from '@/theme/typography';
 
 interface TableHeaderProps {
   columns: { key: string; header: string; width: string }[];
@@ -11,10 +12,11 @@ interface TableHeaderProps {
 }
 
 const HeaderCell = styled.th<{ width?: string }>`
+  ${typography.admin.Caption1};
+  color: ${({ theme }) => theme.semantic.text.alternative};
   text-align: left;
   padding: 18px;
-  font-weight: bold;
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid ${({ theme }) => theme.semantic.line};
   white-space: nowrap;
   width: ${({ width }) => width || 'auto'};
 `;
@@ -43,7 +45,7 @@ const MemberListTableHeader: React.FC<TableHeaderProps> = ({
   return (
     <thead>
       <HeaderRow>
-        <StatusCell statusColor={statusColors['승인 완료']} />
+        <StatusCell $statusColor={getStatusColor('승인 완료')} />
 
         <SvgWrapper onClick={onClickToCheckBox}>
           <img

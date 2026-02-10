@@ -1,27 +1,18 @@
 import useCustomBack from '@/hooks/useCustomBack';
-import styled from 'styled-components';
-
-import Header from '@/components/Header/Header';
 import React, { useState } from 'react';
 import ModalPenalty from '@/components/Penalty/ModalPenalty';
 import PenaltyInfoBox from '@/components/Penalty/PenaltyInfoBox';
 import PenaltyItem from '@/components/Penalty/PenaltyItem';
-import useGetPenalty from '@/api/useGetPenalty';
-import Loading from '@/components/common/Loading';
-import { MOBILE } from '@/styles';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: ${MOBILE};
-  max-width: ${MOBILE};
-  margin-bottom: 50px;
-`;
+import InfoButton from '@/components/Penalty/InfoButton';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import { PageHeader } from '@/styles';
+import usePenaltyData from '@/hooks/queries/attend/usePenaltyData';
+import { AttendContainer } from './Attendance';
 
 const Penalty: React.FC = () => {
   useCustomBack('/attendance');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { penaltyInfo, isLoading } = useGetPenalty();
+  const { data: penaltyInfo } = usePenaltyData();
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -31,17 +22,19 @@ const Penalty: React.FC = () => {
     setModalOpen(false);
   };
 
-  if (isLoading) return <Loading />;
-
   return (
-    <Container>
-      <Header
-        RightButtonType="INFO"
-        isAccessible
-        onClickRightButton={handleOpenModal}
-      >
+    <AttendContainer>
+      <Breadcrumb
+        items={[
+          { label: '출석', path: '/attendance' },
+          { label: '페널티', path: '/penalty' },
+        ]}
+        hasTitle
+      />
+      <PageHeader>
         페널티
-      </Header>
+        <InfoButton onClick={handleOpenModal} />
+      </PageHeader>
       <PenaltyInfoBox
         penaltyCount={penaltyInfo?.penaltyCount || 0}
         warningCount={penaltyInfo?.warningCount || 0}
@@ -57,7 +50,7 @@ const Penalty: React.FC = () => {
       ))}
 
       <ModalPenalty open={modalOpen} close={handleCloseModal} />
-    </Container>
+    </AttendContainer>
   );
 };
 

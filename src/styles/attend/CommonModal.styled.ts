@@ -1,10 +1,12 @@
+import { colors } from '@/theme/designTokens';
 import styled from 'styled-components';
 
 export const OpenModal = styled.div`
   display: block;
 `;
-export const StyledModal = styled.div<{ open: boolean }>`
-  display: ${(props) => (props.open ? 'block' : 'none')};
+
+export const StyledModal = styled.div<{ $open: boolean }>`
+  display: ${({ $open }) => ($open ? 'block' : 'none')};
   position: fixed;
   z-index: 11;
   left: 0;
@@ -14,8 +16,9 @@ export const StyledModal = styled.div<{ open: boolean }>`
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(2px);
-  webkitbackdropfilter: 'blur(5px)';
+  -webkit-backdrop-filter: blur(5px);
 `;
+
 export const ModalContent = styled.div`
   position: absolute;
   top: 50%;
@@ -25,7 +28,7 @@ export const ModalContent = styled.div`
   min-width: 19.688rem;
   height: 30.563rem;
   max-height: 30.563rem;
-  background-color: #2f2f2f;
+  background-color: ${colors.semantic.container.neutral};
   border-radius: 14px;
   padding: 15px;
   box-sizing: border-box;
@@ -51,7 +54,7 @@ export const ModalTitle = styled.div`
 
 export const ModalText = styled.div`
   font-size: 14px;
-  color: #a6a6a6;
+  color: ${colors.semantic.text.alternative};
   margin-top: 20px;
 `;
 

@@ -1,23 +1,23 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import postBoardNotice from '@/api/postBoardNotice';
+import useBoardDetail from '@/hooks/queries/board/useBoardDetail';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
+import EduWrite from '@/components/Board/EduWrite';
+import { RealPart } from '@/types/part';
+import { originFile } from '@/pages/board/part/PartEdit';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import EditGNB from '@/components/Navigation/EditGNB';
 import {
   toastError,
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import useGetBoardDetail from '@/api/useGetBoardDetail';
-import EduWrite from '@/components/Board/EduWrite';
-import { RealPart } from '@/types/part';
-import { originFile } from '@/pages/board/part/PartEdit';
+import * as S from '@/styles/board/BoardDetail.styled';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 const EduEdit = () => {
   const navigate = useNavigate();
   const { postId, part } = useParams();
-
-  const url = new URL(window.location.href);
-  const pathArray = url.pathname.split('/');
-  const path = pathArray[2];
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -30,7 +30,7 @@ const EduEdit = () => {
   const isContentEmpty = content.trim() === '';
   const numericPostId = postId ? parseInt(postId, 10) : 0;
 
-  const { boardDetailInfo } = useGetBoardDetail(path, numericPostId);
+  const { data: boardDetailInfo } = useBoardDetail('board', numericPostId);
 
   useEffect(() => {
     setTitle(boardDetailInfo?.title ?? '');
@@ -40,7 +40,17 @@ const EduEdit = () => {
     setSelectedPart((boardDetailInfo?.parts ?? []) as RealPart[]);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const postBoardMutation = usePostBoard({
+    onSuccess: () => {
+      toastSuccess('게시글이 수정되었습니다.');
+      navigate(`/board/education/${part}`);
+    },
+    onError: (message) => {
+      toastError(message ?? '교육자료 수정 중 문제가 발생했습니다.');
+    },
+  });
+
+  const handleClickButton = () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -50,59 +60,58 @@ const EduEdit = () => {
       return;
     }
 
-    try {
-      if (title.length > 255) {
-        toastError('제목을 255자 이내로 작성해주세요.');
-        return;
-      }
-
-      if (content.length > 65000) {
-        toastError('내용을 65,000자 이내로 작성해주세요.');
-        return;
-      }
-
-      await postBoardNotice({
-        originFiles,
-        files,
-        postData: {
-          title,
-          content,
-          parts: selectedPart,
-          cardinalNumber: selectedCardinal,
-          files: [],
-        },
-        postType: 'editEdu',
-        id: numericPostId,
-      });
-      toastSuccess('게시글이 수정되었습니다.');
-      navigate(`/board/education/${part}`);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error: any) {
-      toastError(
-        path === 'board'
-          ? '게시글 작성 중 문제가 발생했습니다.'
-          : '공지사항 작성 중 문제가 발생했습니다.',
-      );
+    if (title.length > 255) {
+      toastError('제목을 255자 이내로 작성해주세요.');
+      return;
     }
+
+    if (content.length > 65000) {
+      toastError('내용을 65,000자 이내로 작성해주세요.');
+      return;
+    }
+
+    postBoardMutation.mutate({
+      originFiles,
+      files,
+      postData: {
+        title,
+        content,
+        parts: selectedPart,
+        cardinalNumber: selectedCardinal ?? undefined,
+        files: [],
+      },
+      postType: 'editEdu',
+      id: numericPostId,
+    });
   };
 
   return (
-    <EduWrite
-      headerTitle="교육자료"
-      title={title}
-      setTitle={setTitle}
-      selectedCardinal={selectedCardinal}
-      setSelectedCardinal={setSelectedCardinal}
-      selectedPart={selectedPart}
-      setSelectedPart={setSelectedPart}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <S.Container>
+      <EditGNB onClickButton={handleClickButton} save />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 교육자료`, path: `/board/education/${part}` },
+            { label: '교육자료 수정' },
+          ]}
+        />
+        <EduWrite
+          title={title}
+          setTitle={setTitle}
+          selectedCardinal={selectedCardinal}
+          setSelectedCardinal={setSelectedCardinal}
+          selectedPart={selectedPart}
+          setSelectedPart={setSelectedPart}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
+        />
+      </PostContainerWrapper>
+    </S.Container>
   );
 };
 

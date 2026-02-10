@@ -1,14 +1,17 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import postBoardNotice from '@/api/postBoardNotice';
+import usePostBoard from '@/hooks/mutation/board/usePostBoard';
+import useBoardDetail from '@/hooks/queries/board/useBoardDetail';
 import {
   toastError,
   toastInfo,
   toastSuccess,
 } from '@/components/common/ToastMessage';
-import useGetBoardDetail from '@/api/useGetBoardDetail';
 import StudyWriteTemplate from '@/components/Board/StudyWriteTemplate';
-import getHeaderTitle from '@/utils/getHeaderTitle';
+import Breadcrumb from '@/components/common/Breadcrumb';
+import EditGNB from '@/components/Navigation/EditGNB';
+import * as S from '@/styles/board/PartBoard.styled';
+import { PostContainerWrapper } from '@/styles/board/BoardPost.styled';
 
 export interface originFile {
   fileId: number;
@@ -36,7 +39,12 @@ const PartEdit = () => {
   const isContentEmpty = content.trim() === '';
   const numericPostId = postId ? parseInt(postId, 10) : 0;
 
-  const { boardDetailInfo } = useGetBoardDetail(path, numericPostId);
+  const type = path === 'notices' ? 'notices' : 'board';
+  const { data: boardDetailInfo } = useBoardDetail(
+    type,
+    numericPostId,
+    Boolean(postId),
+  );
 
   useEffect(() => {
     setTitle(boardDetailInfo?.title ?? '');
@@ -47,7 +55,22 @@ const PartEdit = () => {
     setSelectedWeek(boardDetailInfo?.week ?? null);
   }, [boardDetailInfo]);
 
-  const onSave = async () => {
+  const postBoardMutation = usePostBoard({
+    onSuccess: () => {
+      toastSuccess('게시글이 수정되었습니다.');
+      navigate(`/board/${category}/${part}`);
+    },
+    onError: (message) => {
+      toastError(
+        message ??
+          (path === 'board'
+            ? '게시글 수정 중 문제가 발생했습니다.'
+            : '공지사항 수정 중 문제가 발생했습니다.'),
+      );
+    },
+  });
+
+  const handleClickButton = () => {
     if (isTitleEmpty) {
       toastInfo('제목을 입력해주세요.');
       return;
@@ -57,43 +80,32 @@ const PartEdit = () => {
       return;
     }
 
-    try {
-      const postType = 'editPart';
+    const postType = 'editPart';
 
-      if (title.length > 255) {
-        toastError('제목을 255자 이내로 작성해주세요.');
-        return;
-      }
-
-      if (content.length > 65000) {
-        toastError('내용을 65,000자 이내로 작성해주세요.');
-        return;
-      }
-
-      await postBoardNotice({
-        originFiles,
-        files,
-        postData: {
-          title,
-          content,
-          studyName: selectedStudy || undefined,
-          week: selectedWeek || undefined,
-          cardinalNumber: selectedCardinal || undefined,
-          files: [],
-        },
-        postType,
-        id: numericPostId,
-      });
-      toastSuccess('게시글이 수정되었습니다.');
-      navigate(`/board/${category}/${part}`);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error: any) {
-      toastError(
-        path === 'board'
-          ? '게시글 작성 중 문제가 발생했습니다.'
-          : '공지사항 작성 중 문제가 발생했습니다.',
-      );
+    if (title.length > 255) {
+      toastError('제목을 255자 이내로 작성해주세요.');
+      return;
     }
+
+    if (content.length > 65000) {
+      toastError('내용을 65,000자 이내로 작성해주세요.');
+      return;
+    }
+
+    postBoardMutation.mutate({
+      originFiles,
+      files,
+      postData: {
+        title,
+        content,
+        studyName: selectedStudy || undefined,
+        week: selectedWeek || undefined,
+        cardinalNumber: selectedCardinal || undefined,
+        files: [],
+      },
+      postType,
+      id: numericPostId,
+    });
   };
 
   if (!category || !part || !postId) {
@@ -101,25 +113,36 @@ const PartEdit = () => {
   }
 
   return (
-    <StudyWriteTemplate
-      category={category}
-      headerTitle={getHeaderTitle(category, part)}
-      selectedCardinal={selectedCardinal}
-      setSelectedCardinal={setSelectedCardinal}
-      selectedWeek={selectedWeek}
-      setSelectedWeek={setSelectedWeek}
-      selectedStudy={selectedStudy}
-      setSelectedStudy={setSelectedStudy}
-      title={title}
-      setTitle={setTitle}
-      content={content}
-      setContent={setContent}
-      files={files}
-      setFiles={setFiles}
-      originFiles={originFiles}
-      setOriginFiles={setOriginFiles}
-      onSave={onSave}
-    />
+    <S.Container>
+      <EditGNB onClickButton={handleClickButton} save />
+      <PostContainerWrapper>
+        <Breadcrumb
+          items={[
+            { label: '게시판', path: '/board' },
+            { label: `${part} 파트게시판`, path: `/board/study/${part}` },
+            { label: '글쓰기 수정' },
+          ]}
+        />
+        <StudyWriteTemplate
+          category={category}
+          selectedPart={part}
+          selectedCardinal={selectedCardinal}
+          setSelectedCardinal={setSelectedCardinal}
+          selectedWeek={selectedWeek}
+          setSelectedWeek={setSelectedWeek}
+          selectedStudy={selectedStudy}
+          setSelectedStudy={setSelectedStudy}
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
+          files={files}
+          setFiles={setFiles}
+          originFiles={originFiles}
+          setOriginFiles={setOriginFiles}
+        />
+      </PostContainerWrapper>
+    </S.Container>
   );
 };
 

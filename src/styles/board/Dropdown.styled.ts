@@ -1,30 +1,31 @@
 import theme from '@/styles/theme';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  width: 171px;
-  height: 32px;
+  width: 100%;
+  max-width: 792px;
+  height: 36px;
   box-sizing: border-box;
-  padding: 6px 10px;
-  border-radius: 10px;
-  background-color: ${theme.color.gray[18]};
+  padding: 8px ${units.padding['200']}px 8px ${units.padding['300']}px;
+  border-radius: ${units.radius.lg}px;
+  background-color: ${colors.semantic.container.neutral};
 `;
 
 export const Input = styled.input<{ $isNew?: boolean }>`
   width: 100%;
+  padding: 0;
   position: relative;
-  background-color: ${theme.color.gray[18]};
-  color: ${theme.color.gray[100]};
-  font-family: ${theme.font.regular};
-  color: ${({ $isNew }) =>
-    $isNew ? theme.color.gray[65] : theme.color.gray[100]};
-  font-size: 14px;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
+  ${typography.Body2};
   border: none;
   outline: none;
 
   &::placeholder {
-    color: ${theme.color.gray[65]};
+    color: ${colors.semantic.text.alternative};
   }
 
   &:focus {
@@ -36,7 +37,7 @@ export const Input = styled.input<{ $isNew?: boolean }>`
 export const StudyDropdownList = styled.div`
   position: absolute;
   left: 0;
-  width: 144px;
+  width: 100%;
   max-height: 170px;
   box-sizing: border-box;
   background-color: ${theme.color.gray[18]};
@@ -85,19 +86,18 @@ export const HiddenText = styled.span`
   position: absolute;
   visibility: hidden;
   white-space: pre;
-  font-size: 14px;
-  font-family: ${theme.font.regular};
-  color: ${theme.color.gray[65]};
+  ${typography.Body2};
+  color: ${colors.semantic.text.alternative};
 `;
 
 export const DropdownContainer = styled.div`
   position: relative;
   display: flex;
-  width: 82px;
-  min-width: 82px;
-  height: 32px;
+  width: 93px;
+  min-width: 93px;
+  height: 36px;
+  border-radius: ${units.radius.lg}px;
   box-sizing: border-box;
-  font-family: ${theme.font.semiBold};
 `;
 
 export const DropdownButton = styled.div<{ $hasValue: boolean }>`
@@ -108,11 +108,11 @@ export const DropdownButton = styled.div<{ $hasValue: boolean }>`
   width: 100%;
   height: 100%;
   outline: none;
-  background-color: ${theme.color.gray[20]};
-  color: ${theme.color.gray[100]};
-  font-size: 14px;
-  border-radius: 10px;
-  padding: 6px 6px 6px 10px;
+  background-color: ${colors.semantic.container.neutral};
+  color: ${colors.semantic.text.normal};
+  ${typography.Button2};
+  padding: 6px ${units.padding['200']}px 6px ${units.padding['300']}px;
+  border-radius: ${units.radius.lg}px;
   cursor: pointer;
 `;
 
@@ -126,19 +126,19 @@ export const DropdownList = styled.div`
   overflow-y: auto;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: ${theme.color.gray[20]};
-  padding: 5px 0px;
+  background-color: ${colors.semantic.container.neutral};
+  padding: ${units.padding['100']}px 0;
 `;
 
 export const DropdownItem = styled.div`
-  padding: 10px;
-  font-size: 14px;
-  color: white;
+  padding: ${units.padding['200']}px 16px;
+  ${typography.Button1};
+  color: ${colors.semantic.text.strong};
   cursor: pointer;
-  background-color: ${theme.color.gray[20]};
+  background-color: ${colors.semantic.container.neutral};
 
   &:hover {
-    background-color: ${theme.color.gray[9]};
+    background-color: ${colors.semantic.container['neutral-interaction']};
   }
 `;
 

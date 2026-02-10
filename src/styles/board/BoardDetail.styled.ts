@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import { MOBILE, pcResponsive } from '@/styles';
+import { pcResponsive } from '@/styles';
+import { units } from '@/theme/designTokens';
 
 export const Container = styled.div`
   width: 100%;
-  max-width: ${MOBILE};
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  padding-bottom: 60px;
-
+  min-width: ${units.device.mobile}px;
   ${pcResponsive}
+  box-sizing: border-box;
+  margin-bottom: 50px;
 `;
 
 export const CommentInputContainer = styled.div`
@@ -23,7 +23,7 @@ export const CommentInputContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: ${MOBILE};
+  min-width: ${units.device.mobile}px;
 
   ${pcResponsive}
 `;

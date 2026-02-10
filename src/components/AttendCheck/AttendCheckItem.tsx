@@ -1,13 +1,7 @@
-import theme from '@/styles/theme';
 import * as S from '@/styles/attendCheck/AttendCheckItem.styled';
 import Caption from '@/components/Button/Caption';
-
-interface AttendCheckItemProps {
-  attend: 'ATTEND' | 'ABSENT' | 'PENDING';
-  title: string;
-  date: string;
-  place: string;
-}
+import { colors } from '@/theme/designTokens';
+import { AttendCheckItemProps } from '@/types/attend';
 
 const AttendCheckItem: React.FC<AttendCheckItemProps> = ({
   attend,
@@ -16,20 +10,24 @@ const AttendCheckItem: React.FC<AttendCheckItemProps> = ({
   place,
 }) => {
   let captionText = '미결';
-  let captionColor = theme.color.gray[65];
+  let captionColor = colors.semantic.icon.alternative;
+  let captionTextColor = colors.semantic.text.strong;
 
   if (attend === 'ATTEND') {
     captionText = '출석';
-    captionColor = theme.color.main;
+    captionColor = colors.semantic.brand.primary;
+    captionTextColor = colors.semantic.text.inverse;
   } else if (attend === 'ABSENT') {
     captionText = '결석';
-    captionColor = theme.color.negative;
+    captionColor = colors.semantic.state.error;
   }
 
   return (
     <S.MeetingInfoBox>
       <S.MeetingHeader>
-        <Caption color={captionColor}>{captionText}</Caption>
+        <Caption color={captionColor} textcolor={captionTextColor}>
+          {captionText}
+        </Caption>
         <S.MeetingTitle>{title}</S.MeetingTitle>
       </S.MeetingHeader>
       <S.MeetingInfo>

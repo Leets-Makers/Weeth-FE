@@ -1,30 +1,32 @@
 import deleteUser from '@/api/deleteUser';
-import MenuModal from '@/components/common/MenuModal';
 import { toastError, toastInfo } from '@/components/common/ToastMessage';
-import Header from '@/components/Header/Header';
-import SelectModal from '@/components/Modal/SelectModal';
 import MyInfo from '@/components/MyPage/MyInfo';
 import useCustomBack from '@/hooks/useCustomBack';
-import useLogout from '@/hooks/useLogout';
 import * as S from '@/styles/mypage/Mypage.styled';
-import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import { useOpenSelectModal } from '@/stores/selectModalStore';
+import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
+import { PageHeader, ResponsiveContainer } from '@/styles';
+import { KebabIcon } from '@/styles/board/PostDetail.styled';
+import useLogout from '@/hooks/useLogout';
+import Breadcrumb from '@/components/common/Breadcrumb';
 
 const MyPage = () => {
   useCustomBack('/home');
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
   const navigate = useNavigate();
+  const openSelectModal = useOpenSelectModal();
 
-  const openSelectModal = () => {
-    setIsSelectModalOpen(true);
+  const openMenuModal = useOpenMenuModal();
+  const closeMenuModal = useCloseMenuModal();
+
+  const logout = useLogout();
+
+  const handleLogoutClick = () => {
+    closeMenuModal();
+    logout();
   };
-
-  const closeSelectModal = () => {
-    setIsSelectModalOpen(false);
-  };
-
-  const confirmLogout = useLogout();
 
   const onClickLeave = async () => {
     try {
@@ -37,51 +39,51 @@ const MyPage = () => {
     } catch (err) {
       toastError('탈퇴 중 문제가 발생하였습니다.');
     }
-    closeSelectModal();
   };
 
-  return (
-    <S.Container>
-      {isModalOpen && (
-        <MenuModal
-          mobileOnly
-          onClose={() => {
-            setIsModalOpen(false);
-          }}
-        >
+  const handleMenu = () => {
+    openMenuModal({
+      topPadding: false,
+      children: (
+        <>
           <S.TextButton
             onClick={() => {
+              closeMenuModal();
               navigate('/edit');
             }}
           >
             정보 수정
           </S.TextButton>
-          <S.TextButton onClick={confirmLogout}>로그아웃</S.TextButton>
-          <S.TextButton isSignOut onClick={openSelectModal}>
+          <S.TextButton onClick={handleLogoutClick}>로그아웃</S.TextButton>
+
+          <S.TextButton
+            $isSignOut
+            onClick={() => {
+              closeMenuModal();
+              openSelectModal({
+                title: '회원 탈퇴',
+                content: '정말 탈퇴하시겠습니까?',
+                buttonContent: '탈퇴',
+                onDelete: onClickLeave,
+              });
+            }}
+          >
             탈퇴
           </S.TextButton>
-        </MenuModal>
-      )}
-      {isSelectModalOpen && (
-        <SelectModal
-          title="회원 탈퇴"
-          content="정말 탈퇴하시겠습니까?"
-          buttonContent="탈퇴"
-          onClose={closeSelectModal}
-          onDelete={onClickLeave}
-        />
-      )}
-      <Header
-        RightButtonType="MENU"
-        onClickRightButton={() => {
-          setIsModalOpen(true);
-        }}
-        isAccessible
-      >
-        MY
-      </Header>
+        </>
+      ),
+    });
+  };
+
+  return (
+    <ResponsiveContainer>
+      <Breadcrumb items={[{ label: 'My', path: '/mypage' }]} hasTitle />
+      <PageHeader>
+        My
+        <KebabIcon onClick={handleMenu} />
+      </PageHeader>
       <MyInfo />
-    </S.Container>
+    </ResponsiveContainer>
   );
 };
 

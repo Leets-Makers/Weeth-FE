@@ -1,14 +1,18 @@
+/* eslint-disable no-alert */
 import React, { useRef, useState } from 'react';
 import Button from '@/components/Button/Button';
 import * as S from '@/styles/admin/cardinal/CardinalModal.styled';
 import CommonCardinalModal from '@/components/Admin/Modal/CommonCardinalModal';
 import DirectCardinalDropdown from '@/components/Admin/DirectCardinal';
 import { continueNextCardinalApi } from '@/api/admin/member/patchUserManagement';
-import useGetAllCardinals from '@/api/useGetCardinals';
 import {
   handleNumericInput,
   preventNonNumeric,
 } from '@/utils/admin/handleNumericInput';
+import useCardinalData from '@/hooks/queries/useCardinalData';
+import { units } from '@/theme/designTokens';
+import { useTheme } from 'styled-components';
+import typography from '@/theme/typography';
 
 interface CardinalChangeModalProps {
   isOpen: boolean;
@@ -29,15 +33,19 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
   position = 'absolute',
   overlayColor = 'transparent',
 }) => {
+  const theme = useTheme();
   const [cardinalNumber, setCardinalNumber] = useState('');
   const [isCustomInput, setIsCustomInput] = useState(true);
   const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { allCardinals } = useGetAllCardinals();
-  const existingCardinalNumbers = allCardinals.map((c) => c.cardinalNumber);
+  const { data: allCardinals } = useCardinalData();
 
-  const handleSelectCardinal = (value: number, isCustom: boolean) => {
+  const existingCardinalNumbers = Array.isArray(allCardinals)
+    ? allCardinals.map((c) => c.cardinalNumber)
+    : [];
+
+  const handleSelectCardinal = (value: number | null, isCustom: boolean) => {
     setIsCustomInput(isCustom);
     if (isCustom) {
       setCardinalNumber('');
@@ -58,8 +66,10 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
     try {
       const newCardinalNumber = Number(cardinalNumber);
 
-      // 기존 기수 중 최대값
-      const maxExistingCardinal = Math.max(...existingCardinalNumbers);
+      const maxExistingCardinal =
+        existingCardinalNumbers.length > 0
+          ? Math.max(...existingCardinalNumbers)
+          : 0;
 
       // 기존 기수 or 기존 기수 중 최대 기수 +1 인 경우만 허용
       const isValidCardinal =
@@ -67,9 +77,8 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
         newCardinalNumber === maxExistingCardinal + 1;
 
       if (!isValidCardinal) {
-        alert(
-          `새로운 기수는 ${maxExistingCardinal + 1}기만 입력할 수 있습니다.`,
-        );
+        const nextCardinal = maxExistingCardinal + 1;
+        alert(`새로운 기수는 ${nextCardinal}기만 입력할 수 있습니다.`);
         return;
       }
 
@@ -110,20 +119,23 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
       footer={
         <S.FooterWrapper>
           <Button
-            width="80px"
-            height="45px"
-            borderRadius="4px"
-            color="#2f2f2f"
+            width="60px"
+            height="48px"
+            borderRadius={`${units.radius.md}px`}
+            textcolor={`${theme.semantic.text.strong}`}
+            color={`${theme.semantic.button.neutral}`}
             onClick={onClose}
+            $typo={typography.admin.Button1}
           >
-            Cancel
+            취소
           </Button>
           <Button
-            width="70px"
-            height="45px"
-            color="#2f2f2f"
-            borderRadius="4px"
+            width="60px"
+            height="48px"
+            color={`${theme.semantic.button.primary}`}
+            borderRadius={`${units.radius.md}px`}
             onClick={handleSave}
+            $typo={typography.admin.Button1}
           >
             저장
           </Button>
@@ -146,6 +158,7 @@ const CardinalEditModal: React.FC<CardinalChangeModalProps> = ({
           <DirectCardinalDropdown
             selectedCardinal={selectedCardinal}
             setSelectedCardinal={handleSelectCardinal}
+            variant="button"
           />
         </S.InputGroup>
         <S.ErrorMessage>

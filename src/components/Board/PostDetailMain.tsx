@@ -1,15 +1,28 @@
 import { useCallback } from 'react';
-import CommentImage from '@/assets/images/ic_comment_count.svg';
+import CommentImage from '@/assets/images/ic_comment_count.svg?react';
 import * as S from '@/styles/board/PostDetail.styled';
 import PostFile from '@/components/Board/PostFile';
 import formatDateTime from '@/hooks/formatDateTime';
 import setPositionIcon from '@/hooks/setPositionIcon';
-import { toastSuccess, toastError } from '@/components/common/ToastMessage';
+import {
+  toastSuccess,
+  toastError,
+  toastInfo,
+} from '@/components/common/ToastMessage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import { MarkdownLink, CustomCheckbox } from '@/components/Board/MarkdownLink';
+import useDeletePost from '@/hooks/mutation/board/useDeletePost';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useCloseSelectModal,
+  useOpenSelectModal,
+} from '@/stores/selectModalStore';
+import { useCloseMenuModal, useOpenMenuModal } from '@/stores/menuModalStore';
+import useUserData from '@/hooks/queries/useUserData';
+import Loading from '../common/Loading';
 
 interface Comment {
   id: number;
@@ -44,22 +57,55 @@ interface PostDetailMainProps {
 }
 
 const PostDetailMain = ({ info }: PostDetailMainProps) => {
+  const navigate = useNavigate();
+  const { data: userInfo } = useUserData();
+  const { category, part, postId } = useParams<{
+    category: string;
+    part: string;
+    postId: string;
+  }>();
+  const numericPostId = postId ? parseInt(postId, 10) : null;
   const formattedDate = formatDateTime(info?.time ?? '');
 
-  if (!info) return <div>Loading...</div>;
+  const url = new URL(window.location.href);
+  const pathArray = url.pathname.split('/');
+  const path = pathArray[1];
+  const type = path === 'notices' ? 'notices' : 'board';
+  const editPath =
+    category === 'study'
+      ? `/board/${category}/${part}/${postId}/edit`
+      : `/education/${part}/${postId}/edit`;
+
+  const isMyPost = info?.name === userInfo?.name;
+
+  const openSelectModal = useOpenSelectModal();
+  const closeSelectModal = useCloseSelectModal();
+
+  const openMenuModal = useOpenMenuModal();
+  const closeMenuModal = useCloseMenuModal();
+
+  const deletePostMutation = useDeletePost({
+    onSuccess: () => {
+      navigate(`/board/${category}/${part}`, { replace: true });
+      setTimeout(() => {
+        toastInfo('게시물이 삭제되었습니다');
+      }, 500);
+      closeSelectModal();
+    },
+  });
 
   const onClickDownload = useCallback((fileUrl: string, fileName: string) => {
     fetch(fileUrl, { method: 'GET' })
       .then((res) => res.blob())
       .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
+        const downloadUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
+        a.href = downloadUrl;
         a.download = fileName;
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
-          window.URL.revokeObjectURL(url);
+          window.URL.revokeObjectURL(downloadUrl);
           a.remove();
         }, 1000);
         toastSuccess('저장되었습니다');
@@ -70,11 +116,55 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
       });
   }, []);
 
+  if (!numericPostId) {
+    return <div>잘못된 게시물 ID입니다.</div>;
+  }
+
+  const confirmDelete = () => {
+    if (!numericPostId) return;
+    deletePostMutation.mutate({ postId: numericPostId, path: type });
+  };
+
+  const handleSelectModal = () => {
+    closeMenuModal();
+    openSelectModal({
+      title: '게시물 삭제',
+      content: '이 게시물을 정말 삭제하시겠습니까?',
+      onDelete: confirmDelete,
+    });
+  };
+
+  if (!info) return <Loading />;
+
+  const handleMenu = () => {
+    openMenuModal({
+      topPadding: true,
+      children: (
+        <>
+          <S.TextButton
+            onClick={() => {
+              navigate(editPath);
+              closeMenuModal();
+            }}
+          >
+            수정
+          </S.TextButton>
+          <S.TextButton $isLast onClick={handleSelectModal}>
+            삭제
+          </S.TextButton>
+        </>
+      ),
+    });
+  };
+
   return (
     <S.PostMainContainer>
       <S.PostContentContainer>
         <S.PostMainTitle>
-          <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
+          <S.TitleContainer>
+            <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
+            {isMyPost && <S.KebabIcon onClick={handleMenu} />}
+          </S.TitleContainer>
           <S.SmallText>
             <S.PositionIcon
               src={setPositionIcon(info.role, info.position)}
@@ -85,7 +175,6 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
           </S.SmallText>
         </S.PostMainTitle>
         <S.PostingContianer>
-          {/* {parse(convertLinksInText(info.content))} */}
           <ReactMarkdown
             rehypePlugins={[rehypeRaw]}
             remarkPlugins={[remarkBreaks, remarkGfm]}
@@ -110,7 +199,7 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
           ))}
         </S.PostFileList>
         <S.CommentText>
-          <img src={CommentImage} alt="댓글 이미지" />
+          <CommentImage />
           <div>{info.commentCount}</div>
         </S.CommentText>
       </S.PostBottomContent>

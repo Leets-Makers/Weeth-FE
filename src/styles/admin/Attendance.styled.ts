@@ -1,10 +1,16 @@
+import { units } from '@/theme/designTokens';
 import styled from 'styled-components';
+import typography from '@/theme/typography';
 
-export const AttendanceTable = styled.div`
+export const AttendanceTable = styled.div<{ $isOpen?: boolean }>`
   width: 95%;
-  background-color: #f2f9f8;
-  border-radius: 10px 10px 0px 0px;
-  border-bottom: 1px solid #dedede;
+  background-color: ${({ theme, $isOpen }) =>
+    $isOpen ? theme.semantic.button.primary : theme.semantic.container.neutral};
+  border-radius: ${({ $isOpen }) =>
+    $isOpen
+      ? `${units.radius.md}px ${units.radius.md}px 0 0`
+      : `${units.radius.md}px`};
+  border: 1px solid ${({ theme }) => theme.semantic.line};
   display: flex;
   margin-left: 2.5%;
   margin-top: 15px;
@@ -27,20 +33,35 @@ export const Wrapper = styled.div`
 export const DateInfoWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
 `;
 
-export const DateText = styled.span`
-  font-size: 20px;
-  color: black;
-  margin-right: 15px;
+export const DateText = styled.span<{ $isOpen?: boolean }>`
+  ${typography.admin.Sub1}
+  color: ${({ theme, $isOpen }) =>
+    $isOpen === true
+      ? theme.semantic.text.inverse
+      : theme.semantic.text.normal};
+  transition: color 0.2s ease;
 `;
 
-export const ContentText = styled.span`
-  font-size: 20px;
-  color: black;
+export const ContentText = styled.span<{ $isOpen?: boolean }>`
+  ${typography.admin.Sub1}
+  color: ${({ theme, $isOpen }) =>
+    $isOpen === true
+      ? theme.semantic.text.inverse
+      : theme.semantic.text.normal};
+  transition: color 0.2s ease;
 `;
 
-export const DropdownButton = styled.img<{ isOpen: boolean }>`
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ isOpen }) => (isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+export const DropdownButton = styled.div<{ $isOpen: boolean }>`
+  transition:
+    transform 0.3s ease-in-out,
+    color 0.2s ease;
+  transform: ${({ $isOpen }) => ($isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+  color: ${({ $isOpen, theme }) =>
+    $isOpen ? theme.semantic.text.inverse : theme.semantic.text.normal};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

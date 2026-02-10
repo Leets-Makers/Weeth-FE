@@ -1,6 +1,7 @@
-// 라디오 그룹 공통 컴포넌트(패널티/경고 추가에 사용 )
+// 라디오 그룹 공통 컴포넌트(페널티/경고 추가에 사용 )
 
 import theme from '@/styles/theme';
+import { units } from '@/theme/designTokens';
 import { KeyboardEvent } from 'react';
 import styled from 'styled-components';
 
@@ -66,15 +67,15 @@ const SegmentGroup = styled.div<{ $count: number; $disabled: boolean }>`
   grid-template-columns: repeat(${({ $count }) => $count}, 1fr);
   max-width: 160px;
   gap: 0;
-  background: #fff;
-  border-radius: 4px;
+  background: ${({ theme }) => theme.semantic.button.neutral};
+  border-radius: ${units.radius.sm}px;
   overflow: auto;
 `;
 
 const SegmentItem = styled.button<{ $selected: boolean }>`
   position: relative;
-  height: 44px;
-  padding: 0 16px;
+  height: 48px;
+  padding: 16px 8px;
   box-sizing: border-box;
 
   font-weight: 700;
@@ -86,10 +87,13 @@ const SegmentItem = styled.button<{ $selected: boolean }>`
     margin-left: -1px;
   }
 
-  background: ${({ $selected }) => ($selected ? '#323232' : '#f9f9f9')};
-  color: ${({ $selected }) => ($selected ? '#fff' : theme.color.gray[65])};
+  background: ${({ $selected, theme }) =>
+    $selected ? theme.semantic.button.primary : theme.semantic.button.neutral};
+  color: ${({ $selected, theme }) =>
+    $selected ? theme.semantic.text.inverse : theme.semantic.text.alternative};
 
-  ${({ $selected }) => !$selected && `border-color: #dedede;`}
+  ${({ $selected, theme }) =>
+    !$selected && `border-color: ${theme.semantic.line};`}
 
   &:first-child {
     border-top-left-radius: 4px;

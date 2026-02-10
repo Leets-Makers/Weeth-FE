@@ -1,31 +1,33 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
 import { formatDateTime } from '@/hooks/formatDate';
 import { useNavigate } from 'react-router-dom';
+import { colors, units } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 345px;
+  width: 100%;
   height: 63px;
-  background-color: ${theme.color.gray[18]};
-  color: #fff;
-  border-radius: 5px;
+  background-color: ${colors.semantic.container.neutral};
+  border-radius: ${units.radius.md}px;
   box-sizing: border-box;
 
   &:hover {
     cursor: pointer;
-    background-color: ${theme.color.gray[9]};
-    color: ${theme.color.gray[65]};
+    background-color: ${colors.semantic.button.neutral};
+    color: ${colors.semantic.text.alternative};
   }
 `;
 
 const Line = styled.div<{ $isMeeting: boolean }>`
   width: 5px;
-  height: 53px;
+  height: 45px;
   background-color: ${(props) =>
-    props.$isMeeting ? theme.color.main : '#fff'};
+    props.$isMeeting
+      ? colors.semantic.brand.primary
+      : colors.semantic.icon.normal};
   border-radius: 11px;
   margin-left: 5px;
 `;
@@ -33,12 +35,12 @@ const Line = styled.div<{ $isMeeting: boolean }>`
 const Text = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 `;
 
 const Title = styled.div`
-  font-size: 16px;
-  font-family: ${theme.font.semiBold};
+  ${typography.Body1};
+  color: ${colors.semantic.text.strong};
   overflow-wrap: break-word;
   word-break: break-word;
   overflow: hidden;
@@ -50,7 +52,8 @@ const Title = styled.div`
 `;
 
 const Date = styled.div`
-  font-size: 12px;
+  ${typography.Caption2};
+  color: ${colors.semantic.text.alternative};
 `;
 
 const ScheduleItem = ({

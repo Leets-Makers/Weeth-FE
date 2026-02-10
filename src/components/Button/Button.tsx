@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import theme from '../../styles/theme';
+import { colors } from '@/theme/designTokens';
+import typography from '@/theme/typography';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -11,22 +12,41 @@ interface ButtonProps {
   width?: string;
   borderRadius?: string;
   disabled?: boolean;
-  isSemibold?: boolean; // 폰트 두께 : true(기본값) - semibold, false - regular
+  isSemibold?: boolean;
+  $typo?:
+    | typeof typography.admin.Button1
+    | typeof typography.admin.Button2
+    | typeof typography.Button1
+    | typeof typography.Button2;
 }
 
-const BasicButton = styled.button<ButtonProps>`
-  background-color: ${({ color }) => color || theme.color.gray[30]};
-  font-family: ${({ isSemibold }) =>
-    isSemibold ? theme.font.semiBold : theme.font.regular};
-  color: ${({ textcolor }) => textcolor || theme.color.gray[100]};
+interface StyledButtonProps {
+  color?: string;
+  $textColor?: string;
+  height?: string;
+  width?: string;
+  $borderRadius?: string;
+  disabled?: boolean;
+  $isSemibold?: boolean;
+  $typo?:
+    | typeof typography.admin.Button1
+    | typeof typography.admin.Button2
+    | typeof typography.Button1
+    | typeof typography.Button2;
+}
+
+const BasicButton = styled.button<StyledButtonProps>`
+  background-color: ${({ color }) => color || colors.semantic.button.neutral};
+  ${({ $typo, $isSemibold }) =>
+    $typo ? $typo : $isSemibold ? typography.Button1 : typography.Button2}
+  color: ${({ $textColor }) => $textColor || colors.semantic.text.normal};
   border: none;
-  border-radius: ${({ borderRadius }) => borderRadius || '10px'};
+  border-radius: ${({ $borderRadius }) => $borderRadius || '10px'};
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  width: ${({ width }) => width || 'calc(370px * 0.84)'};
+  width: ${({ width }) => width || '100%'};
   height: ${({ height }) => height || '50px'};
 
   &:disabled {
@@ -34,7 +54,6 @@ const BasicButton = styled.button<ButtonProps>`
   }
 `;
 
-// TODO: 스타일 props 변수 이름에 '$' 넣기
 const Button: FC<ButtonProps> = ({
   children,
   color,
@@ -45,19 +64,23 @@ const Button: FC<ButtonProps> = ({
   borderRadius,
   disabled,
   isSemibold = true,
-}) => (
-  <BasicButton
-    color={color}
-    textcolor={textcolor}
-    onClick={onClick}
-    height={height}
-    width={width}
-    borderRadius={borderRadius}
-    disabled={disabled}
-    isSemibold={isSemibold}
-  >
-    {children}
-  </BasicButton>
-);
+  $typo,
+}) => {
+  return (
+    <BasicButton
+      color={color}
+      $textColor={textcolor}
+      onClick={onClick}
+      height={height}
+      width={width}
+      $borderRadius={borderRadius}
+      disabled={disabled}
+      $isSemibold={isSemibold}
+      $typo={$typo}
+    >
+      {children}
+    </BasicButton>
+  );
+};
 
 export default Button;

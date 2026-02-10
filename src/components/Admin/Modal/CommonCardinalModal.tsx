@@ -41,7 +41,7 @@ const CommonCardinalModal: React.FC<CommonCardinalModalProps> = ({
       className="common-cardinal-modal"
       portalClassName="common-cardinal-modal-root"
       style={{
-        overlay: { backgroundColor: 'transparent', zIndex: 1000 },
+        overlay: { backgroundColor: 'transparent', zIndex: 1200 },
         content: { inset: 'unset' },
       }}
     >
@@ -68,7 +68,7 @@ const CommonCardinalModal: React.FC<CommonCardinalModalProps> = ({
             <S.MainContent borderBottom={borderBottom}>
               {children}
             </S.MainContent>
-            <S.Footer>{footer}</S.Footer>
+            {footer && <S.Footer>{footer}</S.Footer>}
           </S.ModalContainer>
         </S.StyledModalContent>
       </S.StyledModalOverlay>
