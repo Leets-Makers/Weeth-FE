@@ -40,7 +40,7 @@ export const ContentTop = styled.div`
   flex-direction: column;
   background-color: ${colors.semantic.container.neutral};
   gap: 12px;
-  width: 339px;
+  width: 100%;
   height: 136px;
   margin-top: 50px;
   border-radius: 19px 19px 0 0;
@@ -54,7 +54,7 @@ export const ContentBottom = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 339px;
+  width: 100%;
   border: 1px solid ${colors.semantic.line};
   border-top: none;
   border-radius: 0 0 19px 19px;
