@@ -16,6 +16,7 @@ import { colors } from '@/theme/designTokens';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import useMemberDetailData from '@/hooks/queries/useMemberDetailData';
 import { useParams } from 'react-router-dom';
+import { BreadcrumbPadding } from '@/styles/breadCrum';
 
 const MemberDetail = () => {
   const { userId } = useParams();
@@ -57,12 +58,14 @@ const MemberDetail = () => {
 
   return (
     <>
-      <Breadcrumb
-        items={[
-          { label: '멤버', path: '/member' },
-          { label: '멤버 상세', path: `/member/${memberDetail?.id}` },
-        ]}
-      />
+      <BreadcrumbPadding>
+        <Breadcrumb
+          items={[
+            { label: '멤버', path: '/member' },
+            { label: '멤버 상세', path: `/member/${memberDetail?.id}` },
+          ]}
+        />
+      </BreadcrumbPadding>
       <S.Wrapper>
         {positionData && (
           <>

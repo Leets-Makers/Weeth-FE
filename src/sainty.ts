@@ -9,7 +9,7 @@ export const client = createClient({
 
 // 가장 최근 활성 팝업 1개를 가져오는 함수
 export async function getActivePopups() {
-  const query = `*[_type == "popup" && isActive == true && now() >= startDate && now() <= endDate] | order(startDate desc)[0] {
+  const query = `*[_type == "popup" && isActive == true && (target == "all" || target == $currentEnv) && now() >= startDate && now() <= endDate] | order(startDate desc)[0] {
     headerLabel,
     pages[] {
       title,
@@ -20,5 +20,9 @@ export async function getActivePopups() {
     }
   }`;
 
-  return client.fetch(query, {}, { useCdn: false });
+  const currentEnv = import.meta.env.VITE_API_URL?.includes('dev')
+    ? 'dev'
+    : 'production';
+
+  return client.fetch(query, { currentEnv }, { useCdn: false });
 }

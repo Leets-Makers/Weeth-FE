@@ -1,14 +1,6 @@
 import styled from 'styled-components';
-import { colors, units } from '@/theme/designTokens';
+import { colors } from '@/theme/designTokens';
 import typography from '@/theme/typography';
-
-export const MemberDetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 375px;
-  padding: 0 ${units.padding['450']}px;
-  height: 100vh;
-`;
 
 export const Wrapper = styled.div`
   display: flex;

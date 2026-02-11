@@ -13,6 +13,9 @@ const useLogout = () => {
     localStorage.removeItem('kakaoId');
     localStorage.removeItem('register');
     localStorage.removeItem('appleAuthCode');
+
+    queryClient.clear();
+
     navigate('/');
   };
 
@@ -23,7 +26,6 @@ const useLogout = () => {
       onDelete: onClickLogout,
       buttonContent: '확인',
     });
-    queryClient.clear();
   };
 
   return confirmLogout;

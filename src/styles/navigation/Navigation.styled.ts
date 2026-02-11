@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
+import { pcResponsive } from '..';
 
 // LNB
 
@@ -158,7 +159,7 @@ export const UserInfo = styled.div`
 export const Container = styled.div`
   display: flex;
   width: 100%;
-  max-width: ${units.device.desktop};
+  ${pcResponsive};
   justify-content: space-between;
   align-items: center;
   padding: 12px 18px;
@@ -187,7 +188,7 @@ export const GNBMenu = styled.ul`
 
 export const GNBMenuItem = styled.li<{ $active?: boolean }>`
   cursor: pointer;
-  font-weight: ${({ $active }) => ($active ? 600 : 400)};
+  ${typography.Button1};
   color: ${({ $active }) =>
     $active ? colors.dark.primary[500] : colors.dark.neutral[900]};
   transition: color 0.2s;

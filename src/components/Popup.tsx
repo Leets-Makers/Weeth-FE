@@ -5,6 +5,7 @@ import defaultPopupImg from '@/assets/images/popup/popup_default_img_1.png';
 import CloseIcon from '@/assets/images/ic_close.svg?react';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
+import { useLocation } from 'react-router-dom';
 
 interface PopupPage {
   title: string;
@@ -27,6 +28,7 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  pointer-events: none;
   pointer-events: none;
   z-index: 50;
 
@@ -56,6 +58,7 @@ const PopupContainer = styled.div`
   flex-direction: column;
   position: relative;
   border: 1px ${colors.semantic.line} solid;
+  box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.3);
 `;
 
 const HeaderWrapper = styled.div`
@@ -65,6 +68,7 @@ const HeaderWrapper = styled.div`
   padding: 18px;
   background-color: ${colors.semantic.backGround};
 `;
+
 
 const CloseButton = styled.button`
   width: 24px;
@@ -171,7 +175,6 @@ const CTAButton = styled.a`
 const PopupWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  pointer-events: auto; /* 팝업 영역만 클릭 가능 */
 `;
 
 const DismissText = styled.button`
@@ -202,6 +205,7 @@ const NoticePopup = () => {
   const [popup, setPopup] = useState<PopupDocument | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const checkPopup = async () => {
@@ -246,6 +250,7 @@ const NoticePopup = () => {
     setCurrentIndex((prev) => Math.min(popup.pages.length - 1, prev + 1));
   };
 
+  if (location.pathname !== '/home') return null;
   if (!isVisible || !popup || popup.pages.length === 0) return null;
 
   const currentPage = popup.pages[currentIndex];
@@ -253,6 +258,7 @@ const NoticePopup = () => {
   const headerText = popup.headerLabel || 'Weeth의 새로운 기능';
 
   return (
+    <Overlay>
     <Overlay>
       <PopupWrapper onClick={(e) => e.stopPropagation()}>
         <PopupContainer>
@@ -289,7 +295,10 @@ const NoticePopup = () => {
             )}
 
             <ButtonRow>
-              {currentPage.linkUrl ? (
+              <CTAButton as="button" onClick={handleClose}>
+                확인
+              </CTAButton>
+              {/* {currentPage.linkUrl ? (
                 <CTAButton
                   href={currentPage.linkUrl}
                   target="_blank"
@@ -301,7 +310,7 @@ const NoticePopup = () => {
                 <CTAButton as="button" onClick={handleClose}>
                   확인
                 </CTAButton>
-              )}
+              )} */}
             </ButtonRow>
           </ContentContainer>
         </PopupContainer>

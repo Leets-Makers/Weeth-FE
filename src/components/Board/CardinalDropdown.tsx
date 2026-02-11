@@ -24,6 +24,7 @@ const CardinalDropdown = ({
         value: cardinalNumber,
         label: `${cardinalNumber}기`,
       }))
+      .filter((item) => item.value !== 0)
       .reverse() || [];
 
   if (isMember === true) options.unshift({ value: null, label: '전체' });
