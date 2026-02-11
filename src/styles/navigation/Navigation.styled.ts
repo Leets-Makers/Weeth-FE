@@ -188,7 +188,7 @@ export const GNBMenu = styled.ul`
 
 export const GNBMenuItem = styled.li<{ $active?: boolean }>`
   cursor: pointer;
-  font-weight: ${({ $active }) => ($active ? 600 : 400)};
+  ${typography.Button1};
   color: ${({ $active }) =>
     $active ? colors.dark.primary[500] : colors.dark.neutral[900]};
   transition: color 0.2s;
