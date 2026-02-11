@@ -50,7 +50,7 @@ export const GridItem = styled.a`
   }
   &:hover {
     background-color: ${colors.semantic.container['neutral-interaction']};
-    color: ${colors.semantic.text.inverse};
+    color: ${colors.semantic.text.strong};
   }
 `;
 
