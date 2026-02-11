@@ -69,7 +69,6 @@ const HeaderWrapper = styled.div`
   background-color: ${colors.semantic.backGround};
 `;
 
-
 const CloseButton = styled.button`
   width: 24px;
   height: 24px;
@@ -175,6 +174,7 @@ const CTAButton = styled.a`
 const PopupWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  pointer-events: auto;
 `;
 
 const DismissText = styled.button`
@@ -259,7 +259,6 @@ const NoticePopup = () => {
 
   return (
     <Overlay>
-    <Overlay>
       <PopupWrapper onClick={(e) => e.stopPropagation()}>
         <PopupContainer>
           <HeaderWrapper>
@@ -295,10 +294,7 @@ const NoticePopup = () => {
             )}
 
             <ButtonRow>
-              <CTAButton as="button" onClick={handleClose}>
-                확인
-              </CTAButton>
-              {/* {currentPage.linkUrl ? (
+              {currentPage.linkUrl ? (
                 <CTAButton
                   href={currentPage.linkUrl}
                   target="_blank"
@@ -310,7 +306,7 @@ const NoticePopup = () => {
                 <CTAButton as="button" onClick={handleClose}>
                   확인
                 </CTAButton>
-              )} */}
+              )}
             </ButtonRow>
           </ContentContainer>
         </PopupContainer>
