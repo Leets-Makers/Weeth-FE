@@ -293,19 +293,9 @@ const NoticePopup = () => {
             )}
 
             <ButtonRow>
-              {currentPage.linkUrl ? (
-                <CTAButton
-                  href={currentPage.linkUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  지금 사용해보기
-                </CTAButton>
-              ) : (
-                <CTAButton as="button" onClick={handleClose}>
-                  확인
-                </CTAButton>
-              )}
+              <CTAButton as="button" onClick={handleClose}>
+                확인
+              </CTAButton>
             </ButtonRow>
           </ContentContainer>
         </PopupContainer>
