@@ -28,6 +28,7 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  pointer-events: none;
   z-index: 50;
 
   display: flex;
@@ -66,6 +67,7 @@ const HeaderWrapper = styled.div`
   padding: 18px;
   background-color: ${colors.semantic.backGround};
 `;
+
 const CloseButton = styled.button`
   width: 24px;
   height: 24px;
@@ -150,6 +152,8 @@ const PaginationText = styled.span`
 `;
 
 const CTAButton = styled.a`
+  all: unset;
+  display: inline-block;
   min-width: 120px;
   padding: 12px 20px;
   background-color: ${colors.semantic.button.primary};
@@ -168,6 +172,7 @@ const CTAButton = styled.a`
 const PopupWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  pointer-events: auto;
 `;
 
 const DismissText = styled.button`
@@ -251,7 +256,7 @@ const NoticePopup = () => {
   const headerText = popup.headerLabel || 'Weeth의 새로운 기능';
 
   return (
-    <Overlay onClick={handleClose}>
+    <Overlay>
       <PopupWrapper onClick={(e) => e.stopPropagation()}>
         <PopupContainer>
           <HeaderWrapper>
