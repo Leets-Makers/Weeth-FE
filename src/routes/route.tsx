@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
 import PrivateRoute from '@/components/common/PrivateRoute';
-import FixedLayout from '@/Layout/FixedLayout';
 import ResponsiveLayout from '@/Layout/ResponsiveLayout';
 import NoHeaderLayout from '@/Layout/NoHeaderLayout';
 import Layout from '@/Layout/layout';
@@ -76,12 +75,6 @@ const router = createBrowserRouter([
     ],
   },
 
-  // 1. FixedLayout (로그인 필요)
-  {
-    element: <PrivateRoute element={<FixedLayout />} />,
-    children: [{ path: '/member/:userId', element: <MemberDetail /> }],
-  },
-
   // 2. ResponsiveLayout (로그인 필요)
   {
     element: <PrivateRoute element={<ResponsiveLayout />} />,
@@ -96,6 +89,7 @@ const router = createBrowserRouter([
       { path: '/calendar', element: <Calendar /> },
       { path: '/:type/:id', element: <EventDetail /> },
       { path: '/home', element: <Home /> },
+      { path: '/member/:userId', element: <MemberDetail /> },
 
       // board layout
       {

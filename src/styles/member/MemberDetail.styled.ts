@@ -2,24 +2,17 @@ import styled from 'styled-components';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
-export const MemberDetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 375px;
-  padding: 0 ${units.padding['450']}px;
-  height: 100vh;
-`;
-
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  padding: 0 ${units.padding['450']}px;
 `;
 
 export const PositionCharacter = styled.img`
-  margin-top: 52px;
-  width: 14.3rem;
+  margin-top: ${units.margin['500']}px;
+  width: 203px;
 `;
 
 export const ClipContainer = styled.div`
@@ -31,7 +24,7 @@ export const ClipContainer = styled.div`
 
 export const Clip = styled.img`
   position: absolute;
-  top: 27px;
+  top: 17px;
   left: 30px;
 `;
 
@@ -40,11 +33,11 @@ export const ContentTop = styled.div`
   flex-direction: column;
   background-color: ${colors.semantic.container.neutral};
   gap: 12px;
-  width: 339px;
+  width: 100%;
   height: 136px;
-  margin-top: 50px;
+  margin-top: 40px;
   border-radius: 19px 19px 0 0;
-  padding: 47px 0 20px 16px;
+  padding: 40px 0 16px 16px;
   box-sizing: border-box;
   border: 1px solid ${colors.semantic.line};
   border-bottom: none;
@@ -54,7 +47,7 @@ export const ContentBottom = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 339px;
+  width: 100%;
   border: 1px solid ${colors.semantic.line};
   border-top: none;
   border-radius: 0 0 19px 19px;

@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 
 const Content = styled.main``;
 
+// 삭제 가능 파일
 const FixedLayout = () => {
   return (
     <Suspense fallback={<DelayedFallback delay={300} />}>
