@@ -1,3 +1,4 @@
+import { startTransition } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOpenSelectModal } from '@/stores/selectModalStore';
 import { useQueryClient } from '@tanstack/react-query';
@@ -14,9 +15,10 @@ const useLogout = () => {
     localStorage.removeItem('register');
     localStorage.removeItem('appleAuthCode');
 
-    queryClient.clear();
-
-    navigate('/');
+    startTransition(() => {
+      queryClient.clear();
+      navigate('/');
+    });
   };
 
   const confirmLogout = () => {
