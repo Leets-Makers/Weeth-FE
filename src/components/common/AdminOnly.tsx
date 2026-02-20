@@ -1,3 +1,4 @@
+import { startTransition } from 'react';
 import Button from '@/components/Button/Button';
 import useUserData from '@/hooks/queries/useUserData';
 import theme from '@/styles/theme';
@@ -36,7 +37,7 @@ const AdminOnly = ({ isAdminPage }: { isAdminPage?: boolean }) => {
         <div>운영진만 접근 가능합니다.</div>
         <Button
           onClick={() => {
-            navigate('/');
+            startTransition(() => navigate('/'));
           }}
           color={isAdminPage === true ? theme.color.main : theme.color.gray[30]}
         >
