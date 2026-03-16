@@ -126,20 +126,20 @@ const LoginButton = styled.button<{ $isKakao: boolean }>`
   }
 `;
 
-const SignUpbutton = styled.button`
-  ${typography.Button1};
-  all: unset;
-  color: ${colors.semantic.text.alternative};
-  border-bottom: 1px solid ${colors.semantic.text.alternative};
-  padding-bottom: 2px;
-  margin-top: 20px;
+// const SignUpbutton = styled.button`
+//   ${typography.Button1};
+//   all: unset;
+//   color: ${colors.semantic.text.alternative};
+//   border-bottom: 1px solid ${colors.semantic.text.alternative};
+//   padding-bottom: 2px;
+//   margin-top: 20px;
 
-  &:hover {
-    cursor: pointer;
-    color: ${colors.semantic.text.strong};
-    border-color: ${colors.semantic.text.strong};
-  }
-`;
+//   &:hover {
+//     cursor: pointer;
+//     color: ${colors.semantic.text.strong};
+//     border-color: ${colors.semantic.text.strong};
+//   }
+// `;
 
 const Footer = styled.div`
   ${typography.Caption1};
