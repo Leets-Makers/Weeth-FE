@@ -11,6 +11,7 @@ export interface SelectModalProps {
   visibility?: boolean;
   cancelText?: string;
   onDelete?: () => void;
+  onCancel?: () => void;
 }
 
 interface SelectModalState {
