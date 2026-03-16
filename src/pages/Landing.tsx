@@ -241,9 +241,9 @@ const Landing: React.FC = () => {
             <span style={{ width: 24 }} />
           </LoginButton> */}
 
-          <SignUpbutton onClick={() => navigate('/register')}>
+          {/* <SignUpbutton onClick={() => navigate('/register')}>
             신규 회원가입
-          </SignUpbutton>
+          </SignUpbutton> */}
 
           <Footer>
             <span>개인정보보호정책</span>
