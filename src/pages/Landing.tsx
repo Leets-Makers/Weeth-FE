@@ -5,7 +5,7 @@ import styled, { keyframes, css } from 'styled-components';
 
 import Cover from '@/assets/images/ic_login_cover.svg?react';
 import kakao from '@/assets/images/ic_KAKAO_symbol.svg';
-import apple from '@/assets/images/ic_apple_symbol.svg';
+// import apple from '@/assets/images/ic_apple_symbol.svg';
 import { colors, units } from '@/theme/designTokens';
 import typography from '@/theme/typography';
 
@@ -179,18 +179,18 @@ const Landing: React.FC = () => {
 
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&state=${stateParam}`;
 
-  const APPLE_REDIRECT_URI = import.meta.env.VITE_APPLE_REDIRECT_URI;
-  const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID;
-  const APPLE_REDIRECT_URI_FULL = BASE_URL + APPLE_REDIRECT_URI;
-  const mode = 'login';
-  const appleState = `${mode}::${redirectPath}`;
+  // const APPLE_REDIRECT_URI = import.meta.env.VITE_APPLE_REDIRECT_URI;
+  // const APPLE_CLIENT_ID = import.meta.env.VITE_APPLE_CLIENT_ID;
+  // const APPLE_REDIRECT_URI_FULL = BASE_URL + APPLE_REDIRECT_URI;
+  // const mode = 'login';
+  // const appleState = `${mode}::${redirectPath}`;
 
-  const appleURL =
-    `https://appleid.apple.com/auth/authorize?` +
-    `client_id=${APPLE_CLIENT_ID}` +
-    `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI_FULL)}` +
-    `&response_type=code` +
-    `&state=${appleState}`;
+  // const appleURL =
+  //   `https://appleid.apple.com/auth/authorize?` +
+  //   `client_id=${APPLE_CLIENT_ID}` +
+  //   `&redirect_uri=${encodeURIComponent(APPLE_REDIRECT_URI_FULL)}` +
+  //   `&response_type=code` +
+  //   `&state=${appleState}`;
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -230,7 +230,7 @@ const Landing: React.FC = () => {
             <span style={{ width: 24 }} />
           </LoginButton>
 
-          <LoginButton
+          {/* <LoginButton
             $isKakao={false}
             onClick={() => {
               window.location.href = appleURL;
@@ -239,7 +239,7 @@ const Landing: React.FC = () => {
             <img src={apple} alt="apple" />
             <div>Apple로 로그인</div>
             <span style={{ width: 24 }} />
-          </LoginButton>
+          </LoginButton> */}
 
           <SignUpbutton onClick={() => navigate('/register')}>
             신규 회원가입
