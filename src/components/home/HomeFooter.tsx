@@ -4,7 +4,6 @@ import * as S from '@/styles/home/HomeFooter.styled';
 
 import leets from '@/assets/images/ic_leets.svg';
 import insta from '@/assets/images/ic_insta.svg';
-import leetsmakers from '@/assets/images/ic_leets_makers.svg';
 import discord from '@/assets/images/ic_discord.svg';
 import github from '@/assets/images/ic_github.svg';
 import gradu from '@/assets/images/ic_gradu.svg';
@@ -19,6 +18,9 @@ import yes from '@/assets/images/ic_yes.svg';
 import chikahea from '@/assets/images/ic_chikahea.svg';
 import insightbox from '@/assets/images/ic_insightbox.svg';
 import seeat from '@/assets/images/ic_seeat.svg';
+import stepbookstep from '@/assets/images/ic_stepbookstep.svg';
+import loopit from '@/assets/images/ic_loopit.svg';
+import monifit from '@/assets/images/ic_monifit.svg';
 
 const HomeFooter: React.FC = () => {
   const scrollerRef1 = useRef<HTMLDivElement | null>(null);
@@ -53,15 +55,6 @@ const HomeFooter: React.FC = () => {
           </S.ImgContainer>
           Instagram
         </S.GridItem>
-        <S.GridItem
-          href="https://www.instagram.com/leets_makers?igsh=MThnOXVqdDc2ZmJqYw%3D%3D&utm_source=qr"
-          target="_blank"
-        >
-          <S.ImgContainer>
-            <img src={leetsmakers} alt="leetsmakers" loading="lazy" />
-          </S.ImgContainer>
-          Makers
-        </S.GridItem>
         <S.GridItem href="https://discord.gg/XvZqeAca4K" target="_blank">
           <S.ImgContainer>
             <img src={discord} alt="discord" loading="lazy" />
@@ -83,6 +76,27 @@ const HomeFooter: React.FC = () => {
         onMouseUp={draggableHandlers2.onMouseUp}
         onMouseLeave={draggableHandlers2.onMouseLeave}
       >
+        <S.GridItemWithImage
+          $image={monifit}
+          href="https://www.leets.land/project/22"
+          target="_blank"
+        >
+          <span>MONIFIT</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={stepbookstep}
+          href="https://www.leets.land/project/21"
+          target="_blank"
+        >
+          <span>StepBookStep</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={loopit}
+          href="https://www.leets.land/project/20"
+          target="_blank"
+        >
+          <span>LOOPIT</span>
+        </S.GridItemWithImage>
         <S.GridItemWithImage
           $image={seeat}
           href="https://www.leets.land/project/17"
