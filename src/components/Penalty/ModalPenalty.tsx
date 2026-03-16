@@ -34,7 +34,7 @@ const ModalPenalty: React.FC<ModalPenaltyProps> = ({ open, close }) => {
           <S.P>페널티를 받는 기준은 아래와 같아요.</S.P>
           <p> </p>
           <S.OL>
-            <li>정기 모임에 출석을 하지 않았을 때(= 결석)</li>
+            <li>정기 모임에 무단 결석했을 때</li>
             <li>과제를 제출하지 않았을 때</li>
             <li>경고를 2회 받았을 때</li>
           </S.OL>
@@ -45,6 +45,8 @@ const ModalPenalty: React.FC<ModalPenaltyProps> = ({ open, close }) => {
           <p> </p>
           <S.OL>
             <li>과제를 미완성했을 때</li>
+            <li>정기 모임에 20분 초과 지각했을 때</li>
+            <li>정기 모임에 사유 결석했을 때</li>
           </S.OL>
         </S.Section>
       </ModalContent>

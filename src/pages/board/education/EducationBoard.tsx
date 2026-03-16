@@ -24,9 +24,6 @@ const EducationBoard = () => {
   const { currentCardinal } = useCardinalData();
 
   const [searchLoading, setSearchLoading] = useState(false);
-
-  const [selectedCardinal, setSelectedCardinal] = useState<number | null>(null);
-
   const [searchMode, setSearchMode] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchContent[]>([]);
   const navigate = useNavigate();
@@ -36,22 +33,31 @@ const EducationBoard = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    const c = searchParams.get('cardinal');
-    if (c) {
-      setSelectedCardinal(Number(c));
-    } else if (currentCardinal !== null) {
-      setSelectedCardinal(currentCardinal);
-    }
-  }, [currentCardinal, searchParams]);
+  const [selectedCardinal, setSelectedCardinal] = useState<number | null>(
+    () => {
+      const c = searchParams.get('cardinal');
+      return c ? Number(c) : null;
+    },
+  );
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    if (selectedCardinal != null)
-      params.set('cardinal', String(selectedCardinal));
-    else params.delete('cardinal');
-    setSearchParams(params, { replace: true });
-  }, [selectedCardinal, searchParams, setSearchParams]);
+    if (selectedCardinal === null && currentCardinal !== null) {
+      setSelectedCardinal(currentCardinal);
+    }
+  }, [currentCardinal]);
+
+  useEffect(() => {
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev);
+        if (selectedCardinal != null)
+          params.set('cardinal', String(selectedCardinal));
+        else params.delete('cardinal');
+        return params;
+      },
+      { replace: true },
+    );
+  }, [selectedCardinal, setSearchParams]);
 
   const handleTabChange = (nextPart: Part) => {
     if (nextPart !== part) {

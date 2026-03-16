@@ -20,7 +20,6 @@ import { toastError } from '@/components/common/ToastMessage';
 const ProfileContainer = styled.div`
   width: 370px;
   max-width: 370px;
-  overflow-x: hidden;
   margin-bottom: 70px;
 `;
 
@@ -209,7 +208,7 @@ const Profile: React.FC = () => {
           type: 'positive',
           visibility: false,
           cancelText: '확인',
-          onDelete: () => {
+          onCancel: () => {
             navigate('/register-success', { replace: true });
           },
         });

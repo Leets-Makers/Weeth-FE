@@ -87,6 +87,7 @@ const SelectModal = () => {
     visibility,
     cancelText,
     onDelete,
+    onCancel,
   } = modalProps;
 
   return (
@@ -97,7 +98,14 @@ const SelectModal = () => {
       </Container>
 
       <ButtonContainer>
-        <CancelButton onClick={close}>{cancelText}</CancelButton>
+        <CancelButton
+          onClick={() => {
+            onCancel?.();
+            close();
+          }}
+        >
+          {cancelText}
+        </CancelButton>
         <ActionButton
           type={type ?? 'negative'}
           $visible={visibility ?? true}

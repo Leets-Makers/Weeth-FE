@@ -4,7 +4,6 @@ import * as S from '@/styles/home/HomeFooter.styled';
 
 import leets from '@/assets/images/ic_leets.svg';
 import insta from '@/assets/images/ic_insta.svg';
-import leetsmakers from '@/assets/images/ic_leets_makers.svg';
 import discord from '@/assets/images/ic_discord.svg';
 import github from '@/assets/images/ic_github.svg';
 import gradu from '@/assets/images/ic_gradu.svg';
@@ -19,6 +18,9 @@ import yes from '@/assets/images/ic_yes.svg';
 import chikahea from '@/assets/images/ic_chikahea.svg';
 import insightbox from '@/assets/images/ic_insightbox.svg';
 import seeat from '@/assets/images/ic_seeat.svg';
+import stepbookstep from '@/assets/images/ic_stepbookstep.svg';
+import loopit from '@/assets/images/ic_loopit.svg';
+import monifit from '@/assets/images/ic_monifit.svg';
 
 const HomeFooter: React.FC = () => {
   const scrollerRef1 = useRef<HTMLDivElement | null>(null);
@@ -38,7 +40,11 @@ const HomeFooter: React.FC = () => {
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
       >
-        <S.GridItem href="https://www.leets.land/" target="_blank">
+        <S.GridItem
+          href="https://www.leets.land/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <S.ImgContainer>
             <img src={leets} alt="leets" loading="lazy" />
           </S.ImgContainer>
@@ -47,6 +53,7 @@ const HomeFooter: React.FC = () => {
         <S.GridItem
           href="https://www.instagram.com/leets_official?igsh=bGI4bTJmMjB5OHk3"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <S.ImgContainer>
             <img src={insta} alt="instagram" loading="lazy" />
@@ -54,21 +61,20 @@ const HomeFooter: React.FC = () => {
           Instagram
         </S.GridItem>
         <S.GridItem
-          href="https://www.instagram.com/leets_makers?igsh=MThnOXVqdDc2ZmJqYw%3D%3D&utm_source=qr"
+          href="https://discord.gg/XvZqeAca4K"
           target="_blank"
+          rel="noopener noreferrer"
         >
-          <S.ImgContainer>
-            <img src={leetsmakers} alt="leetsmakers" loading="lazy" />
-          </S.ImgContainer>
-          Makers
-        </S.GridItem>
-        <S.GridItem href="https://discord.gg/XvZqeAca4K" target="_blank">
           <S.ImgContainer>
             <img src={discord} alt="discord" loading="lazy" />
           </S.ImgContainer>
           Discord
         </S.GridItem>
-        <S.GridItem href="https://github.com/Leets-Official" target="_blank">
+        <S.GridItem
+          href="https://github.com/Leets-Official"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <S.ImgContainer>
             <img src={github} alt="github" loading="lazy" />
           </S.ImgContainer>
@@ -84,9 +90,34 @@ const HomeFooter: React.FC = () => {
         onMouseLeave={draggableHandlers2.onMouseLeave}
       >
         <S.GridItemWithImage
+          $image={monifit}
+          href="https://www.leets.land/project/22"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>MONIFIT</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={stepbookstep}
+          href="https://www.leets.land/project/21"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>StepBookStep</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
+          $image={loopit}
+          href="https://www.leets.land/project/20"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>LOOPIT</span>
+        </S.GridItemWithImage>
+        <S.GridItemWithImage
           $image={seeat}
           href="https://www.leets.land/project/17"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>seeat</span>
         </S.GridItemWithImage>
@@ -94,6 +125,7 @@ const HomeFooter: React.FC = () => {
           $image={insightbox}
           href="https://www.leets.land/project/18"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>INSIGHT BOX</span>
         </S.GridItemWithImage>
@@ -101,6 +133,7 @@ const HomeFooter: React.FC = () => {
           $image={chikahea}
           href="https://www.leets.land/project/19"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>치카해</span>
         </S.GridItemWithImage>
@@ -108,6 +141,7 @@ const HomeFooter: React.FC = () => {
           $image={yes}
           href="https://www.leets.land/project/14"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>Yes!</span>
         </S.GridItemWithImage>
@@ -115,6 +149,7 @@ const HomeFooter: React.FC = () => {
           $image={gachtaxi}
           href="https://www.leets.land/project/15"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>가치택시</span>
         </S.GridItemWithImage>
@@ -122,6 +157,7 @@ const HomeFooter: React.FC = () => {
           $image={eatmate}
           href="https://www.leets.land/project/16"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>EatMate</span>
         </S.GridItemWithImage>
@@ -129,6 +165,7 @@ const HomeFooter: React.FC = () => {
           $image={weeth}
           href="https://www.leets.land/project/12"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>Weeth</span>
         </S.GridItemWithImage>
@@ -136,6 +173,7 @@ const HomeFooter: React.FC = () => {
           $image={commitato}
           href="https://www.leets.land/project/13"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>Commitato</span>
         </S.GridItemWithImage>
@@ -143,6 +181,7 @@ const HomeFooter: React.FC = () => {
           $image={moodmate}
           href="https://www.leets.land/project/7"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>MoodMate</span>
         </S.GridItemWithImage>
@@ -150,6 +189,7 @@ const HomeFooter: React.FC = () => {
           $image={fling}
           href="https://www.leets.land/project/8"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>Fling</span>
         </S.GridItemWithImage>
@@ -157,6 +197,7 @@ const HomeFooter: React.FC = () => {
           $image={weneed}
           href="https://www.leets.land/project/11"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>WeNeed</span>
         </S.GridItemWithImage>
@@ -164,6 +205,7 @@ const HomeFooter: React.FC = () => {
           $image={gradu}
           href="https://www.leets.land/project/10"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <span>Gradu</span>
         </S.GridItemWithImage>
